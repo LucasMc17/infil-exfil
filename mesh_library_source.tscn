@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://wjekhrh367k1"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_xdm1l"]
+lightmap_size_hint = Vector2i(14, 31)
+size = Vector3(1, 2, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_vnitd"]
+orientation = 1
+
+[node name="MeshLibrarySource" type="Node3D" unique_id=1710925448]
+
+[node name="WallHolder" type="Node3D" parent="." unique_id=275226620]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="Wall" type="MeshInstance3D" parent="WallHolder" unique_id=1635234729]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("BoxMesh_xdm1l")
+
+[node name="FloorHolder" type="Node3D" parent="." unique_id=618404326]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+
+[node name="Floor" type="MeshInstance3D" parent="FloorHolder" unique_id=1727608971]
+mesh = SubResource("QuadMesh_vnitd")
