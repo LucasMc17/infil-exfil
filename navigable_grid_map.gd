@@ -15,7 +15,7 @@ extends GridMap
 ## The [AStar3D] instance that can be used in your games.
 var astar := AStar3D.new()
 ## Dictionary of all point_ids that are walkable.
-var point_id_map = {}
+var point_id_map : Dictionary[Vector3i, int] = {}
 ## A reuseable variable for loops.  Can ignore.
 var points : PackedVector3Array
 
@@ -73,7 +73,9 @@ func setup_astar_grid(grid_walkable_items: Array[int]):
 			Vector3(point_pos.x + path_cell_size, point_pos.y, point_pos.z),
 			Vector3(point_pos.x - path_cell_size, point_pos.y, point_pos.z),
 			Vector3(point_pos.x, point_pos.y, point_pos.z + path_cell_size),
-			Vector3(point_pos.x, point_pos.y, point_pos.z - path_cell_size)
+			Vector3(point_pos.x, point_pos.y, point_pos.z - path_cell_size),
+			# Vector3(point_pos.x, point_pos.y + path_cell_size, point_pos.z),
+			# Vector3(point_pos.x, point_pos.y - path_cell_size, point_pos.z)
 		]
 		
 		# Only connect neighnors that are navigable, and only connect them once
