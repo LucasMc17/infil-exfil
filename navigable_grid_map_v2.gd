@@ -10,14 +10,17 @@ class GridPoint:
 	var mesh_id : int
 	var a_star_point : int
 	var forward_direction : Vector3i
+	var position : Vector3i
+
 	var mesh_name : String:
 		get():
 			return MESH_MAP[mesh_id]
 
-	func _init(p_mesh_id : int, p_a_star_point : int, p_forward_direction : Vector3):
+	func _init(p_position: Vector3i, p_mesh_id : int, p_a_star_point : int, p_forward_direction : Vector3):
 		mesh_id = p_mesh_id
 		a_star_point = p_a_star_point
 		forward_direction = p_forward_direction
+		position = p_position
 
 
 @export_category("In Editor Debug")
@@ -42,25 +45,36 @@ class GridPoint:
 var astar := AStar3D.new()
 ## Dictionary of all points identified by their Vector3i coords in the [GridMap].
 var point_map_by_grid_coords : Dictionary[Vector3i, GridPoint] = {}
+var point_map_by_astar_ids: Dictionary[int, GridPoint] = {}
 ## A reuseable variable for loops.  Can ignore.
 var points : PackedVector3Array
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
+		# var start_time = Time.get_ticks_msec()
 		setup_astar_grid()
+		# var end_time = Time.get_ticks_msec()
+		# print("Execution time to build A* map: ", end_time - start_time, " milliseconds")
 		do_debug_path(debug_start_cell, debug_end_cell)
+		var start_time = Time.get_ticks_msec()
+		get_all_valid_moves(Vector3(0, 0, 0), 10)
+		# get_all_valid_moves_v2(Vector3.ZERO, 7)
+		var end_time = Time.get_ticks_msec()
+		print("Execution time to find all valid moves: ", end_time - start_time, " milliseconds")
 
 
 func _map_new_point(cell_pos : Vector3i, mesh_id : int, a_star_point : int, forward_direction : Vector3):
-	var point := GridPoint.new(mesh_id, a_star_point, forward_direction)
+	var point := GridPoint.new(cell_pos, mesh_id, a_star_point, forward_direction)
 
 	point_map_by_grid_coords[cell_pos] = point
+	point_map_by_astar_ids[a_star_point] = point
 
 
 func setup_astar_grid():
 	# Clear previous A* data
 	astar.clear()
 	point_map_by_grid_coords.clear()
+	point_map_by_astar_ids.clear()
 	
 	# For all walkable tiles in grid map
 	for item_id: int in NAVIGABLE_INDEXES:
@@ -91,14 +105,12 @@ func setup_astar_grid():
 					if not astar.are_points_connected(point.a_star_point, neighbor_id):
 						astar.connect_points(point.a_star_point, neighbor_id)
 		elif point.mesh_id == 2:
-			# print(point.forward_direction)
 			neighbors = [
 				coord + point.forward_direction + Vector3i(0, 1, 0),
 				coord + point.forward_direction * -1,
 				coord + Vector3i((Vector3(point.forward_direction).rotated(Vector3.UP, deg_to_rad(90)))),
 				coord + Vector3i((Vector3(point.forward_direction).rotated(Vector3.UP, deg_to_rad(-90)))),
 			]
-			print(neighbors)
 		
 			# Only connect neighnors that are navigable, and only connect them once
 			for neighbor_pos in neighbors:
@@ -159,4 +171,58 @@ func do_debug_path(start_pos : Vector3i, end_pos : Vector3i):
 
 	# draw point path for added effect
 	DebugDraw3D.draw_point_path.call_deferred(points, 0, 0.25, Color(0, 0, 0, 0), Color(0, 0, 0, 0), INF)
+
+
+func paint_grid_square(position: Vector3, color : Color):
+	var temp = position
+	temp.y += 1
+	DebugDraw3D.draw_box.call_deferred(temp, Quaternion.IDENTITY, Vector3(0.9, 0.9, 0.9), color, true, INF)
+
+
+func get_all_valid_moves(position: Vector3, max_moves : int):
+	paint_grid_square(map_to_local(position), Color.RED)
+	var true_max_moves = max_moves * 2
+	var potential_moves : Array[Vector3]
+	var final_moves : Array[Vector3]
+	for x in range(-true_max_moves, true_max_moves + 1):
+		for y in range(-true_max_moves, true_max_moves + 1):
+			for z in range(-true_max_moves, true_max_moves + 1):
+				var vector = Vector3(x, y, z)
+				if vector != Vector3.ZERO and point_map_by_grid_coords.has(vector + position) and absi(x) + absi(y) + absi(z) <= true_max_moves :
+					potential_moves.append(vector + position)
 	
+	for move in potential_moves:
+		var path = find_path(position, move)
+		if path.size() - 1 <= max_moves:
+			final_moves.append(move)
+			paint_grid_square(map_to_local(move), Color.GREEN)
+
+
+func get_all_valid_moves_v2(position: Vector3i, max_moves: int):
+	var valid_moves : Array[GridPoint] = []
+	var point = point_map_by_grid_coords[position]
+	_recusively_get_valid_pos(point, max_moves, valid_moves, true)
+	for move in valid_moves:
+		paint_grid_square(map_to_local(move.position), Color.GREEN)
+
+func _recusively_get_valid_pos(point: GridPoint, moves_left: int, potential_moves : Array[GridPoint], top_level : bool, starting_point: GridPoint = null):
+	# NOTE: serious performance issues here. 10 moves is enough to crash engine. The check below this comment used to be before the recursive function call (except the top level part). but this lead to missed moves, because it was possible to take a twisting path to a point, and end up with 0 moves left even though the move was not an extermity. This blocked it from checking its connections, ever.
+	# Maybe a new map of cells which have had theri connections checked?
+	if !top_level && point != starting_point && !potential_moves.has(point):
+		potential_moves.append(point)
+	else:
+		starting_point = point
+	if !moves_left == 0:
+		var connections := astar.get_point_connections(point.a_star_point)
+		for a_star_id : int in connections:
+			var next_point : GridPoint = point_map_by_astar_ids[a_star_id]
+			_recusively_get_valid_pos(next_point, moves_left - 1, potential_moves, false, starting_point)
+	# if position != Vector3i.ZERO && !potential_moves.has(position):
+	# 	potential_moves.append(position)
+	# var point : GridPoint = point_map_by_grid_coords[position]
+	# var connections = astar.get_point_connections(point.a_star_point)
+	# if moves_left > 0:
+	# 	for astar_point : int in connections:
+	# 		_recusively_get_valid_pos(point_map_by_astar_ids[astar_point].position, moves_left - 1, potential_moves)
+	# return potential_moves
+
