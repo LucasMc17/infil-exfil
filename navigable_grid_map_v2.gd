@@ -57,7 +57,7 @@ func _ready() -> void:
 		# print("Execution time to build A* map: ", end_time - start_time, " milliseconds")
 		do_debug_path(debug_start_cell, debug_end_cell)
 		var start_time = Time.get_ticks_msec()
-		get_all_valid_moves(Vector3(0, 0, 0), 10)
+		# get_all_valid_moves(Vector3(0, 0, 0), 10)
 		# get_all_valid_moves_v2(Vector3.ZERO, 7)
 		var end_time = Time.get_ticks_msec()
 		print("Execution time to find all valid moves: ", end_time - start_time, " milliseconds")
@@ -226,3 +226,28 @@ func _recusively_get_valid_pos(point: GridPoint, moves_left: int, potential_move
 	# 		_recusively_get_valid_pos(point_map_by_astar_ids[astar_point].position, moves_left - 1, potential_moves)
 	# return potential_moves
 
+
+func get_clicked_tile_pos() -> Variant:
+	var mouse_pos = get_viewport().get_mouse_position()
+	var camera = get_viewport().get_camera_3d()
+
+	# Project a ray from the camera through the mouse position
+	var ray_from = camera.project_ray_origin(mouse_pos)
+	var ray_to = ray_from + camera.project_ray_normal(mouse_pos) * 1000
+
+	var ray_params = PhysicsRayQueryParameters3D.create(ray_from, ray_to)
+	var result = get_world_3d().direct_space_state.intersect_ray(ray_params)
+
+	if result.is_empty():
+		return null # No tile clicked
+		
+	# Get the global position of the collision
+	var hit_pos = result.position
+	# Convert global world position to GridMap local coordinates
+	return local_to_map(to_local(hit_pos))
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
+		var target = get_clicked_tile_pos()
+		if target != null:
+			Events.tile_left_clicked.emit(target)

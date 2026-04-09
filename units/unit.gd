@@ -1,11 +1,14 @@
-extends Node3D
+@tool
+class_name Unit extends Node3D
+
+@export var tile_position := Vector3i.ZERO:
+	set(val):
+		tile_position = val
+		if Engine.is_editor_hint():
+			snap_to_position()
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func snap_to_position() -> void:
+	var temp = tile_position
+	temp.y *= 4
+	position = temp as Vector3 + Vector3(0.5, 0, 0.5)

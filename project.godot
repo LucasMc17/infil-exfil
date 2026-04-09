@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="Infil/Exfil v.1"
+run/main_scene="uid://dt305x7b2byrv"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Events="*uid://cndbfd7bt3wyg"
 
 [debug_draw_3d]
 
