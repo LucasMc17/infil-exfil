@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://b6h1160eunshj"]
+
+[ext_resource type="PackedScene" uid="uid://djexlndf28o7d" path="res://units/unit.tscn" id="1_7ia1n"]
+[ext_resource type="Script" uid="uid://c0ilkw2vjlixv" path="res://units/friendlies/friendly_unit.gd" id="2_3ipgw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ipgw"]
+albedo_color = Color(0.27409065, 0.7122239, 0.12106868, 1)
+
+[node name="FriendlyUnit" unique_id=1676765037 groups=["friendlies"] instance=ExtResource("1_7ia1n")]
+script = ExtResource("2_3ipgw")
+
+[node name="MeshInstance3D" parent="." index="0" unique_id=1987464459]
+surface_material_override/0 = SubResource("StandardMaterial3D_3ipgw")

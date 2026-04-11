@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dmkx4m8je1llw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_lyy88"]
+size = Vector3(1, 0.03, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6vgg2"]
+albedo_color = Color(0, 0.5486908, 0.9665299, 1)
+
+[node name="CellHighlight" type="MeshInstance3D" unique_id=1376729606]
+transparency = 0.5
+mesh = SubResource("BoxMesh_lyy88")
+surface_material_override/0 = SubResource("StandardMaterial3D_6vgg2")

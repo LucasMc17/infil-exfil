@@ -18,10 +18,16 @@ config/icon="res://icon.svg"
 [autoload]
 
 Events="*uid://cndbfd7bt3wyg"
+World="*uid://dj03hyc0fpb7p"
 
 [debug_draw_3d]
 
 settings/addon_root_folder="res://addons/debug_draw_3d"
+
+[global_group]
+
+friendlies="The player's units under their direct control"
+enemies="The enemy units directly opposed to the player."
 
 [physics]
 

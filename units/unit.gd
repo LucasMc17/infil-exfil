@@ -7,8 +7,16 @@ class_name Unit extends Node3D
 		if Engine.is_editor_hint():
 			snap_to_position()
 
+@export var max_movement := 4
+
+var potential_moves : Array[Vector3] = []
+
+func _ready():
+	pass
 
 func snap_to_position() -> void:
 	var temp = tile_position
 	temp.y *= 4
 	position = temp as Vector3 + Vector3(0.5, 0, 0.5)
+
+

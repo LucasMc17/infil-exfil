@@ -3,19 +3,38 @@ extends Node3D
 
 var is_player_turn := true
 
-var active_unit
+var active_unit:
+	set(val):
+		active_unit = val
+		camera_holder.global_position = active_unit.global_position
 
-@onready var _unit : Unit = %Unit
+## TODO: While this works to stop a unit from moving into an occupied space, it does not stop them pathing directly through other units.
+## Naive solution would be to regen A* grid after every Unit move. But I think it could get costly. Other idea: Can I manually clear a tile's connections when moved into?
+## Then maybe keep a queue of tiles to be "repaired" after every move, unless they are still occupied. Maybe something there.
+var occupied_map : Dictionary[Vector3, bool]:
+	get():
+		var result : Dictionary[Vector3, bool] = {}
+		for friendly : FriendlyUnit in _friendlies.get_children():
+			result[friendly.tile_position as Vector3] = true
+		for enemy : Unit in _enemies.get_children():
+			result[enemy.tile_position as Vector3] = true
+		return result
+
+@onready var nav_map : NavigableGridMapV2 = %NavigableGridMapV2
+@onready var cell_highlighter : CellHighlighter = %CellHighlighter
+@onready var click_handler : ClickHandler3D = %ClickHandler3D
+@onready var _friendlies := %Friendlies
+@onready var _enemies := %Enemies
+@onready var camera_holder := %CameraHolder
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	Events.tile_left_clicked.connect(_on_tile_left_clicked)
+	nav_map.setup_astar_grid()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func set_active_unit(unit : FriendlyUnit):
+	active_unit = unit
+	var valid_moves = nav_map.get_all_valid_moves(unit.tile_position, unit.max_movement)
+	unit.set_valid_moves(valid_moves)
 
-func _on_tile_left_clicked(tile_position : Vector3):
-	_unit.tile_position = tile_position
-	_unit.snap_to_position()
+	cell_highlighter.highlighted_cells = valid_moves

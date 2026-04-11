@@ -8,15 +8,13 @@ radius = 0.45
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2atv2"]
 radius = 0.45
 
-[node name="Unit" type="Node3D" unique_id=1676765037]
+[node name="Unit" type="AnimatableBody3D" unique_id=2103260635]
 script = ExtResource("1_2atv2")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1987464459]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_8orno")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=511514223]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=599417616]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=599417616]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CylinderShape3D_2atv2")

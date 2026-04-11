@@ -22,6 +22,8 @@ class GridPoint:
 		forward_direction = p_forward_direction
 		position = p_position
 
+@export_category("Context")
+@export var level : BaseLevel
 
 @export_category("In Editor Debug")
 ## The start path [GridMap] position for in editor debugging.[br][br]
@@ -40,7 +42,6 @@ class GridPoint:
 ## This is only used in the editor to debug pathfinding.
 @export var show_debug: bool = true
 
-
 ## The [AStar3D] instance that can be used in your games.
 var astar := AStar3D.new()
 ## Dictionary of all points identified by their Vector3i coords in the [GridMap].
@@ -51,16 +52,7 @@ var points : PackedVector3Array
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
-		# var start_time = Time.get_ticks_msec()
 		setup_astar_grid()
-		# var end_time = Time.get_ticks_msec()
-		# print("Execution time to build A* map: ", end_time - start_time, " milliseconds")
-		do_debug_path(debug_start_cell, debug_end_cell)
-		var start_time = Time.get_ticks_msec()
-		# get_all_valid_moves(Vector3(0, 0, 0), 10)
-		# get_all_valid_moves_v2(Vector3.ZERO, 7)
-		var end_time = Time.get_ticks_msec()
-		print("Execution time to find all valid moves: ", end_time - start_time, " milliseconds")
 
 
 func _map_new_point(cell_pos : Vector3i, mesh_id : int, a_star_point : int, forward_direction : Vector3):
@@ -71,6 +63,7 @@ func _map_new_point(cell_pos : Vector3i, mesh_id : int, a_star_point : int, forw
 
 
 func setup_astar_grid():
+	var start_time = Time.get_ticks_msec()
 	# Clear previous A* data
 	astar.clear()
 	point_map_by_grid_coords.clear()
@@ -119,6 +112,8 @@ func setup_astar_grid():
 					var neighbor_id: int = point_map_by_grid_coords[neighbor_cell].a_star_point
 					if not astar.are_points_connected(point.a_star_point, neighbor_id):
 						astar.connect_points(point.a_star_point, neighbor_id)
+	var end_time = Time.get_ticks_msec()
+	print("Execution time to build A* map: ", end_time - start_time, " milliseconds")
 
 
 func find_path(start: Vector3i, end: Vector3i) -> Array:
@@ -179,8 +174,9 @@ func paint_grid_square(position: Vector3, color : Color):
 	DebugDraw3D.draw_box.call_deferred(temp, Quaternion.IDENTITY, Vector3(0.9, 0.9, 0.9), color, true, INF)
 
 
-func get_all_valid_moves(position: Vector3, max_moves : int):
-	paint_grid_square(map_to_local(position), Color.RED)
+func get_all_valid_moves(position: Vector3, max_moves : int) -> Array[Vector3]:
+	var start_time = Time.get_ticks_msec()
+	# paint_grid_square(map_to_local(position), Color.RED)
 	var true_max_moves = max_moves * 2
 	var potential_moves : Array[Vector3]
 	var final_moves : Array[Vector3]
@@ -188,14 +184,18 @@ func get_all_valid_moves(position: Vector3, max_moves : int):
 		for y in range(-true_max_moves, true_max_moves + 1):
 			for z in range(-true_max_moves, true_max_moves + 1):
 				var vector = Vector3(x, y, z)
-				if vector != Vector3.ZERO and point_map_by_grid_coords.has(vector + position) and absi(x) + absi(y) + absi(z) <= true_max_moves :
+				if vector != Vector3.ZERO and point_map_by_grid_coords.has(vector + position) and !level.occupied_map.has(vector + position) and absi(x) + absi(y) + absi(z) <= true_max_moves :
 					potential_moves.append(vector + position)
 	
 	for move in potential_moves:
 		var path = find_path(position, move)
 		if path.size() - 1 <= max_moves:
 			final_moves.append(move)
-			paint_grid_square(map_to_local(move), Color.GREEN)
+			# paint_grid_square(map_to_local(move), Color.GREEN)
+	
+	var end_time = Time.get_ticks_msec()
+	print("Execution time to find all valid moves: ", end_time - start_time, " milliseconds")
+	return final_moves
 
 
 func get_all_valid_moves_v2(position: Vector3i, max_moves: int):
@@ -225,29 +225,3 @@ func _recusively_get_valid_pos(point: GridPoint, moves_left: int, potential_move
 	# 	for astar_point : int in connections:
 	# 		_recusively_get_valid_pos(point_map_by_astar_ids[astar_point].position, moves_left - 1, potential_moves)
 	# return potential_moves
-
-
-func get_clicked_tile_pos() -> Variant:
-	var mouse_pos = get_viewport().get_mouse_position()
-	var camera = get_viewport().get_camera_3d()
-
-	# Project a ray from the camera through the mouse position
-	var ray_from = camera.project_ray_origin(mouse_pos)
-	var ray_to = ray_from + camera.project_ray_normal(mouse_pos) * 1000
-
-	var ray_params = PhysicsRayQueryParameters3D.create(ray_from, ray_to)
-	var result = get_world_3d().direct_space_state.intersect_ray(ray_params)
-
-	if result.is_empty():
-		return null # No tile clicked
-		
-	# Get the global position of the collision
-	var hit_pos = result.position
-	# Convert global world position to GridMap local coordinates
-	return local_to_map(to_local(hit_pos))
-
-func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
-		var target = get_clicked_tile_pos()
-		if target != null:
-			Events.tile_left_clicked.emit(target)
