@@ -34,7 +34,8 @@ func _ready() -> void:
 
 func set_active_unit(unit : FriendlyUnit):
 	active_unit = unit
-	var valid_moves = nav_map.get_all_valid_moves(unit.tile_position, unit.max_movement)
-	unit.set_valid_moves(valid_moves)
+	if active_unit.can_move:
+		var valid_moves = nav_map.get_all_valid_moves(unit.tile_position, unit.max_movement)
+		unit.set_valid_moves(valid_moves)
 
-	cell_highlighter.highlighted_cells = valid_moves
+		cell_highlighter.highlighted_cells = valid_moves

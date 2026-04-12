@@ -15,6 +15,7 @@ func input(event: InputEvent) -> void:
 			var coords = clicked_object.local_to_map(clicked_object.to_local(real_position))
 			print(coords)
 			if level.active_unit and level.active_unit.potential_moves.has(coords):
-				level.active_unit.tile_position = coords
-				level.active_unit.snap_to_position()
+				level.active_unit.move_to_position(coords)
+				level.level_camera.jump_to_point(coords)
+				level.cell_highlighter.highlighted_cells = []
 
