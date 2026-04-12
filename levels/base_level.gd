@@ -6,7 +6,7 @@ var is_player_turn := true
 var active_unit:
 	set(val):
 		active_unit = val
-		camera_holder.global_position = active_unit.global_position
+		level_camera.jump_to_point(active_unit.tile_position)
 
 ## TODO: While this works to stop a unit from moving into an occupied space, it does not stop them pathing directly through other units.
 ## Naive solution would be to regen A* grid after every Unit move. But I think it could get costly. Other idea: Can I manually clear a tile's connections when moved into?
@@ -25,7 +25,7 @@ var occupied_map : Dictionary[Vector3, bool]:
 @onready var click_handler : ClickHandler3D = %ClickHandler3D
 @onready var _friendlies := %Friendlies
 @onready var _enemies := %Enemies
-@onready var camera_holder := %CameraHolder
+@onready var level_camera : LevelCamera = %LevelCamera
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

@@ -17,9 +17,6 @@ size = Vector3(1, 0.1, 1)
 lightmap_size_hint = Vector2i(14, 31)
 size = Vector3(1, 4, 0.1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_xdm1l"]
-size = Vector3(1, 4, 0.1)
-
 [node name="MeshLibrarySource" type="Node3D" unique_id=1710925448]
 
 [node name="WallHolder" type="Node3D" parent="." unique_id=275226620]
@@ -54,9 +51,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -0.45)
 transparency = 0.5
 mesh = SubResource("BoxMesh_6sru8")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="LadderHolder/Ladder" unique_id=2104458498]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.45)
+[node name="StaticBody3D2" type="StaticBody3D" parent="LadderHolder/Ladder" unique_id=502608010]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LadderHolder/Ladder/StaticBody3D" unique_id=584860754]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.45)
-shape = SubResource("BoxShape3D_xdm1l")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LadderHolder/Ladder/StaticBody3D2" unique_id=1869033990]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.05, 0.45)
+shape = SubResource("BoxShape3D_6sru8")

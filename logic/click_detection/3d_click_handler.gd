@@ -14,7 +14,7 @@ func get_clicked_object() -> Variant:
 
 	if result.is_empty():
 		return null # Nothing clicked
-		
+	
 	# Get the global position of the collision
 	return result
 	# var hit_pos = result.position
