@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bup8e1flyaj0p"]
 
 [ext_resource type="PackedScene" uid="uid://djexlndf28o7d" path="res://units/unit.tscn" id="1_nlthm"]
+[ext_resource type="Material" uid="uid://cfxlo28yuwser" path="res://assets/materials/enemy_highlight.tres" id="2_lmb8q"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lmb8q"]
 albedo_color = Color(0.95711046, 0, 0.2486856, 1)
@@ -9,3 +10,6 @@ albedo_color = Color(0.95711046, 0, 0.2486856, 1)
 
 [node name="MeshInstance3D" parent="." index="0" unique_id=1987464459 groups=["enemies"]]
 surface_material_override/0 = SubResource("StandardMaterial3D_lmb8q")
+
+[node name="CellHighlight" parent="." index="2" unique_id=1376729606]
+surface_material_override/0 = ExtResource("2_lmb8q")

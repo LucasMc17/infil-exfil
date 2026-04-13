@@ -13,8 +13,11 @@ extends Node3D
 var potential_moves : Array[Vector3] = []
 var can_move := true
 
+@onready var _cell_highlight := %CellHighlight
+
 func _ready():
 	pass
+
 
 func snap_to_position() -> void:
 	var temp = tile_position
@@ -27,3 +30,15 @@ func move_to_position(pos : Vector3):
 	potential_moves = []
 	tile_position = pos
 	snap_to_position()
+
+
+func set_valid_moves(moves : Array[Vector3]) -> void:
+	potential_moves = moves
+
+
+func activate():
+	_cell_highlight.visible = true
+
+
+func deactivate():
+	_cell_highlight.visible = false

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://djexlndf28o7d"]
 
 [ext_resource type="Script" uid="uid://cbsb8godne71a" path="res://units/unit.gd" id="1_2atv2"]
+[ext_resource type="PackedScene" uid="uid://dmkx4m8je1llw" path="res://cell_highlight.tscn" id="2_gxe1c"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_8orno"]
 radius = 0.45
@@ -18,3 +19,7 @@ mesh = SubResource("CapsuleMesh_8orno")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=599417616]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CylinderShape3D_2atv2")
+
+[node name="CellHighlight" parent="." unique_id=1376729606 instance=ExtResource("2_gxe1c")]
+unique_name_in_owner = true
+visible = false

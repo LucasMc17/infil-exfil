@@ -1,7 +1,6 @@
 class_name ClickHandler3D extends Node3D
 
 func get_clicked_object() -> Variant:
-	print('click detection')
 	var mouse_pos = get_viewport().get_mouse_position()
 	var camera = get_viewport().get_camera_3d()
 

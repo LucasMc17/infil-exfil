@@ -64,7 +64,6 @@ func setup_astar_grid(grid_walkable_items: Array[int]):
 			var point_id: int = astar.get_available_point_id()
 			astar.add_point(point_id, cell_pos)
 			point_id_map[cell_pos] = point_id
-			#print(cell_pos) 
 	
 	# Connect neighboring points
 	for point_id in astar.get_point_ids():
@@ -107,7 +106,6 @@ func find_path(start: Vector3i, end: Vector3i) -> Array:
 func do_debug_path(start_pos : Vector3i, end_pos : Vector3i):
 	# DebugDraw2D.clear_all()
 	DebugDraw3D.clear_all()
-	print('hello indeedy')
 	if !show_debug: return
 
 	var path = find_path(start_pos, end_pos)
