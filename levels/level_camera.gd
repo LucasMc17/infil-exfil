@@ -45,7 +45,7 @@ func _input(event: InputEvent) -> void:
 
 	elif Input.is_action_pressed('camera_pan'):
 		if event is InputEventMouseMotion and event.relative != Vector2.ZERO:
-			_lerp_target += Vector3(-event.relative.x / 20, 0, -event.relative.y / 20).rotated(Vector3.UP, _y_pivot.rotation.y)
+			_lerp_target += Vector3(-event.relative.x / 50, 0, -event.relative.y / 50).rotated(Vector3.UP, _y_pivot.rotation.y)
 	
 	elif Input.is_action_just_pressed('zoom_in'):
 		zoom_offset -= 1

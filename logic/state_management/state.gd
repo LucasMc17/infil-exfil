@@ -13,7 +13,11 @@ func transition(new_state_name : StringName, ext := {}):
 
 
 ## Called when entering this state.
-func enter(_previous_state : State, _ext : Dictionary):
+func enter(_previous_state : State, ext : Dictionary):
+	for key in ext:
+		var value = ext[key]
+		if key in self:
+			self[key] = value
 	pass
 
 

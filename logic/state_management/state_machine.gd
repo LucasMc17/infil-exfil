@@ -19,6 +19,7 @@ func _ready():
 			push_warning("State machine contains incompatible child node")
 	
 	await owner.ready
+	# NOTE: Commented this out to avoid issues when initializing enemy state from action queue. May need to bring back.
 	current_state.enter(null, {})
 
 

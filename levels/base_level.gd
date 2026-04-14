@@ -38,6 +38,7 @@ var occupied_map : Dictionary[Vector3, bool]:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	nav_map.setup_astar_grid()
+	World.level = self
 
 
 func set_active_unit(unit : Unit):
