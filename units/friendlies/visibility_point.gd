@@ -1,0 +1,2 @@
+class_name VisibilityPoint
+extends Marker3D

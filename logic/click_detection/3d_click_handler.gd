@@ -11,8 +11,6 @@ func get_clicked_object() -> Variant:
 	var ray_params = PhysicsRayQueryParameters3D.create(ray_from, ray_to)
 	var result = get_world_3d().direct_space_state.intersect_ray(ray_params)
 
-	print(result)
-
 	if result.is_empty():
 		return null # Nothing clicked
 	

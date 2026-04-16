@@ -2,7 +2,7 @@
 class_name Unit
 extends Node3D
 
-@export var tile_position := Vector3i.ZERO:
+@export var tile_position := Vector3.ZERO:
 	# TODO: Check for not in editor here eventually. Or remove tool annotation.
 	set(val):
 		tile_position = val

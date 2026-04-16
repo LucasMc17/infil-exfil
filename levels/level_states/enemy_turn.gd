@@ -5,3 +5,4 @@ func enter(previous_state : State, ext : Dictionary):
 	level.is_player_turn = false
 	level.cycle_active_unit()
 	level.active_unit.state_machine.current_state.take_turn()
+	transition.call_deferred('PlayerTurn')

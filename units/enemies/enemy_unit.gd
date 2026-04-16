@@ -23,6 +23,8 @@ var alarmed_action_queue : Array[Action] = []
 
 @onready var state_machine : StateMachine = %StateMachine
 
+@onready var vision_zone : VisionZone = %VisionZone
+
 func _ready():
 	unaware_action_queue = unaware_base_actions.duplicate()
 	var next_action : Action = unaware_action_queue.pop_front()
