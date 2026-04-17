@@ -10,3 +10,6 @@ var vision_targets : Array[VisibilityPoint]:
 		for point : VisibilityPoint in _vision_target_holder.get_children():
 			result.append(point)
 		return result
+
+func reset():
+	can_move = true

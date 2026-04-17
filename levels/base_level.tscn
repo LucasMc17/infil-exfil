@@ -65,6 +65,7 @@ unique_name_in_owner = true
 highlighted_cells = Array[Vector3]([])
 
 [node name="StateMachine" type="Node" parent="." unique_id=1160962442 node_paths=PackedStringArray("current_state")]
+unique_name_in_owner = true
 script = ExtResource("8_0rg8l")
 current_state = NodePath("PlayerTurn")
 metadata/_custom_type_script = "uid://bsxnir3r10yla"

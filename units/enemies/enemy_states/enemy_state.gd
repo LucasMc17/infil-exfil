@@ -5,3 +5,7 @@ extends State
 
 func take_turn():
 	pass
+
+
+func end_turn():
+	pass

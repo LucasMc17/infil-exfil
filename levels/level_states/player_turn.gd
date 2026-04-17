@@ -3,6 +3,9 @@ extends LevelState
 func enter(previous_state : State, ext : Dictionary):
 	super(previous_state, ext)
 	level.is_player_turn = true
+	for friendly : FriendlyUnit in level.friendlies:
+		friendly.reset()
+	level.set_active_unit(level.friendlies[0])
 	Events.player_turn_ended.connect(_on_player_turn_ended)
 
 
@@ -22,7 +25,7 @@ func input(event: InputEvent) -> void:
 			real_position.y += 0.1
 			var coords = clicked_object.local_to_map(clicked_object.to_local(real_position))
 			if level.active_unit and level.active_unit.potential_moves.has(coords):
-				level.active_unit.move_to_position(coords)
+				# level.active_unit.move_to_position(coords)
 				level.level_camera.jump_to_point(coords)
 				level.cell_highlighter.highlighted_cells = []
 

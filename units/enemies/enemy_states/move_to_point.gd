@@ -27,3 +27,7 @@ func physics_update(_delta: float):
 		unit.snap_to_position()
 		points.pop_front()
 		unit.vision_zone.queue_vision_test()
+
+
+func end_turn():
+	Events.enemy_action_ended.emit()
