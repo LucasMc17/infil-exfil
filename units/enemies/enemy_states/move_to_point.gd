@@ -1,4 +1,4 @@
-extends EnemyState
+extends UnitState
 
 var end_point : Vector3
 

@@ -21,8 +21,6 @@ var unaware_action_queue : Array[Action] = []
 var alerted_action_queue : Array[Action] = []
 var alarmed_action_queue : Array[Action] = []
 
-@onready var state_machine : StateMachine = %StateMachine
-
 @onready var vision_zone : VisionZone = %VisionZone
 
 func _ready():

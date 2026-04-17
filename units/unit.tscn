@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://cbsb8godne71a" path="res://units/unit.gd" id="1_2atv2"]
 [ext_resource type="PackedScene" uid="uid://dmkx4m8je1llw" path="res://cell_highlight.tscn" id="2_gxe1c"]
+[ext_resource type="Script" uid="uid://bsxnir3r10yla" path="res://logic/state_management/state_machine.gd" id="3_xx66i"]
+[ext_resource type="Script" uid="uid://b4a11nmmh0wgy" path="res://units/enemies/enemy_states/enemy_state.gd" id="4_33c7x"]
+[ext_resource type="Script" uid="uid://c5qt2wdsxh3x8" path="res://units/enemies/enemy_states/move_to_point.gd" id="5_3nj72"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_8orno"]
 radius = 0.45
@@ -23,3 +26,17 @@ shape = SubResource("CylinderShape3D_2atv2")
 [node name="CellHighlight" parent="." unique_id=1376729606 instance=ExtResource("2_gxe1c")]
 unique_name_in_owner = true
 visible = false
+
+[node name="StateMachine" type="Node" parent="." unique_id=1342667413 node_paths=PackedStringArray("current_state")]
+unique_name_in_owner = true
+script = ExtResource("3_xx66i")
+current_state = NodePath("Idle")
+metadata/_custom_type_script = "uid://bsxnir3r10yla"
+
+[node name="Idle" type="Node" parent="StateMachine" unique_id=657487160 node_paths=PackedStringArray("unit")]
+script = ExtResource("4_33c7x")
+unit = NodePath("../..")
+
+[node name="MoveToPoint" type="Node" parent="StateMachine" unique_id=2017805870 node_paths=PackedStringArray("unit")]
+script = ExtResource("5_3nj72")
+unit = NodePath("../..")

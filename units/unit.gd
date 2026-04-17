@@ -14,6 +14,8 @@ var can_move := true
 
 @onready var _cell_highlight := %CellHighlight
 
+@onready var state_machine : StateMachine = %StateMachine
+
 # func move_to_position(pos : Vector3):
 # 	can_move = false
 # 	potential_moves = []

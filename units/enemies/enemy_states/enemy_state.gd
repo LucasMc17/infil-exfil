@@ -1,7 +1,7 @@
-class_name EnemyState
+class_name UnitState
 extends State
 
-@export var unit : EnemyUnit
+@export var unit : Unit
 
 func take_turn():
 	pass

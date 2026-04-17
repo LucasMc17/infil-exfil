@@ -4,9 +4,6 @@
 [ext_resource type="Script" uid="uid://cda3qe2hu7vct" path="res://units/enemies/enemy_unit.gd" id="2_klayc"]
 [ext_resource type="Material" uid="uid://cfxlo28yuwser" path="res://assets/materials/enemy_highlight.tres" id="2_lmb8q"]
 [ext_resource type="Script" uid="uid://bp1pubml3l0d7" path="res://units/ai/actions/action.gd" id="3_i6gcf"]
-[ext_resource type="Script" uid="uid://bsxnir3r10yla" path="res://logic/state_management/state_machine.gd" id="4_y30u5"]
-[ext_resource type="Script" uid="uid://c5qt2wdsxh3x8" path="res://units/enemies/enemy_states/move_to_point.gd" id="5_r576r"]
-[ext_resource type="Script" uid="uid://b4a11nmmh0wgy" path="res://units/enemies/enemy_states/enemy_state.gd" id="6_ijy6f"]
 [ext_resource type="PackedScene" uid="uid://cof3le0rdxhxw" path="res://units/enemies/vision_zone.tscn" id="8_j686a"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lmb8q"]
@@ -28,20 +25,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_lmb8q")
 [node name="CellHighlight" parent="." index="2" unique_id=1376729606]
 surface_material_override/0 = ExtResource("2_lmb8q")
 
-[node name="StateMachine" type="Node" parent="." index="3" unique_id=1090900037 node_paths=PackedStringArray("current_state")]
-unique_name_in_owner = true
-script = ExtResource("4_y30u5")
-current_state = NodePath("IdleState")
-metadata/_custom_type_script = "uid://bsxnir3r10yla"
-
-[node name="MoveToPoint" type="Node" parent="StateMachine" index="0" unique_id=165522480 node_paths=PackedStringArray("unit")]
-script = ExtResource("5_r576r")
-unit = NodePath("../..")
-
-[node name="IdleState" type="Node" parent="StateMachine" index="1" unique_id=708472925 node_paths=PackedStringArray("unit")]
-script = ExtResource("6_ijy6f")
-unit = NodePath("../..")
-
-[node name="VisionZone" parent="." index="4" unique_id=1663672907 instance=ExtResource("8_j686a")]
+[node name="VisionZone" parent="." index="3" unique_id=1663672907 instance=ExtResource("8_j686a")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
