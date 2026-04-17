@@ -23,8 +23,7 @@ var target : Node3D
 func jump_to_point(point: Vector3i):
 	unfix()
 	y_level = point.y
-	point.y *= 4
-	_lerp_target = point
+	_lerp_target = NavigableGridMapV2.convert_grid_to_global_position(point, true)
 
 
 func fix_to_actor(actor : Node3D):
@@ -69,30 +68,3 @@ func _process(_delta: float) -> void:
 	if target:
 		_lerp_target = target.global_position
 	global_position = lerp(global_position, _lerp_target, 0.15)
-
-# func _input(event: InputEvent) -> void:
-# 	if Input.is_action_just_pressed('y_up'):
-# 		y_level += 1
-# 		_lerp_target.y = y_level * 4
-
-# 	elif Input.is_action_just_pressed('y_down'):
-# 		y_level -= 1
-# 		_lerp_target.y = y_level * 4
-
-# 	elif Input.is_action_pressed('camera_pivot'):
-# 		if event is InputEventMouseMotion and event.relative.x != 0:
-# 			_y_pivot.rotation.y -= (event.relative.x / 100)
-# 		if event is InputEventMouseMotion and event.relative.y != 0:
-# 			_x_pivot.rotation.x = clamp((_x_pivot.rotation.x - event.relative.y / 100), deg_to_rad(MIN_X_PIVOT), deg_to_rad(MAX_X_PIVOT))
-
-# 	elif Input.is_action_pressed('camera_pan'):
-# 		if event is InputEventMouseMotion and event.relative != Vector2.ZERO:
-# 			_lerp_target += Vector3(-event.relative.x / 50, 0, -event.relative.y / 50).rotated(Vector3.UP, _y_pivot.rotation.y)
-	
-# 	elif Input.is_action_just_pressed('zoom_in'):
-# 		zoom_offset -= 1
-# 		_camera.position.z =  zoom_offset + 12
-	
-# 	elif Input.is_action_just_pressed('zoom_out'):
-# 		zoom_offset += 1
-# 		_camera.position.z =  zoom_offset + 12

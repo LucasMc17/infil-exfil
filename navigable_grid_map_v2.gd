@@ -50,6 +50,25 @@ var point_map_by_astar_ids: Dictionary[int, GridPoint] = {}
 ## A reuseable variable for loops.  Can ignore.
 var points : PackedVector3Array
 
+# TODO: Find a way to make that y height a magic number.
+## Takes in a global position and converts it to it's nearest position on the grid (ASSUMES A Y HEIGHT OF 4)
+static func convert_global_to_grid_position(pos : Vector3) -> Vector3:
+	var result = pos.round()
+	result.y = (result.y - (result.y % 4)) / 4
+	return result
+
+
+## Takes in a grid local position and converts it to it's equivalent global position (ASSUMES A Y HEIGHT OF 4)[br]
+## If [should_center] is true, it will add 0.5 to the x and z axis so that the resulting global position is centered on the grid tile.
+static func convert_grid_to_global_position(pos : Vector3, should_center := false) -> Vector3:
+	var result = Vector3(pos)
+	result.y *= 4
+	if should_center:
+		result.x += 0.5
+		result.z += 0.5
+	return result
+
+
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		setup_astar_grid()

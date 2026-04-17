@@ -16,9 +16,7 @@ var can_move := true
 @onready var _cell_highlight := %CellHighlight
 
 func snap_to_position() -> void:
-	var temp = tile_position
-	temp.y *= 4
-	global_position = temp as Vector3 + Vector3(0.5, 0, 0.5)
+	global_position = NavigableGridMapV2.convert_grid_to_global_position(tile_position, true)
 
 
 # func move_to_position(pos : Vector3):
