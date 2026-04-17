@@ -37,6 +37,10 @@ func _input(event):
 	current_state.input(event)
 
 
+func _unhandled_input(event):
+	current_state.unhandled_input(event)
+
+
 func _process(delta):
 	current_state.update(delta)
 

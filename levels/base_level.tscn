@@ -38,6 +38,8 @@ metadata/_custom_type_script = "uid://cvy611uxolcnt"
 [node name="Level" type="Node3D" unique_id=1510169201]
 script = ExtResource("1_63c5o")
 
+[node name="MatchUi" parent="." unique_id=1837896508 instance=ExtResource("12_5mwf5")]
+
 [node name="NavigableGridMapV2" type="GridMap" parent="." unique_id=805823171 node_paths=PackedStringArray("level")]
 unique_name_in_owner = true
 mesh_library = ExtResource("1_ew5uy")
@@ -102,5 +104,3 @@ tile_position = Vector3(1, 0, 0)
 unique_name_in_owner = true
 script = ExtResource("10_n8wy4")
 metadata/_custom_type_script = "uid://cwt2k11twrldn"
-
-[node name="MatchUi" parent="." unique_id=1837896508 instance=ExtResource("12_5mwf5")]

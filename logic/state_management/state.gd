@@ -42,3 +42,8 @@ func physics_update(_delta: float):
 ## The proxy input function, running whenever an input is received and the State is activated.
 func input(_event: InputEvent):
 	pass
+
+
+## The proxy unhandled input function, running whenever an input is received, not handled by earlier UI elements, and the State is activated.
+func unhandled_input(_event: InputEvent):
+	pass

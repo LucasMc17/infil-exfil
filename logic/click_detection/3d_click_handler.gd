@@ -1,4 +1,5 @@
-class_name ClickHandler3D extends Node3D
+class_name ClickHandler3D
+extends Node3D
 
 func get_clicked_object() -> Variant:
 	var mouse_pos = get_viewport().get_mouse_position()
@@ -15,6 +16,7 @@ func get_clicked_object() -> Variant:
 		return null # Nothing clicked
 	
 	# Get the global position of the collision
+	print("3d CLICK REGISTERED")
 	return result
 	# var hit_pos = result.position
 	# Convert global world position to GridMap local coordinates

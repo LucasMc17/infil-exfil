@@ -54,7 +54,7 @@ var points : PackedVector3Array
 ## Takes in a global position and converts it to it's nearest position on the grid (ASSUMES A Y HEIGHT OF 4)
 static func convert_global_to_grid_position(pos : Vector3) -> Vector3:
 	var result = pos.round()
-	result.y = (result.y - (result.y % 4)) / 4
+	result.y = (result.y - (int(result.y) % 4)) / 4
 	return result
 
 

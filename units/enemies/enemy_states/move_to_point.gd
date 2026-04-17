@@ -17,16 +17,8 @@ func take_turn():
 		points = path.slice(1, unit.max_movement + 1)
 
 
-func physics_update(_delta: float):
-	if points.is_empty():
-		return
-	unit.tile_position = lerp(unit.tile_position, points[0], 0.15)
-	unit.snap_to_position()
-	if unit.tile_position.distance_to(points[0]) < 0.01:
-		unit.tile_position = points[0]
-		unit.snap_to_position()
-		points.pop_front()
-		unit.vision_zone.queue_vision_test()
+func physics_update(delta: float):
+	unit.follow_path(delta, points)
 
 
 func end_turn():
