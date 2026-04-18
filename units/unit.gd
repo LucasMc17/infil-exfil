@@ -1,6 +1,6 @@
 @tool
 class_name Unit
-extends Node3D
+extends AnimatableBody3D
 
 @export var tile_position := Vector3.ZERO:
 	set(val):
@@ -34,10 +34,15 @@ func deactivate():
 	_cell_highlight.visible = false
 
 
-func follow_path(delta : float, path : Array, mps := 1.0):
+func check_for_detection():
+	pass
+
+
+func follow_path(delta : float, path : Array, mps := 1.0) -> void:
 	if path.is_empty():
+		state_machine.current_state.transition('Idle')
 		return
 	tile_position = tile_position.move_toward(path[0], mps * delta)
 	if tile_position == path[0]:
 		path.pop_front()
-		# vision_zone.queue_vision_test()
+		check_for_detection()

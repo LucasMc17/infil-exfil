@@ -4,9 +4,13 @@
 [ext_resource type="Script" uid="uid://c0ilkw2vjlixv" path="res://units/friendlies/friendly_unit.gd" id="2_3ipgw"]
 [ext_resource type="Material" uid="uid://b343cwtgaxavy" path="res://assets/materials/friendly_highlight.tres" id="3_ikcby"]
 [ext_resource type="Script" uid="uid://8c6xrxfefw3o" path="res://units/friendlies/visibility_point.gd" id="4_allfh"]
+[ext_resource type="PackedScene" uid="uid://1lky50pj0tct" path="res://units/friendlies/visible_zone.tscn" id="4_o5yok"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ipgw"]
 albedo_color = Color(0.27409065, 0.7122239, 0.12106868, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o5yok"]
+radius = 0.45
 
 [node name="FriendlyUnit" unique_id=1676765037 groups=["friendlies"] instance=ExtResource("1_7ia1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
@@ -18,45 +22,51 @@ surface_material_override/0 = SubResource("StandardMaterial3D_3ipgw")
 [node name="CellHighlight" parent="." index="2" unique_id=1376729606]
 surface_material_override/0 = ExtResource("3_ikcby")
 
-[node name="VisionTargets" type="Node3D" parent="." index="3" unique_id=1358458093]
+[node name="VisibleZone" parent="." index="3" unique_id=1411709038 node_paths=PackedStringArray("friendly") instance=ExtResource("4_o5yok")]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+friendly = NodePath("..")
 
-[node name="VisibilityPoint01" type="Marker3D" parent="VisionTargets" index="0" unique_id=1118335855]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.5, 0.2)
+[node name="VisibilityPoint01" type="Marker3D" parent="VisibleZone" index="0" unique_id=525744306]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19999999, -0.5, 0.19999999)
 script = ExtResource("4_allfh")
 metadata/_custom_type_script = "uid://8c6xrxfefw3o"
 
-[node name="VisibilityPoint02" type="Marker3D" parent="VisionTargets" index="1" unique_id=154247502]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.5, -0.2)
+[node name="VisibilityPoint02" type="Marker3D" parent="VisibleZone" index="1" unique_id=973080675]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19999999, -0.5, -0.19999999)
 script = ExtResource("4_allfh")
 metadata/_custom_type_script = "uid://8c6xrxfefw3o"
 
-[node name="VisibilityPoint03" type="Marker3D" parent="VisionTargets" index="2" unique_id=316296289]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.5, -0.2)
+[node name="VisibilityPoint03" type="Marker3D" parent="VisibleZone" index="2" unique_id=1428602187]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19999999, -0.5, -0.19999999)
 script = ExtResource("4_allfh")
 metadata/_custom_type_script = "uid://8c6xrxfefw3o"
 
-[node name="VisibilityPoint04" type="Marker3D" parent="VisionTargets" index="3" unique_id=341840717]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.5, 0.2)
+[node name="VisibilityPoint04" type="Marker3D" parent="VisibleZone" index="3" unique_id=310598668]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19999999, -0.5, 0.19999999)
 script = ExtResource("4_allfh")
 metadata/_custom_type_script = "uid://8c6xrxfefw3o"
 
-[node name="VisibilityPoint05" type="Marker3D" parent="VisionTargets" index="4" unique_id=192867968]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 1.5, 0.2)
+[node name="VisibilityPoint05" type="Marker3D" parent="VisibleZone" index="4" unique_id=843346525]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19999999, 0.5, 0.19999999)
 script = ExtResource("4_allfh")
 metadata/_custom_type_script = "uid://8c6xrxfefw3o"
 
-[node name="VisibilityPoint06" type="Marker3D" parent="VisionTargets" index="5" unique_id=819888980]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 1.5, -0.2)
+[node name="VisibilityPoint06" type="Marker3D" parent="VisibleZone" index="5" unique_id=1061156353]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19999999, 0.5, -0.19999999)
 script = ExtResource("4_allfh")
 metadata/_custom_type_script = "uid://8c6xrxfefw3o"
 
-[node name="VisibilityPoint07" type="Marker3D" parent="VisionTargets" index="6" unique_id=1073550177]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 1.5, -0.2)
+[node name="VisibilityPoint07" type="Marker3D" parent="VisibleZone" index="6" unique_id=1203537087]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19999999, 0.5, -0.19999999)
 script = ExtResource("4_allfh")
 metadata/_custom_type_script = "uid://8c6xrxfefw3o"
 
-[node name="VisibilityPoint08" type="Marker3D" parent="VisionTargets" index="7" unique_id=491486482]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 1.5, 0.2)
+[node name="VisibilityPoint08" type="Marker3D" parent="VisibleZone" index="7" unique_id=1079324434]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19999999, 0.5, 0.19999999)
 script = ExtResource("4_allfh")
 metadata/_custom_type_script = "uid://8c6xrxfefw3o"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VisibleZone" index="8" unique_id=2113446846]
+shape = SubResource("CapsuleShape3D_o5yok")
+debug_color = Color(2.2862107e-06, 0.6497064, 0.14529341, 0.41960785)

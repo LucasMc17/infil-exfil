@@ -25,5 +25,18 @@ var alarmed_action_queue : Array[Action] = []
 
 func _ready():
 	unaware_action_queue = unaware_base_actions.duplicate()
-	var next_action : Action = unaware_action_queue.pop_front()
+
+
+func take_turn_from_queue():
+	var next_action : Action
+	if awareness_level == AwarenessLevel.UNAWARE:
+		next_action = unaware_action_queue.pop_front()
+	elif awareness_level == AwarenessLevel.ALERTED:
+		next_action = alerted_action_queue.pop_front()
+	elif awareness_level == AwarenessLevel.ALARMED:
+		next_action = alarmed_action_queue.pop_front()
 	next_action.begin(self)
+
+
+func check_for_detection() -> void:
+	vision_zone.queue_vision_test()

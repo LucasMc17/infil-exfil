@@ -11,3 +11,4 @@ script = ExtResource("1_2jn7x")
 [node name="VisionShape" type="CollisionShape3D" parent="." unique_id=2117925060]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -10)
 shape = SubResource("ConvexPolygonShape3D_i6gcf")
+debug_color = Color(0.9966604, 0, 0.19131464, 0.41960785)

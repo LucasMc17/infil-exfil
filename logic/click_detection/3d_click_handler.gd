@@ -16,7 +16,6 @@ func get_clicked_object() -> Variant:
 		return null # Nothing clicked
 	
 	# Get the global position of the collision
-	print("3d CLICK REGISTERED")
 	return result
 	# var hit_pos = result.position
 	# Convert global world position to GridMap local coordinates

@@ -2,14 +2,11 @@
 class_name FriendlyUnit
 extends Unit
 
-@onready var _vision_target_holder := %VisionTargets
-
-var vision_targets : Array[VisibilityPoint]:
-	get():
-		var result : Array[VisibilityPoint]
-		for point : VisibilityPoint in _vision_target_holder.get_children():
-			result.append(point)
-		return result
+@onready var _visible_zone := %VisibleZone
 
 func reset():
 	can_move = true
+
+
+func check_for_detection():
+	_visible_zone.queue_detection_check()
