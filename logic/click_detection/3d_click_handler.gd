@@ -1,4 +1,5 @@
-class_name ClickHandler3D extends Node3D
+class_name ClickHandler3D
+extends Node3D
 
 func get_clicked_object() -> Variant:
 	var mouse_pos = get_viewport().get_mouse_position()

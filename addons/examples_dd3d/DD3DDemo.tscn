@@ -1,12 +1,12 @@
-[gd_scene load_steps=43 format=3 uid="uid://c3sccy6x0ht5j"]
+[gd_scene format=3 uid="uid://c3sccy6x0ht5j"]
 
-[ext_resource type="Script" uid="uid://ba2ie81p2x3x7" path="res://examples_dd3d/DD3DDemo.gd" id="1"]
-[ext_resource type="FontFile" uid="uid://erdgllynwqkw" path="res://examples_dd3d/Roboto-Bold.ttf" id="2_aedbq"]
-[ext_resource type="Script" uid="uid://b5mdrjubj0lg5" path="res://examples_dd3d/demo_camera_movement.gd" id="3_3m1mp"]
-[ext_resource type="FontFile" uid="uid://cqbkyhs6g8trq" path="res://examples_dd3d/Minecraft - by BennyFonts1002 - from fontstruct.ttf" id="3_rgja2"]
-[ext_resource type="Script" uid="uid://bebbekatkxaoe" path="res://examples_dd3d/demo_music_visualizer.gd" id="4_eq2lt"]
-[ext_resource type="Script" uid="uid://83dhsep7l725" path="res://examples_dd3d/demo_settings_panel.gd" id="5_31v5h"]
-[ext_resource type="Script" uid="uid://hvx3t70syvkm" path="res://examples_dd3d/demo_web_docs_version_select.gd" id="6_07f7q"]
+[ext_resource type="Script" uid="uid://ba2ie81p2x3x7" path="res://addons/examples_dd3d/DD3DDemo.gd" id="1"]
+[ext_resource type="FontFile" path="res://addons/examples_dd3d/Roboto-Bold.ttf" id="2_aedbq"]
+[ext_resource type="Script" uid="uid://b5mdrjubj0lg5" path="res://addons/examples_dd3d/demo_camera_movement.gd" id="3_3m1mp"]
+[ext_resource type="FontFile" path="res://addons/examples_dd3d/Minecraft - by BennyFonts1002 - from fontstruct.ttf" id="3_rgja2"]
+[ext_resource type="Script" uid="uid://bebbekatkxaoe" path="res://addons/examples_dd3d/demo_music_visualizer.gd" id="4_eq2lt"]
+[ext_resource type="Script" uid="uid://83dhsep7l725" path="res://addons/examples_dd3d/demo_settings_panel.gd" id="5_31v5h"]
+[ext_resource type="Script" uid="uid://hvx3t70syvkm" path="res://addons/examples_dd3d/demo_web_docs_version_select.gd" id="6_07f7q"]
 
 [sub_resource type="Animation" id="Animation_ucqh5"]
 resource_name = "RESET"

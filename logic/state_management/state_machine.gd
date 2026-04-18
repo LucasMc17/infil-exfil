@@ -19,6 +19,7 @@ func _ready():
 			push_warning("State machine contains incompatible child node")
 	
 	await owner.ready
+	# NOTE: Commented this out to avoid issues when initializing enemy state from action queue. May need to bring back.
 	current_state.enter(null, {})
 
 
@@ -34,6 +35,10 @@ func unlock():
 
 func _input(event):
 	current_state.input(event)
+
+
+func _unhandled_input(event):
+	current_state.unhandled_input(event)
 
 
 func _process(delta):
