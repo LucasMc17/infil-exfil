@@ -6,13 +6,19 @@ var speed := 1.0
 
 var points := []
 
+var will_reach_endpoint := false
+
 func enter(previous_state : State, ext : Dictionary):
 	super(previous_state, ext)
+	unit.can_move = false
+	World.level.cell_highlighter.highlighted_cells = []
 	World.level.nav_map.do_debug_path(unit.tile_position, end_point)
 	var path = World.level.nav_map.find_path(unit.tile_position, end_point)
 	if unit.potential_moves.has(end_point):
+		will_reach_endpoint = true
 		points = path
 	else:
+		will_reach_endpoint = false
 		points = path.slice(1, unit.max_movement + 1)
 
 
@@ -21,4 +27,7 @@ func physics_update(delta: float):
 
 
 func exit():
-	Events.enemy_action_ended.emit()
+	if unit is EnemyUnit:
+		if unit.current_action is MoveToPointAction and will_reach_endpoint:
+			unit.current_action = null
+		Events.enemy_turn_ended.emit()

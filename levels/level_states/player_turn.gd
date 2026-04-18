@@ -31,10 +31,7 @@ func unhandled_input(event: InputEvent) -> void:
 				# NOTE: Tried to convert this to the static func in nav grid but it didn't work quite right. Gotta fix that later.
 				var coords = clicked_object.local_to_map(clicked_object.to_local(real_position))
 				if level.active_unit and level.active_unit.potential_moves.has(coords):
-					# level.active_unit.move_to_position(coords)
-					# level.level_camera.jump_to_point(coords)
 					level.active_unit.state_machine.current_state.transition('MoveToPoint', { "end_point": coords, "speed": 2.0})
-					level.cell_highlighter.highlighted_cells = []
 
 
 func _on_player_turn_ended():

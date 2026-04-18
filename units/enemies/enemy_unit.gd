@@ -21,22 +21,33 @@ var unaware_action_queue : Array[Action] = []
 var alerted_action_queue : Array[Action] = []
 var alarmed_action_queue : Array[Action] = []
 
+var current_action : Action
+
 @onready var vision_zone : VisionZone = %VisionZone
 
 func _ready():
+	# Events.enemy_action_finished.connect(_on_enemy_action_finished)
 	unaware_action_queue = unaware_base_actions.duplicate()
 
 
-func take_turn_from_queue():
+func take_action_from_queue():
 	var next_action : Action
 	if awareness_level == AwarenessLevel.UNAWARE:
+		if unaware_action_queue.is_empty():
+			unaware_action_queue = unaware_base_actions.duplicate()
 		next_action = unaware_action_queue.pop_front()
 	elif awareness_level == AwarenessLevel.ALERTED:
 		next_action = alerted_action_queue.pop_front()
 	elif awareness_level == AwarenessLevel.ALARMED:
 		next_action = alarmed_action_queue.pop_front()
-	next_action.begin(self)
+	current_action = next_action
+	current_action.begin(self)
 
 
 func check_for_detection() -> void:
 	vision_zone.queue_vision_test()
+
+
+# func _on_enemy_action_finished(enemy : EnemyUnit):
+# 	if enemy == self:
+# 		current_action = null

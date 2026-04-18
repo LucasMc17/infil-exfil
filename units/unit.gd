@@ -16,11 +16,6 @@ var can_move := true
 
 @onready var state_machine : StateMachine = %StateMachine
 
-# func move_to_position(pos : Vector3):
-# 	can_move = false
-# 	potential_moves = []
-# 	tile_position = pos
-
 
 func set_valid_moves(moves : Array[Vector3]) -> void:
 	potential_moves = moves
@@ -33,6 +28,10 @@ func activate():
 func deactivate():
 	_cell_highlight.visible = false
 
+
+func reset():
+	can_move = true
+	
 
 func check_for_detection():
 	pass
