@@ -28,6 +28,10 @@ settings/addon_root_folder="res://addons/debug_draw_3d"
 
 window/size/mode=2
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/debug_label_3d/plugin.cfg")
+
 [global_group]
 
 friendlies="The player's units under their direct control"

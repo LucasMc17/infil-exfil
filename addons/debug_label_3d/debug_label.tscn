@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://kf84gf5ci1lj"]
+
+[ext_resource type="Script" uid="uid://8lotdfrh5t6l" path="res://addons/debug_label_3d/debug_label.gd" id="1_0bk4a"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_hwf51"]
+viewport_path = NodePath("@SubViewport@66916")
+
+[node name="DebugLabel" type="Sprite3D" unique_id=1361823450]
+visibility_range_end = 20.0
+pixel_size = 0.005
+billboard = 1
+no_depth_test = true
+texture = SubResource("ViewportTexture_hwf51")
+script = ExtResource("1_0bk4a")

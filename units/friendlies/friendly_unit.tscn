@@ -12,6 +12,9 @@ albedo_color = Color(0.27409065, 0.7122239, 0.12106868, 1)
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o5yok"]
 radius = 0.45
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_o5yok"]
+viewport_path = NodePath("DebugLabel/@SubViewport@27729")
+
 [node name="FriendlyUnit" unique_id=1676765037 groups=["friendlies"] instance=ExtResource("1_7ia1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
 script = ExtResource("2_3ipgw")
@@ -70,3 +73,9 @@ metadata/_custom_type_script = "uid://8c6xrxfefw3o"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VisibleZone" index="8" unique_id=2113446846]
 shape = SubResource("CapsuleShape3D_o5yok")
 debug_color = Color(2.2862107e-06, 0.6497064, 0.14529341, 0.41960785)
+
+[node name="DebugLabel" parent="." index="5" unique_id=607303816]
+texture = SubResource("ViewportTexture_o5yok")
+_text = "FRIENDLY UNIT
+Position: (x: {x}, y: {y}, z: {z})
+Current State: {state}"

@@ -43,7 +43,7 @@ class GridPoint:
 @export var show_debug: bool = true
 
 ## The [AStar3D] instance that can be used in your games.
-var astar := AStar3D.new()
+var astar := CustomAStar.new()
 ## Dictionary of all points identified by their Vector3i coords in the [GridMap].
 var point_map_by_grid_coords : Dictionary[Vector3i, GridPoint] = {}
 var point_map_by_astar_ids: Dictionary[int, GridPoint] = {}

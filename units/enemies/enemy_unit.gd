@@ -26,6 +26,7 @@ var current_action : Action
 @onready var vision_zone : VisionZone = %VisionZone
 
 func _ready():
+	super()
 	# Events.enemy_action_finished.connect(_on_enemy_action_finished)
 	unaware_action_queue = unaware_base_actions.duplicate()
 
