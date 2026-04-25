@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CommandConfig" format=3 uid="uid://blgexr8p0bx7u"]
+
+[ext_resource type="Script" uid="uid://c7wkmu16m43m" path="res://addons/debug_console/command_config.gd" id="1_it481"]
+
+[resource]
+script = ExtResource("1_it481")
+name = "help"
+description = "Logs to the console all available commands, their descriptions, expected parameters, and examples of how to use them"
+parameters = "None"
+examples = Array[String](["help"])
+metadata/_custom_type_script = "uid://c7wkmu16m43m"

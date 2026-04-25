@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b6v64sbglrpl0" path="res://levels/base_level.gd" id="1_63c5o"]
 [ext_resource type="MeshLibrary" uid="uid://cfe0cqr35beud" path="res://grid_meshes.tres" id="1_ew5uy"]
 [ext_resource type="Script" uid="uid://ch5vn3soxrapt" path="res://navigable_grid_map_v2.gd" id="1_wevqg"]
+[ext_resource type="PackedScene" uid="uid://3rc8lg86w2jx" path="res://2D/debug/debug_ui.tscn" id="2_qeex7"]
 [ext_resource type="PackedScene" uid="uid://cfeifk7bnyc0h" path="res://levels/level_camera.tscn" id="4_dx6c5"]
 [ext_resource type="Texture2D" uid="uid://i8vhjvcw28g8" path="res://assets/industrial_sunset_puresky_4k.hdr" id="5_p5284"]
 [ext_resource type="PackedScene" uid="uid://cmp62gpdora7s" path="res://units/cell_highlighter.tscn" id="6_46036"]
@@ -40,6 +41,8 @@ metadata/_custom_type_script = "uid://cvy611uxolcnt"
 script = ExtResource("1_63c5o")
 
 [node name="MatchUi" parent="." unique_id=1837896508 instance=ExtResource("12_5mwf5")]
+
+[node name="DebugUi" parent="." unique_id=1639751749 instance=ExtResource("2_qeex7")]
 
 [node name="NavigableGridMapV2" type="GridMap" parent="." unique_id=805823171 node_paths=PackedStringArray("level")]
 unique_name_in_owner = true

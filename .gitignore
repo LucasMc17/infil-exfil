@@ -5,4 +5,5 @@
 # CSV metadata 
 *.translation
 
-settings.json
+devlog.md
+.vscode/settings.json

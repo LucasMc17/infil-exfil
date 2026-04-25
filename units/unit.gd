@@ -6,6 +6,10 @@ extends AnimatableBody3D
 	set(val):
 		tile_position = val
 		global_position = NavigableGridMapV2.convert_grid_to_global_position(tile_position, true)
+		if debug_label:
+			debug_label.change_param('x', str(round(tile_position.x)))
+			debug_label.change_param('y', str(round(tile_position.y)))
+			debug_label.change_param('z', str(round(tile_position.z)))
 
 @export var max_movement := 4
 
@@ -15,6 +19,13 @@ var can_move := true
 @onready var _cell_highlight := %CellHighlight
 
 @onready var state_machine : StateMachine = %StateMachine
+
+@onready var debug_label : DebugLabel = %DebugLabel
+
+func _ready():
+	debug_label.change_param('x', str(round(tile_position.x)))
+	debug_label.change_param('y', str(round(tile_position.y)))
+	debug_label.change_param('z', str(round(tile_position.z)))
 
 
 func set_valid_moves(moves : Array[Vector3]) -> void:

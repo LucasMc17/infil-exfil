@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CommandConfig" format=3 uid="uid://jtcbpe1i1m4g"]
+
+[ext_resource type="Script" uid="uid://c7wkmu16m43m" path="res://addons/debug_console/command_config.gd" id="1_esf2i"]
+
+[resource]
+script = ExtResource("1_esf2i")
+name = "clear"
+description = "Clears the history of the console."
+parameters = "None"
+examples = Array[String](["clear"])
+metadata/_custom_type_script = "uid://c7wkmu16m43m"

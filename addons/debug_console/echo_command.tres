@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CommandConfig" format=3 uid="uid://u2a8x8slm7r1"]
+
+[ext_resource type="Script" uid="uid://c7wkmu16m43m" path="res://addons/debug_console/command_config.gd" id="1_o811i"]
+
+[resource]
+script = ExtResource("1_o811i")
+name = "echo"
+description = "Prints a message to the console"
+parameters = "Pass any text following the command to echo it to the console"
+examples = Array[String](["echo this", "echo that", "echo this and that"])
+metadata/_custom_type_script = "uid://c7wkmu16m43m"

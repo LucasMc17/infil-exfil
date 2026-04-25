@@ -9,6 +9,9 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lmb8q"]
 albedo_color = Color(0.95711046, 0, 0.2486856, 1)
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_r576r"]
+viewport_path = NodePath("DebugLabel/@SubViewport@31033")
+
 [node name="EnemyUnit" unique_id=1676765037 instance=ExtResource("1_nlthm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
 script = ExtResource("2_klayc")
@@ -28,3 +31,9 @@ surface_material_override/0 = ExtResource("2_lmb8q")
 [node name="VisionZone" parent="." index="3" unique_id=1663672907 instance=ExtResource("8_j686a")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="DebugLabel" parent="." index="5" unique_id=607303816]
+texture = SubResource("ViewportTexture_r576r")
+_text = "ENEMY UNIT
+Position: (x: {x}, y: {y}, z: {z})
+Current State: {state}"
