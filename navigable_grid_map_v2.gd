@@ -132,7 +132,7 @@ func setup_astar_grid():
 					if not astar.are_points_connected(point.a_star_point, neighbor_id):
 						astar.connect_points(point.a_star_point, neighbor_id)
 	var end_time = Time.get_ticks_msec()
-	print("Execution time to build A* map: ", end_time - start_time, " milliseconds")
+	DebugConsole.log("Execution time to build A* map: " + str(end_time - start_time) + " milliseconds", 3)
 
 
 func find_path(start: Vector3i, end: Vector3i) -> Array:
@@ -213,7 +213,7 @@ func get_all_valid_moves(position: Vector3, max_moves : int) -> Array[Vector3]:
 			# paint_grid_square(map_to_local(move), Color.GREEN)
 	
 	var end_time = Time.get_ticks_msec()
-	print("Execution time to find all valid moves: ", end_time - start_time, " milliseconds")
+	DebugConsole.log("Execution time to find all valid moves: " + str(end_time - start_time) + " milliseconds", 3)
 	return final_moves
 
 

@@ -40,9 +40,9 @@ metadata/_custom_type_script = "uid://cvy611uxolcnt"
 [node name="Level" type="Node3D" unique_id=1510169201]
 script = ExtResource("1_63c5o")
 
-[node name="DebugUi" parent="." unique_id=1639751749 instance=ExtResource("2_qeex7")]
-
 [node name="MatchUi" parent="." unique_id=1837896508 instance=ExtResource("12_5mwf5")]
+
+[node name="DebugUi" parent="." unique_id=1639751749 instance=ExtResource("2_qeex7")]
 
 [node name="NavigableGridMapV2" type="GridMap" parent="." unique_id=805823171 node_paths=PackedStringArray("level")]
 unique_name_in_owner = true

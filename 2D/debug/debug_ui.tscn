@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://3rc8lg86w2jx"]
 
 [ext_resource type="PackedScene" uid="uid://btf2hsfloj3i3" path="res://2D/debug/performance_monitor.tscn" id="1_crbk0"]
+[ext_resource type="Script" uid="uid://1nqsah5bsarx" path="res://addons/debug_console/debug_console.gd" id="2_1hpl2"]
 
 [node name="DebugUi" type="Control" unique_id=1639751749]
 layout_mode = 3
@@ -9,8 +10,21 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="PerformanceMonitor" parent="." unique_id=1043356784 instance=ExtResource("1_crbk0")]
 layout_mode = 0
 offset_right = 51.0
 offset_bottom = 23.0
+
+[node name="DebugConsole" type="PanelContainer" parent="." unique_id=425858574]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -400.0
+offset_right = 500.0
+grow_vertical = 0
+script = ExtResource("2_1hpl2")
+console_log_level = 3
+metadata/_custom_type_script = "uid://1nqsah5bsarx"

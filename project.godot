@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Events="*uid://cndbfd7bt3wyg"
 World="*uid://dj03hyc0fpb7p"
+ConsoleEvents="*uid://cvf4hwhfclj32"
 
 [debug_draw_3d]
 
@@ -26,11 +27,12 @@ settings/addon_root_folder="res://addons/debug_draw_3d"
 
 [display]
 
-window/size/mode=2
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/debug_label_3d/plugin.cfg")
+enabled=PackedStringArray("res://addons/debug_console/plugin.cfg", "res://addons/debug_label_3d/plugin.cfg")
 
 [global_group]
 
