@@ -6,3 +6,4 @@
 *.translation
 
 devlog.md
+.vscode/settings.json
