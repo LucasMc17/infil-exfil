@@ -156,14 +156,14 @@ func do_debug_path(start_pos : Vector3i, end_pos : Vector3i):
 	var path = find_path(start_pos, end_pos)
 	if astar.get_point_count() == 0: return
 	
-	DebugDraw2D.set_text.call_deferred("1. Grid count: ", astar.get_point_count(), 0, Color(0, 0, 0, 0), INF)
-	DebugDraw2D.set_text.call_deferred("2. Walkable Ids: ", NAVIGABLE_INDEXES, 0, Color(0, 0, 0, 0), INF)
-	if path.size() < 1:
-		DebugDraw2D.set_text.call_deferred("3. Path length: ", "No path found", 0, Color(0, 0, 0, 0), INF)
-	else:
-		DebugDraw2D.set_text.call_deferred("3. Path length: ", path.size(), 0, Color(0, 0, 0, 0), INF)
-	DebugDraw2D.set_text.call_deferred("4. Start Grid position / Start World position: ", str(start_pos, " / ", map_to_local(start_pos)), 0, Color.GREEN, INF)
-	DebugDraw2D.set_text.call_deferred("5. End Grid position / End World position: ", str(end_pos, " / ", map_to_local(end_pos)), 0, Color.RED, INF)
+	# DebugDraw2D.set_text.call_deferred("1. Grid count: ", astar.get_point_count(), 0, Color(0, 0, 0, 0), INF)
+	# DebugDraw2D.set_text.call_deferred("2. Walkable Ids: ", NAVIGABLE_INDEXES, 0, Color(0, 0, 0, 0), INF)
+	# if path.size() < 1:
+	# 	DebugDraw2D.set_text.call_deferred("3. Path length: ", "No path found", 0, Color(0, 0, 0, 0), INF)
+	# else:
+	# 	DebugDraw2D.set_text.call_deferred("3. Path length: ", path.size(), 0, Color(0, 0, 0, 0), INF)
+	# DebugDraw2D.set_text.call_deferred("4. Start Grid position / Start World position: ", str(start_pos, " / ", map_to_local(start_pos)), 0, Color.GREEN, INF)
+	# DebugDraw2D.set_text.call_deferred("5. End Grid position / End World position: ", str(end_pos, " / ", map_to_local(end_pos)), 0, Color.RED, INF)
 	
 	var i: int = 0
 	points.resize(path.size())

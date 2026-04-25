@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://btf2hsfloj3i3"]
+
+[ext_resource type="Script" uid="uid://cd0x6j2c8y8g0" path="res://2D/debug/performance_monitor.gd" id="1_k4h8f"]
+
+[node name="PerformanceMonitor" type="PanelContainer" unique_id=1043356784]
+script = ExtResource("1_k4h8f")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1727627937]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer" unique_id=671237137]
+layout_mode = 2
+text = "FPS"
+
+[node name="FPS" type="Label" parent="HBoxContainer" unique_id=1159693139]
+unique_name_in_owner = true
+layout_mode = 2
+text = "60"
