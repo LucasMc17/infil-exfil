@@ -1,0 +1,19 @@
+{
+  "godotTools.editorPath.godot4": "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Godot\\Godot_v4.6.1-stable_win64.exe",
+  // "godotTools.lsp.headless": true,
+  "editor.insertSpaces": false,
+  "files.exclude": {
+    "**/*.gd.uid": true,
+    "**/*.tres": true,
+    "**/*.tscn": true,
+    "blender/**/*[0-9].blend": true,
+    "blender/**/*.blend1": true,
+    "blender/**/*.*.import": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true,
+    "addons": true
+  }
+}
