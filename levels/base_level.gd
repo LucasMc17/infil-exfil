@@ -42,6 +42,10 @@ var occupied_map : Dictionary[Vector3, bool]:
 func _ready() -> void:
 	nav_map.setup_astar_grid()
 	World.level = self
+	ConsoleEvents.command_submitted.connect(func (command_name, _parameters):
+		if command_name == "exit":
+			get_tree().quit()
+	)
 
 
 func set_active_unit(unit : Unit):
@@ -87,3 +91,6 @@ func _input(event: InputEvent) -> void:
 	
 	elif Input.is_action_just_pressed('zoom_out'):
 		level_camera.zoom_camera(false)
+	
+	elif Input.is_action_just_pressed('force_exit'):
+		get_tree().quit()

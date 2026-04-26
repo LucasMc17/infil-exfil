@@ -27,6 +27,7 @@ func _init(u : EnemyUnit) -> void:
 func alert():
 	awareness_level = AwarenessLevel.ALERTED
 	targeted_friendlies = []
+	unit.debug_label.change_param('targets', '[]')
 
 
 func alarm(spotted_friendlies : Array[FriendlyUnit] = []):
@@ -40,3 +41,4 @@ func alarm(spotted_friendlies : Array[FriendlyUnit] = []):
 func drop_guard():
 	awareness_level = AwarenessLevel.UNAWARE
 	targeted_friendlies = []
+	unit.debug_label.change_param('targets', '[]')

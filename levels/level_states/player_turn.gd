@@ -13,6 +13,8 @@ func input(_event : InputEvent):
 	if active:
 		if Input.is_action_just_pressed('cycle_unit'):
 			level.cycle_active_unit()
+		elif Input.is_action_just_pressed('end_turn'):
+			Events.player_turn_ended.emit()
 
 
 func unhandled_input(event: InputEvent) -> void:
