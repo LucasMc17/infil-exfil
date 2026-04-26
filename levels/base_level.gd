@@ -16,6 +16,8 @@ var enemies : Array:
 	get():
 		return _enemies_node.get_children()
 
+var enemy_awareness := EnemyTeamAwarenessModule.new()
+
 ## TODO: While this works to stop a unit from moving into an occupied space, it does not stop them pathing directly through other units.
 ## Naive solution would be to regen A* grid after every Unit move. But I think it could get costly. Other idea: Can I manually clear a tile's connections when moved into?
 ## Then maybe keep a queue of tiles to be "repaired" after every move, unless they are still occupied. Maybe something there.

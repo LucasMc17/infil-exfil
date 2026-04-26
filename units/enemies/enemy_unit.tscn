@@ -10,12 +10,11 @@
 albedo_color = Color(0.95711046, 0, 0.2486856, 1)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_r576r"]
-viewport_path = NodePath("DebugLabel/@SubViewport@31033")
+viewport_path = NodePath("DebugLabel/@SubViewport@18810")
 
 [node name="EnemyUnit" unique_id=1676765037 instance=ExtResource("1_nlthm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
 script = ExtResource("2_klayc")
-awareness_level = 0
 unaware_move_distance = 3
 alerted_move_distance = 5
 alarmed_move_distance = 5
@@ -36,4 +35,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 texture = SubResource("ViewportTexture_r576r")
 _text = "ENEMY UNIT
 Position: (x: {x}, y: {y}, z: {z})
-Current State: {state}"
+Current State: {state}
+Awareness Level: {awareness_level}
+Targets: {targets}"
+
+[connection signal="friendly_seen" from="VisionZone" to="." method="_on_vision_zone_friendly_seen"]
