@@ -10,7 +10,7 @@
 albedo_color = Color(0.95711046, 0, 0.2486856, 1)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_r576r"]
-viewport_path = NodePath("DebugLabel/@SubViewport@18810")
+viewport_path = NodePath("DebugLabel/@SubViewport@18800")
 
 [node name="EnemyUnit" unique_id=1676765037 instance=ExtResource("1_nlthm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
@@ -20,6 +20,7 @@ alerted_move_distance = 5
 alarmed_move_distance = 5
 unaware_base_actions = Array[ExtResource("3_i6gcf")]([])
 alerted_base_actions = Array[ExtResource("3_i6gcf")]([])
+alarm_run_chance = null
 
 [node name="MeshInstance3D" parent="." index="0" unique_id=1987464459 groups=["enemies"]]
 surface_material_override/0 = SubResource("StandardMaterial3D_lmb8q")

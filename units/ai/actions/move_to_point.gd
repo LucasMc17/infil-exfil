@@ -7,5 +7,5 @@ func begin(unit : EnemyUnit) -> void:
 	unit.state_machine.current_state.transition('MoveToPoint', { "end_point": _end_point})
 
 
-func end(unit : EnemyUnit) -> void:
+func end(_unit : EnemyUnit) -> void:
 	pass

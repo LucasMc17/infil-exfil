@@ -2,16 +2,16 @@ class_name VisionZone
 extends Area3D
 
 # TODO: Will support an array later.
-signal friendly_seen(friendly : FriendlyUnit)
+signal friendly_seen(friendlies : Array[FriendlyUnit])
 
-var _check_queued := false
+# var _check_queued := false
 
-func queue_vision_test():
-	_check_queued = true
+# func queue_vision_test():
+# 	_check_queued = true
 
 
-func _test_visibility():
-	_check_queued = false
+func test_visibility() -> bool:
+	var spotted : Array[FriendlyUnit]= []
 	var colliders = get_overlapping_areas()
 	var visible_zones = colliders.filter(func(collider): return collider is VisibleZone)
 	for zone : VisibleZone in visible_zones:
@@ -23,10 +23,14 @@ func _test_visibility():
 			if collision and collision.collider == zone.friendly:
 				vis_score += 1
 		DebugConsole.log(vis_score)
-		if vis_score > 1:
-			friendly_seen.emit(zone.friendly)
+		if vis_score > 2:
+			spotted.append(zone.friendly)
+	if !spotted.is_empty():
+		friendly_seen.emit(spotted)
+		return true
+	return false
 
 
-func _physics_process(_delta: float) -> void:
-	if _check_queued:
-		_test_visibility()
+# func _physics_process(_delta: float) -> void:
+# 	if _check_queued:
+# 		_test_visibility()

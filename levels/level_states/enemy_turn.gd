@@ -21,10 +21,10 @@ func enter(previous_state : State, ext : Dictionary):
 		enemy.reset()
 	level.is_player_turn = false
 	cycle_enemy()
-	if level.active_unit.current_action:
-		level.active_unit.current_action.begin(level.active_unit)
+	if level.active_unit.action_director.current_action:
+		level.active_unit.action_director.current_action.begin(level.active_unit)
 	else:
-		level.active_unit.take_action_from_queue()
+		level.active_unit.action_director.take_action_from_queue()
 	# transition.call_deferred('PlayerTurn')
 
 
@@ -32,10 +32,6 @@ func cycle_enemy():
 	var next_enemy_index = level.enemies.find_custom(func (unit): return unit.can_move)
 	if next_enemy_index > -1:
 		level.set_active_unit(level.enemies[next_enemy_index])
-		if level.active_unit.current_action:
-			level.active_unit.current_action.begin(level.active_unit)
-		else:
-			level.active_unit.take_action_from_queue()
 	else:
 		transition('PlayerTurn')
 

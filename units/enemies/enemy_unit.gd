@@ -9,40 +9,27 @@ extends Unit
 @export var unaware_base_actions : Array[Action] = []
 @export var alerted_base_actions : Array[Action] = []
 
-var unaware_action_queue : Array[Action] = []
-var alerted_action_queue : Array[Action] = []
-var alarmed_action_queue : Array[Action] = []
-
-var current_action : Action
+## How likely the unit is to run for the alarm each turn when encoutering the player's units.
+@export var alarm_run_chance := 0.5
 
 var awareness := EnemyUnitAwarenessModule.new(self)
+
+var action_director : ActionDirector
 
 @onready var vision_zone : VisionZone = %VisionZone
 
 func _ready():
 	super()
+	awareness.awareness_changed.connect(_on_awareness_changed)
+	action_director = ActionDirector.new(self, awareness)
 	debug_label.change_param('awareness_level', awareness.AwarenessLevel.find_key(awareness.awareness_level))
 	debug_label.change_param('targets', '[]')
 	# Events.enemy_action_finished.connect(_on_enemy_action_finished)
-	unaware_action_queue = unaware_base_actions.duplicate()
+	# unaware_action_queue = unaware_base_actions.duplicate()
 
 
-func take_action_from_queue():
-	var next_action : Action
-	if awareness.awareness_level == awareness.AwarenessLevel.UNAWARE:
-		if unaware_action_queue.is_empty():
-			unaware_action_queue = unaware_base_actions.duplicate()
-		next_action = unaware_action_queue.pop_front()
-	elif awareness.awareness_level == awareness.AwarenessLevel.ALERTED:
-		next_action = alerted_action_queue.pop_front()
-	elif awareness.awareness_level == awareness.AwarenessLevel.ALARMED:
-		next_action = alarmed_action_queue.pop_front()
-	current_action = next_action
-	current_action.begin(self)
-
-
-func check_for_detection() -> void:
-	vision_zone.queue_vision_test()
+func check_for_detection() -> bool:
+	return vision_zone.test_visibility()
 
 
 # func _on_enemy_action_finished(enemy : EnemyUnit):
@@ -50,6 +37,23 @@ func check_for_detection() -> void:
 # 		current_action = null
 
 
-func _on_vision_zone_friendly_seen(friendly: FriendlyUnit) -> void:
+func _on_vision_zone_friendly_seen(friendlies: Array[FriendlyUnit]) -> void:
 	DebugConsole.log("I SEE YA")
-	awareness.alarm([friendly])
+	awareness.alarm(friendlies)
+
+
+func follow_path(delta : float, path : Array, mps := 1.0) -> void:
+	if path.is_empty():
+		state_machine.current_state.transition('Idle')
+		return
+	tile_position = tile_position.move_toward(path[0], mps * delta)
+	if tile_position == path[0]:
+		var alarmed = check_for_detection()
+		if !alarmed:
+			path.pop_front()
+		else:
+			state_machine.current_state.transition('Idle')
+
+
+func _on_awareness_changed(_old_awareness, _new_awareness):
+	action_director.clear_action()
