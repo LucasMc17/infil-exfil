@@ -4,13 +4,15 @@
 [ext_resource type="Script" uid="uid://cda3qe2hu7vct" path="res://units/enemies/enemy_unit.gd" id="2_klayc"]
 [ext_resource type="Material" uid="uid://cfxlo28yuwser" path="res://assets/materials/enemy_highlight.tres" id="2_lmb8q"]
 [ext_resource type="Script" uid="uid://bp1pubml3l0d7" path="res://units/ai/actions/action.gd" id="3_i6gcf"]
+[ext_resource type="Script" uid="uid://bkb1ux38olt6v" path="res://units/unit_states/no_action.gd" id="6_i6gcf"]
+[ext_resource type="Script" uid="uid://b2wn44c68jodx" path="res://units/unit_states/run_for_alarm.gd" id="7_j686a"]
 [ext_resource type="PackedScene" uid="uid://cof3le0rdxhxw" path="res://units/enemies/vision_zone.tscn" id="8_j686a"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lmb8q"]
 albedo_color = Color(0.95711046, 0, 0.2486856, 1)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_r576r"]
-viewport_path = NodePath("DebugLabel/@SubViewport@18800")
+[sub_resource type="ViewportTexture" id="ViewportTexture_l7fnf"]
+viewport_path = NodePath("DebugLabel/@SubViewport@160193")
 
 [node name="EnemyUnit" unique_id=1676765037 instance=ExtResource("1_nlthm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
@@ -20,7 +22,7 @@ alerted_move_distance = 5
 alarmed_move_distance = 5
 unaware_base_actions = Array[ExtResource("3_i6gcf")]([])
 alerted_base_actions = Array[ExtResource("3_i6gcf")]([])
-alarm_run_chance = null
+alarm_run_chance = 0.5
 
 [node name="MeshInstance3D" parent="." index="0" unique_id=1987464459 groups=["enemies"]]
 surface_material_override/0 = SubResource("StandardMaterial3D_lmb8q")
@@ -32,8 +34,16 @@ surface_material_override/0 = ExtResource("2_lmb8q")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
+[node name="NoAction" type="Node" parent="StateMachine" parent_id_path=PackedInt32Array(1342667413) index="2" unique_id=816837253 node_paths=PackedStringArray("unit")]
+script = ExtResource("6_i6gcf")
+unit = NodePath("../..")
+
+[node name="RunForAlarm" type="Node" parent="StateMachine" parent_id_path=PackedInt32Array(1342667413) index="3" unique_id=1185605202 node_paths=PackedStringArray("unit")]
+script = ExtResource("7_j686a")
+unit = NodePath("../..")
+
 [node name="DebugLabel" parent="." index="5" unique_id=607303816]
-texture = SubResource("ViewportTexture_r576r")
+texture = SubResource("ViewportTexture_l7fnf")
 _text = "ENEMY UNIT
 Position: (x: {x}, y: {y}, z: {z})
 Current State: {state}

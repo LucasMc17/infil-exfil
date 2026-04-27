@@ -1,8 +1,12 @@
 extends Node
 
-# Turn events
+# Player turn events
 
 signal player_turn_ended()
+
+# Enemy turn events
+
+signal enemy_finished_moving(enemy : EnemyUnit)
 
 signal enemy_turn_ended()
 

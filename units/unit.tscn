@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://b4a11nmmh0wgy" path="res://units/unit_states/enemy_state.gd" id="4_33c7x"]
 [ext_resource type="Script" uid="uid://c5qt2wdsxh3x8" path="res://units/unit_states/move_to_point.gd" id="5_3nj72"]
 [ext_resource type="Script" uid="uid://8lotdfrh5t6l" path="res://addons/debug_label_3d/debug_label.gd" id="6_3nj72"]
+[ext_resource type="Script" uid="uid://brj1egpgrjncu" path="res://units/unit_states/finished_moving.gd" id="6_vtl0n"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_8orno"]
 radius = 0.45
@@ -13,8 +14,8 @@ radius = 0.45
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2atv2"]
 radius = 0.45
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_vtl0n"]
-viewport_path = NodePath("DebugLabel/@SubViewport@22263")
+[sub_resource type="ViewportTexture" id="ViewportTexture_hyvs3"]
+viewport_path = NodePath("DebugLabel/@SubViewport@18804")
 
 [node name="Unit" type="AnimatableBody3D" unique_id=2103260635]
 script = ExtResource("1_2atv2")
@@ -45,6 +46,10 @@ unit = NodePath("../..")
 script = ExtResource("5_3nj72")
 unit = NodePath("../..")
 
+[node name="FinishedMoving" type="Node" parent="StateMachine" unique_id=702136086 node_paths=PackedStringArray("unit")]
+script = ExtResource("6_vtl0n")
+unit = NodePath("../..")
+
 [node name="DebugLabel" type="Sprite3D" parent="." unique_id=607303816]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -52,7 +57,7 @@ visibility_range_end = 20.0
 pixel_size = 0.005
 billboard = 1
 no_depth_test = true
-texture = SubResource("ViewportTexture_vtl0n")
+texture = SubResource("ViewportTexture_hyvs3")
 script = ExtResource("6_3nj72")
 _text = "UNIT
 Position: (x: {x}, y: {y}, z: {z})

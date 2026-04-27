@@ -2,8 +2,10 @@ class_name RunForAlarmAction
 extends Action
 
 func begin(unit : EnemyUnit) -> void:
+	super(unit)
+	unit.state_machine.current_state.transition("RunForAlarm")
 	DebugConsole.log('running for alarm')
-	unit.action_director.finish_action()
 
-func end(_unit : EnemyUnit) -> void:
-	pass
+
+func check_if_finished() -> bool:
+	return true

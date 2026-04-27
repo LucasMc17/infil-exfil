@@ -10,7 +10,6 @@ var will_reach_endpoint := false
 
 func enter(previous_state : State, ext : Dictionary):
 	super(previous_state, ext)
-	unit.can_move = false
 	World.level.cell_highlighter.highlighted_cells = []
 	World.level.nav_map.do_debug_path(unit.tile_position, end_point)
 	var path = World.level.nav_map.find_path(unit.tile_position, end_point)
@@ -26,8 +25,8 @@ func physics_update(delta: float):
 	unit.follow_path(delta, points, speed)
 
 
-func exit():
-	if unit is EnemyUnit:
-		if unit.action_director.current_action is MoveToPointAction and will_reach_endpoint:
-			unit.action_director.finish_action()
-		Events.enemy_turn_ended.emit()
+# func exit():
+# 	if unit is EnemyUnit:
+# 		if unit.action_director.current_action is MoveToPointAction and will_reach_endpoint:
+# 			unit.action_director.finish_action()
+# 		Events.enemy_turn_ended.emit()

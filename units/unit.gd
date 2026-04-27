@@ -50,7 +50,7 @@ func check_for_detection() -> bool:
 
 func follow_path(delta : float, path : Array, mps := 1.0) -> void:
 	if path.is_empty():
-		state_machine.current_state.transition('Idle')
+		state_machine.current_state.transition('FinishedMoving')
 		return
 	tile_position = tile_position.move_toward(path[0], mps * delta)
 	if tile_position == path[0]:

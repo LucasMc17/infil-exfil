@@ -2,8 +2,9 @@ class_name NoAction
 extends Action
 
 func begin(unit : EnemyUnit) -> void:
+	super(unit)
 	DebugConsole.log("Enemy takes no action")
-	unit.action_director.finish_action()
+	unit.state_machine.current_state.transition("NoAction")
 
-func end(_unit : EnemyUnit) -> void:
-	pass
+func check_if_finished() -> bool:
+	return true
