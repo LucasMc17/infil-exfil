@@ -13,12 +13,20 @@ extends AnimatableBody3D
 
 @export var max_movement := 4
 
+@export var max_movement_points := 1
+@export var max_action_points := 1
+
 var potential_moves : Array[Vector3] = []
-var can_move := true
+var movement_points := max_movement_points
+var action_points := max_action_points
+var is_active : bool:
+	get():
+		return World.level.active_unit == self
 
 @onready var _cell_highlight := %CellHighlight
 
-@onready var state_machine : StateMachine = %StateMachine
+@onready var movement_machine : MovementMachine = %MovementMachine
+@onready var action_machine : ActionMachine = %ActionMachine
 
 @onready var debug_label : DebugLabel = %DebugLabel
 
@@ -28,12 +36,18 @@ func _ready():
 	debug_label.change_param('z', str(round(tile_position.z)))
 
 
-func set_valid_moves(moves : Array[Vector3]) -> void:
-	potential_moves = moves
+func refresh_valid_moves():
+	var valid_moves : Array[Vector3] = []
+	if World.level and can_move():
+		valid_moves = World.level.nav_map.get_all_valid_moves(tile_position, max_movement)
+	if World.level and is_active:
+		World.level.cell_highlighter.highlighted_cells = valid_moves
+	potential_moves = valid_moves
 
 
 func activate():
 	_cell_highlight.visible = true
+	refresh_valid_moves()
 
 
 func deactivate():
@@ -41,8 +55,13 @@ func deactivate():
 
 
 func reset():
-	can_move = true
-	
+	movement_points = max_movement_points
+	action_points = max_action_points
+
+
+func can_move() -> bool:
+	return movement_points > 0 and movement_machine.current_state is NoMovement
+
 
 func check_for_detection() -> bool:
 	return false
@@ -50,7 +69,7 @@ func check_for_detection() -> bool:
 
 func follow_path(delta : float, path : Array, mps := 1.0) -> void:
 	if path.is_empty():
-		state_machine.current_state.transition('FinishedMoving')
+		movement_machine.current_state.transition('NoMovement')
 		return
 	tile_position = tile_position.move_toward(path[0], mps * delta)
 	if tile_position == path[0]:

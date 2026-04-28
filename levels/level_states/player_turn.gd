@@ -5,7 +5,7 @@ func enter(previous_state : State, ext : Dictionary):
 	level.is_player_turn = true
 	for friendly : FriendlyUnit in level.friendlies:
 		friendly.reset()
-	level.set_active_unit(level.friendlies[0])
+	level.set_active_unit.call_deferred(level.friendlies[0])
 	Events.player_turn_ended.connect(_on_player_turn_ended)
 
 
@@ -30,10 +30,10 @@ func unhandled_input(event: InputEvent) -> void:
 				var real_position = clicked.position
 				# Moves the considered position up slightly to avoid misidentifying y layer.
 				real_position.y += 0.1
-				# NOTE: Tried to convert this to the static func in nav grid but it didn't work quite right. Gotta fix that later.
+				# NOTE: Tried to convert this to the static func in nav grid but it didn't work quite right. Gotta fix that later.	
 				var coords = clicked_object.local_to_map(clicked_object.to_local(real_position))
-				if level.active_unit and level.active_unit.can_move and level.active_unit.potential_moves.has(coords):
-					level.active_unit.state_machine.current_state.transition('MoveToPoint', { "end_point": coords, "speed": 2.0})
+				if level.active_unit and level.active_unit.can_move() and level.active_unit.potential_moves.has(coords):
+					level.active_unit.movement_machine.current_state.transition('Sneak', { "end_point": coords })
 
 
 func _on_player_turn_ended():

@@ -3,7 +3,7 @@ extends Action
 
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
-	unit.state_machine.current_state.transition("RunForAlarm")
+	# unit.state_machine.current_state.transition("RunForAlarm")
 	DebugConsole.log('running for alarm')
 
 

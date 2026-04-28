@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://cbsb8godne71a" path="res://units/unit.gd" id="1_2atv2"]
 [ext_resource type="PackedScene" uid="uid://dmkx4m8je1llw" path="res://cell_highlight.tscn" id="2_gxe1c"]
-[ext_resource type="Script" uid="uid://bsxnir3r10yla" path="res://logic/state_management/state_machine.gd" id="3_xx66i"]
-[ext_resource type="Script" uid="uid://b4a11nmmh0wgy" path="res://units/unit_states/enemy_state.gd" id="4_33c7x"]
-[ext_resource type="Script" uid="uid://c5qt2wdsxh3x8" path="res://units/unit_states/move_to_point.gd" id="5_3nj72"]
 [ext_resource type="Script" uid="uid://8lotdfrh5t6l" path="res://addons/debug_label_3d/debug_label.gd" id="6_3nj72"]
-[ext_resource type="Script" uid="uid://brj1egpgrjncu" path="res://units/unit_states/finished_moving.gd" id="6_vtl0n"]
+[ext_resource type="Script" uid="uid://4lx7x7dl2ekr" path="res://units/movement/movement_machine.gd" id="8_hyvs3"]
+[ext_resource type="Script" uid="uid://db1xkfe2r44vj" path="res://units/movement/no_movement.gd" id="9_d7xs0"]
+[ext_resource type="Script" uid="uid://dpwkeyrf5khee" path="res://units/action/action_machine.gd" id="9_urgnh"]
+[ext_resource type="Script" uid="uid://d2agcqikuidqx" path="res://units/action/no_action.gd" id="11_ysu83"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_8orno"]
 radius = 0.45
@@ -14,11 +14,13 @@ radius = 0.45
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2atv2"]
 radius = 0.45
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_hyvs3"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_vtl0n"]
 viewport_path = NodePath("DebugLabel/@SubViewport@18804")
 
 [node name="Unit" type="AnimatableBody3D" unique_id=2103260635]
 script = ExtResource("1_2atv2")
+max_movement_points = null
+max_action_points = null
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1987464459]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -32,24 +34,6 @@ shape = SubResource("CylinderShape3D_2atv2")
 unique_name_in_owner = true
 visible = false
 
-[node name="StateMachine" type="Node" parent="." unique_id=1342667413 node_paths=PackedStringArray("current_state")]
-unique_name_in_owner = true
-script = ExtResource("3_xx66i")
-current_state = NodePath("Idle")
-metadata/_custom_type_script = "uid://bsxnir3r10yla"
-
-[node name="Idle" type="Node" parent="StateMachine" unique_id=657487160 node_paths=PackedStringArray("unit")]
-script = ExtResource("4_33c7x")
-unit = NodePath("../..")
-
-[node name="MoveToPoint" type="Node" parent="StateMachine" unique_id=2017805870 node_paths=PackedStringArray("unit")]
-script = ExtResource("5_3nj72")
-unit = NodePath("../..")
-
-[node name="FinishedMoving" type="Node" parent="StateMachine" unique_id=702136086 node_paths=PackedStringArray("unit")]
-script = ExtResource("6_vtl0n")
-unit = NodePath("../..")
-
 [node name="DebugLabel" type="Sprite3D" parent="." unique_id=607303816]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -57,9 +41,31 @@ visibility_range_end = 20.0
 pixel_size = 0.005
 billboard = 1
 no_depth_test = true
-texture = SubResource("ViewportTexture_hyvs3")
+texture = SubResource("ViewportTexture_vtl0n")
 script = ExtResource("6_3nj72")
 _text = "UNIT
 Position: (x: {x}, y: {y}, z: {z})
 Current State: {state}"
 metadata/_custom_type_script = "uid://8lotdfrh5t6l"
+
+[node name="MovementMachine" type="Node" parent="." unique_id=1758725307 node_paths=PackedStringArray("current_state")]
+unique_name_in_owner = true
+script = ExtResource("8_hyvs3")
+current_state = NodePath("NoMovement")
+metadata/_custom_type_script = "uid://4lx7x7dl2ekr"
+
+[node name="NoMovement" type="Node" parent="MovementMachine" unique_id=961751474 node_paths=PackedStringArray("unit")]
+script = ExtResource("9_d7xs0")
+unit = NodePath("../..")
+metadata/_custom_type_script = "uid://db1xkfe2r44vj"
+
+[node name="ActionMachine" type="Node" parent="." unique_id=155581739 node_paths=PackedStringArray("current_state")]
+unique_name_in_owner = true
+script = ExtResource("9_urgnh")
+current_state = NodePath("NoAction")
+metadata/_custom_type_script = "uid://dpwkeyrf5khee"
+
+[node name="NoAction" type="Node" parent="ActionMachine" unique_id=803163594 node_paths=PackedStringArray("unit")]
+script = ExtResource("11_ysu83")
+unit = NodePath("../..")
+metadata/_custom_type_script = "uid://d2agcqikuidqx"

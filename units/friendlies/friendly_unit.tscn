@@ -5,6 +5,7 @@
 [ext_resource type="Material" uid="uid://b343cwtgaxavy" path="res://assets/materials/friendly_highlight.tres" id="3_ikcby"]
 [ext_resource type="Script" uid="uid://8c6xrxfefw3o" path="res://units/friendlies/visibility_point.gd" id="4_allfh"]
 [ext_resource type="PackedScene" uid="uid://1lky50pj0tct" path="res://units/friendlies/visible_zone.tscn" id="4_o5yok"]
+[ext_resource type="Script" uid="uid://dsirg6rpatadl" path="res://units/movement/movement_state.gd" id="6_wqcmw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ipgw"]
 albedo_color = Color(0.27409065, 0.7122239, 0.12106868, 1)
@@ -12,12 +13,14 @@ albedo_color = Color(0.27409065, 0.7122239, 0.12106868, 1)
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o5yok"]
 radius = 0.45
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_o5yok"]
-viewport_path = NodePath("DebugLabel/@SubViewport@27729")
+[sub_resource type="ViewportTexture" id="ViewportTexture_wqcmw"]
+viewport_path = NodePath("DebugLabel/@SubViewport@52478")
 
 [node name="FriendlyUnit" unique_id=1676765037 groups=["friendlies"] instance=ExtResource("1_7ia1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
 script = ExtResource("2_3ipgw")
+max_movement_points = 1
+max_action_points = 1
 
 [node name="MeshInstance3D" parent="." index="0" unique_id=1987464459]
 surface_material_override/0 = SubResource("StandardMaterial3D_3ipgw")
@@ -75,7 +78,13 @@ shape = SubResource("CapsuleShape3D_o5yok")
 debug_color = Color(2.2862107e-06, 0.6497064, 0.14529341, 0.41960785)
 
 [node name="DebugLabel" parent="." index="5" unique_id=607303816]
-texture = SubResource("ViewportTexture_o5yok")
+texture = SubResource("ViewportTexture_wqcmw")
 _text = "FRIENDLY UNIT
 Position: (x: {x}, y: {y}, z: {z})
 Current State: {state}"
+
+[node name="Sneak" type="Node" parent="MovementMachine" parent_id_path=PackedInt32Array(1758725307) index="1" unique_id=178902922 node_paths=PackedStringArray("unit")]
+script = ExtResource("6_wqcmw")
+unit = NodePath("../..")
+mps = 2.0
+metadata/_custom_type_script = "uid://dsirg6rpatadl"

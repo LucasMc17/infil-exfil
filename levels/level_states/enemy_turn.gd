@@ -31,7 +31,7 @@ func exit():
 
 
 func cycle_enemy() -> bool:
-	var next_enemy_index = level.enemies.find_custom(func (unit): return unit.can_move)
+	var next_enemy_index = level.enemies.find_custom(func (unit): return unit.can_move())
 	if next_enemy_index > -1:
 		level.set_active_unit(level.enemies[next_enemy_index])
 		return true

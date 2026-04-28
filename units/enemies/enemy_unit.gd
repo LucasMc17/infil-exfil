@@ -44,7 +44,7 @@ func _on_vision_zone_friendly_seen(friendlies: Array[FriendlyUnit]) -> void:
 
 func follow_path(delta : float, path : Array, mps := 1.0) -> void:
 	if path.is_empty():
-		state_machine.current_state.transition('FinishedMoving')
+		movement_machine.current_state.transition('NoMovement')
 		return
 	tile_position = tile_position.move_toward(path[0], mps * delta)
 	if tile_position == path[0]:
@@ -52,7 +52,7 @@ func follow_path(delta : float, path : Array, mps := 1.0) -> void:
 		if !alarmed:
 			path.pop_front()
 		else:
-			state_machine.current_state.transition('FinishedMoving')
+			movement_machine.current_state.transition('NoMovement')
 
 
 func _on_awareness_changed(_old_awareness, _new_awareness):

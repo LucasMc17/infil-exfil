@@ -52,11 +52,8 @@ func set_active_unit(unit : Unit):
 	if active_unit:
 		active_unit.deactivate()
 	active_unit = unit
-	active_unit.activate()
-	if active_unit.can_move:
-		var valid_moves = nav_map.get_all_valid_moves(unit.tile_position, unit.max_movement)
-		unit.set_valid_moves(valid_moves)
-		cell_highlighter.highlighted_cells = valid_moves
+	if active_unit:
+		active_unit.activate()
 
 
 func cycle_active_unit():

@@ -1,0 +1,4 @@
+class_name ActionState
+extends State
+
+@export var cost := 1

@@ -5,7 +5,7 @@ extends Action
 
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
-	unit.state_machine.current_state.transition('MoveToPoint', { "end_point": _end_point})
+	unit.movement_machine.current_state.transition('Walk', { "end_point": _end_point})
 
 
 func check_if_finished() -> bool:
