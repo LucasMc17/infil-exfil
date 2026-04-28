@@ -1,4 +1,4 @@
-@abstract class_name Action
+@abstract class_name Directive
 extends Resource
 
 var acting_unit : EnemyUnit
@@ -10,7 +10,7 @@ func begin(unit : EnemyUnit) -> void:
 
 func end() -> void:
 	Events.enemy_finished_moving.disconnect(_on_finished_moving)
-	acting_unit.action_director.finish_action()
+	acting_unit.decision_director.finish_directive()
 
 
 @abstract func check_if_finished() -> bool

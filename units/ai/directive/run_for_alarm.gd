@@ -1,9 +1,8 @@
-class_name RunForAlarmAction
-extends Action
+class_name RunForAlarm
+extends Directive
 
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
-	# unit.state_machine.current_state.transition("RunForAlarm")
 	DebugConsole.log('running for alarm')
 
 

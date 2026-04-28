@@ -6,35 +6,28 @@ extends Unit
 @export var alerted_move_distance := 5
 @export var alarmed_move_distance := 5
 
-@export var unaware_base_actions : Array[Action] = []
-@export var alerted_base_actions : Array[Action] = []
+@export var unaware_base_directives : Array[Directive] = []
+@export var alerted_base_directives : Array[Directive] = []
 
 ## How likely the unit is to run for the alarm each turn when encoutering the player's units.
 @export var alarm_run_chance := 0.5
 
 var awareness := EnemyUnitAwarenessModule.new(self)
 
-var action_director : ActionDirector
+var decision_director : DecisionDirector
 
 @onready var vision_zone : VisionZone = %VisionZone
 
 func _ready():
 	super()
 	awareness.awareness_changed.connect(_on_awareness_changed)
-	action_director = ActionDirector.new(self, awareness)
+	decision_director = DecisionDirector.new(self, awareness)
 	debug_label.change_param('awareness_level', awareness.AwarenessLevel.find_key(awareness.awareness_level))
 	debug_label.change_param('targets', '[]')
-	# Events.enemy_action_finished.connect(_on_enemy_action_finished)
-	# unaware_action_queue = unaware_base_actions.duplicate()
 
 
 func check_for_detection() -> bool:
 	return vision_zone.test_visibility()
-
-
-# func _on_enemy_action_finished(enemy : EnemyUnit):
-# 	if enemy == self:
-# 		current_action = null
 
 
 func _on_vision_zone_friendly_seen(friendlies: Array[FriendlyUnit]) -> void:
@@ -56,4 +49,4 @@ func follow_path(delta : float, path : Array, mps := 1.0) -> void:
 
 
 func _on_awareness_changed(_old_awareness, _new_awareness):
-	action_director.clear_action()
+	decision_director.clear_directive()

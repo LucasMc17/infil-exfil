@@ -1,5 +1,5 @@
-class_name MoveToPointAction
-extends Action
+class_name MoveToPoint
+extends Directive
 
 @export var _end_point := Vector3.ZERO
 

@@ -6,10 +6,10 @@ func _ready() -> void:
 
 func _on_enemy_finished_moving(_unit):
 	if cycle_enemy():
-		if level.active_unit.action_director.current_action:
-			level.active_unit.action_director.current_action.begin(level.active_unit)
+		if level.active_unit.decision_director.current_directive:
+			level.active_unit.decision_director.current_directive.begin(level.active_unit)
 		else:
-			level.active_unit.action_director.take_action_from_queue()
+			level.active_unit.decision_director.take_directive_from_queue()
 
 
 func enter(previous_state : State, ext : Dictionary):
@@ -19,10 +19,10 @@ func enter(previous_state : State, ext : Dictionary):
 		enemy.reset()
 	level.is_player_turn = false
 	cycle_enemy()
-	if level.active_unit.action_director.current_action:
-		level.active_unit.action_director.current_action.begin(level.active_unit)
+	if level.active_unit.decision_director.current_directive:
+		level.active_unit.decision_director.current_directive.begin(level.active_unit)
 	else:
-		level.active_unit.action_director.take_action_from_queue()
+		level.active_unit.decision_director.take_directive_from_queue()
 	# transition.call_deferred('PlayerTurn')
 
 

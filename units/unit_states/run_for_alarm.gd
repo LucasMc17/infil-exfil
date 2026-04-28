@@ -1,4 +1,4 @@
-class_name RunForAlarm
+class_name RunForAlarmOLD
 extends UnitState
 
 func enter(previous_state, ext):

@@ -27,6 +27,6 @@ func physics_update(delta: float):
 
 # func exit():
 # 	if unit is EnemyUnit:
-# 		if unit.action_director.current_action is MoveToPointAction and will_reach_endpoint:
-# 			unit.action_director.finish_action()
+# 		if unit.decision_director.current_directive is MoveToPoint and will_reach_endpoint:
+# 			unit.decision_director.current_directive
 # 		Events.enemy_turn_ended.emit()

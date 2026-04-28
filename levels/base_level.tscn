@@ -14,8 +14,8 @@
 [ext_resource type="Script" uid="uid://cu06vvfrrxrxs" path="res://levels/level_states/enemy_turn.gd" id="9_upde5"]
 [ext_resource type="Script" uid="uid://cwt2k11twrldn" path="res://logic/click_detection/3d_click_handler.gd" id="10_n8wy4"]
 [ext_resource type="PackedScene" uid="uid://51rqmlm6v48t" path="res://2D/match_ui/match_ui.tscn" id="12_5mwf5"]
-[ext_resource type="Script" uid="uid://bp1pubml3l0d7" path="res://units/ai/actions/action.gd" id="12_jldy4"]
-[ext_resource type="Script" uid="uid://cvy611uxolcnt" path="res://units/ai/actions/move_to_point.gd" id="13_qeex7"]
+[ext_resource type="Script" uid="uid://bp1pubml3l0d7" path="res://units/ai/directive/directive.gd" id="12_jldy4"]
+[ext_resource type="Script" uid="uid://cvy611uxolcnt" path="res://units/ai/directive/move_to_point.gd" id="13_qeex7"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_46036"]
 panorama = ExtResource("5_p5284")
@@ -27,12 +27,12 @@ sky_material = SubResource("PanoramaSkyMaterial_46036")
 background_mode = 2
 sky = SubResource("Sky_satuh")
 
-[sub_resource type="Resource" id="Resource_hd0gu"]
+[sub_resource type="Resource" id="Resource_qeex7"]
 script = ExtResource("13_qeex7")
 _end_point = Vector3(-3, 0, 4)
 metadata/_custom_type_script = "uid://cvy611uxolcnt"
 
-[sub_resource type="Resource" id="Resource_jldy4"]
+[sub_resource type="Resource" id="Resource_hd0gu"]
 script = ExtResource("13_qeex7")
 _end_point = Vector3(1, 0, 0)
 metadata/_custom_type_script = "uid://cvy611uxolcnt"
@@ -90,7 +90,6 @@ unique_name_in_owner = true
 [node name="FriendlyUnit" parent="Friendlies" unique_id=1676765037 instance=ExtResource("6_maq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -2.5)
 tile_position = Vector3(-4, 0, -3)
-max_movement_points = 2
 
 [node name="FriendlyUnit2" parent="Friendlies" unique_id=151222999 instance=ExtResource("6_maq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 2.5)
@@ -101,7 +100,8 @@ unique_name_in_owner = true
 
 [node name="EnemyUnit" parent="Enemies" unique_id=2010674513 instance=ExtResource("7_maq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0.5)
-unaware_base_actions = Array[ExtResource("12_jldy4")]([SubResource("Resource_hd0gu"), SubResource("Resource_jldy4")])
+unaware_base_directives = Array[ExtResource("12_jldy4")]([SubResource("Resource_qeex7"), SubResource("Resource_hd0gu")])
+alerted_base_directives = Array[Vector3]([])
 tile_position = Vector3(1, 0, 0)
 
 [node name="ClickHandler3D" type="Node3D" parent="." unique_id=797014710]
