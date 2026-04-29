@@ -11,7 +11,7 @@
 albedo_color = Color(0.95711046, 0, 0.2486856, 1)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ijy6f"]
-viewport_path = NodePath("DebugLabel/@SubViewport@18800")
+viewport_path = NodePath("DebugLabel/@SubViewport@18805")
 
 [node name="EnemyUnit" unique_id=1676765037 instance=ExtResource("1_nlthm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)

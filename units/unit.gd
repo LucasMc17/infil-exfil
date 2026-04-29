@@ -66,6 +66,7 @@ func reset():
 	action_points = max_action_points
 
 
+# NOTE: I don't like these.
 func can_move() -> bool:
 	return movement_points > 0 and movement_machine.current_state is NoMovement
 
