@@ -2,28 +2,40 @@
 
 [ext_resource type="PackedScene" uid="uid://koopiox1qt5g" path="res://assets/meshes/grid_library_source.glb" id="1_0f31m"]
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0f31m"]
-data = PackedVector3Array(0.5, 0, -0.5, -0.5, 0, 0.5, -0.5, 0, -0.5, 0.5, 0, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, -0.099999994, 0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, 0.5, -0.099999994, 0.5, -0.5, -0.099999994, 0.5, -0.5, 0, 0.5, -0.5, -0.099999994, 0.5, -0.5, 0, -0.5, -0.5, 0, 0.5, -0.5, -0.099999994, 0.5, -0.5, -0.099999994, -0.5, -0.5, 0, -0.5, -0.5, -0.099999994, -0.5, 0.5, -0.099999994, 0.5, 0.5, -0.099999994, -0.5, -0.5, -0.099999994, -0.5, -0.5, -0.099999994, 0.5, 0.5, -0.099999994, 0.5, 0.5, -0.099999994, -0.5, 0.5, 0, 0.5, 0.5, 0, -0.5, 0.5, -0.099999994, -0.5, 0.5, -0.099999994, 0.5, 0.5, 0, 0.5, -0.5, -0.099999994, -0.5, 0.5, 0, -0.5, -0.5, 0, -0.5, -0.5, -0.099999994, -0.5, 0.5, -0.099999994, -0.5, 0.5, 0, -0.5)
+[sub_resource type="BoxShape3D" id="BoxShape3D_0f31m"]
+size = Vector3(1, 0.1, 1)
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_2sjd1"]
-data = PackedVector3Array(0.5, 4, -0.5, -0.5, 4, 0.5, -0.5, 4, -0.5, 0.5, 4, -0.5, 0.5, 4, 0.5, -0.5, 4, 0.5, 0.5, 0, 0.5, -0.5, 4, 0.5, 0.5, 4, 0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, -0.5, 4, 0.5, -0.5, 0, 0.5, -0.5, 4, -0.5, -0.5, 4, 0.5, -0.5, 0, 0.5, -0.5, 0, -0.5, -0.5, 4, -0.5, -0.5, 0, -0.5, 0.5, 0, 0.5, 0.5, 0, -0.5, -0.5, 0, -0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, 0.5, 0, -0.5, 0.5, 4, 0.5, 0.5, 4, -0.5, 0.5, 0, -0.5, 0.5, 0, 0.5, 0.5, 4, 0.5, -0.5, 0, -0.5, 0.5, 4, -0.5, -0.5, 4, -0.5, -0.5, 0, -0.5, 0.5, 0, -0.5, 0.5, 4, -0.5)
+[sub_resource type="BoxShape3D" id="BoxShape3D_2sjd1"]
+size = Vector3(0.95, 3.9, 0.95)
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_cxgg3"]
-data = PackedVector3Array(0.5, 0, -0.39999998, -0.5, 0, 0.5, -0.5, 0, -0.39999998, 0.5, 0, -0.39999998, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, -0.099999994, 0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, 0.5, -0.099999994, 0.5, -0.5, -0.099999994, 0.5, -0.5, 0, 0.5, -0.5, -0.099999994, -0.39999998, -0.5, 0, -0.5, -0.5, 0, -0.39999998, -0.5, -0.099999994, -0.39999998, -0.5, -0.099999994, -0.5, -0.5, 0, -0.5, -0.5, -0.099999994, 0.5, -0.5, -0.099999994, -0.39999998, -0.5, 0, -0.39999998, -0.5, -0.099999994, 0.5, -0.5, 0, -0.39999998, -0.5, 0, 0.5, -0.5, 0, -0.5, -0.5, 4, -0.39999998, -0.5, 0, -0.39999998, -0.5, 0, -0.5, -0.5, 4, -0.5, -0.5, 4, -0.39999998, -0.5, -0.099999994, -0.39999998, 0.5, -0.099999994, 0.5, 0.5, -0.099999994, -0.39999998, -0.5, -0.099999994, -0.39999998, -0.5, -0.099999994, 0.5, 0.5, -0.099999994, 0.5, -0.5, -0.099999994, -0.5, -0.5, -0.099999994, -0.39999998, 0.5, -0.099999994, -0.39999998, -0.5, -0.099999994, -0.5, 0.5, -0.099999994, -0.39999998, 0.5, -0.099999994, -0.5, 0.5, -0.099999994, -0.39999998, 0.5, 0, 0.5, 0.5, 0, -0.39999998, 0.5, -0.099999994, -0.39999998, 0.5, -0.099999994, 0.5, 0.5, 0, 0.5, 0.5, -0.099999994, -0.5, 0.5, -0.099999994, -0.39999998, 0.5, 0, -0.39999998, 0.5, -0.099999994, -0.5, 0.5, 0, -0.39999998, 0.5, 0, -0.5, 0.5, 0, -0.39999998, 0.5, 4, -0.5, 0.5, 0, -0.5, 0.5, 0, -0.39999998, 0.5, 4, -0.39999998, 0.5, 4, -0.5, -0.5, -0.099999994, -0.5, 0.5, 0, -0.5, -0.5, 0, -0.5, -0.5, -0.099999994, -0.5, 0.5, -0.099999994, -0.5, 0.5, 0, -0.5, 0.5, 0, -0.5, -0.5, 4, -0.5, -0.5, 0, -0.5, 0.5, 0, -0.5, 0.5, 4, -0.5, -0.5, 4, -0.5, 0.5, 4, -0.5, -0.5, 4, -0.39999998, -0.5, 4, -0.5, 0.5, 4, -0.5, 0.5, 4, -0.39999998, -0.5, 4, -0.39999998, -0.5, 0, -0.39999998, 0.5, 4, -0.39999998, 0.5, 0, -0.39999998, -0.5, 0, -0.39999998, -0.5, 4, -0.39999998, 0.5, 4, -0.39999998)
+[sub_resource type="BoxShape3D" id="BoxShape3D_cxgg3"]
+size = Vector3(1, 0.1, 1)
 
-[node name="grid_library_source" unique_id=283454138 instance=ExtResource("1_0f31m")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_7jdsr"]
+size = Vector3(1, 0.1, 1)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Floor" parent_id_path=PackedInt32Array(640143800) index="0" unique_id=876020068]
+[node name="grid_library_source" unique_id=129720639 instance=ExtResource("1_0f31m")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D" index="0" unique_id=1908292452]
-shape = SubResource("ConcavePolygonShape3D_0f31m")
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor" parent_id_path=PackedInt32Array(1561326563) index="0" unique_id=876020068]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Wall" parent_id_path=PackedInt32Array(157574304) index="0" unique_id=895997945]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D" index="0" unique_id=859509283]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+shape = SubResource("BoxShape3D_0f31m")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/StaticBody3D" index="0" unique_id=2063867137]
-shape = SubResource("ConcavePolygonShape3D_2sjd1")
+[node name="StaticBody3D" type="StaticBody3D" parent="Wall" parent_id_path=PackedInt32Array(1386969234) index="0" unique_id=895997945]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Ladder" parent_id_path=PackedInt32Array(1530289189) index="0" unique_id=688951947]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/StaticBody3D" index="0" unique_id=14837559]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("BoxShape3D_2sjd1")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ladder" parent_id_path=PackedInt32Array(1520512424) index="0" unique_id=688951947]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder/StaticBody3D" index="0" unique_id=238401811]
-shape = SubResource("ConcavePolygonShape3D_cxgg3")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+shape = SubResource("BoxShape3D_cxgg3")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Alarm" parent_id_path=PackedInt32Array(544084670) index="0" unique_id=1239267472]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Alarm/StaticBody3D" index="0" unique_id=1678641631]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+shape = SubResource("BoxShape3D_7jdsr")
