@@ -32,7 +32,9 @@ func check_for_detection() -> bool:
 
 func _on_vision_zone_friendly_seen(friendlies: Array[FriendlyUnit]) -> void:
 	DebugConsole.log("I SEE YA")
-	awareness.alarm(friendlies)
+	if !awareness.is_alarmed():
+		awareness.alarm(friendlies)
+		forfeit_turn()
 
 
 func follow_path(delta : float, path : Array, mps := 1.0) -> void:
