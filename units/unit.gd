@@ -2,6 +2,12 @@
 class_name Unit
 extends AnimatableBody3D
 
+signal started_moving(unit : Unit)
+signal finished_moving(unit : Unit)
+signal started_acting(unit : Unit)
+signal finished_acting(unit : Unit)
+signal forfeited_turn(unit : Unit)
+
 @export var tile_position := Vector3.ZERO:
 	set(val):
 		tile_position = val
@@ -36,6 +42,7 @@ func _ready():
 	debug_label.change_param('z', str(round(tile_position.z)))
 
 
+# NOTE: There's a lot more to do here. Right now this is called when the unit is activated, or enters or exits a movmement state. I think there could be a more elegant solution, utilizing signals to determine when the list of available moves should be updated. I am also considering changing the level cell highlighter from the global level to a per unit level, then just swapping its visibility as the unit is activated/deactivated.
 func refresh_valid_moves():
 	var valid_moves : Array[Vector3] = []
 	if World.level and can_move():
@@ -61,6 +68,16 @@ func reset():
 
 func can_move() -> bool:
 	return movement_points > 0 and movement_machine.current_state is NoMovement
+
+
+func can_act() -> bool:
+	return action_points > 0 and action_machine.current_state is NoAction
+
+
+func forfeit_turn() -> void:
+	movement_points = 0
+	action_points = 0
+	forfeited_turn.emit(self)
 
 
 func check_for_detection() -> bool:

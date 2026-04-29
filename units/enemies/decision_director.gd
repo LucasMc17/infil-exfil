@@ -55,6 +55,7 @@ func finish_directive():
 
 
 func clear_directive():
+	current_directive.cancel()
 	current_directive = null
 
 

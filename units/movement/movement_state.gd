@@ -14,6 +14,7 @@ var points := []
 func enter(previous_state : State, ext : Dictionary):
 	super(previous_state, ext)
 	unit.movement_points -= cost
+	unit.started_moving.emit(unit)
 	var path = World.level.nav_map.find_path(unit.tile_position, end_point)
 	if unit.potential_moves.has(end_point):
 		points = path
@@ -28,3 +29,4 @@ func physics_update(delta: float):
 
 func exit():
 	unit.refresh_valid_moves.call_deferred()
+	unit.finished_moving.emit(unit)
