@@ -2,25 +2,40 @@
 class_name NavigableGridMapV2
 extends GridMap
 
-const MESH_MAP = ["Floor", "Wall", "Ladder"]
+# TODO: With the addition of new cell types this needs a more robust solution for setting up the grid. Right now it basically checks if each cell can see viable neighbors and links them if so. That won't be good enough for long. Instead we need to see if the two cells "agree". IE, once can see the other AND vice versa. This could get a little expensive, but hopefully should be fine as we should only need to run this once at the beginning of the level.
 
-const NAVIGABLE_INDEXES = [0, 2]
+# First idea: each tile type has a function for getting it's viable neighbors. We run this, then for each viable neighbor, we also call its viable neighbor function. if it includes the original cell, we build the link. Then move onto next cell. UPSIDE: probably the most simple solution. DOWNSIDE: we'd end up calling that get viable neighbors fun a lot. a lot alot.
+
+# Second idea: building on the above, we iterate through the grid, creating a GridPoint for each as we do, but also creating a property on GridPoint called viable neighbors. as we create the points, we do no actual comparisons yet. Just log them. Then we iterate a second time, this time for each cell we look at all its neighbors and for each one check: Are they already connected? If not, does the neighbor also include the original point in its neighbor dict too? If yes, connect them. This requires two iterations, and is still probably hefty, but I think probably bettter. To work.
+
+const FLOOR := preload("./tiles/floor.tres")
+const WALL := preload("./tiles/wall.tres")
+const LADDER := preload("./tiles/ladder.tres")
+const ALARM := preload("./tiles/alarm.tres")
+
+const TILE_PALETTE : Array[Tile] = [FLOOR, WALL, LADDER, ALARM]
+
+const NAVIGABLE_INDEXES = [0, 2, 3]	
 
 class GridPoint:
 	var mesh_id : int
 	var a_star_point : int
-	var forward_direction : Vector3i
+	var basis : Basis
 	var position : Vector3i
+	var tile : Tile
+	var viable_connections : Dictionary[Vector3i, bool]
 
 	var mesh_name : String:
 		get():
-			return MESH_MAP[mesh_id]
+			return TILE_PALETTE[mesh_id].name
 
-	func _init(p_position: Vector3i, p_mesh_id : int, p_a_star_point : int, p_forward_direction : Vector3):
+	func _init(p_position: Vector3i, p_mesh_id : int, p_a_star_point : int, p_basis : Basis, p_tile : Tile):
 		mesh_id = p_mesh_id
 		a_star_point = p_a_star_point
-		forward_direction = p_forward_direction
+		basis = p_basis
 		position = p_position
+		tile = p_tile
+		viable_connections = tile.get_viable_connections(position, basis)
 
 @export_category("Context")
 @export var level : BaseLevel
@@ -74,63 +89,41 @@ func _ready() -> void:
 		setup_astar_grid()
 
 
-func _map_new_point(cell_pos : Vector3i, mesh_id : int, a_star_point : int, forward_direction : Vector3):
-	var point := GridPoint.new(cell_pos, mesh_id, a_star_point, forward_direction)
+func _map_new_point(cell_pos : Vector3i, mesh_id : int, a_star_point : int, basis : Basis, tile : Tile):
+	var point := GridPoint.new(cell_pos, mesh_id, a_star_point, basis, tile)
 
+	if tile == LADDER:
+		print(point.viable_connections)
 	point_map_by_grid_coords[cell_pos] = point
 	point_map_by_astar_ids[a_star_point] = point
 
 
 func setup_astar_grid():
 	var start_time = Time.get_ticks_msec()
-	# Clear previous A* data
 	astar.clear()
 	point_map_by_grid_coords.clear()
 	point_map_by_astar_ids.clear()
-	
-	# For all walkable tiles in grid map
-	for item_id: int in NAVIGABLE_INDEXES:
-		# Iterate through the grid to find walkable cells
+
+	for item_id: int in range(TILE_PALETTE.size()):
+		var tile : Tile = TILE_PALETTE[item_id]
 		for cell_pos: Vector3i in get_used_cells_by_item(item_id):
 			var orientation := get_cell_item_orientation(cell_pos)
-			var basis = get_basis_with_orthogonal_index(orientation)
-			var forward_direction = -basis.z
+			if tile == LADDER:
+				DebugConsole.log(orientation)
+			var basis = get_basis_with_orthogonal_index(orientation).inverse()
 			var point_id: int = astar.get_available_point_id()
 			astar.add_point(point_id, cell_pos)
-			_map_new_point(cell_pos, item_id, point_id, forward_direction as Vector3)
+			_map_new_point(cell_pos, item_id, point_id, basis, tile)
 	
 	# Connect neighboring points
 	for coord : Vector3i in point_map_by_grid_coords:
 		var point = point_map_by_grid_coords[coord]
-		var neighbors : Array[Vector3i]
-		if point.mesh_id == 0:
-			neighbors = [
-				Vector3(coord.x + 1, coord.y, coord.z),
-				Vector3(coord.x - 1, coord.y, coord.z),
-				Vector3(coord.x, coord.y, coord.z + 1),
-				Vector3(coord.x, coord.y, coord.z - 1)
-			]
-			for neighbor_pos in neighbors:
-				var neighbor_cell: Vector3i = Vector3i(neighbor_pos.x, neighbor_pos.y, neighbor_pos.z)
-				if point_map_by_grid_coords.has(neighbor_cell) and point_map_by_grid_coords[neighbor_cell].mesh_id == 0:
-					var neighbor_id: int = point_map_by_grid_coords[neighbor_cell].a_star_point
-					if not astar.are_points_connected(point.a_star_point, neighbor_id):
-						astar.connect_points(point.a_star_point, neighbor_id)
-		elif point.mesh_id == 2:
-			neighbors = [
-				coord + point.forward_direction + Vector3i(0, 1, 0),
-				coord + point.forward_direction * -1,
-				coord + Vector3i((Vector3(point.forward_direction).rotated(Vector3.UP, deg_to_rad(90)))),
-				coord + Vector3i((Vector3(point.forward_direction).rotated(Vector3.UP, deg_to_rad(-90)))),
-			]
-		
-			# Only connect neighnors that are navigable, and only connect them once
-			for neighbor_pos in neighbors:
-				var neighbor_cell: Vector3i = Vector3i(neighbor_pos.x, neighbor_pos.y, neighbor_pos.z)
-				if point_map_by_grid_coords.has(neighbor_cell):
-					var neighbor_id: int = point_map_by_grid_coords[neighbor_cell].a_star_point
-					if not astar.are_points_connected(point.a_star_point, neighbor_id):
-						astar.connect_points(point.a_star_point, neighbor_id)
+		for neighbor : Vector3i in point.viable_connections:
+			if point_map_by_grid_coords.has(neighbor):
+				var neighbor_point : GridPoint = point_map_by_grid_coords[neighbor]
+				if point.viable_connections[neighbor] == false or (!astar.are_points_connected(point.a_star_point, neighbor_point.a_star_point) \
+				and neighbor_point.viable_connections.has(coord)):
+					astar.connect_points(point.a_star_point, neighbor_point.a_star_point)
 	var end_time = Time.get_ticks_msec()
 	DebugConsole.log("Execution time to build A* map: " + str(end_time - start_time) + " milliseconds", 3)
 
@@ -208,7 +201,7 @@ func get_all_valid_moves(position: Vector3, max_moves : int) -> Array[Vector3]:
 	
 	for move in potential_moves:
 		var path = find_path(position, move)
-		if path.size() - 1 <= max_moves:
+		if !path.is_empty() and path.size() - 1 <= max_moves:
 			final_moves.append(move)
 			# paint_grid_square(map_to_local(move), Color.GREEN)
 	
