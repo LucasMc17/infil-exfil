@@ -26,15 +26,13 @@ func _ready():
 	debug_label.change_param('targets', '[]')
 
 
-func check_for_detection() -> bool:
+func check_for_detection() -> void:
 	return vision_zone.test_visibility()
 
 
 func _on_vision_zone_friendly_seen(friendlies: Array[FriendlyUnit]) -> void:
-	DebugConsole.log("I SEE YA")
-	if !awareness.is_alarmed():
-		awareness.alarm(friendlies)
-		forfeit_turn()
+	DebugConsole.log("Enemy Sees Friendly/Friendlies", 2)
+	awareness.alarm(friendlies)
 
 
 # This needs work.
@@ -45,10 +43,11 @@ func follow_path(delta : float, path : Array, mps := 1.0) -> void:
 	tile_position = tile_position.move_toward(path[0], mps * delta)
 	if tile_position == path[0]:
 		path.pop_front()
-		if !awareness.is_alarmed():
-			var alarmed = check_for_detection()
-			if alarmed:
-				movement_machine.current_state.transition('NoMovement')
+		check_for_detection()
+		# if !awareness.is_alarmed():
+		# 	var alarmed = check_for_detection()
+		# 	if alarmed:
+		# 		movement_machine.current_state.transition('NoMovement')
 
 
 func _on_awareness_changed(_old_awareness, _new_awareness):

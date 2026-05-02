@@ -108,8 +108,6 @@ func setup_astar_grid():
 		var tile : Tile = TILE_PALETTE[item_id]
 		for cell_pos: Vector3i in get_used_cells_by_item(item_id):
 			var orientation := get_cell_item_orientation(cell_pos)
-			if tile == LADDER:
-				DebugConsole.log(orientation)
 			var basis = get_basis_with_orthogonal_index(orientation).inverse()
 			var point_id: int = astar.get_available_point_id()
 			astar.add_point(point_id, cell_pos)
@@ -127,7 +125,7 @@ func setup_astar_grid():
 				and neighbor_point.viable_connections.has(coord)):
 					astar.connect_points(point.a_star_point, neighbor_point.a_star_point)
 	var end_time = Time.get_ticks_msec()
-	DebugConsole.log("Execution time to build A* map: " + str(end_time - start_time) + " milliseconds", 3)
+	DebugConsole.log("Execution time to build A* map: " + str(end_time - start_time) + " milliseconds", 4)
 
 
 func find_path(start: Vector3i, end: Vector3i) -> Array:
@@ -208,7 +206,7 @@ func get_all_valid_moves(position: Vector3, max_moves : int) -> Array[Vector3]:
 			# paint_grid_square(map_to_local(move), Color.GREEN)
 	
 	var end_time = Time.get_ticks_msec()
-	DebugConsole.log("Execution time to find all valid moves: " + str(end_time - start_time) + " milliseconds", 3)
+	DebugConsole.log("Execution time to find all valid moves: " + str(end_time - start_time) + " milliseconds", 4)
 	return final_moves
 
 

@@ -34,7 +34,10 @@ func alert():
 
 
 func alarm(spotted_friendlies : Array[FriendlyUnit] = []):
-	awareness_level = AwarenessLevel.ALARMED
+	if !is_alarmed():
+		awareness_level = AwarenessLevel.ALARMED
+		unit.movement_machine.current_state.transition('NoMovement')
+		unit.forfeit_turn()
 	for friendly : FriendlyUnit in spotted_friendlies:
 		if !targeted_friendlies.has(friendly):
 			targeted_friendlies.append(friendly)

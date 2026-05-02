@@ -71,7 +71,6 @@ func add_directive(directive : Directive, priority : int = current_directive_que
 func _decide_alarmed_directive():
 	if !World.level.enemy_awareness.alarm_active:
 		var dice_roll = randf()
-		DebugConsole.log(dice_roll)
 		if dice_roll <= unit.alarm_run_chance:
 			add_directive(RunForAlarm.new())
 		else:

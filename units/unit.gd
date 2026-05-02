@@ -81,8 +81,8 @@ func forfeit_turn() -> void:
 	forfeited_turn.emit(self)
 
 
-func check_for_detection() -> bool:
-	return false
+func check_for_detection() -> void:
+	pass
 
 
 func follow_path(delta : float, path : Array, mps := 1.0) -> void:
@@ -92,3 +92,5 @@ func follow_path(delta : float, path : Array, mps := 1.0) -> void:
 	tile_position = tile_position.move_toward(path[0], mps * delta)
 	if tile_position == path[0]:
 		path.pop_front()
+		check_for_detection()
+		
