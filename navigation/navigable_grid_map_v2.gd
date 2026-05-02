@@ -15,8 +15,6 @@ const ALARM := preload("./tiles/alarm.tres")
 
 const TILE_PALETTE : Array[Tile] = [FLOOR, WALL, LADDER, ALARM]
 
-const NAVIGABLE_INDEXES = [0, 2, 3]	
-
 class GridPoint:
 	var mesh_id : int
 	var a_star_point : int
@@ -62,8 +60,10 @@ var astar := CustomAStar.new()
 ## Dictionary of all points identified by their Vector3i coords in the [GridMap].
 var point_map_by_grid_coords : Dictionary[Vector3i, GridPoint] = {}
 var point_map_by_astar_ids: Dictionary[int, GridPoint] = {}
-## A reuseable variable for loops.  Can ignore.
+## A reuseable variable for loops. Can ignore.
 var points : PackedVector3Array
+## A dictionary of alarms in the level.
+var alarms : Dictionary[Vector3i, bool] = {}
 
 # TODO: Find a way to make that y height a magic number.
 ## Takes in a global position and converts it to it's nearest position on the grid (ASSUMES A Y HEIGHT OF 4)
@@ -114,6 +114,8 @@ func setup_astar_grid():
 			var point_id: int = astar.get_available_point_id()
 			astar.add_point(point_id, cell_pos)
 			_map_new_point(cell_pos, item_id, point_id, basis, tile)
+			if tile == ALARM:
+				alarms[cell_pos] = true
 	
 	# Connect neighboring points
 	for coord : Vector3i in point_map_by_grid_coords:
@@ -237,3 +239,12 @@ func _recusively_get_valid_pos(point: GridPoint, moves_left: int, potential_move
 	# 	for astar_point : int in connections:
 	# 		_recusively_get_valid_pos(point_map_by_astar_ids[astar_point].position, moves_left - 1, potential_moves)
 	# return potential_moves
+
+
+func get_closest_point(pos : Vector3i, points_to_check : Array[Vector3i]) -> Variant:
+	var result = null
+	for point : Vector3i in points_to_check:
+		var path = find_path(pos, point)
+		if !result or path.size() < result.size():
+			result = point
+	return result

@@ -48,4 +48,10 @@ script = ExtResource("8_mer0c")
 unit = NodePath("../..")
 metadata/_custom_type_script = "uid://dsirg6rpatadl"
 
+[node name="Run" type="Node" parent="MovementMachine" parent_id_path=PackedInt32Array(1758725307) index="1" unique_id=1760808487 node_paths=PackedStringArray("unit")]
+script = ExtResource("8_mer0c")
+unit = NodePath("../..")
+mps = 3.0
+metadata/_custom_type_script = "uid://dsirg6rpatadl"
+
 [connection signal="friendly_seen" from="VisionZone" to="." method="_on_vision_zone_friendly_seen"]

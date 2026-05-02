@@ -37,17 +37,18 @@ func _on_vision_zone_friendly_seen(friendlies: Array[FriendlyUnit]) -> void:
 		forfeit_turn()
 
 
+# This needs work.
 func follow_path(delta : float, path : Array, mps := 1.0) -> void:
 	if path.is_empty():
 		movement_machine.current_state.transition('NoMovement')
 		return
 	tile_position = tile_position.move_toward(path[0], mps * delta)
 	if tile_position == path[0]:
-		var alarmed = check_for_detection()
-		if !alarmed:
-			path.pop_front()
-		else:
-			movement_machine.current_state.transition('NoMovement')
+		path.pop_front()
+		if !awareness.is_alarmed():
+			var alarmed = check_for_detection()
+			if alarmed:
+				movement_machine.current_state.transition('NoMovement')
 
 
 func _on_awareness_changed(_old_awareness, _new_awareness):
