@@ -75,3 +75,5 @@ func _decide_alarmed_directive():
 			add_directive(RunForAlarm.new())
 		else:
 			add_directive(NoDirective.new())
+	else:
+		add_directive(NoDirective.new())

@@ -24,6 +24,7 @@ func _ready():
 	decision_director = DecisionDirector.new(self, awareness)
 	debug_label.change_param('awareness_level', awareness.AwarenessLevel.find_key(awareness.awareness_level))
 	debug_label.change_param('targets', '[]')
+	Events.alarm_raised.connect(_on_alarm_raised)
 
 
 func check_for_detection() -> void:
@@ -52,3 +53,7 @@ func follow_path(delta : float, path : Array, mps := 1.0) -> void:
 
 func _on_awareness_changed(_old_awareness, _new_awareness):
 	decision_director.clear_directive()
+
+
+func _on_alarm_raised(_alarm, _raiser) -> void:
+	awareness.alarm([])

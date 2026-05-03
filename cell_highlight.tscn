@@ -6,6 +6,5 @@
 size = Vector3(1, 0.03, 1)
 
 [node name="CellHighlight" type="MeshInstance3D" unique_id=1376729606]
-transparency = 0.5
 mesh = SubResource("BoxMesh_lyy88")
 surface_material_override/0 = ExtResource("1_6vgg2")

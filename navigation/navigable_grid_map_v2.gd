@@ -239,8 +239,10 @@ func _recusively_get_valid_pos(point: GridPoint, moves_left: int, potential_move
 
 func get_closest_point(pos : Vector3i, points_to_check : Array[Vector3i]) -> Variant:
 	var result = null
+	var result_path = null
 	for point : Vector3i in points_to_check:
 		var path = find_path(pos, point)
-		if !result or path.size() < result.size():
+		if !result or path.size() < result_path.size():
 			result = point
+			result_path = path
 	return result

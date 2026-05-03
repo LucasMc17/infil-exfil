@@ -41,11 +41,10 @@ func _init() -> void:
 	Events.alarm_ended.connect(_on_alarm_ended)
 
 
-func _on_alarm_raised(raised_alarm, _raiser : EnemyUnit):
+func _on_alarm_raised(raised_alarm, raiser : EnemyUnit):
 	alarm_active = true
 	encountered_friendlies = true
-	# pseudocode - for enemy in enemy units, enemy awareness = alarmed
-	# known_friendly_count = raiser.awareness.targeted_friendlies_count
+	known_friendly_count = raiser.awareness.targeted_friendly_count
 	alarm = raised_alarm
 
 

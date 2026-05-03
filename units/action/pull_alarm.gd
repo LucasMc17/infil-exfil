@@ -6,6 +6,7 @@ var temp_timer := 1.0
 func enter(previous_state : State, ext : Dictionary):
 	super(previous_state, ext)
 	DebugConsole.log("Unit pulling alarm", 2)
+	Events.alarm_raised.emit(null, unit)
 
 
 func update(delta: float):
