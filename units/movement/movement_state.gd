@@ -13,6 +13,7 @@ var points := []
 
 func enter(previous_state : State, ext : Dictionary):
 	super(previous_state, ext)
+	unit.debug_label.change_param('movement_state', name)
 	unit.movement_points -= cost
 	unit.started_moving.emit(unit)
 	var path = World.level.nav_map.find_path(unit.tile_position, end_point)

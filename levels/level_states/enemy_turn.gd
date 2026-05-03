@@ -24,7 +24,6 @@ func cycle_enemy() -> void:
 		else:
 			enemy.decision_director.take_directive_from_queue()
 		await enemy.forfeited_turn
-		DebugConsole.log([enemy, "ENEMY TURN ENDED"])
 		cycle_enemy()
 	else:
 		transition('PlayerTurn')
