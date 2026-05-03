@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CommandConfig" format=3 uid="uid://cw0fgeywlrgcf"]
+
+[ext_resource type="Script" uid="uid://c7wkmu16m43m" path="res://addons/debug_console/command_config.gd" id="1_tbx11"]
+
+[resource]
+script = ExtResource("1_tbx11")
+name = "exit"
+description = "Immediately exits the game."
+parameters = "None"
+examples = Array[String](["exit"])
+metadata/_custom_type_script = "uid://c7wkmu16m43m"

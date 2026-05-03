@@ -4,4 +4,3 @@
 
 [node name="CellHighlighter" type="Node3D" unique_id=1162376540]
 script = ExtResource("1_oajpe")
-highlighted_cells = null

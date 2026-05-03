@@ -6,4 +6,9 @@ extends Unit
 
 
 func check_for_detection():
-	_visible_zone.queue_detection_check()
+	_visible_zone.check_detection()
+
+func _on_visible_zone_seen_by_enemies(enemies: Array[EnemyUnit]) -> void:
+	DebugConsole.log("Friendly is Seen by Enemy/Enemies", 2)
+	for enemy : EnemyUnit in enemies:
+		enemy.awareness.alarm([self])

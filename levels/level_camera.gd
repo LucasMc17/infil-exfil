@@ -67,4 +67,5 @@ func zoom_camera(inward : bool):
 func _process(_delta: float) -> void:
 	if target:
 		_lerp_target = target.global_position
+		y_level = round(target.global_position.y / 4)
 	global_position = lerp(global_position, _lerp_target, 0.15)

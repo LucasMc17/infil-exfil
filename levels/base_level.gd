@@ -16,6 +16,8 @@ var enemies : Array:
 	get():
 		return _enemies_node.get_children()
 
+var enemy_awareness := EnemyTeamAwarenessModule.new()
+
 ## TODO: While this works to stop a unit from moving into an occupied space, it does not stop them pathing directly through other units.
 ## Naive solution would be to regen A* grid after every Unit move. But I think it could get costly. Other idea: Can I manually clear a tile's connections when moved into?
 ## Then maybe keep a queue of tiles to be "repaired" after every move, unless they are still occupied. Maybe something there.
@@ -40,17 +42,18 @@ var occupied_map : Dictionary[Vector3, bool]:
 func _ready() -> void:
 	nav_map.setup_astar_grid()
 	World.level = self
+	ConsoleEvents.command_submitted.connect(func (command_name, _parameters):
+		if command_name == "exit":
+			get_tree().quit()
+	)
 
 
 func set_active_unit(unit : Unit):
 	if active_unit:
 		active_unit.deactivate()
 	active_unit = unit
-	active_unit.activate()
-	if active_unit.can_move:
-		var valid_moves = nav_map.get_all_valid_moves(unit.tile_position, unit.max_movement)
-		unit.set_valid_moves(valid_moves)
-		cell_highlighter.highlighted_cells = valid_moves
+	if active_unit:
+		active_unit.activate()
 
 
 func cycle_active_unit():
@@ -85,3 +88,6 @@ func _input(event: InputEvent) -> void:
 	
 	elif Input.is_action_just_pressed('zoom_out'):
 		level_camera.zoom_camera(false)
+	
+	elif Input.is_action_just_pressed('force_exit'):
+		get_tree().quit()

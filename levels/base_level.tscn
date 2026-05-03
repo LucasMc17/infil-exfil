@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dt305x7b2byrv"]
 
 [ext_resource type="Script" uid="uid://b6v64sbglrpl0" path="res://levels/base_level.gd" id="1_63c5o"]
-[ext_resource type="MeshLibrary" uid="uid://cfe0cqr35beud" path="res://grid_meshes.tres" id="1_ew5uy"]
-[ext_resource type="Script" uid="uid://ch5vn3soxrapt" path="res://navigable_grid_map_v2.gd" id="1_wevqg"]
+[ext_resource type="Script" uid="uid://ch5vn3soxrapt" path="res://navigation/navigable_grid_map_v2.gd" id="1_wevqg"]
 [ext_resource type="PackedScene" uid="uid://3rc8lg86w2jx" path="res://2D/debug/debug_ui.tscn" id="2_qeex7"]
 [ext_resource type="PackedScene" uid="uid://cfeifk7bnyc0h" path="res://levels/level_camera.tscn" id="4_dx6c5"]
+[ext_resource type="MeshLibrary" uid="uid://crn4m7ftmqgqh" path="res://navigation/grid_library_source.tres" id="4_qeex7"]
 [ext_resource type="Texture2D" uid="uid://i8vhjvcw28g8" path="res://assets/industrial_sunset_puresky_4k.hdr" id="5_p5284"]
 [ext_resource type="PackedScene" uid="uid://cmp62gpdora7s" path="res://units/cell_highlighter.tscn" id="6_46036"]
 [ext_resource type="PackedScene" uid="uid://b6h1160eunshj" path="res://units/friendlies/friendly_unit.tscn" id="6_maq6b"]
@@ -14,8 +14,8 @@
 [ext_resource type="Script" uid="uid://cu06vvfrrxrxs" path="res://levels/level_states/enemy_turn.gd" id="9_upde5"]
 [ext_resource type="Script" uid="uid://cwt2k11twrldn" path="res://logic/click_detection/3d_click_handler.gd" id="10_n8wy4"]
 [ext_resource type="PackedScene" uid="uid://51rqmlm6v48t" path="res://2D/match_ui/match_ui.tscn" id="12_5mwf5"]
-[ext_resource type="Script" uid="uid://bp1pubml3l0d7" path="res://units/ai/actions/action.gd" id="12_jldy4"]
-[ext_resource type="Script" uid="uid://cvy611uxolcnt" path="res://units/ai/actions/move_to_point.gd" id="13_qeex7"]
+[ext_resource type="Script" uid="uid://bp1pubml3l0d7" path="res://units/ai/directive/directive.gd" id="12_jldy4"]
+[ext_resource type="Script" uid="uid://cvy611uxolcnt" path="res://units/ai/directive/move_to_point.gd" id="13_qeex7"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_46036"]
 panorama = ExtResource("5_p5284")
@@ -27,14 +27,34 @@ sky_material = SubResource("PanoramaSkyMaterial_46036")
 background_mode = 2
 sky = SubResource("Sky_satuh")
 
-[sub_resource type="Resource" id="Resource_hd0gu"]
+[sub_resource type="Resource" id="Resource_qeex7"]
 script = ExtResource("13_qeex7")
 _end_point = Vector3(-3, 0, 4)
 metadata/_custom_type_script = "uid://cvy611uxolcnt"
 
-[sub_resource type="Resource" id="Resource_jldy4"]
+[sub_resource type="Resource" id="Resource_hd0gu"]
 script = ExtResource("13_qeex7")
 _end_point = Vector3(1, 0, 0)
+metadata/_custom_type_script = "uid://cvy611uxolcnt"
+
+[sub_resource type="Resource" id="Resource_e78uj"]
+script = ExtResource("13_qeex7")
+_end_point = Vector3(11, 0, 2)
+metadata/_custom_type_script = "uid://cvy611uxolcnt"
+
+[sub_resource type="Resource" id="Resource_u35x1"]
+script = ExtResource("13_qeex7")
+_end_point = Vector3(11, 0, 0)
+metadata/_custom_type_script = "uid://cvy611uxolcnt"
+
+[sub_resource type="Resource" id="Resource_ubdnn"]
+script = ExtResource("13_qeex7")
+_end_point = Vector3(13, 0, 2)
+metadata/_custom_type_script = "uid://cvy611uxolcnt"
+
+[sub_resource type="Resource" id="Resource_lxejw"]
+script = ExtResource("13_qeex7")
+_end_point = Vector3(13, 0, 0)
 metadata/_custom_type_script = "uid://cvy611uxolcnt"
 
 [node name="Level" type="Node3D" unique_id=1510169201]
@@ -46,11 +66,11 @@ script = ExtResource("1_63c5o")
 
 [node name="NavigableGridMapV2" type="GridMap" parent="." unique_id=805823171 node_paths=PackedStringArray("level")]
 unique_name_in_owner = true
-mesh_library = ExtResource("1_ew5uy")
+mesh_library = ExtResource("4_qeex7")
 cell_size = Vector3(1, 4, 1)
 cell_center_y = false
 data = {
-"cells": PackedInt32Array(1, 65534, 1048576, 1, 65535, 0, 1, 0, 0, 0, 0, 1048576, 2, 65534, 1048576, 2, 65535, 1048576, 2, 0, 1048576, 2, 65533, 1048576, 1, 65533, 1048576, 0, 65533, 1048576, 0, 65534, 1048576, 0, 65535, 1048576, 65535, 65533, 1048576, 65534, 65533, 1048576, 65533, 65533, 1, 65533, 65534, 0, 65533, 65535, 1048576, 65533, 0, 1048576, 65533, 1, 1048576, 65533, 2, 1048576, 65534, 2, 1048576, 65535, 2, 1048576, 0, 2, 1048576, 1, 2, 1048576, 2, 2, 0, 2, 1, 1048576, 1, 1, 0, 0, 1, 1048576, 65535, 1, 1048576, 65534, 1, 1048576, 65534, 0, 1048576, 65534, 65535, 1048576, 65535, 65535, 1048576, 65535, 0, 1048576, 65535, 65534, 1048576, 65534, 65534, 1048576, 3, 65533, 1048576, 3, 65532, 1048576, 2, 65532, 1048576, 1, 65532, 1048576, 0, 65532, 1048576, 65535, 65532, 1048576, 65534, 65532, 1048576, 65533, 65532, 1048576, 65532, 65532, 0, 65532, 65533, 1048576, 65532, 65534, 1048576, 65532, 65535, 1048576, 65532, 0, 1048576, 65532, 1, 1048576, 65532, 2, 1048576, 65532, 3, 1048576, 65533, 3, 1048576, 65534, 3, 1048576, 65535, 3, 1048576, 0, 3, 1048576, 1, 3, 1048576, 2, 3, 1048576, 3, 3, 1048576, 3, 2, 1048576, 3, 1, 1048576, 3, 0, 1048576, 3, 65535, 1048576, 3, 65534, 1048576, 65532, 4, 0, 65533, 4, 1048576, 65534, 4, 1048576, 65535, 4, 1048576, 0, 4, 1048576, 1, 4, 1048576, 2, 4, 1048576, 3, 4, 1048576, 4, 4, 1048576, 4, 3, 1048576, 4, 2, 1048576, 4, 1, 1048576, 4, 0, 1048576, 4, 65535, 1048576, 4, 65534, 1048576, 4, 65533, 1048576, 4, 65532, 1048576, 65532, 65531, 2, 131068, 65530, 0, 131068, 65529, 0, 131068, 65528, 0, 131069, 65528, 0, 131070, 65528, 0, 131070, 65529, 0, 131070, 65530, 0, 131069, 65530, 0, 131069, 65529, 0, 131068, 65527, 0, 131069, 65527, 0, 131070, 65527, 0, 131068, 65526, 0, 131069, 65526, 0, 131070, 65526, 0, 131070, 65525, 0, 131069, 65525, 0, 131068, 65525, 0, 1, 65531, 0, 131069, 65531, 0, 131069, 65532, 0, 131069, 65533, 0)
+"cells": PackedInt32Array(1, 65534, 1048576, 1, 65535, 0, 1, 0, 0, 0, 0, 1048576, 2, 65534, 1048576, 2, 65535, 1048576, 2, 0, 1048576, 2, 65533, 1048576, 1, 65533, 1048576, 0, 65533, 1048576, 0, 65534, 1048576, 0, 65535, 1048576, 65535, 65533, 1048576, 65534, 65533, 1048576, 65533, 65533, 1, 65533, 65534, 2, 65533, 65535, 1048576, 65533, 0, 1048576, 65533, 1, 1048576, 65533, 2, 1048576, 65534, 2, 1048576, 65535, 2, 1048576, 0, 2, 1048576, 1, 2, 1048576, 2, 2, 0, 2, 1, 1048576, 1, 1, 0, 0, 1, 1048576, 65535, 1, 1048576, 65534, 1, 1048576, 65534, 0, 1048576, 65534, 65535, 1048576, 65535, 65535, 1048576, 65535, 0, 1048576, 65535, 65534, 1048576, 65534, 65534, 1048576, 3, 65533, 1048576, 3, 65532, 1048576, 2, 65532, 1048576, 1, 65532, 1048576, 0, 65532, 1048576, 65535, 65532, 1048576, 65534, 65532, 1048578, 65533, 65532, 1048576, 65532, 65532, 1441794, 65532, 65533, 0, 65532, 65534, 1048576, 65532, 65535, 1048576, 65532, 0, 1048576, 65532, 1, 1048576, 65532, 2, 1048576, 65532, 3, 1048576, 65533, 3, 1048576, 65534, 3, 1048576, 65535, 3, 1048576, 0, 3, 1048576, 1, 3, 1048576, 2, 3, 1048576, 3, 3, 1048576, 3, 2, 1048576, 3, 1, 1048576, 3, 0, 1048576, 3, 65535, 1048576, 3, 65534, 1048576, 65532, 4, 0, 65533, 4, 1048576, 65534, 4, 1048576, 65535, 4, 1048576, 0, 4, 1048576, 1, 4, 1048576, 2, 4, 1048576, 3, 4, 1048576, 4, 4, 1048576, 4, 3, 1048576, 4, 2, 1048576, 4, 1, 1048576, 4, 0, 1048576, 4, 65535, 1048576, 4, 65534, 1048576, 4, 65533, 1048576, 4, 65532, 1048576, 65532, 65531, 2, 131068, 65530, 0, 131068, 65529, 0, 131068, 65528, 0, 131069, 65528, 0, 131070, 65528, 0, 131070, 65529, 0, 131070, 65530, 0, 131069, 65530, 0, 131069, 65529, 0, 131068, 65527, 0, 131069, 65527, 0, 131070, 65527, 0, 131068, 65526, 0, 131069, 65526, 0, 131070, 65526, 1441795, 131070, 65525, 0, 131069, 65525, 0, 131068, 65525, 0, 1, 65531, 0, 131069, 65531, 0, 131069, 65532, 0, 131069, 65533, 0, 131071, 65526, 1, 131071, 65525, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 13, 1, 0, 12, 1, 0, 12, 2, 0, 13, 2, 0, 13, 3, 0, 12, 3, 0, 11, 3, 0, 11, 2, 0, 11, 1, 0, 4, 5, 655363)
 }
 script = ExtResource("1_wevqg")
 level = NodePath("..")
@@ -68,7 +88,6 @@ transform = Transform3D(0.8660254, 2.1855694e-08, -0.5, 0.5, -3.7855173e-08, 0.8
 
 [node name="CellHighlighter" parent="." unique_id=1162376540 instance=ExtResource("6_46036")]
 unique_name_in_owner = true
-highlighted_cells = Array[Vector3]([])
 
 [node name="StateMachine" type="Node" parent="." unique_id=1160962442 node_paths=PackedStringArray("current_state")]
 unique_name_in_owner = true
@@ -91,6 +110,10 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -2.5)
 tile_position = Vector3(-4, 0, -3)
 
+[node name="FriendlyUnit3" parent="Friendlies" unique_id=743990508 instance=ExtResource("6_maq6b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 4, -10.5)
+tile_position = Vector3(-1, 1, -11)
+
 [node name="FriendlyUnit2" parent="Friendlies" unique_id=151222999 instance=ExtResource("6_maq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 2.5)
 tile_position = Vector3(2, 0, 2)
@@ -100,8 +123,19 @@ unique_name_in_owner = true
 
 [node name="EnemyUnit" parent="Enemies" unique_id=2010674513 instance=ExtResource("7_maq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0.5)
-unaware_base_actions = Array[ExtResource("12_jldy4")]([SubResource("Resource_hd0gu"), SubResource("Resource_jldy4")])
+unaware_base_directives = Array[ExtResource("12_jldy4")]([SubResource("Resource_qeex7"), SubResource("Resource_hd0gu")])
+alarm_run_chance = 1.0
 tile_position = Vector3(1, 0, 0)
+
+[node name="EnemyUnit2" parent="Enemies" unique_id=702838460 instance=ExtResource("7_maq6b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0, 0.5)
+unaware_base_directives = Array[ExtResource("12_jldy4")]([SubResource("Resource_e78uj"), SubResource("Resource_u35x1")])
+tile_position = Vector3(11, 0, 0)
+
+[node name="EnemyUnit3" parent="Enemies" unique_id=707093431 instance=ExtResource("7_maq6b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 0.5)
+unaware_base_directives = Array[ExtResource("12_jldy4")]([SubResource("Resource_ubdnn"), SubResource("Resource_lxejw")])
+tile_position = Vector3(13, 0, 0)
 
 [node name="ClickHandler3D" type="Node3D" parent="." unique_id=797014710]
 unique_name_in_owner = true

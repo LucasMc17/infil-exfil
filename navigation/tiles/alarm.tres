@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Tile" format=3 uid="uid://b73x4ovcpyxvf"]
+
+[ext_resource type="Script" uid="uid://dh08xpx10ru7" path="res://navigation/tiles/tile.gd" id="1_pmsjl"]
+[ext_resource type="Script" uid="uid://boqs7jy6uova" path="res://navigation/tiles/connections/tile_connection.gd" id="2_fcdjs"]
+
+[sub_resource type="Resource" id="Resource_fcdjs"]
+script = ExtResource("2_fcdjs")
+name = "Behind"
+relative_position = Vector3i(0, 0, 1)
+metadata/_custom_type_script = "uid://boqs7jy6uova"
+
+[sub_resource type="Resource" id="Resource_21oq4"]
+script = ExtResource("2_fcdjs")
+name = "Right"
+relative_position = Vector3i(1, 0, 0)
+metadata/_custom_type_script = "uid://boqs7jy6uova"
+
+[sub_resource type="Resource" id="Resource_kxm26"]
+script = ExtResource("2_fcdjs")
+name = "Left"
+relative_position = Vector3i(-1, 0, 0)
+metadata/_custom_type_script = "uid://boqs7jy6uova"
+
+[resource]
+script = ExtResource("1_pmsjl")
+name = "Alarm"
+viable_neighbors = Array[ExtResource("2_fcdjs")]([SubResource("Resource_fcdjs"), SubResource("Resource_21oq4"), SubResource("Resource_kxm26")])
+metadata/_custom_type_script = "uid://dh08xpx10ru7"

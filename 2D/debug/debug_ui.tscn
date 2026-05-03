@@ -2,6 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://btf2hsfloj3i3" path="res://2D/debug/performance_monitor.tscn" id="1_crbk0"]
 [ext_resource type="Script" uid="uid://1nqsah5bsarx" path="res://addons/debug_console/debug_console.gd" id="2_1hpl2"]
+[ext_resource type="Script" uid="uid://c7wkmu16m43m" path="res://addons/debug_console/command_config.gd" id="3_i5hs5"]
+[ext_resource type="Resource" uid="uid://u2a8x8slm7r1" path="res://addons/debug_console/echo_command.tres" id="4_c2eu2"]
+[ext_resource type="Resource" uid="uid://blgexr8p0bx7u" path="res://addons/debug_console/help_command.tres" id="5_r01na"]
+[ext_resource type="Resource" uid="uid://jtcbpe1i1m4g" path="res://addons/debug_console/clear_command.tres" id="6_8umau"]
+[ext_resource type="Resource" uid="uid://cw0fgeywlrgcf" path="res://2D/debug/commands/exit_command.tres" id="7_lf6aa"]
 
 [node name="DebugUi" type="Control" unique_id=1639751749]
 layout_mode = 3
@@ -26,5 +31,6 @@ offset_top = -400.0
 offset_right = 500.0
 grow_vertical = 0
 script = ExtResource("2_1hpl2")
+commands = Array[ExtResource("3_i5hs5")]([ExtResource("4_c2eu2"), ExtResource("5_r01na"), ExtResource("6_8umau"), ExtResource("7_lf6aa")])
 console_log_level = 3
 metadata/_custom_type_script = "uid://1nqsah5bsarx"
