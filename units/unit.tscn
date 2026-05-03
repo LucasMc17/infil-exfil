@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dmkx4m8je1llw" path="res://cell_highlight.tscn" id="2_gxe1c"]
 [ext_resource type="Script" uid="uid://8lotdfrh5t6l" path="res://addons/debug_label_3d/debug_label.gd" id="6_3nj72"]
 [ext_resource type="Script" uid="uid://4lx7x7dl2ekr" path="res://units/movement/movement_machine.gd" id="8_hyvs3"]
+[ext_resource type="Script" uid="uid://b66nb2e5t10cy" path="res://units/action/pull_alarm.gd" id="8_urgnh"]
 [ext_resource type="Script" uid="uid://db1xkfe2r44vj" path="res://units/movement/no_movement.gd" id="9_d7xs0"]
 [ext_resource type="Script" uid="uid://dpwkeyrf5khee" path="res://units/action/action_machine.gd" id="9_urgnh"]
 [ext_resource type="Script" uid="uid://d2agcqikuidqx" path="res://units/action/no_action.gd" id="11_ysu83"]
@@ -67,3 +68,8 @@ metadata/_custom_type_script = "uid://dpwkeyrf5khee"
 script = ExtResource("11_ysu83")
 unit = NodePath("../..")
 metadata/_custom_type_script = "uid://d2agcqikuidqx"
+
+[node name="PullAlarm" type="Node" parent="ActionMachine" unique_id=2084157047 node_paths=PackedStringArray("unit")]
+script = ExtResource("8_urgnh")
+unit = NodePath("../..")
+metadata/_custom_type_script = "uid://b66nb2e5t10cy"

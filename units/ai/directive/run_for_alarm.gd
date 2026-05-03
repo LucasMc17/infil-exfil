@@ -17,10 +17,10 @@ func begin(unit : EnemyUnit) -> void:
 
 func _on_finished_moving(_unit : Unit):
 	if acting_unit.tile_position as Vector3i == _alarm_point:
-		pass
+		acting_unit.action_machine.current_state.transition("PullAlarm")
 	else:
 		acting_unit.forfeit_turn()
 
 
 func check_if_finished() -> bool:
-	return false
+	return World.level.enemy_awareness.alarm_active

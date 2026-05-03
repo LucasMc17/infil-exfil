@@ -92,8 +92,6 @@ func _ready() -> void:
 func _map_new_point(cell_pos : Vector3i, mesh_id : int, a_star_point : int, basis : Basis, tile : Tile):
 	var point := GridPoint.new(cell_pos, mesh_id, a_star_point, basis, tile)
 
-	if tile == LADDER:
-		print(point.viable_connections)
 	point_map_by_grid_coords[cell_pos] = point
 	point_map_by_astar_ids[a_star_point] = point
 
