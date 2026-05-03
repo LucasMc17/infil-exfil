@@ -13,9 +13,9 @@ var zoom_offset := 0:
 			zoom_offset = 15
 		else:
 			zoom_offset = val
-var _lerp_target := global_position
 var target : Node3D
 
+@onready var _lerp_target := global_position
 @onready var _camera : Camera3D = %Camera3D
 @onready var _y_pivot := %YPivot
 @onready var _x_pivot := %XPivot

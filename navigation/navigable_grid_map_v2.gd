@@ -89,8 +89,8 @@ func _ready() -> void:
 		setup_astar_grid()
 
 
-func _map_new_point(cell_pos : Vector3i, mesh_id : int, a_star_point : int, basis : Basis, tile : Tile):
-	var point := GridPoint.new(cell_pos, mesh_id, a_star_point, basis, tile)
+func _map_new_point(cell_pos : Vector3i, mesh_id : int, a_star_point : int, tile_basis : Basis, tile : Tile):
+	var point := GridPoint.new(cell_pos, mesh_id, a_star_point, tile_basis, tile)
 
 	point_map_by_grid_coords[cell_pos] = point
 	point_map_by_astar_ids[a_star_point] = point
@@ -106,10 +106,10 @@ func setup_astar_grid():
 		var tile : Tile = TILE_PALETTE[item_id]
 		for cell_pos: Vector3i in get_used_cells_by_item(item_id):
 			var orientation := get_cell_item_orientation(cell_pos)
-			var basis = get_basis_with_orthogonal_index(orientation).inverse()
+			var tile_basis = get_basis_with_orthogonal_index(orientation).inverse()
 			var point_id: int = astar.get_available_point_id()
 			astar.add_point(point_id, cell_pos)
-			_map_new_point(cell_pos, item_id, point_id, basis, tile)
+			_map_new_point(cell_pos, item_id, point_id, tile_basis, tile)
 			if tile == ALARM:
 				alarms[cell_pos] = true
 	
@@ -178,15 +178,14 @@ func do_debug_path(start_pos : Vector3i, end_pos : Vector3i):
 	DebugDraw3D.draw_point_path.call_deferred(points, 0, 0.25, Color(0, 0, 0, 0), Color(0, 0, 0, 0), INF)
 
 
-func paint_grid_square(position: Vector3, color : Color):
-	var temp = position
+func paint_grid_square(tile_position: Vector3, color : Color):
+	var temp = tile_position
 	temp.y += 1
 	DebugDraw3D.draw_box.call_deferred(temp, Quaternion.IDENTITY, Vector3(0.9, 0.9, 0.9), color, true, INF)
 
 
-func get_all_valid_moves(position: Vector3, max_moves : int) -> Array[Vector3]:
+func get_all_valid_moves(tile_position: Vector3, max_moves : int) -> Array[Vector3]:
 	var start_time = Time.get_ticks_msec()
-	# paint_grid_square(map_to_local(position), Color.RED)
 	var true_max_moves = max_moves * 2
 	var potential_moves : Array[Vector3]
 	var final_moves : Array[Vector3]
@@ -194,11 +193,11 @@ func get_all_valid_moves(position: Vector3, max_moves : int) -> Array[Vector3]:
 		for y in range(-true_max_moves, true_max_moves + 1):
 			for z in range(-true_max_moves, true_max_moves + 1):
 				var vector = Vector3(x, y, z)
-				if vector != Vector3.ZERO and point_map_by_grid_coords.has(vector + position) and !level.occupied_map.has(vector + position) and absi(x) + absi(y) + absi(z) <= true_max_moves :
-					potential_moves.append(vector + position)
+				if vector != Vector3.ZERO and point_map_by_grid_coords.has(vector + tile_position) and !level.occupied_map.has(vector + tile_position) and absi(x) + absi(y) + absi(z) <= true_max_moves :
+					potential_moves.append(vector + tile_position)
 	
 	for move in potential_moves:
-		var path = find_path(position, move)
+		var path = find_path(tile_position, move)
 		if !path.is_empty() and path.size() - 1 <= max_moves:
 			final_moves.append(move)
 			# paint_grid_square(map_to_local(move), Color.GREEN)
@@ -208,17 +207,17 @@ func get_all_valid_moves(position: Vector3, max_moves : int) -> Array[Vector3]:
 	return final_moves
 
 
-func get_all_valid_moves_v2(position: Vector3i, max_moves: int):
+func get_all_valid_moves_v2(tile_position: Vector3i, max_moves: int):
 	var valid_moves : Array[GridPoint] = []
-	var point = point_map_by_grid_coords[position]
+	var point = point_map_by_grid_coords[tile_position]
 	_recusively_get_valid_pos(point, max_moves, valid_moves, true)
 	for move in valid_moves:
 		paint_grid_square(map_to_local(move.position), Color.GREEN)
 
-func _recusively_get_valid_pos(point: GridPoint, moves_left: int, potential_moves : Array[GridPoint], top_level : bool, starting_point: GridPoint = null):
+func _recusively_get_valid_pos(point: GridPoint, moves_left: int, potential_moves : Array[GridPoint], base_level : bool, starting_point: GridPoint = null):
 	# NOTE: serious performance issues here. 10 moves is enough to crash engine. The check below this comment used to be before the recursive function call (except the top level part). but this lead to missed moves, because it was possible to take a twisting path to a point, and end up with 0 moves left even though the move was not an extermity. This blocked it from checking its connections, ever.
 	# Maybe a new map of cells which have had theri connections checked?
-	if !top_level && point != starting_point && !potential_moves.has(point):
+	if !base_level && point != starting_point && !potential_moves.has(point):
 		potential_moves.append(point)
 	else:
 		starting_point = point

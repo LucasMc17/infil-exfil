@@ -21,6 +21,10 @@ Events="*uid://cndbfd7bt3wyg"
 World="*uid://dj03hyc0fpb7p"
 ConsoleEvents="*uid://cvf4hwhfclj32"
 
+[debug]
+
+gdscript/warnings/unused_signal=0
+
 [debug_draw_3d]
 
 settings/addon_root_folder="res://addons/debug_draw_3d"
