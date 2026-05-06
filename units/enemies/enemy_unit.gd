@@ -36,21 +36,6 @@ func _on_vision_zone_friendly_seen(friendlies: Array[FriendlyUnit]) -> void:
 	awareness.alarm(friendlies)
 
 
-# This needs work.
-func follow_path(delta : float, path : Array, mps := 1.0) -> void:
-	if path.is_empty():
-		movement_machine.current_state.transition('NoMovement')
-		return
-	tile_position = tile_position.move_toward(path[0], mps * delta)
-	if tile_position == path[0]:
-		path.pop_front()
-		check_for_detection()
-		# if !awareness.is_alarmed():
-		# 	var alarmed = check_for_detection()
-		# 	if alarmed:
-		# 		movement_machine.current_state.transition('NoMovement')
-
-
 func _on_awareness_changed(_old_awareness, _new_awareness):
 	decision_director.clear_directive()
 

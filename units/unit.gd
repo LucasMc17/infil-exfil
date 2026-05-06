@@ -29,12 +29,13 @@ var action_points := max_action_points
 var is_active : bool:
 	get():
 		return World.level.active_unit == self
+var actual_position : Vector3i:
+	get():
+		return tile_position as Vector3i
 
 @onready var _cell_highlight := %CellHighlight
-
 @onready var movement_machine : MovementMachine = %MovementMachine
 @onready var action_machine : ActionMachine = %ActionMachine
-
 @onready var debug_label : DebugLabel = %DebugLabel
 
 func _ready():
@@ -47,7 +48,7 @@ func _ready():
 func refresh_valid_moves():
 	var valid_moves : Array[Vector3] = []
 	if World.level and can_move():
-		valid_moves = World.level.nav_map.get_all_valid_moves(tile_position, max_movement)
+		valid_moves = World.level.nav_map.get_all_valid_moves(actual_position, max_movement)
 	if World.level and is_active:
 		World.level.cell_highlighter.highlighted_cells = valid_moves
 	potential_moves = valid_moves

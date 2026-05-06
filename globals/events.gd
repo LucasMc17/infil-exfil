@@ -6,9 +6,8 @@ signal player_turn_ended()
 
 # Enemy turn events
 
-signal enemy_finished_moving(enemy : EnemyUnit)
 
-signal enemy_turn_ended()
+# signal enemy_turn_ended()
 
 # signal enemy_action_finished(enemy : EnemyUnit)
 

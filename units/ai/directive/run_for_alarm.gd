@@ -7,7 +7,7 @@ func begin(unit : EnemyUnit) -> void:
 	super(unit)
 	_alarm_point = null
 	DebugConsole.log('Enemy Runs for Alarm', 2)
-	_alarm_point = World.level.nav_map.get_closest_point(acting_unit.tile_position, World.level.nav_map.alarms.keys())
+	_alarm_point = World.level.nav_map.get_closest_point(acting_unit.actual_position, World.level.nav_map.alarms.keys())
 	if !_alarm_point:
 		acting_unit.forfeit_turn.call_deferred()
 		end()
@@ -16,7 +16,7 @@ func begin(unit : EnemyUnit) -> void:
 
 
 func _on_finished_moving(_unit : Unit):
-	if acting_unit.tile_position as Vector3i == _alarm_point:
+	if acting_unit.actual_position == _alarm_point:
 		acting_unit.action_machine.current_state.transition("PullAlarm")
 	acting_unit.forfeit_turn()
 

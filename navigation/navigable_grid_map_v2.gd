@@ -2,7 +2,7 @@
 class_name NavigableGridMapV2
 extends GridMap
 
-# TODO: With the addition of new cell types this needs a more robust solution for setting up the grid. Right now it basically checks if each cell can see viable neighbors and links them if so. That won't be good enough for long. Instead we need to see if the two cells "agree". IE, once can see the other AND vice versa. This could get a little expensive, but hopefully should be fine as we should only need to run this once at the beginning of the level.
+# TODO: With the addition of new cell types this needs a more robust solution for setting up the s. Right now it basically checks if each cell can see viable neighbors and links them if so. That won't be good enough for long. Instead we need to see if the two cells "agree". IE, once can see the other AND vice versa. This could get a little expensive, but hopefully should be fine as we should only need to run this once at the beginning of the level.
 
 # First idea: each tile type has a function for getting it's viable neighbors. We run this, then for each viable neighbor, we also call its viable neighbor function. if it includes the original cell, we build the link. Then move onto next cell. UPSIDE: probably the most simple solution. DOWNSIDE: we'd end up calling that get viable neighbors fun a lot. a lot alot.
 
@@ -64,6 +64,8 @@ var point_map_by_astar_ids: Dictionary[int, GridPoint] = {}
 var points : PackedVector3Array
 ## A dictionary of alarms in the level.
 var alarms : Dictionary[Vector3i, bool] = {}
+## A dictionary representing spaces temporarily blocked by Units standing on them.
+var blocked_spaces : Dictionary[Vector3i, GridPoint] = {}
 
 # TODO: Find a way to make that y height a magic number.
 ## Takes in a global position and converts it to it's nearest position on the grid (ASSUMES A Y HEIGHT OF 4)
@@ -116,14 +118,47 @@ func setup_astar_grid():
 	# Connect neighboring points
 	for coord : Vector3i in point_map_by_grid_coords:
 		var point = point_map_by_grid_coords[coord]
-		for neighbor : Vector3i in point.viable_connections:
-			if point_map_by_grid_coords.has(neighbor):
-				var neighbor_point : GridPoint = point_map_by_grid_coords[neighbor]
-				if point.viable_connections[neighbor] == false or (!astar.are_points_connected(point.a_star_point, neighbor_point.a_star_point) \
-				and neighbor_point.viable_connections.has(coord)):
-					astar.connect_points(point.a_star_point, neighbor_point.a_star_point)
+
+		_connect_point_to_neighbors(point)
+		
 	var end_time = Time.get_ticks_msec()
 	DebugConsole.log("Execution time to build A* map: " + str(end_time - start_time) + " milliseconds", 4)
+
+
+func _connect_point_to_neighbors(point : GridPoint) -> void:
+	for neighbor : Vector3i in point.viable_connections:
+			if point_map_by_grid_coords.has(neighbor):
+				var neighbor_point : GridPoint = point_map_by_grid_coords[neighbor]
+				if point.viable_connections[neighbor] == false or (!astar.are_points_connected(neighbor_point.a_star_point, point.a_star_point, false) \
+				and neighbor_point.viable_connections.has(point.position)):
+					astar.connect_points(point.a_star_point, neighbor_point.a_star_point)
+
+# NOTE: Not using this anywhere yet (part of old blocked tile solution) but I still wonder if it could be useful.
+func _disconnect_point_from_neighbors(point : GridPoint, two_way := true, ingoing := true) -> void:
+	var connections = astar.get_point_connections(point.a_star_point)
+	for connection in connections:
+		if ingoing:
+			astar.disconnect_points(connection, point.a_star_point, two_way)
+		else:
+			astar.disconnect_points(point.a_star_point, connection, two_way)
+
+
+# NOTE: I'm still not completely in love with this solution but it works. I tried disabling one way connections to specific cells but it seemed to work really inconsistently.
+func _update_block_spaces(units : Array[Unit], active_unit : Unit) -> void:
+	var to_block = {}
+	for unit : Unit in units:
+		if unit != active_unit:
+			to_block[unit.actual_position] = true
+	for pos : Vector3i in blocked_spaces.keys():
+		if !to_block.has(pos):
+			var point = point_map_by_grid_coords[pos]
+			astar.set_point_disabled(point.a_star_point, false)
+			blocked_spaces.erase(pos)
+	for pos : Vector3i in to_block.keys():
+		if !blocked_spaces.has(pos):
+			var point = point_map_by_grid_coords[pos]
+			astar.set_point_disabled(point.a_star_point, true)
+			blocked_spaces[pos] = point
 
 
 func find_path(start: Vector3i, end: Vector3i) -> Array:
@@ -184,7 +219,8 @@ func paint_grid_square(tile_position: Vector3, color : Color):
 	DebugDraw3D.draw_box.call_deferred(temp, Quaternion.IDENTITY, Vector3(0.9, 0.9, 0.9), color, true, INF)
 
 
-func get_all_valid_moves(tile_position: Vector3, max_moves : int) -> Array[Vector3]:
+func get_all_valid_moves(tile_position: Vector3i, max_moves : int) -> Array[Vector3]:
+	_update_block_spaces(World.level.units, World.level.active_unit)
 	var start_time = Time.get_ticks_msec()
 	var true_max_moves = max_moves * 2
 	var potential_moves : Array[Vector3]
@@ -192,8 +228,8 @@ func get_all_valid_moves(tile_position: Vector3, max_moves : int) -> Array[Vecto
 	for x in range(-true_max_moves, true_max_moves + 1):
 		for y in range(-true_max_moves, true_max_moves + 1):
 			for z in range(-true_max_moves, true_max_moves + 1):
-				var vector = Vector3(x, y, z)
-				if vector != Vector3.ZERO and point_map_by_grid_coords.has(vector + tile_position) and !level.occupied_map.has(vector + tile_position) and absi(x) + absi(y) + absi(z) <= true_max_moves :
+				var vector = Vector3i(x, y, z)
+				if vector != Vector3i.ZERO and point_map_by_grid_coords.has(vector + tile_position) and !level.occupied_map.has(vector + tile_position) and absi(x) + absi(y) + absi(z) <= true_max_moves :
 					potential_moves.append(vector + tile_position)
 	
 	for move in potential_moves:

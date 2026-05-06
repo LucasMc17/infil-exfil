@@ -8,13 +8,35 @@ var active_unit : Unit:
 		active_unit = val
 		level_camera.fix_to_actor(val)
 
-var friendlies : Array:
+var friendlies : Array[FriendlyUnit]:
 	get():
-		return _friendlies_node.get_children()
+		var result : Array[FriendlyUnit] = []
+		var true_friendlies = _friendlies_node.get_children()
+		for friendly in true_friendlies:
+			if friendly is FriendlyUnit:
+				result.append(friendly)
+		return result
 
-var enemies : Array:
+var enemies : Array[EnemyUnit]:
 	get():
-		return _enemies_node.get_children()
+		var result : Array[EnemyUnit] = []
+		var true_enemies = _enemies_node.get_children()
+		for enemy in true_enemies:
+			if enemy is EnemyUnit:
+				result.append(enemy)
+		return result
+
+
+var units : Array[Unit]:
+	get():
+		var result : Array[Unit] = []
+		for friendly in friendlies:
+			if friendly is Unit:
+				result.append(friendly)
+		for enemy in enemies:
+			if enemy is Unit:
+				result.append(enemy)
+		return result
 
 var enemy_awareness := EnemyTeamAwarenessModule.new()
 
