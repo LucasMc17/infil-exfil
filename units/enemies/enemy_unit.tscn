@@ -35,7 +35,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 enemy = NodePath("..")
 
 [node name="DebugLabel" parent="." index="4" unique_id=607303816]
-pixel_size = 0.005
 texture = SubResource("ViewportTexture_ijy6f")
 _text = "ENEMY UNIT
 Position: (x: {x}, y: {y}, z: {z})

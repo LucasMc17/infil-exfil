@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://3rc8lg86w2jx" path="res://2D/debug/debug_ui.tscn" id="2_qeex7"]
 [ext_resource type="PackedScene" uid="uid://cfeifk7bnyc0h" path="res://levels/level_camera.tscn" id="4_dx6c5"]
 [ext_resource type="MeshLibrary" uid="uid://crn4m7ftmqgqh" path="res://navigation/grid_library_source.tres" id="4_qeex7"]
-[ext_resource type="Texture2D" uid="uid://i8vhjvcw28g8" path="res://assets/industrial_sunset_puresky_4k.hdr" id="5_p5284"]
 [ext_resource type="PackedScene" uid="uid://cmp62gpdora7s" path="res://units/cell_highlighter.tscn" id="6_46036"]
 [ext_resource type="PackedScene" uid="uid://b6h1160eunshj" path="res://units/friendlies/friendly_unit.tscn" id="6_maq6b"]
 [ext_resource type="PackedScene" uid="uid://bup8e1flyaj0p" path="res://units/enemies/enemy_unit.tscn" id="7_maq6b"]
@@ -17,15 +16,18 @@
 [ext_resource type="Script" uid="uid://bp1pubml3l0d7" path="res://units/ai/directive/directive.gd" id="12_jldy4"]
 [ext_resource type="Script" uid="uid://cvy611uxolcnt" path="res://units/ai/directive/move_to_point.gd" id="13_qeex7"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_46036"]
-panorama = ExtResource("5_p5284")
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jldy4"]
+sky_top_color = Color(0.18411472, 0.48912382, 0.5990869, 1)
+sky_curve = 0.10980643
+ground_curve = 0.1837921
+energy_multiplier = 2.0
 
-[sub_resource type="Sky" id="Sky_satuh"]
-sky_material = SubResource("PanoramaSkyMaterial_46036")
+[sub_resource type="Sky" id="Sky_qeex7"]
+sky_material = SubResource("ProceduralSkyMaterial_jldy4")
 
 [sub_resource type="Environment" id="Environment_p5284"]
 background_mode = 2
-sky = SubResource("Sky_satuh")
+sky = SubResource("Sky_qeex7")
 
 [sub_resource type="Resource" id="Resource_qeex7"]
 script = ExtResource("13_qeex7")
@@ -110,13 +112,13 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -2.5)
 tile_position = Vector3(-4, 0, -3)
 
+[node name="FriendlyUnit2" parent="Friendlies" unique_id=1503629063 instance=ExtResource("6_maq6b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 1.5)
+tile_position = Vector3(-1, 0, 1)
+
 [node name="FriendlyUnit3" parent="Friendlies" unique_id=743990508 instance=ExtResource("6_maq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 4, -10.5)
 tile_position = Vector3(-1, 1, -11)
-
-[node name="FriendlyUnit2" parent="Friendlies" unique_id=151222999 instance=ExtResource("6_maq6b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 2.5)
-tile_position = Vector3(2, 0, 2)
 
 [node name="Enemies" type="Node3D" parent="." unique_id=182952236]
 unique_name_in_owner = true

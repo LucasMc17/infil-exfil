@@ -161,6 +161,7 @@ func _update_block_spaces(units : Array[Unit], active_unit : Unit) -> void:
 			blocked_spaces[pos] = point
 
 
+## Returns an array of Vector3s, beginning with the [start] position and ending with the [end] position, which describes a navigable path between those two points. If no valid path exists, returns an empty array.
 func find_path(start: Vector3i, end: Vector3i) -> Array:
 	# Ensure start and end are within the grid and walkable
 	if not point_map_by_grid_coords.has(start) or not point_map_by_grid_coords.has(end):
@@ -172,6 +173,31 @@ func find_path(start: Vector3i, end: Vector3i) -> Array:
 	# Get the path as an array of Vector3 points
 	var path = astar.get_point_path(start_id, end_id)
 	return path
+
+
+## Takes in a starting position and a maximum move distance and returns an array of all valid positions to move to from that position.
+func get_all_valid_moves(tile_position: Vector3i, max_moves : int) -> Array[Vector3]:
+	_update_block_spaces(World.level.units, World.level.active_unit)
+	var start_time = Time.get_ticks_msec()
+	var true_max_moves = max_moves * 2
+	var potential_moves : Array[Vector3]
+	var final_moves : Array[Vector3]
+	for x in range(-true_max_moves, true_max_moves + 1):
+		for y in range(-true_max_moves, true_max_moves + 1):
+			for z in range(-true_max_moves, true_max_moves + 1):
+				var vector = Vector3i(x, y, z)
+				if vector != Vector3i.ZERO and point_map_by_grid_coords.has(vector + tile_position) and !level.occupied_map.has(vector + tile_position) and absi(x) + absi(y) + absi(z) <= true_max_moves :
+					potential_moves.append(vector + tile_position)
+	
+	for move in potential_moves:
+		var path = find_path(tile_position, move)
+		if !path.is_empty() and path.size() - 1 <= max_moves:
+			final_moves.append(move)
+			# paint_grid_square(map_to_local(move), Color.GREEN)
+	
+	var end_time = Time.get_ticks_msec()
+	DebugConsole.log("Execution time to find all valid moves: " + str(end_time - start_time) + " milliseconds", 4)
+	return final_moves
 
 
 func do_debug_path(start_pos : Vector3i, end_pos : Vector3i):
@@ -217,30 +243,6 @@ func paint_grid_square(tile_position: Vector3, color : Color):
 	var temp = tile_position
 	temp.y += 1
 	DebugDraw3D.draw_box.call_deferred(temp, Quaternion.IDENTITY, Vector3(0.9, 0.9, 0.9), color, true, INF)
-
-
-func get_all_valid_moves(tile_position: Vector3i, max_moves : int) -> Array[Vector3]:
-	_update_block_spaces(World.level.units, World.level.active_unit)
-	var start_time = Time.get_ticks_msec()
-	var true_max_moves = max_moves * 2
-	var potential_moves : Array[Vector3]
-	var final_moves : Array[Vector3]
-	for x in range(-true_max_moves, true_max_moves + 1):
-		for y in range(-true_max_moves, true_max_moves + 1):
-			for z in range(-true_max_moves, true_max_moves + 1):
-				var vector = Vector3i(x, y, z)
-				if vector != Vector3i.ZERO and point_map_by_grid_coords.has(vector + tile_position) and !level.occupied_map.has(vector + tile_position) and absi(x) + absi(y) + absi(z) <= true_max_moves :
-					potential_moves.append(vector + tile_position)
-	
-	for move in potential_moves:
-		var path = find_path(tile_position, move)
-		if !path.is_empty() and path.size() - 1 <= max_moves:
-			final_moves.append(move)
-			# paint_grid_square(map_to_local(move), Color.GREEN)
-	
-	var end_time = Time.get_ticks_msec()
-	DebugConsole.log("Execution time to find all valid moves: " + str(end_time - start_time) + " milliseconds", 4)
-	return final_moves
 
 
 func get_all_valid_moves_v2(tile_position: Vector3i, max_moves: int):

@@ -28,6 +28,7 @@ func _ready():
 
 
 func check_for_detection() -> void:
+	DebugConsole.log("Checking for detection", 2)
 	return vision_zone.test_visibility()
 
 

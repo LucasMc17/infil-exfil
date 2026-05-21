@@ -91,8 +91,11 @@ func follow_path(delta : float, path : Array, mps := 1.0) -> void:
 	if path.is_empty():
 		movement_machine.current_state.transition('NoMovement')
 		return
+	var direction = (path[0] - tile_position).normalized()
+	var angle = atan2(-direction.x, -direction.z)
+	rotation.y = angle
 	tile_position = tile_position.move_toward(path[0], mps * delta)
+	# DebugConsole.log(angle)
 	if tile_position == path[0]:
 		path.pop_front()
 		check_for_detection()
-		
