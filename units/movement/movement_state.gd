@@ -16,7 +16,7 @@ func enter(previous_state : State, ext : Dictionary):
 	unit.debug_label.change_param('movement_state', name)
 	unit.movement_points -= cost
 	unit.started_moving.emit(unit)
-	var path = World.level.nav_map.find_path(unit.tile_position, end_point)
+	var path = World.level.nav_map.find_path(unit.actual_position, end_point)
 	if unit.potential_moves.has(end_point):
 		points = path
 	else:

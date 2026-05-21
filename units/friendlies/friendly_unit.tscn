@@ -14,7 +14,7 @@ albedo_color = Color(0.27409065, 0.7122239, 0.12106868, 1)
 radius = 0.45
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_wqcmw"]
-viewport_path = NodePath("DebugLabel/@SubViewport@142736")
+viewport_path = NodePath("DebugLabel/@SubViewport@18802")
 
 [node name="FriendlyUnit" unique_id=1676765037 groups=["friendlies"] instance=ExtResource("1_7ia1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
@@ -76,7 +76,6 @@ shape = SubResource("CapsuleShape3D_o5yok")
 debug_color = Color(2.2862107e-06, 0.6497064, 0.14529341, 0.41960785)
 
 [node name="DebugLabel" parent="." index="4" unique_id=607303816]
-pixel_size = 0.005
 texture = SubResource("ViewportTexture_wqcmw")
 _text = "FRIENDLY UNIT
 Position: (x: {x}, y: {y}, z: {z})
