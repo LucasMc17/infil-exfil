@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://51rqmlm6v48t"]
 
 [ext_resource type="PackedScene" uid="uid://b3dk6f1wi6k61" path="res://2D/match_ui/player_turn_options.tscn" id="1_ka1p3"]
+[ext_resource type="PackedScene" uid="uid://dqltuiiqj5y2u" path="res://2D/match_ui/active_unit_options.tscn" id="2_aurpg"]
 
 [node name="MatchUi" type="Control" unique_id=1837896508]
 layout_mode = 3
@@ -21,4 +22,14 @@ anchor_bottom = 1.0
 offset_left = -90.0
 offset_top = -31.0
 grow_horizontal = 0
+grow_vertical = 0
+
+[node name="ActiveUnitOptions" parent="." unique_id=367003720 instance=ExtResource("2_aurpg")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
 grow_vertical = 0

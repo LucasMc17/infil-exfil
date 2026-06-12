@@ -8,6 +8,10 @@ signal started_acting(unit : Unit)
 signal finished_acting(unit : Unit)
 signal forfeited_turn(unit : Unit)
 
+@export var primary_weapon : Weapon
+
+@export var skills : Array[Skill] = []
+
 @export var tile_position := Vector3.ZERO:
 	set(val):
 		tile_position = val
@@ -57,6 +61,7 @@ func refresh_valid_moves():
 func activate():
 	_cell_highlight.visible = true
 	refresh_valid_moves()
+	Events.unit_activated.emit(self)
 
 
 func deactivate():

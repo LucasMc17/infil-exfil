@@ -1,5 +1,7 @@
 extends Node
 
+signal unit_activated(unit : Unit)
+
 # Player turn events
 
 signal player_turn_ended()

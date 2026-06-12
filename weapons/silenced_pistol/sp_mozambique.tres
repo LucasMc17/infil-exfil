@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SingleTargetSkill" format=3 uid="uid://4ls5wvm11rvh"]
+
+[ext_resource type="Script" uid="uid://dceae7fa2r6en" path="res://skills/single_target_skill.gd" id="1_mhhm3"]
+
+[resource]
+script = ExtResource("1_mhhm3")
+effective_range = 8.0
+ammo_cost = 3
+name = "Mozambique Drill"
+description = "Quickly fire three shots at an unaware enemy. If the enemy is unarmored, they will be killed instantly. If they are wearing either a helmet or body armor, they will take 4 damage and learn the shooter's position."
+skill_type = 1
+metadata/_custom_type_script = "uid://dceae7fa2r6en"

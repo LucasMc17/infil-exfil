@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cxqjmbgho07yf"]
+
+[ext_resource type="Script" uid="uid://nvis4yup64c8" path="res://2D/match_ui/unit_skill.gd" id="1_jgpac"]
+
+[sub_resource type="Gradient" id="Gradient_c5e6n"]
+offsets = PackedFloat32Array(0.6125874)
+colors = PackedColorArray(0.49747366, 0.49747366, 0.49747366, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jgpac"]
+gradient = SubResource("Gradient_c5e6n")
+
+[node name="UnitSkill" type="TextureButton" unique_id=710786138]
+texture_normal = SubResource("GradientTexture2D_jgpac")
+script = ExtResource("1_jgpac")
+
+[node name="Label" type="Label" parent="." unique_id=1809278078]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Test Skill"
