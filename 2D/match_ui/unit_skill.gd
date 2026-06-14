@@ -11,3 +11,7 @@ func build(skill : Skill) -> void:
 func _ready() -> void:
 	if skill_res:
 		_label.text = skill_res.name
+
+
+func _on_pressed() -> void:
+	skill_res.arm(World.level.active_unit)

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="SingleTargetSkill" format=3 uid="uid://4ls5wvm11rvh"]
 
-[ext_resource type="Script" uid="uid://dceae7fa2r6en" path="res://skills/single_target_skill.gd" id="1_mhhm3"]
+[ext_resource type="Script" uid="uid://dceae7fa2r6en" path="res://skills/single_target_skills/single_target_skill.gd" id="1_mhhm3"]
 
 [resource]
 script = ExtResource("1_mhhm3")

@@ -2,6 +2,8 @@
 class_name Unit
 extends AnimatableBody3D
 
+const SKILL_TARGETING_AREA = preload("res://skills/single_target_skills/skill_targeting_area.tscn")
+
 signal started_moving(unit : Unit)
 signal finished_moving(unit : Unit)
 signal started_acting(unit : Unit)
@@ -32,20 +34,63 @@ var movement_points := max_movement_points
 var action_points := max_action_points
 var is_active : bool:
 	get():
-		return World.level.active_unit == self
+		if World.level:
+			return World.level.active_unit == self
+		else:
+			return false
+
 var actual_position : Vector3i:
 	get():
 		return tile_position as Vector3i
-
+var all_skills : Array[Skill]:
+	get():
+		var result = skills.duplicate()
+		if primary_weapon:
+			result.append_array(primary_weapon.skills.duplicate())
+		return result
+var targeted_skills : Array[SingleTargetSkill]:
+	get():
+		var result : Array[SingleTargetSkill] = []
+		for skill in all_skills:
+			if skill is SingleTargetSkill:
+				result.append(skill)
+		return result
+		
 @onready var _cell_highlight := %CellHighlight
 @onready var movement_machine : MovementMachine = %MovementMachine
 @onready var action_machine : ActionMachine = %ActionMachine
 @onready var debug_label : DebugLabel = %DebugLabel
 
-func _ready():
+func _ready(): 
+	if primary_weapon:
+		primary_weapon = primary_weapon.make_unique()
+	var temp = skills.duplicate()
+	skills = []
+	for skill in temp:
+		skills.append(skill.make_unique())
+
 	debug_label.change_param('x', str(round(tile_position.x)))
 	debug_label.change_param('y', str(round(tile_position.y)))
 	debug_label.change_param('z', str(round(tile_position.z)))
+	_set_up_targeted_skill_areas()
+
+
+func _set_up_targeted_skill_areas() -> void:
+	for skill : SingleTargetSkill in targeted_skills:
+		print(skill)
+		print(skill.effective_range)
+		var targeting_area = SKILL_TARGETING_AREA.instantiate()
+		targeting_area.area_radius = skill.effective_range
+		skill.skill_area = targeting_area
+		add_child(targeting_area)
+		# var area = Area3D.new()
+		# var col_shape = CollisionShape3D.new() 
+		# var shape = SphereShape3D.new()
+		# shape.radius = skill.effective_range
+		# col_shape.shape = shape
+		# skill.skill_area = area
+		# add_child(area)
+		# area.add_child(col_shape)
 
 
 # NOTE: There's a lot more to do here. Right now this is called when the unit is activated, or enters or exits a movmement state. I think there could be a more elegant solution, utilizing signals to determine when the list of available moves should be updated. I am also considering changing the level cell highlighter from the global level to a per unit level, then just swapping its visibility as the unit is activated/deactivated.

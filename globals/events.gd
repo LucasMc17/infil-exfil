@@ -6,6 +6,10 @@ signal unit_activated(unit : Unit)
 
 signal player_turn_ended()
 
+signal skill_armed(skill : Skill)
+
+signal skill_disarmed()
+
 # Enemy turn events
 
 

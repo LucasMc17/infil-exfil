@@ -2,6 +2,11 @@ class_name BaseLevel
 extends Node3D
 
 var is_player_turn := true
+var armed_skill : Skill:
+	set(val):
+		armed_skill = val
+		if !val:
+			Events.skill_disarmed.emit()
 
 var active_unit : Unit:
 	set(val):
@@ -76,6 +81,7 @@ func set_active_unit(unit : Unit):
 	active_unit = unit
 	if active_unit:
 		active_unit.activate()
+		armed_skill = null
 
 
 func cycle_active_unit():
@@ -110,6 +116,12 @@ func _input(event: InputEvent) -> void:
 	
 	elif Input.is_action_just_pressed('zoom_out'):
 		level_camera.zoom_camera(false)
+	
+	elif Input.is_action_just_pressed('escape'):
+		if armed_skill:
+			armed_skill = null
+		else:
+			DebugConsole.log("Pausing")
 	
 	elif Input.is_action_just_pressed('force_exit'):
 		get_tree().quit()

@@ -19,3 +19,5 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Test Skill"
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

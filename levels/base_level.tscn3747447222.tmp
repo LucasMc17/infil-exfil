@@ -14,6 +14,8 @@
 [ext_resource type="Script" uid="uid://cwt2k11twrldn" path="res://logic/click_detection/3d_click_handler.gd" id="10_n8wy4"]
 [ext_resource type="PackedScene" uid="uid://51rqmlm6v48t" path="res://2D/match_ui/match_ui.tscn" id="12_5mwf5"]
 [ext_resource type="Script" uid="uid://bp1pubml3l0d7" path="res://units/ai/directive/directive.gd" id="12_jldy4"]
+[ext_resource type="Script" uid="uid://devf41a8jtutj" path="res://skills/skill.gd" id="12_qeex7"]
+[ext_resource type="Resource" uid="uid://dulh3f7qplt67" path="res://weapons/silenced_pistol/sp_headshot.tres" id="13_hd0gu"]
 [ext_resource type="Script" uid="uid://cvy611uxolcnt" path="res://units/ai/directive/move_to_point.gd" id="13_qeex7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jldy4"]
@@ -110,6 +112,7 @@ unique_name_in_owner = true
 
 [node name="FriendlyUnit" parent="Friendlies" unique_id=1676765037 instance=ExtResource("6_maq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -3.5)
+skills = Array[ExtResource("12_qeex7")]([ExtResource("13_hd0gu")])
 tile_position = Vector3(-4, 0, -4)
 
 [node name="FriendlyUnit2" parent="Friendlies" unique_id=1503629063 instance=ExtResource("6_maq6b")]
@@ -120,26 +123,4 @@ tile_position = Vector3(-1, 0, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 4, -10.5)
 tile_position = Vector3(-1, 1, -11)
 
-[node name="Enemies" type="Node3D" parent="." unique_id=182952236]
-unique_name_in_owner = true
-
-[node name="EnemyUnit" parent="Enemies" unique_id=2010674513 instance=ExtResource("7_maq6b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0.5)
-unaware_base_directives = Array[ExtResource("12_jldy4")]([SubResource("Resource_qeex7"), SubResource("Resource_hd0gu")])
-alarm_run_chance = 1.0
-tile_position = Vector3(1, 0, 0)
-
-[node name="EnemyUnit2" parent="Enemies" unique_id=702838460 instance=ExtResource("7_maq6b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0, 0.5)
-unaware_base_directives = Array[ExtResource("12_jldy4")]([SubResource("Resource_e78uj"), SubResource("Resource_u35x1")])
-tile_position = Vector3(11, 0, 0)
-
-[node name="EnemyUnit3" parent="Enemies" unique_id=707093431 instance=ExtResource("7_maq6b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 0.5)
-unaware_base_directives = Array[ExtResource("12_jldy4")]([SubResource("Resource_ubdnn"), SubResource("Resource_lxejw")])
-tile_position = Vector3(13, 0, 0)
-
-[node name="ClickHandler3D" type="Node3D" parent="." unique_id=797014710]
-unique_name_in_owner = true
-script = ExtResource("10_n8wy4")
-metadata/_custom_type_script = "uid://cwt2k11twrldn"
+[node name="Enemies" type="Node3D" p
