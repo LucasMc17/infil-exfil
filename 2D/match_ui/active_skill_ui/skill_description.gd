@@ -24,4 +24,4 @@ func _on_cancel_button_pressed() -> void:
 
 
 func _on_confirm_button_pressed() -> void:
-	pass # Replace with function body.
+	skill_res.use()

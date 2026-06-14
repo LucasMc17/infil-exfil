@@ -72,25 +72,23 @@ func _ready():
 	debug_label.change_param('x', str(round(tile_position.x)))
 	debug_label.change_param('y', str(round(tile_position.y)))
 	debug_label.change_param('z', str(round(tile_position.z)))
-	_set_up_targeted_skill_areas()
+	_set_up_skills()
 
 
-func _set_up_targeted_skill_areas() -> void:
-	for skill : SingleTargetSkill in targeted_skills:
-		print(skill)
-		print(skill.effective_range)
-		var targeting_area = SKILL_TARGETING_AREA.instantiate()
-		targeting_area.area_radius = skill.effective_range
-		skill.skill_area = targeting_area
-		add_child(targeting_area)
-		# var area = Area3D.new()
-		# var col_shape = CollisionShape3D.new() 
-		# var shape = SphereShape3D.new()
-		# shape.radius = skill.effective_range
-		# col_shape.shape = shape
-		# skill.skill_area = area
-		# add_child(area)
-		# area.add_child(col_shape)
+func _set_up_skills() -> void:
+	for skill : Skill in all_skills:
+		skill.user = self
+		if skill is SingleTargetSkill:
+			var targeting_area = SKILL_TARGETING_AREA.instantiate()
+			targeting_area.area_radius = skill.effective_range
+			skill.skill_area = targeting_area
+			add_child(targeting_area)
+
+
+func _refresh_skills() -> void:
+	for skill in all_skills:
+		if skill is SingleTargetSkill:
+			skill.refresh_targets()
 
 
 # NOTE: There's a lot more to do here. Right now this is called when the unit is activated, or enters or exits a movmement state. I think there could be a more elegant solution, utilizing signals to determine when the list of available moves should be updated. I am also considering changing the level cell highlighter from the global level to a per unit level, then just swapping its visibility as the unit is activated/deactivated.
@@ -106,6 +104,7 @@ func refresh_valid_moves():
 func activate():
 	_cell_highlight.visible = true
 	refresh_valid_moves()
+	_refresh_skills()
 	Events.unit_activated.emit(self)
 
 
@@ -140,6 +139,7 @@ func check_for_detection() -> void:
 func follow_path(delta : float, path : Array, mps := 1.0) -> void:
 	if path.is_empty():
 		movement_machine.current_state.transition('NoMovement')
+		_refresh_skills()
 		return
 	var direction = (path[0] - tile_position).normalized()
 	var angle = atan2(-direction.x, -direction.z)

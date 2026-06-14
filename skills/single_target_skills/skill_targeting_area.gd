@@ -10,10 +10,12 @@ func _ready() -> void:
 	_collision_shape.shape.radius = area_radius
 
 
-func get_all_targets() -> Array[Unit]:
+func get_all_targets(user : Unit) -> Array[Unit]:
+	var is_friendly = user is FriendlyUnit
 	var overlaps = get_overlapping_bodies()
 	var result : Array[Unit] = []
 	for overlapper in overlaps:
-		if overlapper is Unit:
+		if overlapper is Unit and overlapper != user and \
+		(overlapper is EnemyUnit if is_friendly else overlapper is FriendlyUnit):
 			result.append(overlapper)
 	return result

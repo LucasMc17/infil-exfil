@@ -11,7 +11,14 @@ func build(skill : Skill) -> void:
 func _ready() -> void:
 	if skill_res:
 		_label.text = skill_res.name
+		var usable = skill_res.get_usability()
+		if !usable:	
+			disabled = true
+			# NOTE: This is temporary		
+			modulate.a = 0.5
+			
 
 
 func _on_pressed() -> void:
-	skill_res.arm(World.level.active_unit)
+	World.level.armed_skill = skill_res
+	skill_res.arm()

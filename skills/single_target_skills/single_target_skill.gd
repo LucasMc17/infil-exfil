@@ -8,14 +8,19 @@ extends Skill
 @export var ammo_cost := 1
 
 var skill_area : SkillTargetingArea
+var potential_targets : Array[Unit] = []
 
-func arm(user) -> void:
-	super(user)
-	DebugConsole.log(skill_area.get_all_targets())
+func arm() -> void:
+	super()
+	DebugConsole.log(skill_area.get_all_targets(user))
 
 
-func get_usability(user : Unit) -> bool:
-	if !super(user):
+func get_usability() -> bool:
+	if !super():
 		return false
 	# TODO: Check area overlapping bodies here
-	return true
+	return !potential_targets.is_empty()
+
+
+func refresh_targets() -> void:
+	potential_targets = skill_area.get_all_targets(user)
