@@ -22,3 +22,5 @@ func _on_skill_disarmed() -> void:
 	_turn_ui.visible = true
 	_skill_ui.visible = false
 	_skill_description.teardown()
+
+	_active_unit_options.refresh_affordability()

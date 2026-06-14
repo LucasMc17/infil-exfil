@@ -6,6 +6,11 @@ func _ready() -> void:
 	Events.unit_activated.connect(_on_unit_activated)
 
 
+func refresh_affordability() -> void:
+	for child in get_children():
+		child.refresh_affordability()
+
+
 func _on_unit_activated(unit : Unit) -> void:
 	for child in get_children():
 		child.queue_free()	

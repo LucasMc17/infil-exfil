@@ -19,7 +19,7 @@ func make_unique() -> Skill:
 	return self.duplicate(true)
 
 
-func get_usability() -> bool:
+func get_affordability() -> bool:
 	return user.action_points >= cost
 
 

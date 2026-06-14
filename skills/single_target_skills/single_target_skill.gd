@@ -12,13 +12,18 @@ var potential_targets : Array[Unit] = []
 
 func arm() -> void:
 	super()
-	DebugConsole.log(skill_area.get_all_targets(user))
+	get_usability()
+	DebugConsole.log(potential_targets)
 
 
-func get_usability() -> bool:
-	if !super():
-		return false
-	# TODO: Check area overlapping bodies here
+# func get_usability() -> bool:
+# 	if !super():
+# 		return false
+# 	# TODO: Check area overlapping bodies here
+# 	return !potential_targets.is_empty()
+
+func get_usability():
+	refresh_targets()
 	return !potential_targets.is_empty()
 
 
