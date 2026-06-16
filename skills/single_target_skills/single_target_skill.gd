@@ -16,12 +16,6 @@ func arm() -> void:
 	DebugConsole.log(potential_targets)
 
 
-# func get_usability() -> bool:
-# 	if !super():
-# 		return false
-# 	# TODO: Check area overlapping bodies here
-# 	return !potential_targets.is_empty()
-
 func get_usability():
 	refresh_targets()
 	return !potential_targets.is_empty()
@@ -29,3 +23,9 @@ func get_usability():
 
 func refresh_targets() -> void:
 	potential_targets = skill_area.get_all_targets(user)
+
+
+func use() -> void:
+	super()
+	# TODO: To update once targeting system is finished.
+	Events.single_target_skill_used.emit(self, user, user)

@@ -9,9 +9,11 @@ enum SkillType {
 
 @export_group("Skill Info")
 @export var name := "Skill Name"
+@export var id := "skill_name"
 @export_multiline var description := "Skill description"
 @export var skill_type := SkillType.GENERAL
-@export var cost := 1
+@export var action_cost := 1
+@export var movement_cost := 0
 
 var user : Unit
 
@@ -20,7 +22,7 @@ func make_unique() -> Skill:
 
 
 func get_affordability() -> bool:
-	return user.action_points >= cost
+	return user.action_points >= action_cost && user.movement_points >= movement_cost
 
 
 func arm() -> void:
@@ -28,5 +30,5 @@ func arm() -> void:
 
 
 func use() -> void:
-	user.action_points -= cost
-	Events.skill_disarmed.emit()
+	user.action_points -= action_cost
+	user.movement_points -= movement_cost

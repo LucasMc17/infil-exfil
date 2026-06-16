@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TargetlessSkill" format=3 uid="uid://diwxsvicfelre"]
+
+[ext_resource type="Script" uid="uid://xqrqbmg2q4k0" path="res://skills/targetless_skills/targetless_skill.gd" id="1_jm03c"]
+
+[resource]
+script = ExtResource("1_jm03c")
+name = "Reload"
+id = "reload"
+description = "Reload the unit's primary weapon to full capacity. Requires a commitment of both Action and Movement points."
+movement_cost = 1
+metadata/_custom_type_script = "uid://xqrqbmg2q4k0"

@@ -1,6 +1,8 @@
 class_name BaseLevel
 extends Node3D
 
+var skill_handler := SkillHandler.new()
+
 var is_player_turn := true
 var armed_skill : Skill:
 	set(val):

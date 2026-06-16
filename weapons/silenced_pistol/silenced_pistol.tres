@@ -4,11 +4,13 @@
 [ext_resource type="Script" uid="uid://devf41a8jtutj" path="res://skills/skill.gd" id="2_p2w61"]
 [ext_resource type="Resource" uid="uid://dulh3f7qplt67" path="res://weapons/silenced_pistol/sp_headshot.tres" id="3_p2w61"]
 [ext_resource type="Resource" uid="uid://4ls5wvm11rvh" path="res://weapons/silenced_pistol/sp_mozambique.tres" id="4_sdsbw"]
+[ext_resource type="Resource" uid="uid://diwxsvicfelre" path="res://skills/targetless_skills/reload.tres" id="5_mpi1w"]
+[ext_resource type="Resource" uid="uid://ck4oucrk1wdga" path="res://skills/targetless_skills/tac_reload.tres" id="6_l4ogs"]
 
 [resource]
 script = ExtResource("1_x6qsl")
 capacity = 8
 name = "Silenced Pistol"
 description = "A pistol, equipped with a silencer. Very effective at close and middle range, but will struggle against armored enemies. The silencer reduces the noise radius of the weapon, and makes the noise less suspicious, but does not make the weapon silent to operate."
-skills = Array[ExtResource("2_p2w61")]([ExtResource("3_p2w61"), ExtResource("4_sdsbw")])
+skills = Array[ExtResource("2_p2w61")]([ExtResource("3_p2w61"), ExtResource("4_sdsbw"), ExtResource("5_mpi1w"), ExtResource("6_l4ogs")])
 metadata/_custom_type_script = "uid://hc8dmdnd0cip"

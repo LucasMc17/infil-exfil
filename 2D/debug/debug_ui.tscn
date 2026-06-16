@@ -32,5 +32,5 @@ offset_right = 500.0
 grow_vertical = 0
 script = ExtResource("2_1hpl2")
 commands = Array[ExtResource("3_i5hs5")]([ExtResource("4_c2eu2"), ExtResource("5_r01na"), ExtResource("6_8umau"), ExtResource("7_lf6aa")])
-console_log_level = 2
+console_log_level = 3
 metadata/_custom_type_script = "uid://1nqsah5bsarx"

@@ -10,6 +10,7 @@ extends Control
 func _ready() -> void:
 	Events.skill_armed.connect(_on_skill_armed)
 	Events.skill_disarmed.connect(_on_skill_disarmed)
+	Events.skill_used.connect(_on_skill_used)
 
 
 func _on_skill_armed(skill : Skill) -> void:
@@ -23,4 +24,11 @@ func _on_skill_disarmed() -> void:
 	_skill_ui.visible = false
 	_skill_description.teardown()
 
-	_active_unit_options.refresh_affordability()
+
+func _on_skill_used(_skill : Skill, user : Unit) -> void:
+	if user is FriendlyUnit:
+		_turn_ui.visible = true
+		_skill_ui.visible = false
+		_skill_description.teardown()
+
+		_active_unit_options.refresh_affordability()
