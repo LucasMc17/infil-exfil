@@ -30,8 +30,16 @@ signal forfeited_turn(unit : Unit)
 @export var max_action_points := 1
 
 var potential_moves : Array[Vector3] = []
-var movement_points := max_movement_points
-var action_points := max_action_points
+var movement_points := max_movement_points:
+	set(val):
+		movement_points = val
+		if flag:
+			flag.refresh(self)
+var action_points := max_action_points:
+	set(val):
+		action_points = val
+		if flag:
+			flag.refresh(self)
 var is_active : bool:
 	get():
 		if World.level:
@@ -57,6 +65,7 @@ var targeted_skills : Array[SingleTargetSkill]:
 		return result
 		
 @onready var _cell_highlight := %CellHighlight
+@onready var flag : UnitFlag = %UnitFlag
 @onready var movement_machine : MovementMachine = %MovementMachine
 @onready var action_machine : ActionMachine = %ActionMachine
 @onready var debug_label : DebugLabel = %DebugLabel
@@ -65,6 +74,7 @@ var targeted_skills : Array[SingleTargetSkill]:
 func _ready(): 
 	if primary_weapon:
 		primary_weapon = primary_weapon.make_unique()
+		primary_weapon.initialize(self)
 	var temp = skills.duplicate()
 	skills = []
 	for skill in temp:
@@ -74,6 +84,8 @@ func _ready():
 	debug_label.change_param('y', str(round(tile_position.y)))
 	debug_label.change_param('z', str(round(tile_position.z)))
 	_set_up_skills()
+
+	flag.refresh(self)
 
 
 func _set_up_skills() -> void:
@@ -104,6 +116,8 @@ func refresh_valid_moves():
 
 func activate():
 	_cell_highlight.visible = true
+	flag.refresh(self)
+	flag.expand()
 	skill_area_holder.visible = true
 	refresh_valid_moves()
 	# _refresh_skills()
@@ -112,6 +126,7 @@ func activate():
 
 func deactivate():
 	_cell_highlight.visible = false
+	flag.collapse()
 	skill_area_holder.visible = false
 
 

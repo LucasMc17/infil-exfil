@@ -11,6 +11,12 @@ extends Resource
 @export_group("Weapon Skills")
 @export var skills : Array[Skill]
 
+var wielder : Unit
+
+func initialize(unit : Unit) -> void:
+	wielder = unit
+
+
 func make_unique() -> Weapon:
 	var result = self.duplicate(true)
 	var temp = skills.duplicate()
