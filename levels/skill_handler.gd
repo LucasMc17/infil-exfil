@@ -11,9 +11,9 @@ func _on_targetless_skill_used(skill : TargetlessSkill, user : Unit) -> void:
 	Events.skill_used.emit(skill, user)
 	match skill.id:
 		"reload":
-			pass
+			user.primary_weapon.reload(false)
 		"tactical_reload":
-			pass
+			user.primary_weapon.reload(true)
 		_:
 			DebugConsole.warn("Unkown targetless skill used: " + skill.name)
 

@@ -12,8 +12,11 @@ enum SkillType {
 @export var id := "skill_name"
 @export_multiline var description := "Skill description"
 @export var skill_type := SkillType.GENERAL
+
+@export_group("Cost")
 @export var action_cost := 1
 @export var movement_cost := 0
+@export var ammo_cost := 0
 
 var user : Unit
 
@@ -32,3 +35,5 @@ func arm() -> void:
 func use() -> void:
 	user.action_points -= action_cost
 	user.movement_points -= movement_cost
+	if ammo_cost and user.primary_weapon is RangedWeapon:
+		user.primary_weapon.current_ammunition -= ammo_cost

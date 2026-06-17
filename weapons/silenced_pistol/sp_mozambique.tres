@@ -5,9 +5,9 @@
 [resource]
 script = ExtResource("1_mhhm3")
 effective_range = 8.0
-ammo_cost = 3
 name = "Mozambique Drill"
 id = "mozambique_drill"
 description = "Quickly fire three shots at an unaware enemy. If the enemy is unarmored, they will be killed instantly. If they are wearing either a helmet or body armor, they will take 4 damage and learn the shooter's position."
 skill_type = 1
+ammo_cost = 3
 metadata/_custom_type_script = "uid://dceae7fa2r6en"

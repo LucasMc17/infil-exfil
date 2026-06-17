@@ -9,4 +9,5 @@ name = "Headshot"
 id = "headshot"
 description = "Take a single, well-aimed shot at the target's head. Chance to hit increases as distance to target decreases. A successful hit will instantly kill the enemy, while a missed shot will give your position away. Units with helmets will not be killed if hit, but will be stunned for a full turn."
 skill_type = 1
+ammo_cost = 1
 metadata/_custom_type_script = "uid://dceae7fa2r6en"

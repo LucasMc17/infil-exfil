@@ -9,7 +9,8 @@
 
 [resource]
 script = ExtResource("1_x6qsl")
-capacity = 8
+capacity = 7
+maximum_reserve_ammo = 14
 name = "Silenced Pistol"
 description = "A pistol, equipped with a silencer. Very effective at close and middle range, but will struggle against armored enemies. The silencer reduces the noise radius of the weapon, and makes the noise less suspicious, but does not make the weapon silent to operate."
 skills = Array[ExtResource("2_p2w61")]([ExtResource("3_p2w61"), ExtResource("4_sdsbw"), ExtResource("5_mpi1w"), ExtResource("6_l4ogs")])
