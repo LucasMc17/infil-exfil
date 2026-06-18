@@ -19,5 +19,16 @@ func handle_refresh(unit) -> void:
 	_name.text = unit.name
 	_mp.text = str(unit.movement_points)
 	_ap.text = str(unit.action_points)
-	_current_ammo.text = str(unit.primary_weapon.current_ammunition) if unit.primary_weapon and unit.primary_weapon is RangedWeapon else "0"
-	_backup_ammo.text = str(unit.primary_weapon.current_reserve_ammo) if unit.primary_weapon and unit.primary_weapon is RangedWeapon else "0"
+	if unit.primary_weapon and unit.primary_weapon is RangedWeapon:
+		if DebugOptions.ammo_mode as int == 2:
+			_current_ammo.text = "INF"
+		else:
+			_current_ammo.text = str(unit.primary_weapon.current_ammunition)
+
+		if DebugOptions.ammo_mode as int > 0:
+			_backup_ammo.text = "INF"
+		else:
+			_backup_ammo.text = str(unit.primary_weapon.current_reserve_ammo)
+	else:
+		_current_ammo.text= "0"
+		_backup_ammo.text = "0"

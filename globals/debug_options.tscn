@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://ccq0t586nfsk"]
+
+[ext_resource type="Script" uid="uid://ckkhpd7bh8p36" path="res://globals/debug_options.gd" id="1_dng8f"]
+
+[node name="DebugOptions" type="Node" unique_id=892237510]
+script = ExtResource("1_dng8f")
+ammo_mode = 1

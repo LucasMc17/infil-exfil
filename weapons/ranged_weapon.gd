@@ -23,12 +23,20 @@ var current_reserve_ammo : int:
 
 func initialize(unit : Unit) -> void:
 	super(unit)
-	current_ammunition = capacity
-	current_reserve_ammo = maximum_reserve_ammo
+	if DebugOptions.ammo_mode as int == 2:
+		current_ammunition = INF
+	else:
+		current_ammunition = capacity
+	if DebugOptions.ammo_mode as int > 0:
+		current_reserve_ammo = INF
+	else:
+		current_reserve_ammo = maximum_reserve_ammo
 
  
 func reload(should_discard_unused : bool) -> void:
-	if should_discard_unused:
+	if DebugOptions.ammo_mode as int == 1:
+		current_ammunition = capacity
+	elif should_discard_unused:
 		current_ammunition = min(capacity, current_reserve_ammo)
 		current_reserve_ammo = max(current_reserve_ammo - capacity, 0)
 	else:
