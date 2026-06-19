@@ -25,7 +25,11 @@ func make_unique() -> Skill:
 
 
 func get_affordability() -> bool:
-	return user.action_points >= action_cost && user.movement_points >= movement_cost
+	if user.action_points >= action_cost && user.movement_points >= movement_cost:
+		if ammo_cost:
+			return user.primary_weapon is RangedWeapon && user.primary_weapon.current_ammunition >= ammo_cost
+		return true
+	return false
 
 
 func arm() -> void:

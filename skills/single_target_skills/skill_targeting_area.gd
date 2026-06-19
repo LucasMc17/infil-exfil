@@ -21,7 +21,13 @@ func get_all_targets(user : Unit) -> Array[Unit]:
 	for overlapper in overlaps:
 		if overlapper is Unit and overlapper != user and \
 		(overlapper is EnemyUnit if is_friendly else overlapper is FriendlyUnit):
-			result.append(overlapper)
+			# TODO: This is not working because it comes from the user's feet and goes to the enemy's feet, hitting the floor along the way (I think)
+			var ray := PhysicsRayQueryParameters3D.create(user.global_position, overlapper.global_position)
+			var collision = get_world_3d().direct_space_state.intersect_ray(ray)
+			DebugConsole.log([collision, collision.collider])
+			if collision and collision.collider == overlapper:
+				result.append(overlapper)
+	DebugConsole.log(result)
 	return result
 
 
