@@ -26,8 +26,16 @@ signal forfeited_turn(unit : Unit)
 
 @export var max_movement := 4
 
-@export var max_movement_points := 1
-@export var max_action_points := 1
+@export var max_movement_points := 1:
+	get():
+		if DebugOptions.unlimited_mp:
+			return 100
+		return max_movement_points
+@export var max_action_points := 1:
+	get():
+		if DebugOptions.unlimited_ap:
+			return 100
+		return max_action_points
 
 var potential_moves : Array[Vector3] = []
 var movement_points := max_movement_points:

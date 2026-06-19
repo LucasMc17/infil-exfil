@@ -8,6 +8,5 @@ enum AmmoMode {
 
 @export_group("God Mode")
 @export var ammo_mode := AmmoMode.NORMAL
-@export var unlimited_capacity := false
 @export var unlimited_mp := false
 @export var unlimited_ap := false
