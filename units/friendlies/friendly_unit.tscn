@@ -4,21 +4,16 @@
 [ext_resource type="Script" uid="uid://c0ilkw2vjlixv" path="res://units/friendlies/friendly_unit.gd" id="2_3ipgw"]
 [ext_resource type="Resource" uid="uid://bjcl38102xf0k" path="res://weapons/silenced_pistol/silenced_pistol.tres" id="3_dnhmq"]
 [ext_resource type="Material" uid="uid://b343cwtgaxavy" path="res://assets/materials/friendly_highlight.tres" id="3_ikcby"]
-[ext_resource type="Script" uid="uid://8c6xrxfefw3o" path="res://units/friendlies/visibility_point.gd" id="4_allfh"]
-[ext_resource type="PackedScene" uid="uid://1lky50pj0tct" path="res://units/friendlies/seen_zone.tscn" id="4_o5yok"]
 [ext_resource type="Script" uid="uid://dsirg6rpatadl" path="res://units/movement/movement_state.gd" id="6_wqcmw"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_dnhmq"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_o5yok"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ipgw"]
 albedo_color = Color(0.27409065, 0.7122239, 0.12106868, 1)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o5yok"]
-radius = 0.45
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_vl54u"]
-viewport_path = NodePath("DebugLabel/@SubViewport@22010")
+[sub_resource type="ViewportTexture" id="ViewportTexture_wqcmw"]
+viewport_path = NodePath("DebugLabel/@SubViewport@36114")
 
 [node name="FriendlyUnit" unique_id=1676765037 groups=["friendlies"] instance=ExtResource("1_7ia1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
@@ -26,66 +21,16 @@ script = ExtResource("2_3ipgw")
 primary_weapon = ExtResource("3_dnhmq")
 
 [node name="UnitFlag" parent="." index="0" unique_id=710425423]
-texture = SubResource("ViewportTexture_dnhmq")
+texture = SubResource("ViewportTexture_o5yok")
 
 [node name="MeshInstance3D" parent="." index="1" unique_id=1987464459]
 surface_material_override/0 = SubResource("StandardMaterial3D_3ipgw")
 
-[node name="SeenZone" parent="." index="3" unique_id=1411709038 node_paths=PackedStringArray("friendly") instance=ExtResource("4_o5yok")]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-friendly = NodePath("..")
-
-[node name="VisibilityPoint01" type="Marker3D" parent="SeenZone" index="0" unique_id=525744306]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19999999, -1, 0.19999999)
-script = ExtResource("4_allfh")
-metadata/_custom_type_script = "uid://8c6xrxfefw3o"
-
-[node name="VisibilityPoint02" type="Marker3D" parent="SeenZone" index="1" unique_id=973080675]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19999999, -1, -0.19999999)
-script = ExtResource("4_allfh")
-metadata/_custom_type_script = "uid://8c6xrxfefw3o"
-
-[node name="VisibilityPoint03" type="Marker3D" parent="SeenZone" index="2" unique_id=1428602187]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19999999, -1, -0.19999999)
-script = ExtResource("4_allfh")
-metadata/_custom_type_script = "uid://8c6xrxfefw3o"
-
-[node name="VisibilityPoint04" type="Marker3D" parent="SeenZone" index="3" unique_id=310598668]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19999999, -1, 0.19999999)
-script = ExtResource("4_allfh")
-metadata/_custom_type_script = "uid://8c6xrxfefw3o"
-
-[node name="VisibilityPoint05" type="Marker3D" parent="SeenZone" index="4" unique_id=843346525]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19999999, 0, 0.19999999)
-script = ExtResource("4_allfh")
-metadata/_custom_type_script = "uid://8c6xrxfefw3o"
-
-[node name="VisibilityPoint06" type="Marker3D" parent="SeenZone" index="5" unique_id=1061156353]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19999999, 0, -0.19999999)
-script = ExtResource("4_allfh")
-metadata/_custom_type_script = "uid://8c6xrxfefw3o"
-
-[node name="VisibilityPoint07" type="Marker3D" parent="SeenZone" index="6" unique_id=1203537087]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19999999, 0, -0.19999999)
-script = ExtResource("4_allfh")
-metadata/_custom_type_script = "uid://8c6xrxfefw3o"
-
-[node name="VisibilityPoint08" type="Marker3D" parent="SeenZone" index="7" unique_id=1079324434]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19999999, 0, 0.19999999)
-script = ExtResource("4_allfh")
-metadata/_custom_type_script = "uid://8c6xrxfefw3o"
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SeenZone" index="8" unique_id=2113446846]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-shape = SubResource("CapsuleShape3D_o5yok")
-debug_color = Color(2.2862107e-06, 0.6497064, 0.14529341, 0.41960785)
-
-[node name="CellHighlight" parent="." index="4" unique_id=1376729606]
+[node name="CellHighlight" parent="." index="3" unique_id=1376729606]
 surface_material_override/0 = ExtResource("3_ikcby")
 
-[node name="DebugLabel" parent="." index="5" unique_id=607303816]
-texture = SubResource("ViewportTexture_vl54u")
+[node name="DebugLabel" parent="." index="4" unique_id=607303816]
+texture = SubResource("ViewportTexture_wqcmw")
 _text = "FRIENDLY UNIT
 Position: (x: {x}, y: {y}, z: {z})
 Current Movement: {movement_state}
@@ -96,5 +41,3 @@ script = ExtResource("6_wqcmw")
 unit = NodePath("../..")
 mps = 2.0
 metadata/_custom_type_script = "uid://dsirg6rpatadl"
-
-[connection signal="seen_by_enemies" from="SeenZone" to="." method="_on_seen_zone_seen_by_enemies"]

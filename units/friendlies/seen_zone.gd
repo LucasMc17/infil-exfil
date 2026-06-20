@@ -3,7 +3,7 @@ extends VisionZone
 
 signal seen_by_enemies(enemies : Array[EnemyUnit])
 
-@export var friendly : FriendlyUnit
+@export var unit : Unit
 
 var vision_targets : Array[VisibilityPoint]:
 	get():
@@ -21,9 +21,9 @@ func check_detection() -> void:
 	for zone : SeeingZone in seeing_zones:
 		var vis_score = 0
 		for point : VisibilityPoint in vision_targets:
-			if zone.get_line_of_sight(point.global_position, friendly):
+			if zone.get_line_of_sight(point.global_position, unit):
 				vis_score += 1
-		DebugConsole.log(str(vis_score) + "/8 of friendly's vision points seen by enemy", 3)
+		DebugConsole.log(str(vis_score) + "/8 of unit's vision points seen by enemy", 3)
 		if vis_score > 1:
 			spotters.append(zone.enemy)
 	if !spotters.is_empty():

@@ -2,12 +2,10 @@
 class_name FriendlyUnit
 extends Unit
 
-@onready var _seen_zone : SeenZone = %SeenZone
-
 
 func check_for_detection():
 	DebugConsole.log("Checking for detection", 2)
-	_seen_zone.check_detection()
+	seen_zone.check_detection()
 
 
 func _on_seen_zone_seen_by_enemies(enemies: Array[EnemyUnit]) -> void:

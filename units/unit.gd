@@ -78,6 +78,7 @@ var targeted_skills : Array[SingleTargetSkill]:
 @onready var action_machine : ActionMachine = %ActionMachine
 @onready var debug_label : DebugLabel = %DebugLabel
 @onready var skill_area_holder : Node3D = %SkillAreaHolder
+@onready var seen_zone : SeenZone = %SeenZone
 
 func _ready(): 
 	if primary_weapon:

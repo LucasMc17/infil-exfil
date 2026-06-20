@@ -12,10 +12,10 @@ func check_detection() -> void:
 	for zone : SeenZone in seen_zones:
 		var vis_score = 0
 		for point : VisibilityPoint in zone.vision_targets:
-			if get_line_of_sight(point.global_position, zone.friendly):
+			if get_line_of_sight(point.global_position, zone.unit):
 				vis_score += 1
 		DebugConsole.log("Enemy sees " + str(vis_score) + "/8 of friendly's vision points", 3)
 		if vis_score > 2:
-			spotted.append(zone.friendly)
+			spotted.append(zone.unit)
 	if !spotted.is_empty():
 		friendly_seen.emit(spotted)
