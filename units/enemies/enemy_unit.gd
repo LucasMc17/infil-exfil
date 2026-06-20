@@ -16,7 +16,7 @@ var awareness := EnemyUnitAwarenessModule.new(self)
 
 var decision_director : DecisionDirector
 
-@onready var vision_zone : VisionZone = %VisionZone
+@onready var seeing_zone : SeeingZone = %SeeingZone
 
 func _ready():
 	super()
@@ -29,10 +29,10 @@ func _ready():
 
 func check_for_detection() -> void:
 	DebugConsole.log("Checking for detection", 2)
-	return vision_zone.test_visibility()
+	return seeing_zone.test_visibility()
 
 
-func _on_vision_zone_friendly_seen(friendlies: Array[FriendlyUnit]) -> void:
+func _on_seeing_zone_friendly_seen(friendlies: Array[FriendlyUnit]) -> void:
 	DebugConsole.log("Enemy Sees Friendly/Friendlies", 2)
 	awareness.alarm(friendlies)
 

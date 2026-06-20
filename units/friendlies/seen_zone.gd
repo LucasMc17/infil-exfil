@@ -1,11 +1,9 @@
-class_name VisibleZone
-extends Area3D
+class_name SeenZone
+extends VisionZone
 
 signal seen_by_enemies(enemies : Array[EnemyUnit])
 
 @export var friendly : FriendlyUnit
-
-# var _detection_check_queued := false
 
 var vision_targets : Array[VisibilityPoint]:
 	get():
@@ -15,16 +13,13 @@ var vision_targets : Array[VisibilityPoint]:
 				result.append(point)
 		return result
 
-# func queue_detection_check():
-# 	_detection_check_queued = true
-
 
 func check_detection() -> void:
 	# _detection_check_queued = false
 	var spotters : Array[EnemyUnit] = []
 	var colliders = get_overlapping_areas()
-	var vision_zones = colliders.filter(func(collider): return collider is VisionZone)
-	for zone : VisionZone in vision_zones:
+	var seeing_zones = colliders.filter(func(collider): return collider is SeeingZone)
+	for zone : SeeingZone in seeing_zones:
 		var vis_score = 0
 		for point : VisibilityPoint in vision_targets:
 			var ray := PhysicsRayQueryParameters3D.create(zone.global_position, point.global_position)
