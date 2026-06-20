@@ -29,7 +29,7 @@ func _ready():
 
 func check_for_detection() -> void:
 	DebugConsole.log("Checking for detection", 2)
-	return seeing_zone.test_visibility()
+	return seeing_zone.check_detection()
 
 
 func _on_seeing_zone_friendly_seen(friendlies: Array[FriendlyUnit]) -> void:

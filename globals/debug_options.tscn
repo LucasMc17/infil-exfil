@@ -4,4 +4,5 @@
 
 [node name="DebugOptions" type="Node" unique_id=892237510]
 script = ExtResource("1_dng8f")
+unlimited_mp = true
 time_scale = 4.0
