@@ -13,7 +13,7 @@ viewport_path = NodePath("SubViewport")
 albedo_color = Color(0.27409065, 0.7122239, 0.12106868, 1)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_wqcmw"]
-viewport_path = NodePath("DebugLabel/@SubViewport@36114")
+viewport_path = NodePath("DebugLabel/@SubViewport@23992")
 
 [node name="FriendlyUnit" unique_id=1676765037 groups=["friendlies"] instance=ExtResource("1_7ia1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
@@ -41,3 +41,5 @@ script = ExtResource("6_wqcmw")
 unit = NodePath("../..")
 mps = 2.0
 metadata/_custom_type_script = "uid://dsirg6rpatadl"
+
+[connection signal="seen_by_enemies" from="SeenZone" to="." method="_on_seen_zone_seen_by_enemies"]

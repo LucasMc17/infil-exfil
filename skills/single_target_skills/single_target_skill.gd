@@ -10,10 +10,9 @@ var potential_targets : Array[Unit] = []
 func arm() -> void:
 	super()
 	get_usability()
-	DebugConsole.log(potential_targets)
 
 
-func get_usability():
+func get_usability() -> bool:
 	refresh_targets()
 	return !potential_targets.is_empty()
 

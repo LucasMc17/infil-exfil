@@ -5,12 +5,15 @@ var skill_res : Skill
 
 @onready var _name_label : Label = %NameLabel
 @onready var _description_label : Label = %DescriptionLabel
+@onready var _confirm_button : Button = %ConfirmButton
 
 
 func build(skill : Skill) -> void:
 	skill_res = skill
 	_name_label.text = skill.name
 	_description_label.text = skill.description
+	_confirm_button.disabled = !skill.get_usability()
+
 
 
 func teardown() -> void:
