@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://cysw2duco05tc"]
 
-[ext_resource type="Script" uid="uid://klrus35hygey" path="res://2D/match_ui/active_skill_ui/skill_description.gd" id="1_0hfeo"]
+[ext_resource type="Script" uid="uid://klrus35hygey" path="res://2D/match_ui/armed_skill_ui/armed_skill_ui.gd" id="1_g0rmj"]
+[ext_resource type="PackedScene" uid="uid://im51q8i00gny" path="res://2D/match_ui/armed_skill_ui/targets_section.tscn" id="2_vgs5q"]
 
-[node name="SkillDescription" type="VBoxContainer" unique_id=1804961802]
+[node name="ArmedSkillUI" type="VBoxContainer" unique_id=1804961802]
 custom_minimum_size = Vector2(1000, 0)
 anchors_preset = 7
 anchor_left = 0.5
@@ -12,7 +13,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 8
-script = ExtResource("1_0hfeo")
+script = ExtResource("1_g0rmj")
 
 [node name="NameLabel" type="Label" parent="." unique_id=1677279685]
 unique_name_in_owner = true
@@ -27,6 +28,10 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 text = "Skill description"
+
+[node name="TargetsSection" parent="." unique_id=951546941 instance=ExtResource("2_vgs5q")]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1033949364]
 layout_mode = 2

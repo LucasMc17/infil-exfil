@@ -5,7 +5,7 @@ extends Control
 @onready var _active_unit_options : HBoxContainer = %ActiveUnitOptions
 
 @onready var _skill_ui : Control = %SkillUi
-@onready var _skill_description : SkillDescription = %SkillDescription
+@onready var _skill_description : ArmedSkillUI = %ArmedSkillUI
 
 func _ready() -> void:
 	Events.skill_armed.connect(_on_skill_armed)

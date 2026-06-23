@@ -23,7 +23,6 @@ func get_all_targets(user : Unit) -> Array[Unit]:
 		(overlapper is EnemyUnit if is_friendly else overlapper is FriendlyUnit):
 			if user.seen_zone.get_line_of_sight(overlapper.seen_zone.global_position, overlapper):
 				result.append(overlapper)
-	DebugConsole.log(result)
 	return result
 
 

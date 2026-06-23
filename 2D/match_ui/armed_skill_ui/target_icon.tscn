@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://vcl2eciemag7"]
+
+[ext_resource type="Script" uid="uid://dt731ejvxfcue" path="res://2D/match_ui/armed_skill_ui/target_icon.gd" id="1_64oy5"]
+
+[sub_resource type="Gradient" id="Gradient_0jv3j"]
+offsets = PackedFloat32Array(0.6125874)
+colors = PackedColorArray(0.9280092, 0, 0.18460894, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_64oy5"]
+gradient = SubResource("Gradient_0jv3j")
+
+[sub_resource type="Gradient" id="Gradient_64oy5"]
+offsets = PackedFloat32Array(0.6125874)
+colors = PackedColorArray(0.63731223, 0, 0.113712974, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0iw2l"]
+gradient = SubResource("Gradient_64oy5")
+
+[node name="TargetIcon" type="TextureButton" unique_id=339662385]
+toggle_mode = true
+texture_normal = SubResource("GradientTexture2D_64oy5")
+texture_pressed = SubResource("GradientTexture2D_0iw2l")
+script = ExtResource("1_64oy5")
