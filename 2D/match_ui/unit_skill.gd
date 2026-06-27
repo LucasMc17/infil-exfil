@@ -4,7 +4,12 @@ var skill_res : Skill
 
 @onready var _label : Label = %Label
 
-func build(skill : Skill) -> void:
+func build(skill : Skill, index : int) -> void:
+	if index < 10:
+		shortcut = Shortcut.new()
+		var key_event := InputEventKey.new()
+		key_event.keycode = 48 + index as Key
+		shortcut.events.append(key_event)
 	skill_res = skill
 
 

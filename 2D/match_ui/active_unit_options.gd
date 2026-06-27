@@ -13,8 +13,10 @@ func refresh_affordability() -> void:
 
 func _on_unit_activated(unit : Unit) -> void:
 	for child in get_children():
-		child.queue_free()	
+		child.queue_free()
+	var index := 1
 	for skill in unit.all_skills:
 		var skill_button = SKILL_SCENE.instantiate()
-		skill_button.build(skill)
+		skill_button.build(skill, index)
 		add_child(skill_button)
+		index += 1

@@ -10,6 +10,7 @@ colors = PackedColorArray(0.49747366, 0.49747366, 0.49747366, 1)
 gradient = SubResource("Gradient_c5e6n")
 
 [node name="UnitSkill" type="TextureButton" unique_id=710786138]
+shortcut_in_tooltip = false
 texture_normal = SubResource("GradientTexture2D_jgpac")
 script = ExtResource("1_jgpac")
 

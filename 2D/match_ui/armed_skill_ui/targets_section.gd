@@ -10,11 +10,13 @@ var selected_target_icon : TargetIcon = null
 func build(skill : SingleTargetSkill) -> void:
 	Events.target_cleared.emit()
 	selected_target_icon = null
+	var index := 1
 	for target in skill.potential_targets:
 			var target_icon = TARGET_ICON.instantiate()
-			target_icon.target = target
+			target_icon.build(target, index)
 			target_icon.target_selected.connect(_on_target_icon_clicked)
 			_targets.add_child(target_icon)
+			index += 1
 
 
 func teardown() -> void:
@@ -30,6 +32,7 @@ func _on_target_icon_clicked(target_icon : TargetIcon):
 		selected_target_icon.button_pressed = false
 	if selected_target_icon == target_icon:
 		selected_target_icon = null
+		Events.target_cleared.emit()
 	else:
 		selected_target_icon = target_icon
 		Events.target_selected.emit(World.level.active_unit, target_icon.target)
