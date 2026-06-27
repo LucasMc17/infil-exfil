@@ -102,6 +102,7 @@ func _set_up_skills() -> void:
 		skill.user = self
 		if skill is SingleTargetSkill:
 			var targeting_area = SKILL_TARGETING_AREA.instantiate()
+			targeting_area.skill = skill
 			targeting_area.area_radius = skill.effective_range
 			skill.skill_area = targeting_area
 			skill_area_holder.add_child(targeting_area)

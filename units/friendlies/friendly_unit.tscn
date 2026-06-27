@@ -14,13 +14,12 @@ viewport_path = NodePath("SubViewport")
 albedo_color = Color(0.27409065, 0.7122239, 0.12106868, 1)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_dnhmq"]
-viewport_path = NodePath("DebugLabel/@SubViewport@80066")
+viewport_path = NodePath("DebugLabel/@SubViewport@40338")
 
 [node name="FriendlyUnit" unique_id=1676765037 groups=["friendlies"] instance=ExtResource("1_7ia1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
 script = ExtResource("2_3ipgw")
 primary_weapon = ExtResource("3_dnhmq")
-max_action_points = 100
 
 [node name="TargetIndicator" parent="." index="0" unique_id=905789699 node_paths=PackedStringArray("unit") instance=ExtResource("4_wqcmw")]
 unique_name_in_owner = true
