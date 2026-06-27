@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://51rqmlm6v48t"]
 
+[ext_resource type="Script" uid="uid://dtus4qfnf3a7h" path="res://2D/match_ui/match_ui.gd" id="1_htp2b"]
 [ext_resource type="PackedScene" uid="uid://b3dk6f1wi6k61" path="res://2D/match_ui/player_turn_options.tscn" id="1_ka1p3"]
+[ext_resource type="PackedScene" uid="uid://dqltuiiqj5y2u" path="res://2D/match_ui/active_unit_options.tscn" id="2_aurpg"]
+[ext_resource type="PackedScene" uid="uid://cysw2duco05tc" path="res://2D/match_ui/armed_skill_ui/armed_skill_ui.tscn" id="3_rcsim"]
 
 [node name="MatchUi" type="Control" unique_id=1837896508]
 layout_mode = 3
@@ -10,8 +13,20 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("1_htp2b")
 
-[node name="PlayerTurnOptions" parent="." unique_id=1407807008 instance=ExtResource("1_ka1p3")]
+[node name="TurnUi" type="Control" parent="." unique_id=1777887983]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PlayerTurnOptions" parent="TurnUi" unique_id=1407807008 instance=ExtResource("1_ka1p3")]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -22,3 +37,22 @@ offset_left = -90.0
 offset_top = -31.0
 grow_horizontal = 0
 grow_vertical = 0
+
+[node name="ActiveUnitOptions" parent="TurnUi" unique_id=367003720 instance=ExtResource("2_aurpg")]
+unique_name_in_owner = true
+layout_mode = 1
+
+[node name="SkillUi" type="Control" parent="." unique_id=1696624923]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ArmedSkillUI" parent="SkillUi" unique_id=1804961802 instance=ExtResource("3_rcsim")]
+unique_name_in_owner = true
+layout_mode = 1

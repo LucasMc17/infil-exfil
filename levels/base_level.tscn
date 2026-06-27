@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://51rqmlm6v48t" path="res://2D/match_ui/match_ui.tscn" id="12_5mwf5"]
 [ext_resource type="Script" uid="uid://bp1pubml3l0d7" path="res://units/ai/directive/directive.gd" id="12_jldy4"]
 [ext_resource type="Script" uid="uid://cvy611uxolcnt" path="res://units/ai/directive/move_to_point.gd" id="13_qeex7"]
+[ext_resource type="Texture2D" uid="uid://8wky484er1ls" path="res://assets/images/crosshair_PLACEHOLDER.png" id="16_qeex7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jldy4"]
 sky_top_color = Color(0.18411472, 0.48912382, 0.5990869, 1)
@@ -63,6 +64,7 @@ metadata/_custom_type_script = "uid://cvy611uxolcnt"
 script = ExtResource("1_63c5o")
 
 [node name="MatchUi" parent="." unique_id=1837896508 instance=ExtResource("12_5mwf5")]
+unique_name_in_owner = true
 
 [node name="DebugUi" parent="." unique_id=1639751749 instance=ExtResource("2_qeex7")]
 
@@ -109,8 +111,8 @@ level = NodePath("../..")
 unique_name_in_owner = true
 
 [node name="FriendlyUnit" parent="Friendlies" unique_id=1676765037 instance=ExtResource("6_maq6b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -2.5)
-tile_position = Vector3(-4, 0, -3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -3.5)
+tile_position = Vector3(-4, 0, -4)
 
 [node name="FriendlyUnit2" parent="Friendlies" unique_id=1503629063 instance=ExtResource("6_maq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 1.5)
@@ -143,3 +145,13 @@ tile_position = Vector3(13, 0, 0)
 unique_name_in_owner = true
 script = ExtResource("10_n8wy4")
 metadata/_custom_type_script = "uid://cwt2k11twrldn"
+
+[node name="TargetRetical" type="Sprite3D" parent="." unique_id=2030216109]
+unique_name_in_owner = true
+visible = false
+pixel_size = 0.0003
+billboard = 1
+no_depth_test = true
+fixed_size = true
+render_priority = 2
+texture = ExtResource("16_qeex7")

@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dq82m4fwucvxn"]
+
+[ext_resource type="PackedScene" uid="uid://b6h1160eunshj" path="res://units/friendlies/friendly_unit.tscn" id="1_458cx"]
+[ext_resource type="Script" uid="uid://brb3kww8r5oiw" path="res://units/friendlies/friendly_classes/operative/operative.gd" id="2_77ftk"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_77ftk"]
+viewport_path = NodePath("DebugLabel/@SubViewport@22239")
+
+[node name="Operative" unique_id=1676765037 instance=ExtResource("1_458cx")]
+script = ExtResource("2_77ftk")
+tile_position = null
+
+[node name="DebugLabel" parent="." index="4" unique_id=607303816]
+texture = SubResource("ViewportTexture_77ftk")
+_text = "FRIENDLY OPERATIVE
+Position: (x: {x}, y: {y}, z: {z})
+Current Movement: {movement_state}
+Current Action: {action_state}"

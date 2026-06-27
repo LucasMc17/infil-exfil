@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://cysw2duco05tc"]
+
+[ext_resource type="Script" uid="uid://klrus35hygey" path="res://2D/match_ui/armed_skill_ui/armed_skill_ui.gd" id="1_g0rmj"]
+[ext_resource type="PackedScene" uid="uid://im51q8i00gny" path="res://2D/match_ui/armed_skill_ui/targets_section.tscn" id="2_vgs5q"]
+
+[node name="ArmedSkillUI" type="VBoxContainer" unique_id=1804961802]
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 1.0
+anchor_right = 0.7
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+script = ExtResource("1_g0rmj")
+
+[node name="NameLabel" type="Label" parent="." unique_id=1677279685]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Skill Name"
+horizontal_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=52760780]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer" unique_id=286416792]
+layout_mode = 2
+
+[node name="DescriptionLabel" type="Label" parent="PanelContainer/ScrollContainer" unique_id=1383303928]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Skill description"
+autowrap_mode = 2
+
+[node name="TargetsSection" parent="." unique_id=951546941 instance=ExtResource("2_vgs5q")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1033949364]
+layout_mode = 2
+alignment = 1
+
+[node name="CancelButton" type="Button" parent="HBoxContainer" unique_id=1501893847]
+layout_mode = 2
+text = "Cancel"
+
+[node name="ConfirmButton" type="Button" parent="HBoxContainer" unique_id=1303727834]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Confirm"
+
+[connection signal="pressed" from="HBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]

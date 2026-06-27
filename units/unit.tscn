@@ -2,12 +2,18 @@
 
 [ext_resource type="Script" uid="uid://cbsb8godne71a" path="res://units/unit.gd" id="1_2atv2"]
 [ext_resource type="PackedScene" uid="uid://dmkx4m8je1llw" path="res://cell_highlight.tscn" id="2_gxe1c"]
+[ext_resource type="PackedScene" uid="uid://ti3t66b32e4c" path="res://units/unit_flag/unit_flag.tscn" id="2_urgnh"]
 [ext_resource type="Script" uid="uid://8lotdfrh5t6l" path="res://addons/debug_label_3d/debug_label.gd" id="6_3nj72"]
 [ext_resource type="Script" uid="uid://4lx7x7dl2ekr" path="res://units/movement/movement_machine.gd" id="8_hyvs3"]
 [ext_resource type="Script" uid="uid://b66nb2e5t10cy" path="res://units/action/pull_alarm.gd" id="8_urgnh"]
 [ext_resource type="Script" uid="uid://db1xkfe2r44vj" path="res://units/movement/no_movement.gd" id="9_d7xs0"]
 [ext_resource type="Script" uid="uid://dpwkeyrf5khee" path="res://units/action/action_machine.gd" id="9_urgnh"]
+[ext_resource type="PackedScene" uid="uid://1lky50pj0tct" path="res://units/friendlies/seen_zone.tscn" id="10_ysu83"]
+[ext_resource type="Script" uid="uid://8c6xrxfefw3o" path="res://units/friendlies/visibility_point.gd" id="11_aa1dw"]
 [ext_resource type="Script" uid="uid://d2agcqikuidqx" path="res://units/action/no_action.gd" id="11_ysu83"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ysu83"]
+viewport_path = NodePath("SubViewport")
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_8orno"]
 radius = 0.45
@@ -15,12 +21,22 @@ radius = 0.45
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2atv2"]
 radius = 0.45
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_hyvs3"]
-viewport_path = NodePath("DebugLabel/@SubViewport@18804")
+[sub_resource type="ViewportTexture" id="ViewportTexture_aa1dw"]
+viewport_path = NodePath("DebugLabel/@SubViewport@408446")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vsw5j"]
+radius = 0.45
 
 [node name="Unit" type="AnimatableBody3D" unique_id=2103260635]
 sync_to_physics = false
 script = ExtResource("1_2atv2")
+max_movement_points = 100
+max_action_points = 100
+
+[node name="UnitFlag" parent="." unique_id=710425423 instance=ExtResource("2_urgnh")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25, 0)
+texture = SubResource("ViewportTexture_ysu83")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1987464459]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -41,7 +57,7 @@ visibility_range_end = 20.0
 pixel_size = 0.005
 billboard = 1
 no_depth_test = true
-texture = SubResource("ViewportTexture_hyvs3")
+texture = SubResource("ViewportTexture_aa1dw")
 script = ExtResource("6_3nj72")
 _text = "UNIT
 Position: (x: {x}, y: {y}, z: {z})
@@ -75,3 +91,57 @@ metadata/_custom_type_script = "uid://d2agcqikuidqx"
 script = ExtResource("8_urgnh")
 unit = NodePath("../..")
 metadata/_custom_type_script = "uid://b66nb2e5t10cy"
+
+[node name="SkillAreaHolder" type="Node3D" parent="." unique_id=397221885]
+unique_name_in_owner = true
+visible = false
+
+[node name="SeenZone" parent="." unique_id=1411709038 node_paths=PackedStringArray("unit") instance=ExtResource("10_ysu83")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+unit = NodePath("..")
+
+[node name="VisibilityPoint01" type="Marker3D" parent="SeenZone" unique_id=669494459]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19999999, -1, 0.19999999)
+script = ExtResource("11_aa1dw")
+metadata/_custom_type_script = "uid://8c6xrxfefw3o"
+
+[node name="VisibilityPoint02" type="Marker3D" parent="SeenZone" unique_id=1277590081]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19999999, -1, -0.19999999)
+script = ExtResource("11_aa1dw")
+metadata/_custom_type_script = "uid://8c6xrxfefw3o"
+
+[node name="VisibilityPoint03" type="Marker3D" parent="SeenZone" unique_id=947946322]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19999999, -1, -0.19999999)
+script = ExtResource("11_aa1dw")
+metadata/_custom_type_script = "uid://8c6xrxfefw3o"
+
+[node name="VisibilityPoint04" type="Marker3D" parent="SeenZone" unique_id=1766699649]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19999999, -1, 0.19999999)
+script = ExtResource("11_aa1dw")
+metadata/_custom_type_script = "uid://8c6xrxfefw3o"
+
+[node name="VisibilityPoint05" type="Marker3D" parent="SeenZone" unique_id=306377188]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19999999, 0, 0.19999999)
+script = ExtResource("11_aa1dw")
+metadata/_custom_type_script = "uid://8c6xrxfefw3o"
+
+[node name="VisibilityPoint06" type="Marker3D" parent="SeenZone" unique_id=1711869246]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19999999, 0, -0.19999999)
+script = ExtResource("11_aa1dw")
+metadata/_custom_type_script = "uid://8c6xrxfefw3o"
+
+[node name="VisibilityPoint07" type="Marker3D" parent="SeenZone" unique_id=1064381235]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19999999, 0, -0.19999999)
+script = ExtResource("11_aa1dw")
+metadata/_custom_type_script = "uid://8c6xrxfefw3o"
+
+[node name="VisibilityPoint08" type="Marker3D" parent="SeenZone" unique_id=545902324]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19999999, 0, 0.19999999)
+script = ExtResource("11_aa1dw")
+metadata/_custom_type_script = "uid://8c6xrxfefw3o"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SeenZone" unique_id=191399931]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("CapsuleShape3D_vsw5j")
+debug_color = Color(2.2862107e-06, 0.6497064, 0.14529341, 0.41960785)

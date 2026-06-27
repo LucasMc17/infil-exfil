@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://ti3t66b32e4c"]
+
+[ext_resource type="PackedScene" uid="uid://boqyarifpalc5" path="res://units/unit_flag/unit_flag_content.tscn" id="1_olgtu"]
+[ext_resource type="Script" uid="uid://cvg7hm5gurhot" path="res://units/unit_flag/unit_flag.gd" id="1_oossa"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_poas5"]
+viewport_path = NodePath("SubViewport")
+
+[node name="UnitFlag" type="Sprite3D" unique_id=710425423]
+centered = false
+offset = Vector2(0, -50)
+pixel_size = 0.001
+billboard = 1
+no_depth_test = true
+fixed_size = true
+render_priority = 3
+texture = SubResource("ViewportTexture_poas5")
+script = ExtResource("1_oossa")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1123576209]
+transparent_bg = true
+size = Vector2i(200, 100)
+
+[node name="UnitFlagContent" parent="SubViewport" unique_id=1237564197 instance=ExtResource("1_olgtu")]
+unique_name_in_owner = true
+offset_right = 0.0
+offset_bottom = 0.0

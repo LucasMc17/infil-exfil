@@ -16,6 +16,8 @@ dest_files=["res://.godot/imported/grid_library_source.glb-de8931cfd9f362dd913a4
 nodes/root_type=""
 nodes/root_name=""
 nodes/root_script=null
+mesh_library/use_node_names_as_mesh_names=false
+array_mesh/deduplicate_surfaces=true
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false
@@ -37,6 +39,30 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={}
+_subresources={
+"materials": {
+"GridMaterial": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://assets/materials/grid_map/GridMaterial.tres",
+"use_external/path": "uid://bwqpn21u2mci4"
+},
+"GridMaterial.alarm": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://assets/materials/grid_map/GridMaterial.alarm.tres",
+"use_external/path": "uid://orvuo1qiwm28"
+},
+"GridMaterial.floor": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://assets/materials/grid_map/GridMaterial.floor.tres",
+"use_external/path": "uid://17e6cew7c4kb"
+},
+"GridMaterial.ladder": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://assets/materials/grid_map/GridMaterial.ladder.tres",
+"use_external/path": "uid://bgxl4w7181sgr"
+}
+}
+}
 gltf/naming_version=2
 gltf/embedded_image_handling=1
+gltf/texture_map_mode=0

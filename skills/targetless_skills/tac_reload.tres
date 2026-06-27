@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TargetlessSkill" format=3 uid="uid://ck4oucrk1wdga"]
+
+[ext_resource type="Script" uid="uid://xqrqbmg2q4k0" path="res://skills/targetless_skills/targetless_skill.gd" id="1_gyoyf"]
+
+[resource]
+script = ExtResource("1_gyoyf")
+name = "Tactical Reload"
+id = "tactical_reload"
+description = "Quickly reload the unit's primary weapon. Unlike a full reload, this skill only consumes an Action point and no Movement points. However, all ammunition left in the magazine will be discarded."
+metadata/_custom_type_script = "uid://xqrqbmg2q4k0"
