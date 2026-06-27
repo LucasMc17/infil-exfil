@@ -1,8 +1,8 @@
-class_name State
-extends Node
 ## A State for use as a direct child of a StateMachine.[br]
 ## The StateMachine defers it's `_process`, `_physics_process`, and `_input` behavior to that of its currently active state.[br]
 ## Will frequently be extended into a more specific form for use in particular contexts, i.e. PlayerState, NPCState, UIState, etc.
+class_name State
+extends Node
 
 ## The signal emitted when the activated state transitions to another, sibling state.
 signal transitioned(new_state_name: StringName, ext : Dictionary)

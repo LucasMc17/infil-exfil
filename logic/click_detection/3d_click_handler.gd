@@ -1,6 +1,8 @@
+## Node3D extended to handle clicks in 3D space, and return the clicked object and it's position.
 class_name ClickHandler3D
 extends Node3D
 
+## Determines the clicked position in 3D space, and returns either a Dictionary of information about the clicked object, or null if no object was clicked.
 func get_clicked_object() -> Variant:
 	var mouse_pos = get_viewport().get_mouse_position()
 	var camera = get_viewport().get_camera_3d()
@@ -15,8 +17,4 @@ func get_clicked_object() -> Variant:
 	if result.is_empty():
 		return null # Nothing clicked
 	
-	# Get the global position of the collision
 	return result
-	# var hit_pos = result.position
-	# Convert global world position to GridMap local coordinates
-	# return local_to_map(to_local(hit_pos))

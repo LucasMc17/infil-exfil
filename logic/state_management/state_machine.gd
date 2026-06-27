@@ -1,6 +1,6 @@
+## A node for managing the state of an actor and localizing state logic to sub modules.
 class_name StateMachine
 extends Node
-## A node for managing the state of an actor and localizing state logic to sub modules.
 
 ## Whether the state machine is currently disabled and cannot switch states.
 @export var disabled := false
@@ -22,14 +22,8 @@ func _ready():
 	current_state.enter(null, {})
 
 
-## Lock the state machine.
-func lock():
-	disabled = true
-
-
-## Unlock the state machine.
-func unlock():
-	disabled = false
+func _physics_process(delta):
+	current_state.physics_update(delta)
 
 
 func _input(event):
@@ -44,11 +38,16 @@ func _process(delta):
 	current_state.update(delta)
 
 
-func _physics_process(delta):
-	current_state.physics_update(delta)
+## Lock the state machine.
+func lock():
+	disabled = true
 
 
-## Event listener for when the current state transitions to another sibling state.
+## Unlock the state machine.
+func unlock():
+	disabled = false
+
+
 func _on_child_transitioned(new_state_name: StringName, ext : Dictionary):
 	if !disabled:
 		var new_state = states.get(new_state_name)
