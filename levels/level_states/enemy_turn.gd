@@ -1,5 +1,6 @@
 extends LevelState
 
+## The list of enemies to cycle through during the enemy turn.
 var enemy_units : Array
 
 func _ready() -> void:
@@ -15,6 +16,7 @@ func enter(previous_state : State, ext : Dictionary):
 	cycle_enemy()
 
 
+## Change the active unit from the current enemy to the next in the list. If there is no next enemy in the list, cycle back to the player turn.
 func cycle_enemy() -> void:
 	if !enemy_units.is_empty():
 		var enemy = enemy_units.pop_front()
@@ -27,8 +29,3 @@ func cycle_enemy() -> void:
 		cycle_enemy()
 	else:
 		transition('PlayerTurn')
-
-
-func _cycle_if_finished_acting(unit : Unit) -> void:
-	if !unit.can_move() and !unit.can_act():
-		cycle_enemy()

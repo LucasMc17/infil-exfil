@@ -27,7 +27,6 @@ func build(skill : SingleTargetSkill) -> void:
 func teardown() -> void:
 	Events.target_cleared.emit()
 	selected_target_icon = null
-	World.level.active_unit.clear_target()
 	for child in _targets.get_children():
 		child.queue_free()
 

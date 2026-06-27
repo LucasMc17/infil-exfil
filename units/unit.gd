@@ -138,6 +138,7 @@ func deactivate():
 	_cell_highlight.visible = false
 	flag.collapse()
 	skill_area_holder.visible = false
+	Events.skill_disarmed.emit()
 
 
 func reset():

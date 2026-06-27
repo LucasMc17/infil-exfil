@@ -186,7 +186,7 @@ func get_all_valid_moves(tile_position: Vector3i, max_moves : int) -> Array[Vect
 		for y in range(-true_max_moves, true_max_moves + 1):
 			for z in range(-true_max_moves, true_max_moves + 1):
 				var vector = Vector3i(x, y, z)
-				if vector != Vector3i.ZERO and point_map_by_grid_coords.has(vector + tile_position) and !level.occupied_map.has(vector + tile_position) and absi(x) + absi(y) + absi(z) <= true_max_moves :
+				if vector != Vector3i.ZERO and point_map_by_grid_coords.has(vector + tile_position) and absi(x) + absi(y) + absi(z) <= true_max_moves :
 					potential_moves.append(vector + tile_position)
 	
 	for move in potential_moves:
