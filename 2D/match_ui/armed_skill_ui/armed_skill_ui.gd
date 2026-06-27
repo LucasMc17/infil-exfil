@@ -1,6 +1,8 @@
+## The slice of game UI related targeting, using or canceling an armed unit skill. Must be initiated with the [build] function before being shown to the user. 
 class_name ArmedSkillUI
 extends VBoxContainer
 
+## The skill currently represented in the UI.
 var skill_res : Skill
 
 @onready var _name_label : Label = %NameLabel
@@ -9,6 +11,7 @@ var skill_res : Skill
 @onready var _targets_section : TargetsSection = %TargetsSection
 
 
+## Initiate the Armed Skill UI with a selected skill.
 func build(skill : Skill) -> void:
 	skill_res = skill
 	_name_label.text = skill.name
@@ -19,6 +22,7 @@ func build(skill : Skill) -> void:
 	_targets_section.visible = skill is SingleTargetSkill
 
 
+## Remove the UI from the screen and unset the current skill.
 func teardown() -> void:
 	skill_res = null
 	_name_label.text = ''
