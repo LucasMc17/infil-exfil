@@ -2,7 +2,6 @@ class_name ArmedSkillUI
 extends VBoxContainer
 
 var skill_res : Skill
-var selected_target : int = -1
 
 @onready var _name_label : Label = %NameLabel
 @onready var _description_label : Label = %DescriptionLabel
@@ -29,7 +28,9 @@ func teardown() -> void:
 
 func _on_cancel_button_pressed() -> void:
 	Events.skill_disarmed.emit()
+	Events.target_cleared.emit()
 
 
 func _on_confirm_button_pressed() -> void:
 	skill_res.use()
+	Events.target_cleared.emit()

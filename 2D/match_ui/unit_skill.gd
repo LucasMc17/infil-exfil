@@ -26,5 +26,4 @@ func refresh_affordability() -> void:
 			
 
 func _on_pressed() -> void:
-	World.level.armed_skill = skill_res
-	skill_res.arm()
+	Events.skill_armed.emit(skill_res)

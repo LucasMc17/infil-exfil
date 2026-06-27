@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://im51q8i00gny"]
 
-[ext_resource type="PackedScene" uid="uid://vcl2eciemag7" path="res://2D/match_ui/armed_skill_ui/target_icon.tscn" id="1_halse"]
 [ext_resource type="Script" uid="uid://mrkerg3epkxj" path="res://2D/match_ui/armed_skill_ui/targets_section.gd" id="1_jx14a"]
 
 [node name="TargetsSection" type="VBoxContainer" unique_id=951546941]
@@ -12,13 +11,4 @@ text = "Targets:"
 
 [node name="Targets" type="HBoxContainer" parent="." unique_id=2080134052]
 unique_name_in_owner = true
-layout_mode = 2
-
-[node name="TargetIcon" parent="Targets" unique_id=339662385 instance=ExtResource("1_halse")]
-layout_mode = 2
-
-[node name="TargetIcon2" parent="Targets" unique_id=742806018 instance=ExtResource("1_halse")]
-layout_mode = 2
-
-[node name="TargetIcon3" parent="Targets" unique_id=1728180722 instance=ExtResource("1_halse")]
 layout_mode = 2

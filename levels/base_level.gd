@@ -4,11 +4,6 @@ extends Node3D
 var skill_handler := SkillHandler.new()
 
 var is_player_turn := true
-var armed_skill : Skill:
-	set(val):
-		armed_skill = val
-		if !val:
-			Events.skill_disarmed.emit()
 
 var active_unit : Unit:
 	set(val):
@@ -66,6 +61,8 @@ var occupied_map : Dictionary[Vector3, bool]:
 @onready var _enemies_node := %Enemies
 @onready var level_camera : LevelCamera = %LevelCamera
 @onready var state_machine : StateMachine = %StateMachine
+@onready var match_ui : MatchUI = %MatchUi
+@onready var target_retical : Sprite3D = %TargetRetical
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -83,7 +80,7 @@ func set_active_unit(unit : Unit):
 	active_unit = unit
 	if active_unit:
 		active_unit.activate()
-		armed_skill = null
+		Events.skill_disarmed.emit()
 
 
 func cycle_active_unit():
@@ -120,8 +117,8 @@ func _input(event: InputEvent) -> void:
 		level_camera.zoom_camera(false)
 	
 	elif Input.is_action_just_pressed('escape'):
-		if armed_skill:
-			armed_skill = null
+		if World.targeting.armed_skill:
+			Events.skill_disarmed.emit()
 		else:
 			DebugConsole.log("Pausing")
 	

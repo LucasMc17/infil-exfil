@@ -56,6 +56,3 @@ mouse_filter = 2
 [node name="ArmedSkillUI" parent="SkillUi" unique_id=1804961802 instance=ExtResource("3_rcsim")]
 unique_name_in_owner = true
 layout_mode = 1
-offset_left = -500.0
-offset_top = -50.0
-offset_right = 500.0

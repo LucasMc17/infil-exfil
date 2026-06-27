@@ -36,7 +36,7 @@ func get_usability() -> bool:
 	return true
 
 func arm() -> void:
-	Events.skill_armed.emit(self)
+	pass
 
 
 func use() -> void:
