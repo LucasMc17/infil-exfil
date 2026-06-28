@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://c0ilkw2vjlixv" path="res://units/friendlies/friendly_unit.gd" id="2_3ipgw"]
 [ext_resource type="Resource" uid="uid://bjcl38102xf0k" path="res://weapons/silenced_pistol/silenced_pistol.tres" id="3_dnhmq"]
 [ext_resource type="Material" uid="uid://b343cwtgaxavy" path="res://assets/materials/friendly_highlight.tres" id="3_ikcby"]
-[ext_resource type="PackedScene" uid="uid://l3xr5ss3ugpl" path="res://units/friendlies/target_indicator.tscn" id="4_wqcmw"]
 [ext_resource type="Script" uid="uid://dsirg6rpatadl" path="res://units/movement/movement_state.gd" id="6_wqcmw"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_wqcmw"]
@@ -21,20 +20,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
 script = ExtResource("2_3ipgw")
 primary_weapon = ExtResource("3_dnhmq")
 
-[node name="TargetIndicator" parent="." index="0" unique_id=905789699 node_paths=PackedStringArray("unit") instance=ExtResource("4_wqcmw")]
-unique_name_in_owner = true
-unit = NodePath("..")
-
-[node name="UnitFlag" parent="." index="1" unique_id=710425423]
+[node name="UnitFlag" parent="." index="0" unique_id=710425423]
 texture = SubResource("ViewportTexture_wqcmw")
 
-[node name="MeshInstance3D" parent="." index="2" unique_id=1987464459]
+[node name="MeshInstance3D" parent="." index="1" unique_id=1987464459]
 surface_material_override/0 = SubResource("StandardMaterial3D_3ipgw")
 
-[node name="CellHighlight" parent="." index="4" unique_id=1376729606]
+[node name="CellHighlight" parent="." index="3" unique_id=1376729606]
 surface_material_override/0 = ExtResource("3_ikcby")
 
-[node name="DebugLabel" parent="." index="5" unique_id=607303816]
+[node name="DebugLabel" parent="." index="4" unique_id=607303816]
 texture = SubResource("ViewportTexture_dnhmq")
 _text = "FRIENDLY UNIT
 Position: (x: {x}, y: {y}, z: {z})
