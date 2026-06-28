@@ -1,3 +1,4 @@
+## A skill which requires no specific target and can be performed without one.
 class_name TargetlessSkill
 extends Skill
 
