@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://6kiqusj20vy5"]
 
 [ext_resource type="MeshLibrary" uid="uid://crn4m7ftmqgqh" path="res://navigation/grid_library_source.tres" id="1_2v7gr"]
-[ext_resource type="Script" uid="uid://ch5vn3soxrapt" path="res://navigation/navigable_grid_map_v2.gd" id="2_hdbhw"]
+[ext_resource type="Script" uid="uid://ch5vn3soxrapt" path="res://navigation/navigable_grid_map.gd" id="2_hdbhw"]
 [ext_resource type="PackedScene" uid="uid://bup8e1flyaj0p" path="res://units/enemies/enemy_unit.tscn" id="3_mc1qd"]
 [ext_resource type="PackedScene" uid="uid://b6h1160eunshj" path="res://units/friendlies/friendly_unit.tscn" id="4_jlrrg"]
 

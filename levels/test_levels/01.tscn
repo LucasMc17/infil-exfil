@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://smpeqj642e1s"]
 
 [ext_resource type="MeshLibrary" uid="uid://crn4m7ftmqgqh" path="res://navigation/grid_library_source.tres" id="1_cfayb"]
-[ext_resource type="Script" uid="uid://ch5vn3soxrapt" path="res://navigation/navigable_grid_map_v2.gd" id="2_dukv5"]
+[ext_resource type="Script" uid="uid://ch5vn3soxrapt" path="res://navigation/navigable_grid_map.gd" id="2_dukv5"]
 
 [node name="01" type="Node3D" unique_id=80948929]
 
