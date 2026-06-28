@@ -51,7 +51,7 @@ var units : Array[Unit]:
 
 @onready var _friendlies_node := %Friendlies
 @onready var _enemies_node := %Enemies
-@onready var nav_map : NavigableGridMapV2 = %NavigableGridMapV2
+@onready var nav_map : NavigableGridMap = %NavigableGridMap
 @onready var cell_highlighter : CellHighlighter = %CellHighlighter
 @onready var click_handler : ClickHandler3D = %ClickHandler3D
 @onready var level_camera : LevelCamera = %LevelCamera

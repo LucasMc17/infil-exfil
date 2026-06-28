@@ -37,7 +37,7 @@ func _process(_delta: float) -> void:
 func jump_to_point(point: Vector3i):
 	unfix()
 	y_level = point.y
-	_lerp_target = NavigableGridMapV2.convert_grid_to_global_position(point, true)
+	_lerp_target = NavigableGridMap.convert_grid_to_global_position(point, true)
 
 
 ## Fix the camera to an actor in 3D space.

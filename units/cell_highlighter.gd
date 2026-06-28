@@ -18,4 +18,4 @@ func clear() -> void:
 func highlight_cell(pos : Vector3) -> void:
 	var highlight_scene = HIGHLIGHT.instantiate()
 	add_child(highlight_scene)
-	highlight_scene.global_position = NavigableGridMapV2.convert_grid_to_global_position(pos, true)
+	highlight_scene.global_position = NavigableGridMap.convert_grid_to_global_position(pos, true)

@@ -1,9 +1,6 @@
 @tool
-
-# TODO: There's no reason for this to stay named V2 except that when I tried to change it it caused a huge problem, it specifically removed the scripts from the instances of friendly and enemy units in the base level scene, wiped all enemy patrol patterns and other stuff. Should try again later in a fresh commit.
-
 ## An extended [GridMap] designed to create a navigable map for A* to work with at first load.
-class_name NavigableGridMapV2
+class_name NavigableGridMap
 extends GridMap
 
 ## Floor [Tile] resource.

@@ -68,7 +68,7 @@ unique_name_in_owner = true
 
 [node name="DebugUi" parent="." unique_id=1639751749 instance=ExtResource("2_qeex7")]
 
-[node name="NavigableGridMapV2" type="GridMap" parent="." unique_id=805823171 node_paths=PackedStringArray("level")]
+[node name="NavigableGridMap" type="GridMap" parent="." unique_id=805823171 node_paths=PackedStringArray("level")]
 unique_name_in_owner = true
 mesh_library = ExtResource("4_qeex7")
 cell_size = Vector3(1, 4, 1)

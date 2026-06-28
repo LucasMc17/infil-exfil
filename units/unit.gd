@@ -18,7 +18,7 @@ signal forfeited_turn(unit : Unit)
 	set(val):
 		tile_position = val
 		if is_node_ready():
-			global_position = NavigableGridMapV2.convert_grid_to_global_position(tile_position, true)
+			global_position = NavigableGridMap.convert_grid_to_global_position(tile_position, true)
 		if debug_label:
 			debug_label.change_param('x', str(round(tile_position.x)))
 			debug_label.change_param('y', str(round(tile_position.y)))
