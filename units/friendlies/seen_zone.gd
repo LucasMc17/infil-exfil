@@ -1,10 +1,16 @@
+# TODO: Move this out friendlies. Enemies have these too now.
+## Extension of the [VisionZone] class which is responsible for being detected by [SeeingZone]s when overlapping with them.
+## [br]Expects to contain an array of [VisibilityPoint]s as direct children, which are used to make sure a configurable portion of the unit is visible before officially considering them as "seen".
 class_name SeenZone
 extends VisionZone
 
+## Signal emitted when this [SeenZone] is detected by one or more [SeeingZone]s.
 signal seen_by_enemies(enemies : Array[EnemyUnit])
 
+## The unit which owns this [SeenZone]. Can be friendly or enemy, as determining line of sight to another unit is relevant for both teams.
 @export var unit : Unit
 
+## The [VisibilityPoint]s contained under this [SeenZone] as children.
 var vision_targets : Array[VisibilityPoint]:
 	get():
 		var result : Array[VisibilityPoint]

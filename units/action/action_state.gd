@@ -1,9 +1,9 @@
+## An extended [State] representing a unit's possible actions, for use with an [ActionMachine].
 class_name ActionState
 extends State
 
+## The unit this action state corresponds to.
 @export var unit : Unit
-
-@export var cost := 1
 
 func enter(previous_state : State, ext : Dictionary):
 	super(previous_state, ext)

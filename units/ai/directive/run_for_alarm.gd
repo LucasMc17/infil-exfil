@@ -1,6 +1,8 @@
+## A directive representing a dash for the alarm. Is considered finished when there is an active alarm, whether or not this specific unit pulled it.
 class_name RunForAlarm
 extends Directive
 
+## The position of the alarm the unit is running for.
 var _alarm_point : Variant = null
 
 func begin(unit : EnemyUnit) -> void:

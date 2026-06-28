@@ -1,3 +1,4 @@
+## A directive representing no specific goal. In practice this should not really be used, it's simple a placeholder for debugging until more complicated rules about switching directives are established.
 class_name NoDirective
 extends Directive
 

@@ -1,3 +1,4 @@
+## The 2D interior of the flag displaying information about units on both teams to the player. Has an expanded and collapsed form.
 class_name UnitFlagContent
 extends Control
 
@@ -8,13 +9,17 @@ extends Control
 @onready var _current_ammo : Label = %CurrentAmmo
 @onready var _backup_ammo : Label = %BackupAmmo
 
+## Expand the flag to show its full information.
 func handle_expand() -> void:
 	_ammo_monitor.visible = true
 
 
+## Collapse the flag to show its basic information.
 func handle_collapse() -> void:
 	_ammo_monitor.visible = false
 
+
+## Refresh the information displayed in the flag when their sources change.
 func handle_refresh(unit) -> void:
 	_name.text = unit.name
 	_mp.text = str(unit.movement_points)
