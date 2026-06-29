@@ -1,15 +1,22 @@
+## A level for one match between player and enemy to take place in.
 class_name BaseLevel
 extends Node3D
 
+## Logic module for handling the usage of skills.
 var skill_handler := SkillHandler.new()
+## Logic module for handling the enemy's awareness of the player's units.
+var enemy_awareness := EnemyTeamAwarenessModule.new()
 
+## Boolean tracking whether or not it is currently the player's turn.
 var is_player_turn := true
 
+## The currently active unit, whether a [FriendlyUnit] or an [EnemyUnit].
 var active_unit : Unit:
 	set(val):
 		active_unit = val
 		level_camera.fix_to_actor(val)
 
+## All [FriendlyUnit]s in the level.
 var friendlies : Array[FriendlyUnit]:
 	get():
 		var result : Array[FriendlyUnit] = []
@@ -19,6 +26,7 @@ var friendlies : Array[FriendlyUnit]:
 				result.append(friendly)
 		return result
 
+## All [EnemyUnit]s in the level.
 var enemies : Array[EnemyUnit]:
 	get():
 		var result : Array[EnemyUnit] = []
@@ -29,6 +37,7 @@ var enemies : Array[EnemyUnit]:
 		return result
 
 
+## All [Unit]s in the level, including both friendlies and enemies.
 var units : Array[Unit]:
 	get():
 		var result : Array[Unit] = []
@@ -40,31 +49,16 @@ var units : Array[Unit]:
 				result.append(enemy)
 		return result
 
-var enemy_awareness := EnemyTeamAwarenessModule.new()
-
-## TODO: While this works to stop a unit from moving into an occupied space, it does not stop them pathing directly through other units.
-## Naive solution would be to regen A* grid after every Unit move. But I think it could get costly. Other idea: Can I manually clear a tile's connections when moved into?
-## Then maybe keep a queue of tiles to be "repaired" after every move, unless they are still occupied. Maybe something there.
-var occupied_map : Dictionary[Vector3, bool]:
-	get():
-		var result : Dictionary[Vector3, bool] = {}
-		for friendly : FriendlyUnit in friendlies:
-			result[friendly.tile_position as Vector3] = true
-		for enemy : Unit in enemies:
-			result[enemy.tile_position as Vector3] = true
-		return result
-
-@onready var nav_map : NavigableGridMapV2 = %NavigableGridMapV2
-@onready var cell_highlighter : CellHighlighter = %CellHighlighter
-@onready var click_handler : ClickHandler3D = %ClickHandler3D
 @onready var _friendlies_node := %Friendlies
 @onready var _enemies_node := %Enemies
+@onready var nav_map : NavigableGridMap = %NavigableGridMap
+@onready var cell_highlighter : CellHighlighter = %CellHighlighter
+@onready var click_handler : ClickHandler3D = %ClickHandler3D
 @onready var level_camera : LevelCamera = %LevelCamera
 @onready var state_machine : StateMachine = %StateMachine
 @onready var match_ui : MatchUI = %MatchUi
 @onready var target_retical : Sprite3D = %TargetRetical
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	nav_map.setup_astar_grid()
 	World.level = self
@@ -72,27 +66,6 @@ func _ready() -> void:
 		if command_name == "exit":
 			get_tree().quit()
 	)
-
-
-func set_active_unit(unit : Unit):
-	if active_unit:
-		active_unit.deactivate()
-	active_unit = unit
-	if active_unit:
-		active_unit.activate()
-		Events.skill_disarmed.emit()
-
-
-func cycle_active_unit():
-	var faction = friendlies if is_player_turn else enemies
-	if active_unit:
-		var index = faction.find(active_unit) + 1
-		if index < faction.size():
-			set_active_unit(faction[index])
-		else:
-			set_active_unit(faction[0])
-	else:
-		set_active_unit(faction[0])
 
 
 func _input(event: InputEvent) -> void:
@@ -124,3 +97,29 @@ func _input(event: InputEvent) -> void:
 	
 	elif Input.is_action_just_pressed('force_exit'):
 		get_tree().quit()
+
+
+## Update the active unit to a given actor.
+func set_active_unit(unit : Unit):
+	if active_unit:
+		active_unit.deactivate()
+	active_unit = unit
+	if active_unit:
+		active_unit.activate()
+
+
+## Cycle the active unit to the next in the list.
+func cycle_active_unit():
+	var faction : Array
+	if is_player_turn:
+		faction = friendlies
+	else:
+		faction = enemies
+	if active_unit:
+		var index = faction.find(active_unit) + 1
+		if index < faction.size():
+			set_active_unit(faction[index])
+		else:
+			set_active_unit(faction[0])
+	else:
+		set_active_unit(faction[0])

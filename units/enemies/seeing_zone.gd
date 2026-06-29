@@ -1,8 +1,11 @@
+## Extension of a [VisionZone] specifically responsible for "seeing" [SeenZone]s which overlap with it.
 class_name SeeingZone
 extends VisionZone
 
+## Signal emitted when the [SeeingZone] successfully detects one or more [FriendlyUnit]s.
 signal friendly_seen(friendlies : Array[FriendlyUnit])
 
+## The enemy unit which owns this [SeeingZone], since only enemies need a typical vision cone at this point in development.
 @export var enemy : EnemyUnit
 
 func check_detection() -> void:

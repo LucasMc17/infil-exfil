@@ -1,3 +1,5 @@
+# NOTE: Should this move to the [logic] root directory?
+## Logic Module responsible for handling the execution of skills within a level.
 class_name SkillHandler
 extends Object
 
@@ -18,7 +20,7 @@ func _on_targetless_skill_used(skill : TargetlessSkill, user : Unit) -> void:
 			DebugConsole.warn("Unkown targetless skill used: " + skill.name)
 
 
-func _on_single_target_skill_used(skill : SingleTargetSkill, user : Unit, target : Unit) -> void:
+func _on_single_target_skill_used(skill : SingleTargetSkill, user : Unit, _target : Unit) -> void:
 	DebugConsole.log("Single target skill used: " + skill.name, 2)
 	Events.skill_used.emit(skill, user)
 	match skill.id:

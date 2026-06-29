@@ -1,6 +1,8 @@
+## A specific Directive representing moving towards a specific point on the NavGrid. Is considered finished when the unit finishes moving to that point.
 class_name MoveToPoint
 extends Directive
 
+## The point to move towards.
 @export var _end_point := Vector3.ZERO
 
 func begin(unit : EnemyUnit) -> void:

@@ -1,8 +1,7 @@
+## Logic module representing the enemy's awareness of the intruding friendlies. Used at the level of the entire enemy team, rather than a single unit.
+## [br]In short, this represents the shared knowledge of the enemies. Individual enemies will have their own logic modules representing their individual knowledge. This separation allows for one enemy unit to be aware of a number of friendly units, without the entire enemy team becoming aware. If this enemy unit is neutralized before raising an alarm, the knowledge will not be passed onto the rest of the enemy force. Conversely, if they do raise an alarm, the entire enemy team will have their general knowledge of the friendly presence elevated to match the number this enemy has observed.
 class_name EnemyTeamAwarenessModule
 extends Resource
-## Logic module representing the enemy's awareness of the intruding friendlies. Used at the level of the entire enemy team, rather than a single unit.
-##
-## [br][br]In short, this represents the shared knowledge of the enemies. Individual enemies will have their own logic modules representing their individual knowledge. This separation allows for one enemy unit to be aware of a number of friendly units, without the entire enemy team becoming aware. If this enemy unit is neutralized before raising an alarm, the knowledge will not be passed onto the rest of the enemy force. Conversely, if they do raise an alarm, the entire enemy team will have their general knowledge of the friendly presence elevated to match the number this enemy has observed.
 
 # General notes:
 	# Enemies are (for now) unable to tell friendlies apart. IE if they see one, lose track, then later see a different one, they will still believe there is only one intruder.

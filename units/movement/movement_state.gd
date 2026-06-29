@@ -1,14 +1,17 @@
+## An extended [State] representing a unit's possible modes of movement, for use with a [MovementMachine].
 class_name MovementState
 extends State
 
+## The unit this state corresponds to.
 @export var unit : Unit
-
+## The cost in movement points of entering this movement state.
 @export var cost := 1
-
+## The speed at which this movment state moves the unit, in meters per second.
 @export var mps := 1.0
 
+## The end point of the current movement, established when entering the state and used to create a path for navigation.
 var end_point : Vector3
-
+## An array of points along which the unit will move to reach the [end_point]
 var points := []
 
 func enter(previous_state : State, ext : Dictionary):

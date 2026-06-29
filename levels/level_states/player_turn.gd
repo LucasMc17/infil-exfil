@@ -26,7 +26,7 @@ func unhandled_input(event: InputEvent) -> void:
 			var clicked_object = clicked.collider
 			if clicked_object is FriendlyUnit:
 				level.set_active_unit(clicked_object)
-			if clicked_object is NavigableGridMapV2:
+			if clicked_object is NavigableGridMap:
 				var real_position = clicked.position
 				# Moves the considered position up slightly to avoid misidentifying y layer.
 				real_position.y += 0.1

@@ -1,19 +1,19 @@
 @tool
+## The basic class of enemy in the game. Initializes own logic around decision making and player awareness tracking and acts autonomously during gameplay.
 class_name EnemyUnit
 extends Unit
 
-@export var unaware_move_distance := 3
-@export var alerted_move_distance := 5
-@export var alarmed_move_distance := 5
-
+## Starting queue of directives to perform when unaware. Passed directly to the [DecisionDirector].
 @export var unaware_base_directives : Array[Directive] = []
+## Starting queue of directives to perform when alerted. Passed directly to the [DecisionDirector].
 @export var alerted_base_directives : Array[Directive] = []
 
-## How likely the unit is to run for the alarm each turn when encoutering the player's units.
+## How likely the unit is to run for the alarm each turn when alarmed by the player's units.
 @export var alarm_run_chance := 0.5
 
+## The enemy unit's awareness module.
 var awareness := EnemyUnitAwarenessModule.new(self)
-
+## The enemy unit's decision director.
 var decision_director : DecisionDirector
 
 @onready var seeing_zone : SeeingZone = %SeeingZone

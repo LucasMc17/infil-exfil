@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bst18n04bdrwl"]
 
 [ext_resource type="MeshLibrary" uid="uid://cfe0cqr35beud" path="res://grid_meshes.tres" id="1_jad8i"]
-[ext_resource type="Script" uid="uid://ch5vn3soxrapt" path="res://navigation/navigable_grid_map_v2.gd" id="2_jad8i"]
+[ext_resource type="Script" uid="uid://ch5vn3soxrapt" path="res://navigation/navigable_grid_map.gd" id="2_jad8i"]
 
 [node name="GridMap" type="GridMap" unique_id=1236589567]
 mesh_library = ExtResource("1_jad8i")

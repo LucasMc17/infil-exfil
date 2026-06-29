@@ -1,7 +1,10 @@
+## An Area3D designed to gather valid targets for a [SingleTargetSkill].
 class_name SkillTargetingArea
 extends Area3D
 
+## The radius of the targeting area.
 var area_radius : float
+## The skill which this area corresponds to.
 var skill : Skill
 
 @onready var _collision_shape : CollisionShape3D = %CollisionShape3D
@@ -17,6 +20,7 @@ func _ready() -> void:
 	size_circle()
 
 
+## Takes in a user for this skill and returns an array of valid targets for this skill, based on team, line of sight, and distance.
 func get_all_targets(user : Unit) -> Array[Unit]:
 	var is_friendly = user is FriendlyUnit
 	var overlaps = get_overlapping_bodies()
@@ -29,6 +33,7 @@ func get_all_targets(user : Unit) -> Array[Unit]:
 	return result
 
 
+## Initializes the circle which indicates the skill radius to the player.
 func size_circle():
 	_mesh_instance.mesh.bottom_radius = area_radius
 	_mesh_instance.mesh.top_radius = area_radius - 0.05

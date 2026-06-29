@@ -1,12 +1,16 @@
+## The slice of the [ArmedSkillUI] which represents the potential targets for the skill. Only relevant for skills which target a single unit.
 class_name TargetsSection
 extends VBoxContainer
 
+## [TargetIcon] scene for instantiation.
 const TARGET_ICON = preload('./target_icon.tscn')
 
+## The particular [TargetIcon] instance which is currently selected, if one exists.
 var selected_target_icon : TargetIcon = null
 
 @onready var _targets : HBoxContainer = %Targets
 
+## Creates the [TargetIcon] scenes in the scene tree and connects their output signals.
 func build(skill : SingleTargetSkill) -> void:
 	Events.target_cleared.emit()
 	selected_target_icon = null
@@ -19,10 +23,10 @@ func build(skill : SingleTargetSkill) -> void:
 			index += 1
 
 
+## Removes the targets from the UI, fully resetting the scene.
 func teardown() -> void:
 	Events.target_cleared.emit()
 	selected_target_icon = null
-	World.level.active_unit.clear_target()
 	for child in _targets.get_children():
 		child.queue_free()
 

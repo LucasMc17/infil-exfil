@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dt305x7b2byrv"]
 
 [ext_resource type="Script" uid="uid://b6v64sbglrpl0" path="res://levels/base_level.gd" id="1_63c5o"]
-[ext_resource type="Script" uid="uid://ch5vn3soxrapt" path="res://navigation/navigable_grid_map_v2.gd" id="1_wevqg"]
+[ext_resource type="Script" uid="uid://ch5vn3soxrapt" path="res://navigation/navigable_grid_map.gd" id="1_wevqg"]
 [ext_resource type="PackedScene" uid="uid://3rc8lg86w2jx" path="res://2D/debug/debug_ui.tscn" id="2_qeex7"]
 [ext_resource type="PackedScene" uid="uid://cfeifk7bnyc0h" path="res://levels/level_camera.tscn" id="4_dx6c5"]
 [ext_resource type="MeshLibrary" uid="uid://crn4m7ftmqgqh" path="res://navigation/grid_library_source.tres" id="4_qeex7"]
@@ -68,7 +68,7 @@ unique_name_in_owner = true
 
 [node name="DebugUi" parent="." unique_id=1639751749 instance=ExtResource("2_qeex7")]
 
-[node name="NavigableGridMapV2" type="GridMap" parent="." unique_id=805823171 node_paths=PackedStringArray("level")]
+[node name="NavigableGridMap" type="GridMap" parent="." unique_id=805823171 node_paths=PackedStringArray("level")]
 unique_name_in_owner = true
 mesh_library = ExtResource("4_qeex7")
 cell_size = Vector3(1, 4, 1)
