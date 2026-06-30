@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cmp62gpdora7s"]
 
-[ext_resource type="Script" uid="uid://bkn7n4xoh0321" path="res://units/cell_highlighter.gd" id="1_oajpe"]
+[ext_resource type="Script" uid="uid://bkn7n4xoh0321" path="res://levels/cell_highlighter.gd" id="1_oajpe"]
 
 [node name="CellHighlighter" type="Node3D" unique_id=1162376540]
 script = ExtResource("1_oajpe")

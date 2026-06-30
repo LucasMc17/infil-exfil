@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://3rc8lg86w2jx" path="res://2D/debug/debug_ui.tscn" id="2_qeex7"]
 [ext_resource type="PackedScene" uid="uid://cfeifk7bnyc0h" path="res://levels/level_camera.tscn" id="4_dx6c5"]
 [ext_resource type="MeshLibrary" uid="uid://crn4m7ftmqgqh" path="res://navigation/grid_library_source.tres" id="4_qeex7"]
-[ext_resource type="PackedScene" uid="uid://cmp62gpdora7s" path="res://units/cell_highlighter.tscn" id="6_46036"]
+[ext_resource type="PackedScene" uid="uid://cmp62gpdora7s" path="res://levels/cell_highlighter.tscn" id="6_46036"]
 [ext_resource type="PackedScene" uid="uid://b6h1160eunshj" path="res://units/friendlies/friendly_unit.tscn" id="6_maq6b"]
 [ext_resource type="PackedScene" uid="uid://bup8e1flyaj0p" path="res://units/enemies/enemy_unit.tscn" id="7_maq6b"]
 [ext_resource type="Script" uid="uid://bsxnir3r10yla" path="res://logic/state_management/state_machine.gd" id="8_0rg8l"]

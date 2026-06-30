@@ -1,4 +1,3 @@
-#  TODO: Move this out of units, it lives under the BaseLevel.
 @tool
 ## Node responsible for highlighting cells in the navgrid to show their availability for navigating to.
 class_name CellHighlighter
