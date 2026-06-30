@@ -78,7 +78,6 @@ var alarms : Dictionary[Vector3i, bool] = {}
 ## A dictionary representing spaces temporarily blocked by Units standing on them.
 var blocked_spaces : Dictionary[Vector3i, GridPoint] = {}
 
-# TODO: Find a way to make that y height a magic number.
 ## Takes in a global position and converts it to it's nearest position on the grid.
 static func convert_global_to_grid_position(pos : Vector3) -> Vector3:
 	var result = pos.round()

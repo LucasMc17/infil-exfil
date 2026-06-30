@@ -28,5 +28,4 @@ func refresh_targets() -> void:
 
 func use() -> void:
 	super()
-	# TODO: To update once targeting system is finished.
-	Events.single_target_skill_used.emit(self, user, user)
+	Events.single_target_skill_used.emit(self, user, World.targeting.current_target)
