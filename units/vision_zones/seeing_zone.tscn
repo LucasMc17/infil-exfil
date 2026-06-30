@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cof3le0rdxhxw"]
 
-[ext_resource type="Script" uid="uid://cgpw6tpslc20p" path="res://units/enemies/seeing_zone.gd" id="1_2jn7x"]
+[ext_resource type="Script" uid="uid://cgpw6tpslc20p" path="res://units/vision_zones/seeing_zone.gd" id="1_2jn7x"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_i6gcf"]
 points = PackedVector3Array(0.29953003, 10, 0, 0.21143341, 10, 0.21143341, 7.0693035, -10, 7.0693035, 10, -10, 0, 0.21143341, 10, -0.21339035, 0, 10, 0.29953003, 0, -10, 10, 7.0693035, -10, -7.0712605, 0, 10, -0.30148792, -0.21339035, 10, 0.21143341, -7.0712605, -10, 7.0693035, 0, -10, -10, -0.21339035, 10, -0.21339035, -0.30148792, 10, 0, -10, -10, 0, -7.0712605, -10, -7.0712605)

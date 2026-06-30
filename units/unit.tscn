@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://b66nb2e5t10cy" path="res://units/action/pull_alarm.gd" id="8_urgnh"]
 [ext_resource type="Script" uid="uid://db1xkfe2r44vj" path="res://units/movement/no_movement.gd" id="9_d7xs0"]
 [ext_resource type="Script" uid="uid://dpwkeyrf5khee" path="res://units/action/action_machine.gd" id="9_urgnh"]
-[ext_resource type="PackedScene" uid="uid://1lky50pj0tct" path="res://units/friendlies/seen_zone.tscn" id="10_ysu83"]
+[ext_resource type="PackedScene" uid="uid://1lky50pj0tct" path="res://units/vision_zones/seen_zone.tscn" id="10_ysu83"]
 [ext_resource type="Script" uid="uid://8c6xrxfefw3o" path="res://units/friendlies/visibility_point.gd" id="11_aa1dw"]
 [ext_resource type="Script" uid="uid://d2agcqikuidqx" path="res://units/action/no_action.gd" id="11_ysu83"]
 
