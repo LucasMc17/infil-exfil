@@ -3,6 +3,9 @@
 class_name NavigableGridMap
 extends GridMap
 
+## The size of the basic cell in the gridmap, as a Vector3.
+static var CELL_SIZE := Vector3(1.0, 4.0, 1.0)
+
 ## Floor [Tile] resource.
 const FLOOR := preload("./tiles/floor.tres")
 ## Wall [Tile] resource.
@@ -76,25 +79,24 @@ var alarms : Dictionary[Vector3i, bool] = {}
 var blocked_spaces : Dictionary[Vector3i, GridPoint] = {}
 
 # TODO: Find a way to make that y height a magic number.
-## Takes in a global position and converts it to it's nearest position on the grid (ASSUMES A Y HEIGHT OF 4)
+## Takes in a global position and converts it to it's nearest position on the grid.
 static func convert_global_to_grid_position(pos : Vector3) -> Vector3:
 	var result = pos.round()
-	result.y = (result.y - (int(result.y) % 4)) / 4
-	return result
+	return result / CELL_SIZE
 
 
-## Takes in a grid local position and converts it to it's equivalent global position (ASSUMES A Y HEIGHT OF 4)[br]
+## Takes in a grid local position and converts it to it's equivalent global position.[br]
 ## If [should_center] is true, it will add 0.5 to the x and z axis so that the resulting global position is centered on the grid tile.
 static func convert_grid_to_global_position(pos : Vector3, should_center := false) -> Vector3:
-	var result = Vector3(pos)
-	result.y *= 4
+	var result = Vector3(pos) * CELL_SIZE
 	if should_center:
-		result.x += 0.5
-		result.z += 0.5
+		result.x += 0.5 * CELL_SIZE.x
+		result.z += 0.5 * CELL_SIZE.z
 	return result
 
 
 func _ready() -> void:
+	cell_size = CELL_SIZE
 	if Engine.is_editor_hint():
 		setup_astar_grid()
 

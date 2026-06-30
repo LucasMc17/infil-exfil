@@ -39,17 +39,9 @@ signal forfeited_turn(unit : Unit)
 
 @export_group('Points')
 ## The maximum movement points for this unit, to which they are restored at the beginning of each new turn.
-@export var max_movement_points := 1:
-	get():
-		if DebugOptions.unlimited_mp:
-			return 100
-		return max_movement_points
+@export var max_movement_points := 1
 ## The maximum action points for this unit, to which they are restored at the beginning of each new turn.
-@export var max_action_points := 1:
-	get():
-		if DebugOptions.unlimited_ap:
-			return 100
-		return max_action_points
+@export var max_action_points := 1
 
 ## The tile positions that this unit can navigate to.
 var potential_moves : Array[Vector3] = []
@@ -162,8 +154,8 @@ func deactivate():
 
 ## Return the unit to a default state, with action and movement points reset.
 func reset():
-	movement_points = max_movement_points
-	action_points = max_action_points
+	movement_points = 100 if DebugOptions.unlimited_mp else max_movement_points
+	action_points = 100 if DebugOptions.unlimited_ap else max_action_points
 
 
 # NOTE: I don't like these.

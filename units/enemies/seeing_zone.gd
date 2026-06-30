@@ -11,7 +11,7 @@ signal friendly_seen(friendlies : Array[FriendlyUnit])
 func check_detection() -> void:
 	var spotted : Array[FriendlyUnit] = []
 	var colliders = get_overlapping_areas()
-	var seen_zones = colliders.filter(func(collider): return collider is SeenZone)
+	var seen_zones = colliders.filter(func(collider): return collider is SeenZone and collider.unit is FriendlyUnit)
 	for zone : SeenZone in seen_zones:
 		var vis_score = 0
 		for point : VisibilityPoint in zone.vision_targets:

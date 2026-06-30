@@ -68,7 +68,7 @@ func _ready() -> void:
 	)
 
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed('y_up') and state_machine.current_state.allow_cam_movement:
 		level_camera.shift_camera_y(true)
 

@@ -113,14 +113,20 @@ unique_name_in_owner = true
 [node name="FriendlyUnit" parent="Friendlies" unique_id=1676765037 instance=ExtResource("6_maq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -3.5)
 tile_position = Vector3(-4, 0, -4)
+max_movement_points = null
+max_action_points = null
 
 [node name="FriendlyUnit2" parent="Friendlies" unique_id=1503629063 instance=ExtResource("6_maq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 1.5)
 tile_position = Vector3(-1, 0, 1)
+max_movement_points = null
+max_action_points = null
 
 [node name="FriendlyUnit3" parent="Friendlies" unique_id=743990508 instance=ExtResource("6_maq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 4, -10.5)
 tile_position = Vector3(-1, 1, -11)
+max_movement_points = null
+max_action_points = null
 
 [node name="Enemies" type="Node3D" parent="." unique_id=182952236]
 unique_name_in_owner = true
@@ -130,16 +136,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0.5)
 unaware_base_directives = Array[ExtResource("12_jldy4")]([SubResource("Resource_qeex7"), SubResource("Resource_hd0gu")])
 alarm_run_chance = 1.0
 tile_position = Vector3(1, 0, 0)
+max_movement_points = null
+max_action_points = null
 
 [node name="EnemyUnit2" parent="Enemies" unique_id=702838460 instance=ExtResource("7_maq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0, 0.5)
 unaware_base_directives = Array[ExtResource("12_jldy4")]([SubResource("Resource_e78uj"), SubResource("Resource_u35x1")])
 tile_position = Vector3(11, 0, 0)
+max_movement_points = null
+max_action_points = null
 
 [node name="EnemyUnit3" parent="Enemies" unique_id=707093431 instance=ExtResource("7_maq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 0.5)
 unaware_base_directives = Array[ExtResource("12_jldy4")]([SubResource("Resource_ubdnn"), SubResource("Resource_lxejw")])
 tile_position = Vector3(13, 0, 0)
+max_movement_points = null
+max_action_points = null
 
 [node name="ClickHandler3D" type="Node3D" parent="." unique_id=797014710]
 unique_name_in_owner = true
