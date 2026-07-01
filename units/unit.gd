@@ -127,8 +127,7 @@ func _set_up_skills() -> void:
 func refresh_valid_moves():
 	var valid_moves : Array[Vector3i] = []
 	if World.level and can_move():
-		valid_moves = World.level.nav_map._recursively_get_valid_pos_v2(actual_position, max_movement, {}, true, actual_position)
-		# valid_moves = World.level.nav_map.get_all_valid_moves(actual_position, max_movement)
+		valid_moves = World.level.nav_map.get_all_valid_moves(actual_position, max_movement)
 	if World.level and is_active:
 		World.level.cell_highlighter.highlighted_cells = valid_moves
 	potential_moves = valid_moves
