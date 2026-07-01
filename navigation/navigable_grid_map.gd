@@ -153,22 +153,21 @@ func _update_block_spaces(units : Array[Unit], active_unit : Unit) -> void:
 
 
 ## Utility function handling the recursion necessary to find all valid moves.
-func _recursively_get_valid_pos(point: Vector3i, moves_left: int, potential_moves : Dictionary[Vector3i, bool], base_level : bool, starting_point : Vector3i) -> void:
-	if !potential_moves.has(point) and point != starting_point:
-		potential_moves[point] = true
-	
-	if moves_left == 0:
-		return 
-
+func _recursively_get_valid_pos(last_point_ring: Array[Vector3i], moves_left: int, potential_moves : Dictionary[Vector3i, bool], base_level : bool, starting_point : Vector3i) -> void:
 	if base_level:
 		_update_block_spaces(World.level.units, World.level.active_unit)
 	
-	for connection: Vector3i in point_map_by_grid_coords[point].real_connections.keys():
-		if !blocked_spaces.has(connection):
-			_recursively_get_valid_pos(connection, moves_left - 1, potential_moves, false, starting_point)
-
-	if base_level:
-		return
+	var next_point_ring : Dictionary[Vector3i, bool] = {}
+	for point : Vector3i in last_point_ring:
+		if point != starting_point and !blocked_spaces.has(point):
+			potential_moves[point] = true
+		var grid_point = point_map_by_grid_coords[point]
+		for connection : Vector3i in grid_point.real_connections:
+			if connection != starting_point and !potential_moves.has(connection) and !blocked_spaces.has(point):
+				next_point_ring[connection] = true
+	
+	if moves_left > 0 and next_point_ring.size() > 0:
+		_recursively_get_valid_pos(next_point_ring.keys(), moves_left - 1, potential_moves, false, starting_point)
 
 
 ## Initializes the nav grid by creating all A* points and defining navigable connections based on their potential connections. Should be called once when the level is loaded.
@@ -275,7 +274,7 @@ func paint_grid_square(tile_position: Vector3, color : Color):
 func get_all_valid_moves(tile_position: Vector3i, max_moves: int) -> Array[Vector3i]:
 	var start_time = Time.get_ticks_msec()
 	var valid_moves : Dictionary[Vector3i, bool] = {}
-	_recursively_get_valid_pos(tile_position, max_moves, valid_moves, true, tile_position)
+	_recursively_get_valid_pos([tile_position], max_moves, valid_moves, true, tile_position)
 	var end_time = Time.get_ticks_msec()
 	DebugConsole.log("Execution time to find all valid moves with RECURSION: " + str(end_time - start_time) + " milliseconds", 4)
 	return valid_moves.keys()
