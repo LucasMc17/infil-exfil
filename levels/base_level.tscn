@@ -78,6 +78,7 @@ data = {
 }
 script = ExtResource("1_wevqg")
 level = NodePath("..")
+show_debug = false
 metadata/_custom_type_script = "uid://ch5vn3soxrapt"
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
@@ -113,6 +114,7 @@ unique_name_in_owner = true
 [node name="FriendlyUnit" parent="Friendlies" unique_id=1676765037 instance=ExtResource("6_maq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -3.5)
 tile_position = Vector3(-4, 0, -4)
+max_movement = 100
 
 [node name="FriendlyUnit2" parent="Friendlies" unique_id=1503629063 instance=ExtResource("6_maq6b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 1.5)

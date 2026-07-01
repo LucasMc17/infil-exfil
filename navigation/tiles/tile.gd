@@ -1,3 +1,4 @@
+@tool
 ## Resource representing a specific type of tile in the [NavigableGridMap], and specifically listing its potential connections to neighboring tiles as [TileConnection] resources.
 class_name Tile
 extends Resource 

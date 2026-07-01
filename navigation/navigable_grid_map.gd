@@ -50,22 +50,22 @@ class GridPoint:
 ## The level this NavGrid lives inside of.
 @export var level : BaseLevel
 
-# @export_group("In Editor Debug")
-## The start path [GridMap] position for in editor debugging.[br][br]
+@export_group("In Editor Debug")
+# The start path [GridMap] position for in editor debugging.[br][br]
+# This is only used in the editor to debug pathfinding.
+@export var debug_start_cell: Vector3i:
+	set(val):
+		debug_start_cell = val
+		_draw_debug_path(debug_start_cell, debug_end_cell)
+## The end path [GridMap] position for in editor debugging.[br][br]
 ## This is only used in the editor to debug pathfinding.
-# @export var debug_start_cell: Vector3i:
-# 	set(val):
-# 		debug_start_cell = val
-# 		do_debug_path(debug_start_cell, debug_end_cell)
-# ## The end path [GridMap] position for in editor debugging.[br][br]
-# ## This is only used in the editor to debug pathfinding.
-# @export var debug_end_cell: Vector3i:
-# 	set(val):
-# 		debug_end_cell = val
-# 		do_debug_path(debug_start_cell, debug_end_cell)
-# ## Enable/disable in editor debugging.[br][br]
-# ## This is only used in the editor to debug pathfinding.
-# @export var show_debug: bool = true
+@export var debug_end_cell: Vector3i:
+	set(val):
+		debug_end_cell = val
+		_draw_debug_path(debug_start_cell, debug_end_cell)
+## Enable/disable in editor debugging.[br][br]
+## This is only used in the editor to debug pathfinding.
+@export var show_debug: bool = true
 
 ## The [AStar3D] instance that can be used in your games.
 var astar := CustomAStar.new()
@@ -170,6 +170,36 @@ func _recursively_get_valid_pos(last_point_ring: Array[Vector3i], moves_left: in
 		_recursively_get_valid_pos(next_point_ring.keys(), moves_left - 1, potential_moves, false, starting_point)
 
 
+## Function for drawing viable paths in the editor, for testing.
+func _draw_debug_path(start_pos : Vector3i, end_pos : Vector3i):
+	DebugDraw3D.clear_all()
+	if !show_debug: return
+
+	var path = find_path(start_pos, end_pos)
+	if astar.get_point_count() == 0: return
+	
+	var i: int = 0
+	points.resize(path.size())
+	
+	var temp: Vector3 = map_to_local(start_pos)
+	temp.y += 1
+	DebugDraw3D.draw_box.call_deferred(temp, Quaternion.IDENTITY, Vector3(1, 1, 1), Color.GREEN, true, INF)
+	temp = map_to_local(end_pos)
+	temp.y += 1
+	DebugDraw3D.draw_box.call_deferred(temp, Quaternion.IDENTITY, Vector3(1, 1, 1), Color.RED, true, INF)
+	
+	# Draw boxes: Green = start, Red = end, Yellow = all others
+	for next_point: Vector3 in path:
+		points[i] = map_to_local(next_point)
+		points[i].y += 1 # move debug the box up
+		if i > 0 and i < path.size() - 1: 
+			DebugDraw3D.draw_box.call_deferred(points[i], Quaternion.IDENTITY, Vector3(1, 1, 1), Color.YELLOW, true, INF)
+		i += 1
+
+	# draw point path for added effect
+	DebugDraw3D.draw_point_path.call_deferred(points, 0, 0.25, Color(0, 0, 0, 0), Color(0, 0, 0, 0), INF)
+
+
 ## Initializes the nav grid by creating all A* points and defining navigable connections based on their potential connections. Should be called once when the level is loaded.
 func setup_astar_grid() -> void:
 	var start_time = Time.get_ticks_msec()
@@ -222,45 +252,6 @@ func get_closest_point(pos : Vector3i, points_to_check : Array[Vector3i]) -> Var
 			result = point
 			result_path = path
 	return result
-
-
-# TODO: Return to this later, it's not working atm.
-# func do_debug_path(start_pos : Vector3i, end_pos : Vector3i):
-# 	# DebugDraw2D.clear_all()
-# 	DebugDraw3D.clear_all()
-# 	if !show_debug: return
-
-# 	var path = find_path(start_pos, end_pos)
-# 	if astar.get_point_count() == 0: return
-	
-# 	DebugDraw2D.set_text.call_deferred("1. Grid count: ", astar.get_point_count(), 0, Color(0, 0, 0, 0), INF)
-# 	if path.size() < 1:
-# 		DebugDraw2D.set_text.call_deferred("3. Path length: ", "No path found", 0, Color(0, 0, 0, 0), INF)
-# 	else:
-# 		DebugDraw2D.set_text.call_deferred("3. Path length: ", path.size(), 0, Color(0, 0, 0, 0), INF)
-# 	DebugDraw2D.set_text.call_deferred("4. Start Grid position / Start World position: ", str(start_pos, " / ", map_to_local(start_pos)), 0, Color.GREEN, INF)
-# 	DebugDraw2D.set_text.call_deferred("5. End Grid position / End World position: ", str(end_pos, " / ", map_to_local(end_pos)), 0, Color.RED, INF)
-	
-# 	var i: int = 0
-# 	points.resize(path.size())
-	
-# 	var temp: Vector3 = map_to_local(start_pos)
-# 	temp.y += 1
-# 	DebugDraw3D.draw_box.call_deferred(temp, Quaternion.IDENTITY, Vector3(1, 1, 1), Color.GREEN, true, INF)
-# 	temp = map_to_local(end_pos)
-# 	temp.y += 1
-# 	DebugDraw3D.draw_box.call_deferred(temp, Quaternion.IDENTITY, Vector3(1, 1, 1), Color.RED, true, INF)
-	
-# 	# Draw boxes: Green = start, Red = end, Yellow = all others
-# 	for next_point: Vector3 in path:
-# 		points[i] = map_to_local(next_point)
-# 		points[i].y += 1 # move debug the box up
-# 		if i > 0 and i < path.size() - 1: 
-# 			DebugDraw3D.draw_box.call_deferred(points[i], Quaternion.IDENTITY, Vector3(1, 1, 1), Color.YELLOW, true, INF)
-# 		i += 1
-
-# 	# draw point path for added effect
-# 	DebugDraw3D.draw_point_path.call_deferred(points, 0, 0.25, Color(0, 0, 0, 0), Color(0, 0, 0, 0), INF)
 
 
 ## Debug function for highlighting a square in the grid.
