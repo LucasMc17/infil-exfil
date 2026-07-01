@@ -7,7 +7,7 @@ extends Node3D
 const HIGHLIGHT = preload("res://cell_highlight.tscn")
 
 ## The currently highlighted cells, exported for testing in-editor.
-@export var highlighted_cells : Array[Vector3]:
+@export var highlighted_cells : Array[Vector3i]:
 	set(val):
 		highlighted_cells = val
 		clear()
@@ -22,7 +22,7 @@ func clear() -> void:
 
 
 ## Highlight a specific cell by its 3D coordinates.
-func highlight_cell(pos : Vector3) -> void:
+func highlight_cell(pos : Vector3i) -> void:
 	var highlight_scene = HIGHLIGHT.instantiate()
 	add_child(highlight_scene)
 	highlight_scene.global_position = NavigableGridMap.convert_grid_to_global_position(pos, true)

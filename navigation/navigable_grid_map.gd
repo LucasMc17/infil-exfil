@@ -29,8 +29,10 @@ class GridPoint:
 	var position : Vector3i
 	## The [Tile] type of this point.
 	var tile : Tile
-	## A dictionary representing the relative positions of viable connections for this point in the A* grid.
-	var viable_connections : Dictionary[Vector3i, bool]
+	## A dictionary representing the absolute positions of possible connections to this tile based on its type, without consideration of whether they are actually able to connect.
+	var potential_connections : Dictionary[Vector3i, bool]
+	## A dictionary representing the absolute positions of real connections for this point in the A* grid.
+	var real_connections : Dictionary[Vector3i, bool]
 	## The name of the mesh shown at this position in the GridMap.
 	var mesh_name : String:
 		get():
@@ -42,7 +44,7 @@ class GridPoint:
 		basis = p_basis
 		position = p_position
 		tile = p_tile
-		viable_connections = tile.get_viable_connections(position, basis)
+		potential_connections = tile.get_viable_connections(position, basis)
 
 @export_group("Context")
 ## The level this NavGrid lives inside of.
@@ -110,12 +112,14 @@ func _map_new_point(cell_pos : Vector3i, mesh_id : int, a_star_point : int, tile
 
 ## Utility function to connect a point to it's tile's viable neighbors.
 func _connect_point_to_neighbors(point : GridPoint) -> void:
-	for neighbor : Vector3i in point.viable_connections:
+	for neighbor : Vector3i in point.potential_connections:
 			if point_map_by_grid_coords.has(neighbor):
 				var neighbor_point : GridPoint = point_map_by_grid_coords[neighbor]
-				if point.viable_connections[neighbor] == false or (!astar.are_points_connected(neighbor_point.a_star_point, point.a_star_point, false) \
-				and neighbor_point.viable_connections.has(point.position)):
+				if point.potential_connections[neighbor] == false or (!astar.are_points_connected(neighbor_point.a_star_point, point.a_star_point, false) \
+				and neighbor_point.potential_connections.has(point.position)):
 					astar.connect_points(point.a_star_point, neighbor_point.a_star_point)
+					point.real_connections[neighbor_point.position] = true
+					neighbor_point.real_connections[point.position] = true
 
 
 # NOTE: Not currently in use, but may still prove useful for changing nav grid without regenning whole grid. IE if a door locks.
@@ -303,3 +307,27 @@ func _recusively_get_valid_pos(point: GridPoint, moves_left: int, potential_move
 	# 	for astar_point : int in connections:
 	# 		_recusively_get_valid_pos(point_map_by_astar_ids[astar_point].position, moves_left - 1, potential_moves)
 	# return potential_moves
+
+func _recursively_get_valid_pos_v2(point: Vector3i, moves_left: int, potential_moves : Dictionary[Vector3i, bool], base_level : bool, starting_point : Vector3i) -> Array[Vector3i]:
+	var start_time = Time.get_ticks_msec()
+	if !potential_moves.has(point) and point != starting_point:
+		potential_moves[point] = true
+	if moves_left == 0:
+		return []
+	
+
+	if base_level:
+		_update_block_spaces(World.level.units, World.level.active_unit)
+	
+	for connection: Vector3i in point_map_by_grid_coords[point].real_connections.keys():
+		if !blocked_spaces.has(connection):
+			_recursively_get_valid_pos_v2(connection, moves_left - 1, potential_moves, false, starting_point)
+	
+
+	if base_level:
+		var end_time = Time.get_ticks_msec()
+		DebugConsole.log(potential_moves.size())
+		DebugConsole.log("Execution time to find all valid moves with RECURSION: " + str(end_time - start_time) + " milliseconds", 4)
+		return potential_moves.keys()
+	else:
+		return []

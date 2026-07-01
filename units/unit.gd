@@ -44,7 +44,7 @@ signal forfeited_turn(unit : Unit)
 @export var max_action_points := 1
 
 ## The tile positions that this unit can navigate to.
-var potential_moves : Array[Vector3] = []
+var potential_moves : Array[Vector3i] = []
 ## The number of movement points this unit has. Restored to the maximum at the start of a turn.
 var movement_points := max_movement_points:
 	set(val):
@@ -125,9 +125,10 @@ func _set_up_skills() -> void:
 # NOTE: There's a lot more to do here. Right now this is called when the unit is activated, or enters or exits a movmement state. I think there could be a more elegant solution, utilizing signals to determine when the list of available moves should be updated. I am also considering changing the level cell highlighter from the global level to a per unit level, then just swapping its visibility as the unit is activated/deactivated.
 ## Update the list of valid moves for this unit based on their maximum move distance and what positions within that range are navigable to.
 func refresh_valid_moves():
-	var valid_moves : Array[Vector3] = []
+	var valid_moves : Array[Vector3i] = []
 	if World.level and can_move():
-		valid_moves = World.level.nav_map.get_all_valid_moves(actual_position, max_movement)
+		valid_moves = World.level.nav_map._recursively_get_valid_pos_v2(actual_position, max_movement, {}, true, actual_position)
+		# valid_moves = World.level.nav_map.get_all_valid_moves(actual_position, max_movement)
 	if World.level and is_active:
 		World.level.cell_highlighter.highlighted_cells = valid_moves
 	potential_moves = valid_moves
