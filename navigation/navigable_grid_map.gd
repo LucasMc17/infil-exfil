@@ -51,8 +51,8 @@ class GridPoint:
 @export var level : BaseLevel
 
 @export_group("In Editor Debug")
-# The start path [GridMap] position for in editor debugging.[br][br]
-# This is only used in the editor to debug pathfinding.
+## The start path [GridMap] position for in editor debugging.[br][br]
+## This is only used in the editor to debug pathfinding.
 @export var debug_start_cell: Vector3i:
 	set(val):
 		debug_start_cell = val
