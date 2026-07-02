@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cda3qe2hu7vct" path="res://units/enemies/enemy_unit.gd" id="2_klayc"]
 [ext_resource type="Material" uid="uid://cfxlo28yuwser" path="res://assets/materials/enemy_highlight.tres" id="2_lmb8q"]
 [ext_resource type="Script" uid="uid://bp1pubml3l0d7" path="res://units/ai/directive/directive.gd" id="3_i6gcf"]
-[ext_resource type="PackedScene" uid="uid://cof3le0rdxhxw" path="res://units/enemies/seeing_zone.tscn" id="8_j686a"]
+[ext_resource type="PackedScene" uid="uid://cof3le0rdxhxw" path="res://units/vision_zones/seeing_zone.tscn" id="8_j686a"]
 [ext_resource type="Script" uid="uid://dsirg6rpatadl" path="res://units/movement/movement_state.gd" id="8_mer0c"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ijy6f"]
@@ -23,6 +23,8 @@ script = ExtResource("2_klayc")
 unaware_base_directives = Array[ExtResource("3_i6gcf")]([])
 alerted_base_directives = Array[ExtResource("3_i6gcf")]([])
 alarm_run_chance = 0.5
+max_movement_points = null
+max_action_points = null
 
 [node name="UnitFlag" parent="." index="0" unique_id=710425423]
 texture = SubResource("ViewportTexture_ijy6f")

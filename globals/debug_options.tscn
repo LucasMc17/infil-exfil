@@ -4,7 +4,6 @@
 
 [node name="DebugOptions" type="Node" unique_id=892237510]
 script = ExtResource("1_dng8f")
-ammo_mode = 2
 unlimited_mp = true
 unlimited_ap = true
 time_scale = 4.0

@@ -3,9 +3,9 @@
 class_name EnemyUnit
 extends Unit
 
-## Starting queue of directives to perform when unaware. Passed directly to the [DecisionDirector].
+## Starting queue of directives to perform when unaware. Passed directly to the [DecisionDirectorModule].
 @export var unaware_base_directives : Array[Directive] = []
-## Starting queue of directives to perform when alerted. Passed directly to the [DecisionDirector].
+## Starting queue of directives to perform when alerted. Passed directly to the [DecisionDirectorModule].
 @export var alerted_base_directives : Array[Directive] = []
 
 ## How likely the unit is to run for the alarm each turn when alarmed by the player's units.
@@ -14,14 +14,14 @@ extends Unit
 ## The enemy unit's awareness module.
 var awareness := EnemyUnitAwarenessModule.new(self)
 ## The enemy unit's decision director.
-var decision_director : DecisionDirector
+var decision_director : DecisionDirectorModule
 
 @onready var seeing_zone : SeeingZone = %SeeingZone
 
 func _ready():
 	super()
 	awareness.awareness_changed.connect(_on_awareness_changed)
-	decision_director = DecisionDirector.new(self, awareness)
+	decision_director = DecisionDirectorModule.new(self, awareness)
 	debug_label.change_param('awareness_level', awareness.AwarenessLevel.find_key(awareness.awareness_level))
 	debug_label.change_param('targets', '[]')
 	Events.alarm_raised.connect(_on_alarm_raised)

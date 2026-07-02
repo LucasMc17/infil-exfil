@@ -15,7 +15,7 @@ enum SkillType {
 @export_group("Skill Info")
 ## The name of this skill.
 @export var name := "Skill Name"
-## The unique ID of this skill, especially for use in the [SkillHandler] logic module.
+## The unique ID of this skill, especially for use in the [SkillHandlerModule] logic module.
 @export var id := "skill_name"
 ## A description of this skill for the player's benefit.
 @export_multiline var description := "Skill description"
@@ -42,7 +42,10 @@ func make_unique() -> Skill:
 func get_affordability() -> bool:
 	if user.action_points >= action_cost && user.movement_points >= movement_cost:
 		if ammo_cost:
-			return user.primary_weapon is RangedWeapon && user.primary_weapon.current_ammunition >= ammo_cost
+			if DebugOptions.ammo_mode as int == 2:
+				return true
+			else:
+				return user.primary_weapon is RangedWeapon && user.primary_weapon.current_ammunition >= ammo_cost
 		return true
 	return false
 

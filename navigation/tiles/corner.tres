@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Tile" format=3 uid="uid://doewqvdgdbi2c"]
+
+[ext_resource type="Script" uid="uid://dh08xpx10ru7" path="res://navigation/tiles/tile.gd" id="1_xb1tu"]
+[ext_resource type="Script" uid="uid://boqs7jy6uova" path="res://navigation/tiles/connections/tile_connection.gd" id="2_o4n2b"]
+[ext_resource type="Resource" uid="uid://tg0xyddhoaba" path="res://navigation/tiles/connections/right.tres" id="3_kr8c7"]
+[ext_resource type="Resource" uid="uid://5hn1njjlodbw" path="res://navigation/tiles/connections/backward.tres" id="4_sa78g"]
+
+[resource]
+script = ExtResource("1_xb1tu")
+name = "Corner"
+viable_neighbors = Array[ExtResource("2_o4n2b")]([ExtResource("3_kr8c7"), ExtResource("4_sa78g")])
+metadata/_custom_type_script = "uid://dh08xpx10ru7"

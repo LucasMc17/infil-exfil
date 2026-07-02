@@ -7,8 +7,6 @@ const MIN_X_PIVOT := -90
 ## The upper limit of the camera's x-pivot.
 const MAX_X_PIVOT := 0
 
-## The current level of the camera's focal point on the Y axis in 3d space. This is measured in 4 meter installments, in keeping with the sizing of the navigable grid map. IE, a [y_level] of 1 is 4 meters elevated, 2 is 8 meters, etc. This is tracked so that the camera knows where to jump to when the player presses the up or down arrows in game.
-var y_level := 0
 ## The zoom level of the camera. Capped between 10 meters zoomed in from the starting position, and 15 meters zoomed out from the starting position.
 var zoom_offset := 0:
 	set(val):
@@ -29,14 +27,12 @@ var target : Node3D
 func _process(_delta: float) -> void:
 	if target:
 		_lerp_target = target.global_position
-		y_level = round(target.global_position.y / 4)
 	global_position = lerp(global_position, _lerp_target, 0.15)
 
 
 ## Jump the camera to a specific point in 3D space.
 func jump_to_point(point: Vector3i):
 	unfix()
-	y_level = point.y
 	_lerp_target = NavigableGridMap.convert_grid_to_global_position(point, true)
 
 
@@ -57,14 +53,16 @@ func pan_camera(mouse_motion : Vector2):
 		_lerp_target += Vector3(-mouse_motion.x / 50, 0, -mouse_motion.y / 50).rotated(Vector3.UP, _y_pivot.rotation.y)
 
 
-## Move the camera up or down one [y_level].
+## Move the camera up or down one level on the nav grid.
 func shift_camera_y(up : bool):
 	unfix()
 	if up:
-		y_level += 1
+		var current_grid_y = floor(_lerp_target.y / NavigableGridMap.CELL_SIZE.y)
+		_lerp_target.y = (current_grid_y + 1) * NavigableGridMap.CELL_SIZE.y
 	else:
-		y_level -= 1
-	_lerp_target.y = y_level * 4
+		var current_grid_y = ceil(_lerp_target.y / NavigableGridMap.CELL_SIZE.y)
+		_lerp_target.y = (current_grid_y - 1) * NavigableGridMap.CELL_SIZE.y
+	DebugConsole.log(_lerp_target.y)
 
 
 ## Pivot the camera around the focal point, in accordance with a Vector2 indicating relative motion.

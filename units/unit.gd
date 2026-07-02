@@ -39,20 +39,12 @@ signal forfeited_turn(unit : Unit)
 
 @export_group('Points')
 ## The maximum movement points for this unit, to which they are restored at the beginning of each new turn.
-@export var max_movement_points := 1:
-	get():
-		if DebugOptions.unlimited_mp:
-			return 100
-		return max_movement_points
+@export var max_movement_points := 1
 ## The maximum action points for this unit, to which they are restored at the beginning of each new turn.
-@export var max_action_points := 1:
-	get():
-		if DebugOptions.unlimited_ap:
-			return 100
-		return max_action_points
+@export var max_action_points := 1
 
 ## The tile positions that this unit can navigate to.
-var potential_moves : Array[Vector3] = []
+var potential_moves : Array[Vector3i] = []
 ## The number of movement points this unit has. Restored to the maximum at the start of a turn.
 var movement_points := max_movement_points:
 	set(val):
@@ -130,10 +122,9 @@ func _set_up_skills() -> void:
 			skill_area_holder.add_child(targeting_area)
 
 
-# NOTE: There's a lot more to do here. Right now this is called when the unit is activated, or enters or exits a movmement state. I think there could be a more elegant solution, utilizing signals to determine when the list of available moves should be updated. I am also considering changing the level cell highlighter from the global level to a per unit level, then just swapping its visibility as the unit is activated/deactivated.
 ## Update the list of valid moves for this unit based on their maximum move distance and what positions within that range are navigable to.
-func refresh_valid_moves():
-	var valid_moves : Array[Vector3] = []
+func refresh_valid_moves() -> void:
+	var valid_moves : Array[Vector3i] = []
 	if World.level and can_move():
 		valid_moves = World.level.nav_map.get_all_valid_moves(actual_position, max_movement)
 	if World.level and is_active:
@@ -162,11 +153,10 @@ func deactivate():
 
 ## Return the unit to a default state, with action and movement points reset.
 func reset():
-	movement_points = max_movement_points
-	action_points = max_action_points
+	movement_points = 100 if DebugOptions.unlimited_mp else max_movement_points
+	action_points = 100 if DebugOptions.unlimited_ap else max_action_points
 
 
-# NOTE: I don't like these.
 ## Returns true if the unit is still capable of moving this turn.
 func can_move() -> bool:
 	return movement_points > 0 and movement_machine.current_state is NoMovement
@@ -187,6 +177,7 @@ func check_for_detection() -> void:
 	pass
 
 
+# TODO: Enemy unit's should extend this to accidentally bump into unseen friendly units rather than blindly pathing around them.
 ## Move along a navigable path towards a destination point.
 func follow_path(delta : float, path : Array, mps := 1.0) -> void:
 	if path.is_empty():

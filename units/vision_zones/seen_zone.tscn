@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://1lky50pj0tct"]
 
-[ext_resource type="Script" uid="uid://bjtxmd5svyp55" path="res://units/friendlies/seen_zone.gd" id="1_ttgrv"]
+[ext_resource type="Script" uid="uid://bjtxmd5svyp55" path="res://units/vision_zones/seen_zone.gd" id="1_ttgrv"]
 
 [node name="VisibleZone" type="Area3D" unique_id=1411709038]
 script = ExtResource("1_ttgrv")

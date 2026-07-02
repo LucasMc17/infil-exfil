@@ -1,4 +1,3 @@
-# NOTE: Not sure I should bother putting module in these class names.
 ## Logic module for handling an individual enemy unit's awareness of the intruding friendlies. This operates in conjunction with the [EnemyTeamAwarenessModule] (which handles team-level awareness) to inform the overall alertness state of the enemy team.
 class_name EnemyUnitAwarenessModule
 extends Resource

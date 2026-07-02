@@ -1,10 +1,13 @@
 [gd_resource type="Resource" script_class="Tile" format=3 uid="uid://dp7k0jhnf8m4j"]
 
 [ext_resource type="Script" uid="uid://dh08xpx10ru7" path="res://navigation/tiles/tile.gd" id="1_kurj0"]
+[ext_resource type="Script" uid="uid://boqs7jy6uova" path="res://navigation/tiles/connections/tile_connection.gd" id="2_jovae"]
+[ext_resource type="Resource" uid="uid://5hn1njjlodbw" path="res://navigation/tiles/connections/backward.tres" id="3_f00gp"]
+[ext_resource type="Resource" uid="uid://tg0xyddhoaba" path="res://navigation/tiles/connections/right.tres" id="4_olcu6"]
+[ext_resource type="Resource" uid="uid://djtatqteb4s8h" path="res://navigation/tiles/connections/left.tres" id="5_0fr7a"]
 
 [resource]
 script = ExtResource("1_kurj0")
 name = "Wall"
-navigable = false
-should_respect_rotation = false
+viable_neighbors = Array[ExtResource("2_jovae")]([ExtResource("3_f00gp"), ExtResource("4_olcu6"), ExtResource("5_0fr7a")])
 metadata/_custom_type_script = "uid://dh08xpx10ru7"

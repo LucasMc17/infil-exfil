@@ -5,37 +5,46 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_0f31m"]
 size = Vector3(1, 0.1, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_2sjd1"]
-size = Vector3(0.95, 3.9, 0.95)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_cxgg3"]
-size = Vector3(1, 0.1, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_7jdsr"]
-size = Vector3(1, 0.1, 1)
-
 [node name="grid_library_source" unique_id=1799051442 instance=ExtResource("1_0f31m")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Floor" parent_id_path=PackedInt32Array(1256506772) index="0" unique_id=876020068]
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor" parent_id_path=PackedInt32Array(1705987905) index="0" unique_id=876020068]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D" index="0" unique_id=859509283]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
 shape = SubResource("BoxShape3D_0f31m")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Wall" parent_id_path=PackedInt32Array(1358384037) index="0" unique_id=895997945]
+[node name="StaticBody3D" type="StaticBody3D" parent="Wall" parent_id_path=PackedInt32Array(1236491286) index="0" unique_id=366327935]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/StaticBody3D" index="0" unique_id=14837559]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-shape = SubResource("BoxShape3D_2sjd1")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Ladder" parent_id_path=PackedInt32Array(891987992) index="0" unique_id=688951947]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder/StaticBody3D" index="0" unique_id=238401811]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/StaticBody3D" index="0" unique_id=1454362496]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
-shape = SubResource("BoxShape3D_cxgg3")
+shape = SubResource("BoxShape3D_0f31m")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Alarm" parent_id_path=PackedInt32Array(1302273464) index="0" unique_id=1239267472]
+[node name="StaticBody3D" type="StaticBody3D" parent="Ladder" parent_id_path=PackedInt32Array(1295160662) index="0" unique_id=717544643]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Alarm/StaticBody3D" index="0" unique_id=1678641631]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder/StaticBody3D" index="0" unique_id=2026163928]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
-shape = SubResource("BoxShape3D_7jdsr")
+shape = SubResource("BoxShape3D_0f31m")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Alarm" parent_id_path=PackedInt32Array(1267200537) index="0" unique_id=1433859942]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Alarm/StaticBody3D" index="0" unique_id=654027188]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+shape = SubResource("BoxShape3D_0f31m")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Corner" parent_id_path=PackedInt32Array(1361599089) index="0" unique_id=481611531]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Corner/StaticBody3D" index="0" unique_id=1737708648]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+shape = SubResource("BoxShape3D_0f31m")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="DeadEnd" parent_id_path=PackedInt32Array(1748677522) index="0" unique_id=465247639]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DeadEnd/StaticBody3D" index="0" unique_id=9352536]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+shape = SubResource("BoxShape3D_0f31m")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Passage" parent_id_path=PackedInt32Array(742184643) index="0" unique_id=743320098]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Passage/StaticBody3D" index="0" unique_id=1006945767]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+shape = SubResource("BoxShape3D_0f31m")

@@ -1,5 +1,3 @@
-# TODO: Move this out friendlies. Enemies have these too now.
-## Extension of the [VisionZone] class which is responsible for being detected by [SeeingZone]s when overlapping with them.
 ## [br]Expects to contain an array of [VisibilityPoint]s as direct children, which are used to make sure a configurable portion of the unit is visible before officially considering them as "seen".
 class_name SeenZone
 extends VisionZone

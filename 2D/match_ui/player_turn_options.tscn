@@ -2,11 +2,20 @@
 
 [ext_resource type="Script" uid="uid://bydkhabiome03" path="res://2D/match_ui/player_turn_options.gd" id="1_abqpe"]
 
+[sub_resource type="InputEventKey" id="InputEventKey_abqpe"]
+device = -1
+shift_pressed = true
+keycode = 4194309
+
+[sub_resource type="Shortcut" id="Shortcut_abqpe"]
+events = [SubResource("InputEventKey_abqpe")]
+
 [node name="PlayerTurnOptions" type="HBoxContainer" unique_id=1407807008]
 script = ExtResource("1_abqpe")
 
 [node name="EndTurnButton" type="Button" parent="." unique_id=1836171905]
 layout_mode = 2
+shortcut = SubResource("Shortcut_abqpe")
 text = "END TURN"
 
 [connection signal="pressed" from="EndTurnButton" to="." method="_on_end_turn_button_pressed"]

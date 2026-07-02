@@ -6,14 +6,14 @@
 [ext_resource type="Material" uid="uid://b343cwtgaxavy" path="res://assets/materials/friendly_highlight.tres" id="3_ikcby"]
 [ext_resource type="Script" uid="uid://dsirg6rpatadl" path="res://units/movement/movement_state.gd" id="6_wqcmw"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_wqcmw"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_o5yok"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ipgw"]
 albedo_color = Color(0.27409065, 0.7122239, 0.12106868, 1)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_dnhmq"]
-viewport_path = NodePath("DebugLabel/@SubViewport@124595")
+[sub_resource type="ViewportTexture" id="ViewportTexture_wqcmw"]
+viewport_path = NodePath("DebugLabel/@SubViewport@152643")
 
 [node name="FriendlyUnit" unique_id=1676765037 groups=["friendlies"] instance=ExtResource("1_7ia1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
@@ -21,7 +21,7 @@ script = ExtResource("2_3ipgw")
 primary_weapon = ExtResource("3_dnhmq")
 
 [node name="UnitFlag" parent="." index="0" unique_id=710425423]
-texture = SubResource("ViewportTexture_wqcmw")
+texture = SubResource("ViewportTexture_o5yok")
 
 [node name="MeshInstance3D" parent="." index="1" unique_id=1987464459]
 surface_material_override/0 = SubResource("StandardMaterial3D_3ipgw")
@@ -30,7 +30,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_3ipgw")
 surface_material_override/0 = ExtResource("3_ikcby")
 
 [node name="DebugLabel" parent="." index="4" unique_id=607303816]
-texture = SubResource("ViewportTexture_dnhmq")
+texture = SubResource("ViewportTexture_wqcmw")
 _text = "FRIENDLY UNIT
 Position: (x: {x}, y: {y}, z: {z})
 Current Movement: {movement_state}

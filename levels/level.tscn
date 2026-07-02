@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://dt305x7b2byrv"]
+
+[ext_resource type="Script" uid="uid://b6v64sbglrpl0" path="res://levels/level.gd" id="1_ta7ci"]
+[ext_resource type="PackedScene" uid="uid://51rqmlm6v48t" path="res://2D/match_ui/match_ui.tscn" id="2_lh335"]
+[ext_resource type="PackedScene" uid="uid://bkyvde1ymp2ch" path="res://levels/test_environment.tscn" id="2_mxp4k"]
+[ext_resource type="PackedScene" uid="uid://3rc8lg86w2jx" path="res://2D/debug/debug_ui.tscn" id="3_u6cys"]
+[ext_resource type="MeshLibrary" uid="uid://crn4m7ftmqgqh" path="res://navigation/grid_library_source.tres" id="4_368ro"]
+[ext_resource type="Script" uid="uid://ch5vn3soxrapt" path="res://navigation/navigable_grid_map.gd" id="5_3ca7f"]
+[ext_resource type="PackedScene" uid="uid://cfeifk7bnyc0h" path="res://levels/level_camera.tscn" id="6_kogck"]
+[ext_resource type="PackedScene" uid="uid://cmp62gpdora7s" path="res://levels/cell_highlighter.tscn" id="7_574oa"]
+[ext_resource type="Script" uid="uid://bsxnir3r10yla" path="res://logic/state_management/state_machine.gd" id="8_tn76l"]
+[ext_resource type="Script" uid="uid://cvky17ch66rjs" path="res://levels/level_states/player_turn.gd" id="9_werwd"]
+[ext_resource type="Script" uid="uid://cu06vvfrrxrxs" path="res://levels/level_states/enemy_turn.gd" id="10_of21v"]
+[ext_resource type="Script" uid="uid://cwt2k11twrldn" path="res://levels/click_handler_3d.gd" id="15_rm7tw"]
+[ext_resource type="Texture2D" uid="uid://8wky484er1ls" path="res://assets/images/crosshair_PLACEHOLDER.png" id="16_dcgl2"]
+
+[node name="Level" type="Node3D" unique_id=1510169201]
+script = ExtResource("1_ta7ci")
+
+[node name="WorldEnvironment" parent="." unique_id=1107774988 instance=ExtResource("2_mxp4k")]
+
+[node name="MatchUi" parent="." unique_id=1837896508 instance=ExtResource("2_lh335")]
+unique_name_in_owner = true
+
+[node name="DebugUi" parent="." unique_id=1639751749 instance=ExtResource("3_u6cys")]
+
+[node name="NavigableGridMap" type="GridMap" parent="." unique_id=805823171 node_paths=PackedStringArray("level")]
+unique_name_in_owner = true
+mesh_library = ExtResource("4_368ro")
+cell_size = Vector3(1, 4, 1)
+cell_center_y = false
+script = ExtResource("5_3ca7f")
+level = NodePath("..")
+show_debug = false
+metadata/_custom_type_script = "uid://ch5vn3soxrapt"
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="LevelCamera" parent="." unique_id=864095843 instance=ExtResource("6_kogck")]
+unique_name_in_owner = true
+
+[node name="CellHighlighter" parent="." unique_id=1162376540 instance=ExtResource("7_574oa")]
+unique_name_in_owner = true
+
+[node name="StateMachine" type="Node" parent="." unique_id=1160962442 node_paths=PackedStringArray("current_state")]
+unique_name_in_owner = true
+script = ExtResource("8_tn76l")
+current_state = NodePath("PlayerTurn")
+metadata/_custom_type_script = "uid://bsxnir3r10yla"
+
+[node name="PlayerTurn" type="Node" parent="StateMachine" unique_id=28919703 node_paths=PackedStringArray("level")]
+script = ExtResource("9_werwd")
+level = NodePath("../..")
+
+[node name="EnemyTurn" type="Node" parent="StateMachine" unique_id=1947903548 node_paths=PackedStringArray("level")]
+script = ExtResource("10_of21v")
+level = NodePath("../..")
+
+[node name="Friendlies" type="Node3D" parent="." unique_id=926091492]
+unique_name_in_owner = true
+
+[node name="Enemies" type="Node3D" parent="." unique_id=182952236]
+unique_name_in_owner = true
+
+[node name="ClickHandler3D" type="Node3D" parent="." unique_id=797014710]
+unique_name_in_owner = true
+script = ExtResource("15_rm7tw")
+metadata/_custom_type_script = "uid://cwt2k11twrldn"
+
+[node name="TargetRetical" type="Sprite3D" parent="." unique_id=2030216109]
+unique_name_in_owner = true
+visible = false
+pixel_size = 0.0003
+billboard = 1
+no_depth_test = true
+fixed_size = true
+render_priority = 2
+texture = ExtResource("16_dcgl2")

@@ -3,6 +3,9 @@
 class_name NavigableGridMap
 extends GridMap
 
+## The size of the basic cell in the gridmap, as a Vector3.
+static var CELL_SIZE := Vector3(1.0, 4.0, 1.0)
+
 ## Floor [Tile] resource.
 const FLOOR := preload("./tiles/floor.tres")
 ## Wall [Tile] resource.
@@ -11,8 +14,14 @@ const WALL := preload("./tiles/wall.tres")
 const LADDER := preload("./tiles/ladder.tres")
 ## Alarm [Tile] resource.
 const ALARM := preload("./tiles/alarm.tres")
+## Corner [Tile] resource.
+const CORNER := preload("./tiles/corner.tres")
+## Dead End [Tile] resource.
+const DEAD_END := preload("./tiles/dead_end.tres")
+## Passage [Tile] resource.
+const PASSAGE := preload("./tiles/passage.tres")
 ## Array of all preloaded [Tile] resources, in the order of their corresponding meshes within the [MeshLibrary] of the [GridMap].
-const TILE_PALETTE : Array[Tile] = [FLOOR, WALL, LADDER, ALARM]
+const TILE_PALETTE : Array[Tile] = [FLOOR, WALL, LADDER, ALARM, CORNER, DEAD_END, PASSAGE]
 
 ## Custom class representing a single point, both in the grid map and the A* grid. Contains information about that point's position, tile type, connections, mesh ID, rotation and A* ID. Designed to allow for easy referencing of specific spoints in the context of either the GridMap or the A* grid.
 class GridPoint:
@@ -26,8 +35,10 @@ class GridPoint:
 	var position : Vector3i
 	## The [Tile] type of this point.
 	var tile : Tile
-	## A dictionary representing the relative positions of viable connections for this point in the A* grid.
-	var viable_connections : Dictionary[Vector3i, bool]
+	## A dictionary representing the absolute positions of possible connections to this tile based on its type, without consideration of whether they are actually able to connect.
+	var potential_connections : Dictionary[Vector3i, bool]
+	## A dictionary representing the absolute positions of real connections for this point in the A* grid.
+	var real_connections : Dictionary[Vector3i, bool]
 	## The name of the mesh shown at this position in the GridMap.
 	var mesh_name : String:
 		get():
@@ -39,28 +50,28 @@ class GridPoint:
 		basis = p_basis
 		position = p_position
 		tile = p_tile
-		viable_connections = tile.get_viable_connections(position, basis)
+		potential_connections = tile.get_viable_connections(position, basis)
 
 @export_group("Context")
 ## The level this NavGrid lives inside of.
 @export var level : BaseLevel
 
-# @export_group("In Editor Debug")
+@export_group("In Editor Debug")
 ## The start path [GridMap] position for in editor debugging.[br][br]
 ## This is only used in the editor to debug pathfinding.
-# @export var debug_start_cell: Vector3i:
-# 	set(val):
-# 		debug_start_cell = val
-# 		do_debug_path(debug_start_cell, debug_end_cell)
-# ## The end path [GridMap] position for in editor debugging.[br][br]
-# ## This is only used in the editor to debug pathfinding.
-# @export var debug_end_cell: Vector3i:
-# 	set(val):
-# 		debug_end_cell = val
-# 		do_debug_path(debug_start_cell, debug_end_cell)
-# ## Enable/disable in editor debugging.[br][br]
-# ## This is only used in the editor to debug pathfinding.
-# @export var show_debug: bool = true
+@export var debug_start_cell: Vector3i:
+	set(val):
+		debug_start_cell = val
+		_draw_debug_path(debug_start_cell, debug_end_cell)
+## The end path [GridMap] position for in editor debugging.[br][br]
+## This is only used in the editor to debug pathfinding.
+@export var debug_end_cell: Vector3i:
+	set(val):
+		debug_end_cell = val
+		_draw_debug_path(debug_start_cell, debug_end_cell)
+## Enable/disable in editor debugging.[br][br]
+## This is only used in the editor to debug pathfinding.
+@export var show_debug: bool = true
 
 ## The [AStar3D] instance that can be used in your games.
 var astar := CustomAStar.new()
@@ -75,26 +86,24 @@ var alarms : Dictionary[Vector3i, bool] = {}
 ## A dictionary representing spaces temporarily blocked by Units standing on them.
 var blocked_spaces : Dictionary[Vector3i, GridPoint] = {}
 
-# TODO: Find a way to make that y height a magic number.
-## Takes in a global position and converts it to it's nearest position on the grid (ASSUMES A Y HEIGHT OF 4)
+## Takes in a global position and converts it to it's nearest position on the grid.
 static func convert_global_to_grid_position(pos : Vector3) -> Vector3:
 	var result = pos.round()
-	result.y = (result.y - (int(result.y) % 4)) / 4
-	return result
+	return result / CELL_SIZE
 
 
-## Takes in a grid local position and converts it to it's equivalent global position (ASSUMES A Y HEIGHT OF 4)[br]
+## Takes in a grid local position and converts it to it's equivalent global position.[br]
 ## If [should_center] is true, it will add 0.5 to the x and z axis so that the resulting global position is centered on the grid tile.
 static func convert_grid_to_global_position(pos : Vector3, should_center := false) -> Vector3:
-	var result = Vector3(pos)
-	result.y *= 4
+	var result = Vector3(pos) * CELL_SIZE
 	if should_center:
-		result.x += 0.5
-		result.z += 0.5
+		result.x += 0.5 * CELL_SIZE.x
+		result.z += 0.5 * CELL_SIZE.z
 	return result
 
 
 func _ready() -> void:
+	cell_size = CELL_SIZE
 	if Engine.is_editor_hint():
 		setup_astar_grid()
 
@@ -109,12 +118,14 @@ func _map_new_point(cell_pos : Vector3i, mesh_id : int, a_star_point : int, tile
 
 ## Utility function to connect a point to it's tile's viable neighbors.
 func _connect_point_to_neighbors(point : GridPoint) -> void:
-	for neighbor : Vector3i in point.viable_connections:
+	for neighbor : Vector3i in point.potential_connections:
 			if point_map_by_grid_coords.has(neighbor):
 				var neighbor_point : GridPoint = point_map_by_grid_coords[neighbor]
-				if point.viable_connections[neighbor] == false or (!astar.are_points_connected(neighbor_point.a_star_point, point.a_star_point, false) \
-				and neighbor_point.viable_connections.has(point.position)):
+				if point.potential_connections[neighbor] == false or (!astar.are_points_connected(neighbor_point.a_star_point, point.a_star_point, false) \
+				and neighbor_point.potential_connections.has(point.position)):
 					astar.connect_points(point.a_star_point, neighbor_point.a_star_point)
+					point.real_connections[neighbor_point.position] = true
+					neighbor_point.real_connections[point.position] = true
 
 
 # NOTE: Not currently in use, but may still prove useful for changing nav grid without regenning whole grid. IE if a door locks.
@@ -145,6 +156,54 @@ func _update_block_spaces(units : Array[Unit], active_unit : Unit) -> void:
 			var point = point_map_by_grid_coords[pos]
 			astar.set_point_disabled(point.a_star_point, true)
 			blocked_spaces[pos] = point
+
+
+## Utility function handling the recursion necessary to find all valid moves.
+func _recursively_get_valid_pos(last_point_ring: Array[Vector3i], moves_left: int, potential_moves : Dictionary[Vector3i, bool], base_level : bool, starting_point : Vector3i) -> void:
+	if base_level:
+		_update_block_spaces(World.level.units, World.level.active_unit)
+	
+	var next_point_ring : Dictionary[Vector3i, bool] = {}
+	for point : Vector3i in last_point_ring:
+		if point != starting_point and !blocked_spaces.has(point):
+			potential_moves[point] = true
+		var grid_point = point_map_by_grid_coords[point]
+		for connection : Vector3i in grid_point.real_connections:
+			if connection != starting_point and !potential_moves.has(connection) and !blocked_spaces.has(point):
+				next_point_ring[connection] = true
+	
+	if moves_left > 0 and next_point_ring.size() > 0:
+		_recursively_get_valid_pos(next_point_ring.keys(), moves_left - 1, potential_moves, false, starting_point)
+
+
+## Function for drawing viable paths in the editor, for testing.
+func _draw_debug_path(start_pos : Vector3i, end_pos : Vector3i):
+	DebugDraw3D.clear_all()
+	if !show_debug: return
+
+	var path = find_path(start_pos, end_pos)
+	if astar.get_point_count() == 0: return
+	
+	var i: int = 0
+	points.resize(path.size())
+	
+	var temp: Vector3 = map_to_local(start_pos)
+	temp.y += 1
+	DebugDraw3D.draw_box.call_deferred(temp, Quaternion.IDENTITY, Vector3(1, 1, 1), Color.GREEN, true, INF)
+	temp = map_to_local(end_pos)
+	temp.y += 1
+	DebugDraw3D.draw_box.call_deferred(temp, Quaternion.IDENTITY, Vector3(1, 1, 1), Color.RED, true, INF)
+	
+	# Draw boxes: Green = start, Red = end, Yellow = all others
+	for next_point: Vector3 in path:
+		points[i] = map_to_local(next_point)
+		points[i].y += 1 # move debug the box up
+		if i > 0 and i < path.size() - 1: 
+			DebugDraw3D.draw_box.call_deferred(points[i], Quaternion.IDENTITY, Vector3(1, 1, 1), Color.YELLOW, true, INF)
+		i += 1
+
+	# draw point path for added effect
+	DebugDraw3D.draw_point_path.call_deferred(points, 0, 0.25, Color(0, 0, 0, 0), Color(0, 0, 0, 0), INF)
 
 
 ## Initializes the nav grid by creating all A* points and defining navigable connections based on their potential connections. Should be called once when the level is loaded.
@@ -187,15 +246,44 @@ func find_path(start: Vector3i, end: Vector3i) -> Array:
 	# Get the path as an array of Vector3 points
 	var path = astar.get_point_path(start_id, end_id)
 	return path
+	
+
+## Takes in a starting position and an array of positions to check, and returns the position from the array which can be reached from the starting position with the shortest navigable path. If no position is found to be reachable, returns null.
+func get_closest_point(pos : Vector3i, points_to_check : Array[Vector3i]) -> Variant:
+	var result = null
+	var result_path = null
+	for point : Vector3i in points_to_check:
+		var path = find_path(pos, point)
+		if !result or path.size() < result_path.size():
+			result = point
+			result_path = path
+	return result
 
 
-## Takes in a starting position and a maximum move distance and returns an array of all valid positions to move to from that position.
-func get_all_valid_moves(tile_position: Vector3i, max_moves : int) -> Array[Vector3]:
+## Debug function for highlighting a square in the grid.
+func paint_grid_square(tile_position: Vector3, color : Color):
+	var temp = tile_position
+	temp.y += 1
+	DebugDraw3D.draw_box.call_deferred(temp, Quaternion.IDENTITY, Vector3(0.9, 0.9, 0.9), color, true, INF)
+
+
+## Utilizes recursion to find all valid moves from a valid position, assuming a certain max movement distance. The recursion makes it considerably faster than using the old, naive function for the same purpose.
+func get_all_valid_moves(tile_position: Vector3i, max_moves: int) -> Array[Vector3i]:
+	var start_time = Time.get_ticks_msec()
+	var valid_moves : Dictionary[Vector3i, bool] = {}
+	_recursively_get_valid_pos([tile_position], max_moves, valid_moves, true, tile_position)
+	var end_time = Time.get_ticks_msec()
+	DebugConsole.log("Execution time to find all valid moves with RECURSION: " + str(end_time - start_time) + " milliseconds", 4)
+	return valid_moves.keys()
+
+
+## DEPRECATED: Takes in a starting position and a maximum move distance and returns an array of all valid positions to move to from that position. Will be removed in future commits.
+func get_all_valid_moves_OLD(tile_position: Vector3i, max_moves : int) -> Array[Vector3i]:
 	_update_block_spaces(World.level.units, World.level.active_unit)
 	var start_time = Time.get_ticks_msec()
 	var true_max_moves = max_moves * 2
-	var potential_moves : Array[Vector3]
-	var final_moves : Array[Vector3]
+	var potential_moves : Array[Vector3i]
+	var final_moves : Array[Vector3i]
 	for x in range(-true_max_moves, true_max_moves + 1):
 		for y in range(-true_max_moves, true_max_moves + 1):
 			for z in range(-true_max_moves, true_max_moves + 1):
@@ -211,94 +299,3 @@ func get_all_valid_moves(tile_position: Vector3i, max_moves : int) -> Array[Vect
 	var end_time = Time.get_ticks_msec()
 	DebugConsole.log("Execution time to find all valid moves: " + str(end_time - start_time) + " milliseconds", 4)
 	return final_moves
-	
-
-## Takes in a starting position and an array of positions to check, and returns the position from the array which can be reached from the starting position with the shortest navigable path. If no position is found to be reachable, returns null.
-func get_closest_point(pos : Vector3i, points_to_check : Array[Vector3i]) -> Variant:
-	var result = null
-	var result_path = null
-	for point : Vector3i in points_to_check:
-		var path = find_path(pos, point)
-		if !result or path.size() < result_path.size():
-			result = point
-			result_path = path
-	return result
-
-
-# TODO: Return to this later, it's not working atm.
-# func do_debug_path(start_pos : Vector3i, end_pos : Vector3i):
-# 	# DebugDraw2D.clear_all()
-# 	DebugDraw3D.clear_all()
-# 	if !show_debug: return
-
-# 	var path = find_path(start_pos, end_pos)
-# 	if astar.get_point_count() == 0: return
-	
-# 	DebugDraw2D.set_text.call_deferred("1. Grid count: ", astar.get_point_count(), 0, Color(0, 0, 0, 0), INF)
-# 	if path.size() < 1:
-# 		DebugDraw2D.set_text.call_deferred("3. Path length: ", "No path found", 0, Color(0, 0, 0, 0), INF)
-# 	else:
-# 		DebugDraw2D.set_text.call_deferred("3. Path length: ", path.size(), 0, Color(0, 0, 0, 0), INF)
-# 	DebugDraw2D.set_text.call_deferred("4. Start Grid position / Start World position: ", str(start_pos, " / ", map_to_local(start_pos)), 0, Color.GREEN, INF)
-# 	DebugDraw2D.set_text.call_deferred("5. End Grid position / End World position: ", str(end_pos, " / ", map_to_local(end_pos)), 0, Color.RED, INF)
-	
-# 	var i: int = 0
-# 	points.resize(path.size())
-	
-# 	var temp: Vector3 = map_to_local(start_pos)
-# 	temp.y += 1
-# 	DebugDraw3D.draw_box.call_deferred(temp, Quaternion.IDENTITY, Vector3(1, 1, 1), Color.GREEN, true, INF)
-# 	temp = map_to_local(end_pos)
-# 	temp.y += 1
-# 	DebugDraw3D.draw_box.call_deferred(temp, Quaternion.IDENTITY, Vector3(1, 1, 1), Color.RED, true, INF)
-	
-# 	# Draw boxes: Green = start, Red = end, Yellow = all others
-# 	for next_point: Vector3 in path:
-# 		points[i] = map_to_local(next_point)
-# 		points[i].y += 1 # move debug the box up
-# 		if i > 0 and i < path.size() - 1: 
-# 			DebugDraw3D.draw_box.call_deferred(points[i], Quaternion.IDENTITY, Vector3(1, 1, 1), Color.YELLOW, true, INF)
-# 		i += 1
-
-# 	# draw point path for added effect
-# 	DebugDraw3D.draw_point_path.call_deferred(points, 0, 0.25, Color(0, 0, 0, 0), Color(0, 0, 0, 0), INF)
-
-
-## Debug function for highlighting a square in the grid.
-func paint_grid_square(tile_position: Vector3, color : Color):
-	var temp = tile_position
-	temp.y += 1
-	DebugDraw3D.draw_box.call_deferred(temp, Quaternion.IDENTITY, Vector3(0.9, 0.9, 0.9), color, true, INF)
-
-
-# TODO: Return to this, get it working.
-## Experimental function to use recursion to get all valid moves more efficiently.
-func get_all_valid_moves_v2(tile_position: Vector3i, max_moves: int):
-	var valid_moves : Array[GridPoint] = []
-	var point = point_map_by_grid_coords[tile_position]
-	_recusively_get_valid_pos(point, max_moves, valid_moves, true)
-	for move in valid_moves:
-		paint_grid_square(map_to_local(move.position), Color.GREEN)
-
-
-## Experimental function to use recursion to get all valid moves more efficiently.
-func _recusively_get_valid_pos(point: GridPoint, moves_left: int, potential_moves : Array[GridPoint], base_level : bool, starting_point: GridPoint = null):
-	# NOTE: serious performance issues here. 10 moves is enough to crash engine. The check below this comment used to be before the recursive function call (except the top level part). but this lead to missed moves, because it was possible to take a twisting path to a point, and end up with 0 moves left even though the move was not an extermity. This blocked it from checking its connections, ever.
-	# Maybe a new map of cells which have had theri connections checked?
-	if !base_level && point != starting_point && !potential_moves.has(point):
-		potential_moves.append(point)
-	else:
-		starting_point = point
-	if !moves_left == 0:
-		var connections := astar.get_point_connections(point.a_star_point)
-		for a_star_id : int in connections:
-			var next_point : GridPoint = point_map_by_astar_ids[a_star_id]
-			_recusively_get_valid_pos(next_point, moves_left - 1, potential_moves, false, starting_point)
-	# if position != Vector3i.ZERO && !potential_moves.has(position):
-	# 	potential_moves.append(position)
-	# var point : GridPoint = point_map_by_grid_coords[position]
-	# var connections = astar.get_point_connections(point.a_star_point)
-	# if moves_left > 0:
-	# 	for astar_point : int in connections:
-	# 		_recusively_get_valid_pos(point_map_by_astar_ids[astar_point].position, moves_left - 1, potential_moves)
-	# return potential_moves

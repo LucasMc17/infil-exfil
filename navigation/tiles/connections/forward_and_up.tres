@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TileConnection" format=3 uid="uid://cn53pkgnyub7s"]
+
+[ext_resource type="Script" uid="uid://boqs7jy6uova" path="res://navigation/tiles/connections/tile_connection.gd" id="1_0ee1j"]
+
+[resource]
+script = ExtResource("1_0ee1j")
+must_be_two_way = false
+name = "Forward and Up"
+relative_position = Vector3i(0, 1, -1)
+metadata/_custom_type_script = "uid://boqs7jy6uova"
