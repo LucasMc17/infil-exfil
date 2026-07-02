@@ -4,8 +4,6 @@ extends State
 
 ## The unit this state corresponds to.
 @export var unit : Unit
-## The cost in movement points of entering this movement state.
-@export var cost := 1
 ## The speed at which this movment state moves the unit, in meters per second.
 @export var mps := 1.0
 
@@ -19,13 +17,14 @@ func enter(previous_state : State, ext : Dictionary):
 	if unit is FriendlyUnit:
 		Events.skill_disarmed.emit()
 	unit.debug_label.change_param('movement_state', name)
-	unit.movement_points -= cost
 	unit.started_moving.emit(unit)
 	var path = World.level.nav_map.find_path(unit.actual_position, end_point)
 	if unit.potential_moves.has(end_point):
 		points = path
+		unit.movement_points -= path.size() - 1
 	else:
-		points = path.slice(1, unit.max_movement + 1)
+		points = path.slice(1, unit.movement_points + 1)
+		unit.movement_points = 0
 	unit.refresh_valid_moves.call_deferred()
 
 

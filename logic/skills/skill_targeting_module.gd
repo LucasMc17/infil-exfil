@@ -51,4 +51,5 @@ func _target_selected(_targeter: FriendlyUnit, target : EnemyUnit) -> void:
 	current_target = target
 	World.level.target_retical.visible = true
 	World.level.target_retical.global_position = target.global_position
+	DebugConsole.log(target.global_position)
 	World.level.level_camera.jump_to_point(target.global_position)

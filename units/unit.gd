@@ -34,12 +34,10 @@ signal forfeited_turn(unit : Unit)
 			debug_label.change_param('x', str(round(tile_position.x)))
 			debug_label.change_param('y', str(round(tile_position.y)))
 			debug_label.change_param('z', str(round(tile_position.z)))
-## The maximum distance this unit can move in one turn.
-@export var max_movement := 4
 
 @export_group('Points')
 ## The maximum movement points for this unit, to which they are restored at the beginning of each new turn.
-@export var max_movement_points := 1
+@export var max_movement_points := 5
 ## The maximum action points for this unit, to which they are restored at the beginning of each new turn.
 @export var max_action_points := 1
 
@@ -126,7 +124,7 @@ func _set_up_skills() -> void:
 func refresh_valid_moves() -> void:
 	var valid_moves : Array[Vector3i] = []
 	if World.level and can_move():
-		valid_moves = World.level.nav_map.get_all_valid_moves(actual_position, max_movement)
+		valid_moves = World.level.nav_map.get_all_valid_moves(actual_position, movement_points)
 	if World.level and is_active:
 		World.level.cell_highlighter.highlighted_cells = valid_moves
 	potential_moves = valid_moves
