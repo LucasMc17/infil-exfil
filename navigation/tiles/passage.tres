@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Tile" format=3 uid="uid://dnxq50dy3lyem"]
+
+[ext_resource type="Script" uid="uid://dh08xpx10ru7" path="res://navigation/tiles/tile.gd" id="1_8jhj1"]
+[ext_resource type="Script" uid="uid://boqs7jy6uova" path="res://navigation/tiles/connections/tile_connection.gd" id="2_mea28"]
+
+[sub_resource type="Resource" id="Resource_6cavn"]
+script = ExtResource("2_mea28")
+name = "Forward"
+relative_position = Vector3i(0, 0, -1)
+metadata/_custom_type_script = "uid://boqs7jy6uova"
+
+[sub_resource type="Resource" id="Resource_rqe6o"]
+script = ExtResource("2_mea28")
+name = "Backward"
+relative_position = Vector3i(0, 0, 1)
+metadata/_custom_type_script = "uid://boqs7jy6uova"
+
+[resource]
+script = ExtResource("1_8jhj1")
+name = "Passage"
+viable_neighbors = Array[ExtResource("2_mea28")]([SubResource("Resource_6cavn"), SubResource("Resource_rqe6o")])
+metadata/_custom_type_script = "uid://dh08xpx10ru7"

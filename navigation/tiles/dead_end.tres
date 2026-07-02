@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Tile" format=3 uid="uid://bmon5owcn2cyp"]
+
+[ext_resource type="Script" uid="uid://dh08xpx10ru7" path="res://navigation/tiles/tile.gd" id="1_gsaf8"]
+[ext_resource type="Script" uid="uid://boqs7jy6uova" path="res://navigation/tiles/connections/tile_connection.gd" id="2_mdb0b"]
+
+[sub_resource type="Resource" id="Resource_7gqbw"]
+script = ExtResource("2_mdb0b")
+name = "Backward"
+relative_position = Vector3i(0, 0, 1)
+metadata/_custom_type_script = "uid://boqs7jy6uova"
+
+[resource]
+script = ExtResource("1_gsaf8")
+name = "Dead End"
+viable_neighbors = Array[ExtResource("2_mdb0b")]([SubResource("Resource_7gqbw")])
+metadata/_custom_type_script = "uid://dh08xpx10ru7"

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cq7qkjlo3jevu"
-path="res://.godot/imported/grid_library_source.blend-25c091d788e0f6ca1608ffa1b28a1440.scn"
+uid="uid://27dwjlv4fx3c"
+path="res://.godot/imported/grid_library_source4.blend-d9cf935d7122c06cb3916e105e8f28a4.scn"
 
 [deps]
 
-source_file="res://external_workflows/blender/grid_library_source/grid_library_source.blend"
-dest_files=["res://.godot/imported/grid_library_source.blend-25c091d788e0f6ca1608ffa1b28a1440.scn"]
+source_file="res://external_workflows/blender/grid_library_source/grid_library_source4.blend"
+dest_files=["res://.godot/imported/grid_library_source4.blend-d9cf935d7122c06cb3916e105e8f28a4.scn"]
 
 [params]
 
@@ -46,7 +46,7 @@ blender/nodes/punctual_lights=true
 blender/nodes/cameras=true
 blender/nodes/custom_properties=true
 blender/nodes/modifiers=1
-blender/meshes/vertex_colors=2
+blender/meshes/vertex_colors=1
 blender/meshes/uvs=true
 blender/meshes/normals=true
 blender/meshes/export_geometry_nodes_instances=false
@@ -60,4 +60,4 @@ blender/animation/limit_playback=true
 blender/animation/always_sample=true
 blender/animation/group_tracks=true
 gltf/naming_version=2
-gltf/texture_map_mode=0
+gltf/texture_map_mode=1

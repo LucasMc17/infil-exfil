@@ -14,8 +14,14 @@ const WALL := preload("./tiles/wall.tres")
 const LADDER := preload("./tiles/ladder.tres")
 ## Alarm [Tile] resource.
 const ALARM := preload("./tiles/alarm.tres")
+## Corner [Tile] resource.
+const CORNER := preload("./tiles/corner.tres")
+## Dead End [Tile] resource.
+const DEAD_END := preload("./tiles/dead_end.tres")
+## Passage [Tile] resource.
+const PASSAGE := preload("./tiles/passage.tres")
 ## Array of all preloaded [Tile] resources, in the order of their corresponding meshes within the [MeshLibrary] of the [GridMap].
-const TILE_PALETTE : Array[Tile] = [FLOOR, WALL, LADDER, ALARM]
+const TILE_PALETTE : Array[Tile] = [FLOOR, WALL, LADDER, ALARM, CORNER, DEAD_END, PASSAGE]
 
 ## Custom class representing a single point, both in the grid map and the A* grid. Contains information about that point's position, tile type, connections, mesh ID, rotation and A* ID. Designed to allow for easy referencing of specific spoints in the context of either the GridMap or the A* grid.
 class GridPoint:
