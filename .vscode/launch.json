@@ -17,10 +17,17 @@
       "additional_options": "--debug-collisions -f"
     },
     {
-      "name": "Debug Current",
+      "name": "Debug Level 1",
       "type": "godot",
       "request": "launch",
-      "scene": "current",
+      "scene": "res://levels/test_levels/test_level_01.tscn",
+      "additional_options": "-f"
+    },
+    {
+      "name": "Debug Level 2",
+      "type": "godot",
+      "request": "launch",
+      "scene": "res://levels/test_levels/test_level_02.tscn",
       "additional_options": "-f"
     }
   ]
