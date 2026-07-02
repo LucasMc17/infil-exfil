@@ -2,15 +2,10 @@
 
 [ext_resource type="Script" uid="uid://dh08xpx10ru7" path="res://navigation/tiles/tile.gd" id="1_gsaf8"]
 [ext_resource type="Script" uid="uid://boqs7jy6uova" path="res://navigation/tiles/connections/tile_connection.gd" id="2_mdb0b"]
-
-[sub_resource type="Resource" id="Resource_7gqbw"]
-script = ExtResource("2_mdb0b")
-name = "Backward"
-relative_position = Vector3i(0, 0, 1)
-metadata/_custom_type_script = "uid://boqs7jy6uova"
+[ext_resource type="Resource" uid="uid://5hn1njjlodbw" path="res://navigation/tiles/connections/backward.tres" id="3_mdb0b"]
 
 [resource]
 script = ExtResource("1_gsaf8")
 name = "Dead End"
-viable_neighbors = Array[ExtResource("2_mdb0b")]([SubResource("Resource_7gqbw")])
+viable_neighbors = Array[ExtResource("2_mdb0b")]([ExtResource("3_mdb0b")])
 metadata/_custom_type_script = "uid://dh08xpx10ru7"
