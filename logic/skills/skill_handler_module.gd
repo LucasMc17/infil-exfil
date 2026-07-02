@@ -1,6 +1,5 @@
-# NOTE: Should this move to the [logic] root directory?
 ## Logic Module responsible for handling the execution of skills within a level.
-class_name SkillHandler
+class_name SkillHandlerModule
 extends Object
 
 func _init() -> void:

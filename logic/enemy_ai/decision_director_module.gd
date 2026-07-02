@@ -1,6 +1,6 @@
 ## A logic module which makes decisions about which [Directive]s to pursue first, for AI-controlled units.
 ## [br]Functions by maintaining several queues of [Directive] resources, one for each alertness state of the unit. Cycles through them in order and makes a decision about what directive to pursue next when the last member of the queue is finished. For low alert states, this can be simply to restart the original queue. For high alert states this will be a more complicated decision process based on available information.
-class_name DecisionDirector
+class_name DecisionDirectorModule
 extends Resource
 
 ## The Unit for whom this director is making decisions.

@@ -15,7 +15,7 @@ enum SkillType {
 @export_group("Skill Info")
 ## The name of this skill.
 @export var name := "Skill Name"
-## The unique ID of this skill, especially for use in the [SkillHandler] logic module.
+## The unique ID of this skill, especially for use in the [SkillHandlerModule] logic module.
 @export var id := "skill_name"
 ## A description of this skill for the player's benefit.
 @export_multiline var description := "Skill description"

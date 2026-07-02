@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://bsxnir3r10yla" path="res://logic/state_management/state_machine.gd" id="8_0rg8l"]
 [ext_resource type="Script" uid="uid://cvky17ch66rjs" path="res://levels/level_states/player_turn.gd" id="9_6w4ab"]
 [ext_resource type="Script" uid="uid://cu06vvfrrxrxs" path="res://levels/level_states/enemy_turn.gd" id="9_upde5"]
-[ext_resource type="Script" uid="uid://cwt2k11twrldn" path="res://logic/click_detection/3d_click_handler.gd" id="10_n8wy4"]
+[ext_resource type="Script" uid="uid://cwt2k11twrldn" path="res://levels/click_handler_3d.gd" id="10_n8wy4"]
 [ext_resource type="PackedScene" uid="uid://51rqmlm6v48t" path="res://2D/match_ui/match_ui.tscn" id="12_5mwf5"]
 [ext_resource type="Script" uid="uid://bp1pubml3l0d7" path="res://units/ai/directive/directive.gd" id="12_jldy4"]
 [ext_resource type="Script" uid="uid://cvy611uxolcnt" path="res://units/ai/directive/move_to_point.gd" id="13_qeex7"]

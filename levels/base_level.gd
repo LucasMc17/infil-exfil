@@ -3,7 +3,7 @@ class_name BaseLevel
 extends Node3D
 
 ## Logic module for handling the usage of skills.
-var skill_handler := SkillHandler.new()
+var skill_handler := SkillHandlerModule.new()
 ## Logic module for handling the enemy's awareness of the player's units.
 var enemy_awareness := EnemyTeamAwarenessModule.new()
 
