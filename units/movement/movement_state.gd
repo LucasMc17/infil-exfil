@@ -10,7 +10,7 @@ extends State
 ## The end point of the current movement, established when entering the state and used to create a path for navigation.
 var end_point : Vector3
 ## An array of points along which the unit will move to reach the [end_point]
-var points := []
+var path := []
 
 func enter(previous_state : State, ext : Dictionary):
 	super(previous_state, ext)
@@ -18,18 +18,22 @@ func enter(previous_state : State, ext : Dictionary):
 		Events.skill_disarmed.emit()
 	unit.debug_label.change_param('movement_state', name)
 	unit.started_moving.emit(unit)
-	var path = World.level.nav_map.find_path(unit.actual_position, end_point)
-	if unit.potential_moves.has(end_point):
-		points = path
+	if ext.has('end_point'):
+		path = World.level.nav_map.find_path(unit.actual_position, end_point)
+		if unit.potential_moves.has(end_point):
+			unit.movement_points -= path.size() - 1
+		else:
+			path = path.slice(1,	 unit.movement_points + 1)
+			unit.movement_points = 0
+	elif ext.has('path'):
 		unit.movement_points -= path.size() - 1
 	else:
-		points = path.slice(1, unit.movement_points + 1)
-		unit.movement_points = 0
+		DebugConsole.error('Must pass MovementState an end_point or a path array of points.')
 	unit.refresh_valid_moves.call_deferred()
 
 
 func physics_update(delta: float):
-	unit.follow_path(delta, points, mps)
+	unit.follow_path(delta, path, mps)
 
 
 func exit():

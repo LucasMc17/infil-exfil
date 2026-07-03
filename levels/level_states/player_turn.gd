@@ -20,16 +20,22 @@ func unhandled_input(event: InputEvent) -> void:
 		if event is InputEventMouseMotion:
 			var mouse_target = level.click_handler.get_clicked_object()
 			if mouse_target == null:
+				level.path_marking_system.clear_path()
 				return
 			var target_object = mouse_target.collider
-			if target_object is NavigableGridMap:
+			if target_object is not NavigableGridMap:
+				level.path_marking_system.clear_path()
+				return
+			else:
 				var real_position = mouse_target.position
 				real_position.y += 0.1
 				var coords = target_object.local_to_map(target_object.to_local(real_position))
 				if level.active_unit and level.active_unit.can_move() and level.active_unit.potential_moves.has(coords):
-					var path = level.nav_map.find_path(level.active_unit.tile_position, coords)
-					level.mark_path(path)
-		if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
+					var path = level.nav_map.find_path(level.active_unit.actual_position, coords)
+					level.path_marking_system.mark_path(path)
+				else:
+					level.path_marking_system.clear_path()
+		elif event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
 			var clicked = level.click_handler.get_clicked_object()
 			if clicked == null:
 				return
@@ -42,7 +48,8 @@ func unhandled_input(event: InputEvent) -> void:
 				real_position.y += 0.1
 				var coords = clicked_object.local_to_map(clicked_object.to_local(real_position))
 				if level.active_unit and level.active_unit.can_move() and level.active_unit.potential_moves.has(coords):
-					level.active_unit.movement_machine.current_state.transition('Sneak', { "end_point": coords })
+					level.active_unit.movement_machine.current_state.transition('Sneak', { "path": World.level.path_marking_system.path })
+					level.path_marking_system.clear_path()
 
 
 func _on_player_turn_ended():

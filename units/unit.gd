@@ -146,6 +146,8 @@ func deactivate():
 	_cell_highlight.visible = false
 	flag.collapse()
 	skill_area_holder.visible = false
+	# TODO: Make this a signal
+	World.level.path_marking_system.clear_path()
 	Events.skill_disarmed.emit()
 
 
