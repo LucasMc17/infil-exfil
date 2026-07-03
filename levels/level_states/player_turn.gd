@@ -17,6 +17,18 @@ func input(_event : InputEvent):
 
 func unhandled_input(event: InputEvent) -> void:
 	if active:
+		if event is InputEventMouseMotion:
+			var mouse_target = level.click_handler.get_clicked_object()
+			if mouse_target == null:
+				return
+			var target_object = mouse_target.collider
+			if target_object is NavigableGridMap:
+				var real_position = mouse_target.position
+				real_position.y += 0.1
+				var coords = target_object.local_to_map(target_object.to_local(real_position))
+				if level.active_unit and level.active_unit.can_move() and level.active_unit.potential_moves.has(coords):
+					var path = level.nav_map.find_path(level.active_unit.tile_position, coords)
+					level.mark_path(path)
 		if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
 			var clicked = level.click_handler.get_clicked_object()
 			if clicked == null:

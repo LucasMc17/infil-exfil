@@ -26,7 +26,7 @@ func _physics_process(delta):
 	current_state.physics_update(delta)
 
 
-func _input(event):
+func _input(event): 
 	current_state.input(event)
 
 

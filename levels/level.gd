@@ -2,6 +2,9 @@
 class_name BaseLevel
 extends Node3D
 
+## Preloaded path marker sprite scene.
+const PATH_MARKER := preload('res://navigation/path_marking/path_marker.tscn')
+
 ## Logic module for handling the usage of skills.
 var skill_handler := SkillHandlerModule.new()
 ## Logic module for handling the enemy's awareness of the player's units.
@@ -51,6 +54,7 @@ var units : Array[Unit]:
 
 @onready var _friendlies_node := %Friendlies
 @onready var _enemies_node := %Enemies
+@onready var _path_marker_holder := %PathMarkerHolder
 @onready var nav_map : NavigableGridMap = %NavigableGridMap
 @onready var cell_highlighter : CellHighlighter = %CellHighlighter
 @onready var click_handler : ClickHandler3D = %ClickHandler3D
@@ -106,6 +110,22 @@ func set_active_unit(unit : Unit):
 	active_unit = unit
 	if active_unit:
 		active_unit.activate()
+
+
+## Mark the intended path for the player's benefit.
+func mark_path(path : PackedVector3Array) -> void:
+	clear_path()
+	for cell in path:
+		var path_marker_scene = PATH_MARKER.instantiate()
+		path_marker_scene.position = NavigableGridMap.convert_grid_to_global_position(cell)
+		_path_marker_holder.add_child(path_marker_scene)
+
+
+## Clears the path_markers from the level scene.
+func clear_path() -> void:
+	for child in _path_marker_holder.get_children():
+		child.queue_free()
+
 
 
 ## Cycle the active unit to the next in the list.

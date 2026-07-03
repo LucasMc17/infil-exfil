@@ -75,3 +75,6 @@ no_depth_test = true
 fixed_size = true
 render_priority = 2
 texture = ExtResource("16_dcgl2")
+
+[node name="PathMarkerHolder" type="Node3D" parent="." unique_id=1086256659]
+unique_name_in_owner = true
