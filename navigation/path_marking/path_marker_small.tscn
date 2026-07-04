@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://codhw5nrgp658"]
+
+[ext_resource type="PackedScene" uid="uid://ck6owgdcv1cpj" path="res://navigation/path_marking/path_marker.tscn" id="1_cm8nl"]
+[ext_resource type="ArrayMesh" uid="uid://u261goo1dpq3" path="res://assets/meshes/squares/base_square_small_Cube.res" id="2_qj8o1"]
+
+[node name="PathMarkerSmall" unique_id=1547351715 instance=ExtResource("1_cm8nl")]
+
+[node name="MeshInstance3D" parent="." index="0" unique_id=1814182286]
+mesh = ExtResource("2_qj8o1")

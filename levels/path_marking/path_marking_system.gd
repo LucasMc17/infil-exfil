@@ -10,6 +10,8 @@ extends Node3D
 
 ## Preloaded path marker sprite scene.
 const PATH_MARKER := preload('res://navigation/path_marking/path_marker.tscn')
+## Preloaded small path marker sprite scene.
+const PATH_MARKER_SMALL := preload('res://navigation/path_marking/path_marker_small.tscn')
 
 ## The path the player has marked with planned points.
 var planned_path : Array[PackedVector3Array] = []
@@ -36,8 +38,8 @@ func mark_hovered_path(end_point : Vector3) -> void:
 	else:
 		starting_point = level.active_unit.actual_position
 	hovered_path = level.nav_map.find_path(starting_point, end_point)
-	for cell in hovered_path:
-		var path_marker_scene = PATH_MARKER.instantiate()
+	for cell in hovered_path.slice(1):
+		var path_marker_scene = PATH_MARKER_SMALL.instantiate()
 		path_marker_scene.position = NavigableGridMap.convert_grid_to_global_position(cell)
 		_hovered_path_holder.add_child(path_marker_scene)
 
@@ -47,7 +49,7 @@ func mark_planned_path() -> void:
 	for child in _planned_paths_holder.get_children():
 		child.queue_free()
 	for subpath in planned_path:
-		for step in subpath:
+		for step in subpath.slice(1):
 			var path_marker_scene = PATH_MARKER.instantiate()
 			path_marker_scene.position = NavigableGridMap.convert_grid_to_global_position(step)
 			_planned_paths_holder.add_child(path_marker_scene)
@@ -71,6 +73,7 @@ func wipe_planned_path() -> void:
 
 ## Places a routing waypoint for the path, enforcing that, if movement is confirmed, the player will first travel to this point along the indicated path.
 func place_waymarker(point : Vector3) -> void:
+	clear_hovered_path()
 	var starting_point : Vector3
 	if !planned_path.is_empty():
 		var last_subpath = planned_path[planned_path.size() - 1]
