@@ -123,10 +123,11 @@ func _set_up_skills() -> void:
 ## Update the list of valid moves for this unit based on their maximum move distance and what positions within that range are navigable to.
 func refresh_valid_moves() -> void:
 	var valid_moves : Array[Vector3i] = []
-	if World.level and can_move():
-		valid_moves = World.level.nav_map.get_all_valid_moves(actual_position, movement_points)
-	if World.level and is_active:
-		World.level.cell_highlighter.highlighted_cells = valid_moves
+	if World.level and can_move() and is_active:
+		# valid_moves = World.level.nav_map.get_all_valid_moves(actual_position, movement_points)
+		World.level.path_marking_system.set_viable_moves(actual_position, movement_points)
+	# if World.level and is_active:
+	# 	World.level.cell_highlighter.highlighted_cells = valid_moves
 	potential_moves = valid_moves
 
 
@@ -172,6 +173,8 @@ func forfeit_turn() -> void:
 	movement_points = 0
 	action_points = 0
 	forfeited_turn.emit(self)
+
+	
 ## Function for updating detected units, either by checking if this unit is being detected or if it is detecting any other units.
 func check_for_detection() -> void:
 	pass

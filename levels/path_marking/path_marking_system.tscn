@@ -10,3 +10,6 @@ unique_name_in_owner = true
 
 [node name="HoveredPathHolder" type="Node3D" parent="." unique_id=1164582464]
 unique_name_in_owner = true
+
+[node name="ViableMoveHolder" type="Node3D" parent="." unique_id=1512358058]
+unique_name_in_owner = true
