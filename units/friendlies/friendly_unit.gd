@@ -1,6 +1,6 @@
 @tool
 ## A unit under direct control by the player.
-class_name FriendlyUnit
+class_name FriendlyUnit 
 extends Unit
 
 func check_for_detection():
