@@ -19,17 +19,13 @@ func enter(previous_state : State, ext : Dictionary):
 	unit.debug_label.change_param('movement_state', name)
 	unit.started_moving.emit(unit)
 	if ext.has('end_point'):
-		path = World.level.nav_map.find_path(unit.actual_position, end_point).slice(1)
-		if unit.potential_moves.has(end_point):
-			unit.movement_points -= path.size()
-		else:
-			path = path.slice(1, unit.movement_points)
-			unit.movement_points = 0
+		path = World.level.nav_map.find_path(unit.actual_position, end_point).slice(1, unit.movement_points + 1)
+		unit.movement_points = 0
 	elif ext.has('path'):
 		unit.movement_points -= path.size()
 	else:
 		DebugConsole.error('Must pass MovementState an end_point or a path array of points.')
-	World.level.path_marking_system.clear_viable_moves.call_deferred()
+	World.level.path_marking_system.deactivate()
 
 
 func physics_update(delta: float):

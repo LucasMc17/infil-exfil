@@ -41,8 +41,6 @@ signal forfeited_turn(unit : Unit)
 ## The maximum action points for this unit, to which they are restored at the beginning of each new turn.
 @export var max_action_points := 1
 
-## The tile positions that this unit can navigate to.
-var potential_moves : Array[Vector3i] = []
 ## The number of movement points this unit has. Restored to the maximum at the start of a turn.
 var movement_points := max_movement_points:
 	set(val):
@@ -91,7 +89,8 @@ var targeted_skills : Array[SingleTargetSkill]:
 @onready var skill_area_holder : Node3D = %SkillAreaHolder
 @onready var seen_zone : SeenZone = %SeenZone
 
-func _ready(): 
+func _ready():
+	Events.skill_disarmed.connect(refresh_valid_moves)
 	if primary_weapon:
 		primary_weapon = primary_weapon.make_unique()
 		primary_weapon.initialize(self)
@@ -122,13 +121,8 @@ func _set_up_skills() -> void:
 
 ## Update the list of valid moves for this unit based on their maximum move distance and what positions within that range are navigable to.
 func refresh_valid_moves() -> void:
-	var valid_moves : Array[Vector3i] = []
 	if World.level and can_move() and is_active:
-		# valid_moves = World.level.nav_map.get_all_valid_moves(actual_position, movement_points)
-		World.level.path_marking_system.set_viable_moves(actual_position, movement_points)
-	# if World.level and is_active:
-	# 	World.level.cell_highlighter.highlighted_cells = valid_moves
-	potential_moves = valid_moves
+		World.level.path_marking_system.activate(self)
 
 
 ## Executed when the unit becomes the active unit within the level.
@@ -148,7 +142,7 @@ func deactivate():
 	flag.collapse()
 	skill_area_holder.visible = false
 	# TODO: Make this a signal	
-	World.level.path_marking_system.wipe_planned_path()
+	World.level.path_marking_system.deactivate()
 	Events.skill_disarmed.emit()
 
 

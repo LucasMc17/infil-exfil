@@ -30,12 +30,12 @@ func unhandled_input(event: InputEvent) -> void:
 				var real_position = mouse_target.position
 				real_position.y += 0.1
 				var coords = target_object.local_to_map(target_object.to_local(real_position))
-				# if level.active_unit and level.active_unit.can_move() and level.active_unit.potential_moves.has(coords):
 				if level.path_marking_system.viable_moves.has(coords):
 					if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT and level.path_marking_system.path.size() >= 1:
 						level.active_unit.movement_machine.current_state.transition('Sneak', { "path": World.level.path_marking_system.path })
 						level.path_marking_system.wipe_planned_path()
 					elif event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_RIGHT and level.path_marking_system.hovered_path.size() >= 1:
+						pass
 						level.path_marking_system.place_waymarker(coords)
 					elif event is InputEventMouseMotion:
 						level.path_marking_system.mark_hovered_path(coords)

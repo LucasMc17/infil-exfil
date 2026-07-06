@@ -13,3 +13,6 @@ unique_name_in_owner = true
 
 [node name="ViableMoveHolder" type="Node3D" parent="." unique_id=1512358058]
 unique_name_in_owner = true
+
+[node name="AllMoveHolder" type="Node3D" parent="." unique_id=1240315826]
+unique_name_in_owner = true

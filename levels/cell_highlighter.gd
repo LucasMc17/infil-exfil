@@ -4,7 +4,7 @@ class_name CellHighlighter
 extends Node3D
 
 ## The cell highlight scene.
-const HIGHLIGHT = preload("res://cell_highlight.tscn")
+const HIGHLIGHT = preload("res://navigation/path_marking/cell_highlight.tscn")
 
 ## The currently highlighted cells, exported for testing in-editor.
 @export var highlighted_cells : Array[Vector3i]:
