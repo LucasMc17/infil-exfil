@@ -11,13 +11,13 @@ extends Node3D
 @onready var _all_move_holder := %AllMoveHolder
 
 ## The cell highlight scene.
-const HIGHLIGHT = preload("res://navigation/path_marking/cell_highlight.tscn")
+const HIGHLIGHT = preload("./cell_highlight.tscn")
 ## The cell unavailable highlight scene.
-const UNAVAILABLE_HIGHLIGHT = preload("res://navigation/path_marking/cell_highlight_unavailable.tscn")
+const UNAVAILABLE_HIGHLIGHT = preload("./cell_highlight_unavailable.tscn")
 ## Preloaded path marker sprite scene.
-const PATH_MARKER := preload('res://navigation/path_marking/path_marker.tscn')
+const PATH_MARKER := preload('./path_marker.tscn')
 ## Preloaded small path marker sprite scene.
-const PATH_MARKER_SMALL := preload('res://navigation/path_marking/path_marker_small.tscn')
+const PATH_MARKER_SMALL := preload('./path_marker_small.tscn')
 
 ## The path the player has marked with planned points.
 var planned_path : Array[PackedVector3Array] = []
