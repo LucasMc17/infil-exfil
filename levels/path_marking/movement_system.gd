@@ -1,5 +1,5 @@
-## 3D node responsible for marking paths for the player as they plan moves.
-class_name PathMarkingSystem
+## 3D node responsible for marking all viable moves to the player, as well as charting paths for the player as they plan moves.
+class_name MovementSystem
 extends Node3D
 
 ## Level context for path finding.
