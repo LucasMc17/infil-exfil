@@ -67,6 +67,7 @@ func clear_hovered_path() -> void:
 
 ## Marks the full planned path, based on placed waypoints. A private function because it is only ever called when placing a waymarker which is done from within this script.
 func _mark_planned_path() -> void:
+	Events.waymarker_placed.emit()
 	for child in _planned_paths_holder.get_children():
 		child.queue_free()
 	for subpath in planned_path:
@@ -78,6 +79,7 @@ func _mark_planned_path() -> void:
 
 ## Fully clears the planned path, and removes it's waymarkers from the level scene.
 func wipe_planned_path() -> void:
+	Events.planned_path_cleared.emit()
 	clear_hovered_path()
 	planned_path = []
 	for child in _planned_paths_holder.get_children():

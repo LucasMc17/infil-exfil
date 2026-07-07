@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://b3dk6f1wi6k61" path="res://2D/match_ui/player_turn_options.tscn" id="1_ka1p3"]
 [ext_resource type="PackedScene" uid="uid://dqltuiiqj5y2u" path="res://2D/match_ui/active_unit_options.tscn" id="2_aurpg"]
 [ext_resource type="PackedScene" uid="uid://cysw2duco05tc" path="res://2D/match_ui/armed_skill_ui/armed_skill_ui.tscn" id="3_rcsim"]
+[ext_resource type="PackedScene" uid="uid://iut3hv0ew1s5" path="res://2D/match_ui/movement_hint.tscn" id="4_8uh2s"]
 
 [node name="MatchUi" type="Control" unique_id=1837896508]
 layout_mode = 3
@@ -41,6 +42,13 @@ grow_vertical = 0
 [node name="ActiveUnitOptions" parent="TurnUi" unique_id=367003720 instance=ExtResource("2_aurpg")]
 unique_name_in_owner = true
 layout_mode = 1
+
+[node name="MovementHint" parent="TurnUi" unique_id=708356331 instance=ExtResource("4_8uh2s")]
+layout_mode = 1
+offset_left = -121.0
+offset_top = -208.0
+offset_right = 124.0
+offset_bottom = -101.0
 
 [node name="SkillUi" type="Control" parent="." unique_id=1696624923]
 unique_name_in_owner = true
