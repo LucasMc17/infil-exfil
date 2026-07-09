@@ -34,17 +34,13 @@ signal forfeited_turn(unit : Unit)
 			debug_label.change_param('x', str(round(tile_position.x)))
 			debug_label.change_param('y', str(round(tile_position.y)))
 			debug_label.change_param('z', str(round(tile_position.z)))
-## The maximum distance this unit can move in one turn.
-@export var max_movement := 4
 
 @export_group('Points')
 ## The maximum movement points for this unit, to which they are restored at the beginning of each new turn.
-@export var max_movement_points := 1
+@export var max_movement_points := 5
 ## The maximum action points for this unit, to which they are restored at the beginning of each new turn.
 @export var max_action_points := 1
 
-## The tile positions that this unit can navigate to.
-var potential_moves : Array[Vector3i] = []
 ## The number of movement points this unit has. Restored to the maximum at the start of a turn.
 var movement_points := max_movement_points:
 	set(val):
@@ -93,7 +89,8 @@ var targeted_skills : Array[SingleTargetSkill]:
 @onready var skill_area_holder : Node3D = %SkillAreaHolder
 @onready var seen_zone : SeenZone = %SeenZone
 
-func _ready(): 
+func _ready():
+	Events.skill_disarmed.connect(refresh_valid_moves)
 	if primary_weapon:
 		primary_weapon = primary_weapon.make_unique()
 		primary_weapon.initialize(self)
@@ -124,12 +121,8 @@ func _set_up_skills() -> void:
 
 ## Update the list of valid moves for this unit based on their maximum move distance and what positions within that range are navigable to.
 func refresh_valid_moves() -> void:
-	var valid_moves : Array[Vector3i] = []
-	if World.level and can_move():
-		valid_moves = World.level.nav_map.get_all_valid_moves(actual_position, max_movement)
-	if World.level and is_active:
-		World.level.cell_highlighter.highlighted_cells = valid_moves
-	potential_moves = valid_moves
+	if World.level and can_move() and is_active:
+		World.level.path_marking_system.activate(self)
 
 
 ## Executed when the unit becomes the active unit within the level.
@@ -148,6 +141,8 @@ func deactivate():
 	_cell_highlight.visible = false
 	flag.collapse()
 	skill_area_holder.visible = false
+	# TODO: Make this a signal	
+	World.level.path_marking_system.deactivate()
 	Events.skill_disarmed.emit()
 
 
@@ -172,6 +167,8 @@ func forfeit_turn() -> void:
 	movement_points = 0
 	action_points = 0
 	forfeited_turn.emit(self)
+
+	
 ## Function for updating detected units, either by checking if this unit is being detected or if it is detecting any other units.
 func check_for_detection() -> void:
 	pass

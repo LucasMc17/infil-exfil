@@ -36,4 +36,5 @@ func refresh_affordability() -> void:
 
 
 func _on_pressed() -> void:
+	World.level.path_marking_system.deactivate()
 	Events.skill_armed.emit(skill_res)

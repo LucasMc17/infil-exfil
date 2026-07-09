@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://djexlndf28o7d"]
 
 [ext_resource type="Script" uid="uid://cbsb8godne71a" path="res://units/unit.gd" id="1_2atv2"]
-[ext_resource type="PackedScene" uid="uid://dmkx4m8je1llw" path="res://cell_highlight.tscn" id="2_gxe1c"]
+[ext_resource type="PackedScene" uid="uid://dmkx4m8je1llw" path="res://levels/navigation/cell_highlight.tscn" id="2_gxe1c"]
 [ext_resource type="PackedScene" uid="uid://ti3t66b32e4c" path="res://units/unit_flag/unit_flag.tscn" id="2_urgnh"]
 [ext_resource type="Script" uid="uid://8lotdfrh5t6l" path="res://addons/debug_label_3d/debug_label.gd" id="6_3nj72"]
 [ext_resource type="Script" uid="uid://4lx7x7dl2ekr" path="res://units/movement/movement_machine.gd" id="8_hyvs3"]

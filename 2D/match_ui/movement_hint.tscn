@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://iut3hv0ew1s5"]
+
+[ext_resource type="Script" uid="uid://kf22mjs3hcng" path="res://2D/match_ui/movement_hint.gd" id="1_vdvov"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_aebdm"]
+device = -1
+keycode = 4194309
+
+[sub_resource type="Shortcut" id="Shortcut_n7bxy"]
+events = [SubResource("InputEventKey_aebdm")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_wtu5o"]
+device = -1
+keycode = 69
+unicode = 101
+
+[sub_resource type="Shortcut" id="Shortcut_aebdm"]
+events = [SubResource("InputEventKey_wtu5o")]
+
+[node name="MovementHint" type="PanelContainer" unique_id=708356331]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -122.5
+offset_top = -107.0
+offset_right = 122.5
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_vdvov")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=807002885]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1752694024]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="ConfirmButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1230261293]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+shortcut = SubResource("Shortcut_n7bxy")
+text = "[Enter] Confirm Movement"
+
+[node name="CancelButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=235463885]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+shortcut = SubResource("Shortcut_aebdm")
+text = "[E] Cancel Movement"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]

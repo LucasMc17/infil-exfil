@@ -235,7 +235,7 @@ func setup_astar_grid() -> void:
 
 
 ## Returns an array of Vector3s, beginning with the [start] position and ending with the [end] position, which describes a navigable path between those two points. If no valid path exists, returns an empty array.
-func find_path(start: Vector3i, end: Vector3i) -> Array:
+func find_path(start: Vector3i, end: Vector3i) -> PackedVector3Array:
 	# Ensure start and end are within the grid and walkable
 	if not point_map_by_grid_coords.has(start) or not point_map_by_grid_coords.has(end):
 		return [] # No valid path

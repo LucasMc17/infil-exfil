@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dmkx4m8je1llw"]
 
-[ext_resource type="Material" uid="uid://cfpnod4f48cn4" path="res://assets/materials/friendly_movement_highlight.tres" id="1_6vgg2"]
+[ext_resource type="Material" uid="uid://cfpnod4f48cn4" path="res://assets/materials/friendly_movement_highlight.tres" id="1_i37ne"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_lyy88"]
+material = ExtResource("1_i37ne")
 size = Vector3(1, 0.03, 1)
 
 [node name="CellHighlight" type="MeshInstance3D" unique_id=1376729606]
 mesh = SubResource("BoxMesh_lyy88")
-surface_material_override/0 = ExtResource("1_6vgg2")

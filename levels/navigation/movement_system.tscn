@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://buxc3af3a42l4"]
+
+[ext_resource type="Script" uid="uid://cky7foe8lpi3x" path="res://levels/navigation/movement_system.gd" id="1_8rw7e"]
+
+[node name="MovementSystem" type="Node3D" unique_id=1696164633]
+script = ExtResource("1_8rw7e")
+
+[node name="PlannedPathsHolder" type="Node3D" parent="." unique_id=854586959]
+unique_name_in_owner = true
+
+[node name="HoveredPathHolder" type="Node3D" parent="." unique_id=1164582464]
+unique_name_in_owner = true
+
+[node name="ViableMoveHolder" type="Node3D" parent="." unique_id=1512358058]
+unique_name_in_owner = true
+
+[node name="AllMoveHolder" type="Node3D" parent="." unique_id=1240315826]
+unique_name_in_owner = true

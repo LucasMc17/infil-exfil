@@ -15,7 +15,7 @@ albedo_color = Color(0.95711046, 0, 0.2486856, 1)
 stencil_flags = 2
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_i6gcf"]
-viewport_path = NodePath("DebugLabel/@SubViewport@94427")
+viewport_path = NodePath("DebugLabel/@SubViewport@34551")
 
 [node name="EnemyUnit" unique_id=1676765037 instance=ExtResource("1_nlthm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
@@ -23,8 +23,6 @@ script = ExtResource("2_klayc")
 unaware_base_directives = Array[ExtResource("3_i6gcf")]([])
 alerted_base_directives = Array[ExtResource("3_i6gcf")]([])
 alarm_run_chance = 0.5
-max_movement_points = null
-max_action_points = null
 
 [node name="UnitFlag" parent="." index="0" unique_id=710425423]
 texture = SubResource("ViewportTexture_ijy6f")

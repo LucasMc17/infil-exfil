@@ -30,6 +30,12 @@ signal single_target_skill_used(skill : SingleTargetSkill, user : Unit, target :
 ## Signal emitted when the player disarms the active units armed skill.
 signal skill_disarmed()
 
+## Emitted when a pathing waymarker is placed by the player.
+signal waymarker_placed()
+
+## Emitted when the player's planned path is cleared.
+signal planned_path_cleared()
+
 # Enemy turn events
 
 ## Signal emitted when the enemy raises an alarm.
