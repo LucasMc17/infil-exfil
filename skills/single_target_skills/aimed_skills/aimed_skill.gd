@@ -8,6 +8,8 @@ extends Skill
 
 ## An array of potential targets which are currently valid for this skill.
 var potential_targets : Array[Unit] = []
+## The currently selected target.
+var target : Unit
 
 @onready var _collision_shape : CollisionShape3D = %CollisionShape3D
 @onready var _mesh_instance : MeshInstance3D = %MeshInstance3D
@@ -31,11 +33,6 @@ func arm() -> void:
 	get_usability()
 
 
-func use() -> void:
-	super()
-	Events.aimed_skill_used.emit(self, World.targeting.current_target)
-
-
 ## Takes in a user for this skill and returns an array of valid targets for this skill, based on team, line of sight, and distance.
 func get_all_targets() -> void:
 	var is_friendly = user is FriendlyUnit
@@ -47,6 +44,11 @@ func get_all_targets() -> void:
 			if user.seen_zone.get_line_of_sight(overlapper.seen_zone.global_position, overlapper):
 				result.append(overlapper)
 	potential_targets = result
+
+
+## Target the skill to a particular unit, change all necessary variables.
+func retarget(new_target : Unit) -> void:
+	target = new_target
 
 
 ## Initializes the circle which indicates the skill radius to the player.

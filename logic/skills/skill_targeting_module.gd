@@ -12,7 +12,14 @@ var skill_user : FriendlyUnit:
 		else:
 			return null
 ## The target of the current skill, if it is a single target skill.
-var current_target : EnemyUnit
+var current_target : EnemyUnit:
+	get():
+		if armed_skill is AimedSkill:
+			return armed_skill.target
+		else:
+			return null
+
+
 ## Reference to the match ui currently loaded in the level.
 var _match_ui : MatchUI:
 	get():
@@ -37,7 +44,7 @@ func _clear_target() -> void:
 	if current_target:
 		World.level.level_camera.fix_to_actor(World.level.active_unit)
 		World.level.target_retical.visible = false
-		current_target = null
+		armed_skill.retarget(null)
 
 
 func _arm_skill(skill : Skill) -> void:
@@ -48,7 +55,7 @@ func _arm_skill(skill : Skill) -> void:
 
 
 func _target_selected(_targeter: FriendlyUnit, target : EnemyUnit) -> void:
-	current_target = target
+	armed_skill.retarget(target)
 	World.level.target_retical.visible = true
 	World.level.target_retical.global_position = target.global_position
 	DebugConsole.log(target.global_position)

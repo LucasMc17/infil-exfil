@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dulcusx643qk8"]
 
-[ext_resource type="Script" uid="uid://cgrtvy5rc4d5d" path="res://skills/single_target_skills/aimed_skills/aimed_skill_instance.gd" id="1_ng3vh"]
+[ext_resource type="Script" uid="uid://cgrtvy5rc4d5d" path="res://skills/single_target_skills/aimed_skills/aimed_skill.gd" id="1_ng3vh"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_yjcyp"]
 

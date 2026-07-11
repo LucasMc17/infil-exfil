@@ -21,12 +21,6 @@ signal target_cleared()
 ## Signal emitted when the player uses a skill. Fired in conjunction with more specific skill events below
 signal skill_used(skill : Skill)
 
-## Signal emitted when the player uses a [TargetlessSkill]. Fired in conjunction with the general [skill_used] event above.
-signal targetless_skill_used(skill : TargetlessSkill)
-
-## Signal emitted when the player uses a [AimedSkill]. Fired in conjunction with the general [skill_used] event above.
-signal aimed_skill_used(skill : AimedSkill, target : Unit)
-
 ## Signal emitted when the player disarms the active units armed skill.
 signal skill_disarmed()
 

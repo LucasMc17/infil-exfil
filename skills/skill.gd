@@ -18,8 +18,6 @@ enum SkillType {
 @export_group("Skill Info")
 ## The name of this skill.
 @export var skill_name := "Skill Name"
-## The unique ID of this skill, especially for use in the [SkillHandlerModule] logic module.
-@export var id := "skill_name"
 ## A description of this skill for the player's benefit.
 @export_multiline var description := "Skill description"
 ## The type of this skill.
@@ -71,9 +69,15 @@ func arm() -> void:
 	pass
 
 
+## Disarm this skill, reset appropriate variables.
+func disarm() -> void:
+	pass
+
+
 ## Use this skill, and send all relevant signals in the global context.
 func use() -> void:
 	user.action_points -= action_cost
 	user.movement_points -= movement_cost
 	if ammo_cost and user.primary_weapon is RangedWeapon:
 		user.primary_weapon.current_ammunition -= ammo_cost
+	Events.skill_used.emit(self)
