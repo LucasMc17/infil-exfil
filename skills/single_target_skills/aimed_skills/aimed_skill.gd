@@ -24,13 +24,21 @@ func _ready() -> void:
 
 
 func get_usability() -> bool:
-	get_all_targets()
-	return !potential_targets.is_empty()
+	return !!target
 
 
 func arm() -> void:
 	super()
+	get_all_targets()
+	Events.target_selected.connect(retarget)
 	get_usability()
+
+
+func disarm() -> void:
+	super()
+	Events.target_selected.disconnect(retarget)
+	potential_targets = []
+	clear_target()
 
 
 ## Takes in a user for this skill and returns an array of valid targets for this skill, based on team, line of sight, and distance.
@@ -49,6 +57,19 @@ func get_all_targets() -> void:
 ## Target the skill to a particular unit, change all necessary variables.
 func retarget(new_target : Unit) -> void:
 	target = new_target
+	if target:
+		World.level.target_retical.visible = true
+		World.level.target_retical.global_position = target.global_position
+		World.level.level_camera.jump_to_point(target.global_position)
+	else:
+		clear_target()
+	Events.recheck_skill_usability.emit()
+
+
+func clear_target() -> void:
+	target = null
+	World.level.level_camera.fix_to_actor(World.level.active_unit)
+	World.level.target_retical.visible = false
 
 
 ## Initializes the circle which indicates the skill radius to the player.

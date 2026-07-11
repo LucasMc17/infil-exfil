@@ -10,6 +10,9 @@ var skill_res : Skill
 @onready var _confirm_button : Button = %ConfirmButton
 @onready var _targets_section : TargetsSection = %TargetsSection
 
+func _ready() -> void:
+	Events.recheck_skill_usability.connect(_on_recheck_skill_usability)
+
 
 ## Initiate the Armed Skill UI with a selected skill.
 func build(skill : Skill) -> void:
@@ -37,3 +40,7 @@ func _on_cancel_button_pressed() -> void:
 func _on_confirm_button_pressed() -> void:
 	skill_res.use()
 	Events.skill_disarmed.emit()
+
+
+func _on_recheck_skill_usability() -> void:
+	_confirm_button.disabled = !skill_res.get_usability()

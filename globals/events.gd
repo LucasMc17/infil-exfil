@@ -13,7 +13,10 @@ signal player_turn_ended()
 signal skill_armed(skill : Skill)
 
 ## Signal emitted when a target is selected for an armed [SingleTargetSkill].
-signal target_selected(targeter : FriendlyUnit, target : EnemyUnit)
+signal target_selected(target : EnemyUnit)
+
+## Trigger the armed skill UI to recheck for skill usability, and enable confirm button if true.
+signal recheck_skill_usability()
 
 ## Signal emitted when the armed [SingleTargetSkill]'s target is cleared.
 signal target_cleared()

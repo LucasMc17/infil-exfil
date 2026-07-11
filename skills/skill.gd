@@ -32,7 +32,12 @@ enum SkillType {
 ## The cost of performing this skill, in terms of ammunition for the primary weapon.
 @export var ammo_cost := 0
 
-
+var is_armed : bool:
+	get():
+		if World.level:
+			return World.level.armed_skill == self
+		else:
+			return false
 
 
 # USABILITY FUNNEL

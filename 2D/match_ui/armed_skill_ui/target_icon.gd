@@ -2,7 +2,7 @@
 class_name TargetIcon
 extends TextureButton
 
-## Emitted when the button is pressed, selecting the [target] unit as the current target in the [SkillTargetingModule].
+## Emitted when the button is pressed, selecting the [target] unit as the current target in the [level].
 signal target_selected(target_icon : TargetIcon)
 
 ## The unit which this icon represents as a possible target.

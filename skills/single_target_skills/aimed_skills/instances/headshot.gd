@@ -7,9 +7,19 @@ extends AimedSkill
 
 var chance := 0.1
 
+func arm() -> void:
+	super()
+	chance = 0.1
+
+
+func disarm() -> void:
+	super()
+	chance = 0.1
+
+
 func use() -> void:
 	var dice_roll = randf()
-	print(dice_roll)
+	DebugConsole.log(['dice roll: ', dice_roll, 'odds of hitting: ', 1 - chance])
 	if dice_roll >= 1 - chance:
 		DebugConsole.log('headshot hits')
 	else:

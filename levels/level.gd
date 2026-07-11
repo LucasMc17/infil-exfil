@@ -13,6 +13,8 @@ var active_unit : Unit:
 	set(val):
 		active_unit = val
 		level_camera.fix_to_actor(val)
+## The currently armed skill.
+var armed_skill : Skill
 
 ## All [FriendlyUnit]s in the level.
 var friendlies : Array[FriendlyUnit]:
@@ -58,6 +60,8 @@ var units : Array[Unit]:
 @onready var target_retical : Sprite3D = %TargetRetical
 
 func _ready() -> void:
+	Events.skill_armed.connect(_on_skill_armed)
+	Events.skill_disarmed.connect(_on_skill_disarmed)
 	nav_map.setup_astar_grid()
 	World.level = self
 	ConsoleEvents.command_submitted.connect(func (command_name, _parameters):
@@ -118,3 +122,19 @@ func cycle_active_unit():
 			set_active_unit(faction[0])
 	else:
 		set_active_unit(faction[0])
+
+
+func _on_skill_armed(skill : Skill) -> void:
+	if armed_skill:
+		armed_skill.disarm()
+		match_ui.disarm_skill_ui()
+	armed_skill = skill
+	armed_skill.arm()
+	match_ui.arm_skill_ui(armed_skill)
+
+
+func _on_skill_disarmed() -> void:
+	if armed_skill:
+		armed_skill.disarm()
+		match_ui.disarm_skill_ui()
+	armed_skill = null
