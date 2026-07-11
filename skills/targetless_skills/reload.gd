@@ -1,5 +1,5 @@
 class_name Reload
-extends TargetlessSkill
+extends Skill
 
 @export var is_tactical := false
 

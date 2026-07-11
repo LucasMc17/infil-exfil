@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bvcn4atewj3ts"]
 
-[ext_resource type="PackedScene" uid="uid://dulcusx643qk8" path="res://skills/single_target_skills/aimed_skills/aimed_skill.tscn" id="1_ruh51"]
+[ext_resource type="PackedScene" uid="uid://dulcusx643qk8" path="res://skills/aimed_skill.tscn" id="1_ruh51"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ruh51"]
 

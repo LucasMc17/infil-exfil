@@ -4,20 +4,20 @@
 [ext_resource type="Script" uid="uid://c0ilkw2vjlixv" path="res://units/friendlies/friendly_unit.gd" id="2_3ipgw"]
 [ext_resource type="Resource" uid="uid://bjcl38102xf0k" path="res://weapons/silenced_pistol/silenced_pistol.tres" id="3_dnhmq"]
 [ext_resource type="Material" uid="uid://b343cwtgaxavy" path="res://assets/materials/friendly_highlight.tres" id="3_ikcby"]
-[ext_resource type="PackedScene" uid="uid://bk3sio8wshyga" path="res://skills/single_target_skills/aimed_skills/instances/headshot.tscn" id="6_dnhmq"]
+[ext_resource type="PackedScene" uid="uid://bk3sio8wshyga" path="res://skills/single_target_skills/aimed_skills/headshot.tscn" id="6_dnhmq"]
 [ext_resource type="Script" uid="uid://dsirg6rpatadl" path="res://units/movement/movement_state.gd" id="6_wqcmw"]
-[ext_resource type="PackedScene" uid="uid://bvcn4atewj3ts" path="res://skills/single_target_skills/aimed_skills/instances/mozambique_drill.tscn" id="7_dnhmq"]
-[ext_resource type="PackedScene" uid="uid://bx51qf8ln0h18" path="res://skills/targetless_skills/instances/reload.tscn" id="8_v7e1a"]
-[ext_resource type="PackedScene" uid="uid://d2fryaamv5psc" path="res://skills/targetless_skills/instances/tactical_reload.tscn" id="9_5d6y8"]
+[ext_resource type="PackedScene" uid="uid://bvcn4atewj3ts" path="res://skills/single_target_skills/aimed_skills/mozambique_drill.tscn" id="7_dnhmq"]
+[ext_resource type="PackedScene" uid="uid://bx51qf8ln0h18" path="res://skills/targetless_skills/reload.tscn" id="8_v7e1a"]
+[ext_resource type="PackedScene" uid="uid://d2fryaamv5psc" path="res://skills/targetless_skills/tactical_reload.tscn" id="9_5d6y8"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_f0n28"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_v7e1a"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ipgw"]
 albedo_color = Color(0.27409065, 0.7122239, 0.12106868, 1)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_h7wl1"]
-viewport_path = NodePath("DebugLabel/@SubViewport@34070")
+[sub_resource type="ViewportTexture" id="ViewportTexture_5d6y8"]
+viewport_path = NodePath("DebugLabel/@SubViewport@68999")
 
 [node name="FriendlyUnit" unique_id=1676765037 groups=["friendlies"] instance=ExtResource("1_7ia1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
@@ -25,7 +25,7 @@ script = ExtResource("2_3ipgw")
 primary_weapon = ExtResource("3_dnhmq")
 
 [node name="UnitFlag" parent="." index="0" unique_id=710425423]
-texture = SubResource("ViewportTexture_f0n28")
+texture = SubResource("ViewportTexture_v7e1a")
 
 [node name="MeshInstance3D" parent="." index="1" unique_id=1987464459]
 surface_material_override/0 = SubResource("StandardMaterial3D_3ipgw")
@@ -34,7 +34,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_3ipgw")
 surface_material_override/0 = ExtResource("3_ikcby")
 
 [node name="DebugLabel" parent="." index="4" unique_id=607303816]
-texture = SubResource("ViewportTexture_h7wl1")
+texture = SubResource("ViewportTexture_5d6y8")
 _text = "FRIENDLY UNIT
 Position: (x: {x}, y: {y}, z: {z})
 Current Movement: {movement_state}
