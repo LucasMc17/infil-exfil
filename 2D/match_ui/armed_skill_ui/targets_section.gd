@@ -11,7 +11,7 @@ var selected_target_icon : TargetIcon = null
 @onready var _targets : HBoxContainer = %Targets
 
 ## Creates the [TargetIcon] scenes in the scene tree and connects their output signals.
-func build(skill : SingleTargetSkill) -> void:
+func build(skill : AimedSkill) -> void:
 	Events.target_cleared.emit()
 	selected_target_icon = null
 	var index := 1

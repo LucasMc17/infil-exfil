@@ -17,9 +17,9 @@ func build(skill : Skill) -> void:
 	_name_label.text = skill.name
 	_description_label.text = skill.description
 	_confirm_button.disabled = !skill.get_usability()
-	if skill is SingleTargetSkill:
+	if skill is AimedSkill:
 		_targets_section.build(skill)
-	_targets_section.visible = skill is SingleTargetSkill
+	_targets_section.visible = skill is AimedSkill
 
 
 ## Remove the UI from the screen and unset the current skill.
@@ -32,9 +32,8 @@ func teardown() -> void:
 
 func _on_cancel_button_pressed() -> void:
 	Events.skill_disarmed.emit()
-	Events.target_cleared.emit()
 
 
 func _on_confirm_button_pressed() -> void:
 	skill_res.use()
-	Events.target_cleared.emit()
+	Events.skill_disarmed.emit()

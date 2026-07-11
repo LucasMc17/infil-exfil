@@ -28,8 +28,8 @@ func disarm_skill_ui() -> void:
 	_armed_skill_ui.teardown()
 
 
-func _on_skill_used(_skill : Skill, user : Unit) -> void:
-	if user is FriendlyUnit:
+func _on_skill_used(skill : Skill) -> void:
+	if skill.user is FriendlyUnit:
 		_turn_ui.visible = true
 		_skill_ui.visible = false
 		_armed_skill_ui.teardown()

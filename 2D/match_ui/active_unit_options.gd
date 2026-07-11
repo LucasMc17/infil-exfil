@@ -20,7 +20,8 @@ func _on_unit_activated(unit : Unit) -> void:
 		child.queue_free()
 	var index := 1
 	for skill in unit.all_skills:
-		var skill_button = SKILL_SCENE.instantiate()
-		skill_button.build(skill, index)
-		add_child(skill_button)
-		index += 1
+		if skill.get_visibility():
+			var skill_button = SKILL_SCENE.instantiate()
+			skill_button.build(skill, index)
+			add_child(skill_button)
+			index += 1

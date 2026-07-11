@@ -1,6 +1,6 @@
-## Abstract class representing an action that a Unit can take, and spend action points on during their turn.
+## Class representing a particular instance of a skill, as belonging to a specific unit. This is done so that we may store a mutable instance of a skill and treat the original resource as a read only data source. It also allows us to host the skill in physical space, which is useful for finding potential targets and locating an AOE on the grid.
 @abstract class_name Skill
-extends Resource
+extends Node3D
 
 ## The type of this skill, as defined as what states it can be used from.
 enum SkillType {
@@ -12,15 +12,19 @@ enum SkillType {
 	COMBAT
 }
 
+## The skill's user.
+@export var user : Unit
+
 @export_group("Skill Info")
 ## The name of this skill.
-@export var name := "Skill Name"
+@export var skill_name := "Skill Name"
 ## The unique ID of this skill, especially for use in the [SkillHandlerModule] logic module.
 @export var id := "skill_name"
 ## A description of this skill for the player's benefit.
 @export_multiline var description := "Skill description"
 ## The type of this skill.
 @export var skill_type := SkillType.GENERAL
+
 
 @export_group("Cost")
 ## The cost of performing this skill, in terms of action points.
@@ -30,12 +34,19 @@ enum SkillType {
 ## The cost of performing this skill, in terms of ammunition for the primary weapon.
 @export var ammo_cost := 0
 
-## The skill's user.
-var user : Unit
 
-## Return a unique instance of this resource.
-func make_unique() -> Skill:
-	return self.duplicate(true)
+
+
+# USABILITY FUNNEL
+# This is a funnel to determine whether the skill is able to be used. The steps in the funnel are:
+	# 1. The skill is visible. Some skills are contextual and so won't be displayed if irrelevant.
+	# 2. The skill is affordable. If the user can afford to use the skill in terms of AP, MP and ammo, then it's button will not be disabled and grayed out.
+	# 3. The skill is usable. Finally, whether the skill can actually be used or not. For some skills this will be dependent on whether or not there are available targets, and if one is actually picked.
+# Only once all three steps are passed, the skill can be used.
+
+## Returns true if this skill is visible to the user, considering context.
+func get_visibility() -> bool:
+	return true
 
 
 ## Return true if this skill is affordable to the user, in terms of action points, movement points, and ammunition.

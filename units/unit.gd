@@ -3,9 +3,6 @@
 class_name Unit
 extends AnimatableBody3D
 
-## Preloaded skill targeting area scene for instantiation at initial load.
-const SKILL_TARGETING_AREA = preload("res://skills/single_target_skills/skill_targeting_area.tscn")
-
 ## Signal emitted when the unit begins moving along a navigation path.
 signal started_moving(unit : Unit)
 ## Signal emitted when the unit stops moving along a navigation path for any reason.
@@ -21,7 +18,7 @@ signal forfeited_turn(unit : Unit)
 ## The unit's main weapon.
 @export var primary_weapon : Weapon
 ## The unit's skills, associated with this particular unit as opposed to the weapons they are equipped with.
-@export var skills : Array[Skill] = []
+# @export var skills : Array[Skill] = []
 
 @export_group('Position')
 ## The unit's current position in tile coordinates on the navgrid.
@@ -68,16 +65,18 @@ var actual_position : Vector3i:
 ## The full array of skills available to this unit, including their own, and those associated with their primary weapon.
 var all_skills : Array[Skill]:
 	get():
-		var result = skills.duplicate()
-		if primary_weapon:
-			result.append_array(primary_weapon.skills.duplicate())
+		var result : Array[Skill] = []
+		var skills = skill_holder.get_children()
+		for skill in skills:
+			if skill is Skill:
+				result.append(skill)
 		return result
-## All of the [SingleTargetSkill]s from the unit's full array of skills.
-var targeted_skills : Array[SingleTargetSkill]:
+## All of the [AimedSkill]s from the unit's full array of skills.
+var aimed_skills : Array[AimedSkill]:
 	get():
-		var result : Array[SingleTargetSkill] = []
+		var result : Array[AimedSkill] = []
 		for skill in all_skills:
-			if skill is SingleTargetSkill:
+			if skill is AimedSkill:
 				result.append(skill)
 		return result
 		
@@ -86,7 +85,7 @@ var targeted_skills : Array[SingleTargetSkill]:
 @onready var movement_machine : MovementMachine = %MovementMachine
 @onready var action_machine : ActionMachine = %ActionMachine
 @onready var debug_label : DebugLabel = %DebugLabel
-@onready var skill_area_holder : Node3D = %SkillAreaHolder
+@onready var skill_holder : Node3D = %Skills
 @onready var seen_zone : SeenZone = %SeenZone
 
 func _ready():
@@ -94,29 +93,30 @@ func _ready():
 	if primary_weapon:
 		primary_weapon = primary_weapon.make_unique()
 		primary_weapon.initialize(self)
-	var temp = skills.duplicate()
-	skills = []
-	for skill in temp:
-		skills.append(skill.make_unique())
+	# var temp = skills.duplicate()
+	# skills = []
+	# for skill in temp:
+	# 	skills.append(skill.make_unique())
 
 	debug_label.change_param('x', str(round(tile_position.x)))
 	debug_label.change_param('y', str(round(tile_position.y)))
 	debug_label.change_param('z', str(round(tile_position.z)))
-	_set_up_skills()
+	# _set_up_skills()
 
 	flag.refresh(self)
 
 
 ## Initialize the skills for this unit as an actor within the level.
-func _set_up_skills() -> void:
-	for skill : Skill in all_skills:
-		skill.user = self
-		if skill is SingleTargetSkill:
-			var targeting_area = SKILL_TARGETING_AREA.instantiate()
-			targeting_area.skill = skill
-			targeting_area.area_radius = skill.effective_range
-			skill.skill_area = targeting_area
-			skill_area_holder.add_child(targeting_area)
+# func _set_up_skills() -> void:
+# 	for skill : AimedSkill in all_skills:
+# 		var skill_instance = skill.make_instance(self)
+# 		skill_holder.add_child(skill_instance)
+# 		# if skill is AimedSkill:
+# 		# 	var targeting_area = SKILL_TARGETING_AREA.instantiate()
+# 		# 	targeting_area.skill = skill
+# 		# 	targeting_area.area_radius = skill.effective_range
+# 		# 	skill.skill_area = targeting_area
+# 		# 	skill_holder.add_child(targeting_area)
 
 
 ## Update the list of valid moves for this unit based on their maximum move distance and what positions within that range are navigable to.
@@ -130,7 +130,7 @@ func activate():
 	_cell_highlight.visible = true
 	flag.refresh(self)
 	flag.expand()
-	skill_area_holder.visible = true
+	skill_holder.visible = true
 	refresh_valid_moves()
 	# _refresh_skills()
 	Events.unit_activated.emit(self)
@@ -140,7 +140,7 @@ func activate():
 func deactivate():
 	_cell_highlight.visible = false
 	flag.collapse()
-	skill_area_holder.visible = false
+	skill_holder.visible = false
 	# TODO: Make this a signal	
 	World.level.path_marking_system.deactivate()
 	Events.skill_disarmed.emit()

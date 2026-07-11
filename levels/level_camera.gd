@@ -62,7 +62,6 @@ func shift_camera_y(up : bool):
 	else:
 		var current_grid_y = ceil(_lerp_target.y / NavigableGridMap.CELL_SIZE.y)
 		_lerp_target.y = (current_grid_y - 1) * NavigableGridMap.CELL_SIZE.y
-	DebugConsole.log(_lerp_target.y)
 
 
 ## Pivot the camera around the focal point, in accordance with a Vector2 indicating relative motion.

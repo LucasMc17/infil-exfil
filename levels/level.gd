@@ -90,10 +90,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		level_camera.zoom_camera(false)
 	
 	elif Input.is_action_just_pressed('escape'):
-		if World.targeting.armed_skill:
-			Events.skill_disarmed.emit()
-		else:
-			DebugConsole.log("Pausing")
+		DebugConsole.log("Pausing")
 	
 	elif Input.is_action_just_pressed('force_exit'):
 		get_tree().quit()
