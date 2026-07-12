@@ -15,6 +15,9 @@ signal skill_armed(skill : Skill)
 ## Signal emitted when a target is selected for an armed [SingleTargetSkill].
 signal target_selected(target : EnemyUnit)
 
+## Signal emitted to request a refresh of the available skills for the active unit.
+signal refresh_unit_skills()
+
 ## Trigger the armed skill UI to recheck for skill usability, and enable confirm button if true.
 signal recheck_skill_usability()
 
@@ -36,7 +39,7 @@ signal planned_path_cleared()
 # Enemy turn events
 
 ## Signal emitted when the enemy raises an alarm.
-signal alarm_raised(alarm, raiser : EnemyUnit)
+signal alarm_raised(alarm, raiser : Unit)
 
 ## Signal emitted when the enemy's alarm is canceled.
 signal alarm_ended()

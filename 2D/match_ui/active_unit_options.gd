@@ -6,7 +6,7 @@ extends HBoxContainer
 const SKILL_SCENE = preload('./unit_skill.tscn')
 
 func _ready() -> void:
-	Events.unit_activated.connect(_on_unit_activated)
+	Events.refresh_unit_skills.connect(_on_skill_refresh)
 
 
 ## Check the affordability of each available skill for the active unit via their own [refresh_affordability] methods.
@@ -15,13 +15,14 @@ func refresh_affordability() -> void:
 		child.refresh_affordability()
 
 
-func _on_unit_activated(unit : Unit) -> void:
-	for child in get_children():
-		child.queue_free()
-	var index := 1
-	for skill in unit.all_skills:
-		if skill.get_visibility():
-			var skill_button = SKILL_SCENE.instantiate()
-			skill_button.build(skill, index)
-			add_child(skill_button)
-			index += 1
+func _on_skill_refresh() -> void:
+	if World.level.active_unit:
+		for child in get_children():
+			child.queue_free()
+		var index := 1
+		for skill in World.level.active_unit.all_skills:
+			if skill.get_visibility():
+				var skill_button = SKILL_SCENE.instantiate()
+				skill_button.build(skill, index)
+				add_child(skill_button)
+				index += 1

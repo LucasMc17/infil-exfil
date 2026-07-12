@@ -134,6 +134,7 @@ func activate():
 	refresh_valid_moves()
 	# _refresh_skills()
 	Events.unit_activated.emit(self)
+	Events.refresh_unit_skills.emit()
 
 
 ## Executed when the unit stops being the active unit within the level.
@@ -179,7 +180,7 @@ func check_for_detection() -> void:
 func follow_path(delta : float, path : Array, mps := 1.0) -> void:
 	if path.is_empty():
 		movement_machine.current_state.transition('NoMovement')
-		# _refresh_skills()
+		Events.refresh_unit_skills.emit()
 		return
 	var direction = (path[0] - tile_position).normalized()
 	var angle = atan2(-direction.x, -direction.z)
