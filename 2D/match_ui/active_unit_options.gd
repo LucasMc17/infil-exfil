@@ -16,7 +16,7 @@ func refresh_affordability() -> void:
 
 
 func _on_skill_refresh() -> void:
-	if World.level.active_unit:
+	if World.level && World.level.active_unit:
 		for child in get_children():
 			child.queue_free()
 		var index := 1

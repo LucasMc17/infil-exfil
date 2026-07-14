@@ -6,6 +6,7 @@ extends Unit
 func check_for_detection():
 	DebugConsole.log("Checking for detection", 2)
 	seen_zone.check_detection()
+	get_instance_id()
 
 
 func _on_seen_zone_seen_by_enemies(enemies: Array[EnemyUnit]) -> void:

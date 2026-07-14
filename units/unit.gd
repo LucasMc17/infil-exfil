@@ -144,7 +144,9 @@ func deactivate():
 	skill_holder.visible = false
 	# TODO: Make this a signal	
 	World.level.path_marking_system.deactivate()
-	Events.skill_disarmed.emit()
+	Events.unit_deactivated.emit(self)
+	if World.level.armed_skill:
+		Events.skill_disarmed.emit()
 
 
 ## Return the unit to a default state, with action and movement points reset.
@@ -180,7 +182,6 @@ func check_for_detection() -> void:
 func follow_path(delta : float, path : Array, mps := 1.0) -> void:
 	if path.is_empty():
 		movement_machine.current_state.transition('NoMovement')
-		Events.refresh_unit_skills.emit()
 		return
 	var direction = (path[0] - tile_position).normalized()
 	var angle = atan2(-direction.x, -direction.z)

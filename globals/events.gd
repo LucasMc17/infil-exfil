@@ -4,6 +4,9 @@ extends Node
 ## Signal emitted when a unit on either team is activated.
 signal unit_activated(unit : Unit)
 
+## Signal emitted when a unit on either team is deactivated.
+signal unit_deactivated(unit : Unit)
+
 # Player turn events
 
 ## Signal emitted when the player's turn ends.
