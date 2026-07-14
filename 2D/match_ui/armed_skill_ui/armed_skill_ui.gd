@@ -20,9 +20,9 @@ func build(skill : Skill) -> void:
 	_name_label.text = skill.name
 	_description_label.text = skill.description
 	_confirm_button.disabled = !skill.get_usability()
-	if skill is AimedSkill:
+	if skill is TargetedSkill:
 		_targets_section.build(skill)
-	_targets_section.visible = skill is AimedSkill
+	_targets_section.visible = skill is TargetedSkill
 
 
 ## Remove the UI from the screen and unset the current skill.

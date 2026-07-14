@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bvcn4atewj3ts" path="res://skills/single_target_skills/aimed_skills/mozambique_drill.tscn" id="7_dnhmq"]
 [ext_resource type="PackedScene" uid="uid://bx51qf8ln0h18" path="res://skills/targetless_skills/reload.tscn" id="8_v7e1a"]
 [ext_resource type="PackedScene" uid="uid://d2fryaamv5psc" path="res://skills/targetless_skills/tactical_reload.tscn" id="9_5d6y8"]
+[ext_resource type="Script" uid="uid://c4sr4g0fkoxwr" path="res://skills/single_target_skills/proximal_skills/proximal_skill.gd" id="10_5d6y8"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_v7e1a"]
 viewport_path = NodePath("SubViewport")
@@ -57,5 +58,10 @@ user = NodePath("../..")
 
 [node name="TacticalReload" parent="Skills" parent_id_path=PackedInt32Array(397221885) index="3" unique_id=408227528 node_paths=PackedStringArray("user") instance=ExtResource("9_5d6y8")]
 user = NodePath("../..")
+
+[node name="ProximalSkill" type="Node3D" parent="Skills" parent_id_path=PackedInt32Array(397221885) index="5" unique_id=1517950902 node_paths=PackedStringArray("user")]
+script = ExtResource("10_5d6y8")
+user = NodePath("../..")
+metadata/_custom_type_script = "uid://c4sr4g0fkoxwr"
 
 [connection signal="seen_by_enemies" from="SeenZone" to="." method="_on_seen_zone_seen_by_enemies"]

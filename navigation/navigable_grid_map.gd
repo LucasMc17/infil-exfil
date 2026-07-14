@@ -287,3 +287,21 @@ func get_all_valid_moves(tile_position: Vector3i, max_moves: int) -> Array[Vecto
 	var end_time = Time.get_ticks_msec()
 	DebugConsole.log("Execution time to find all valid moves with RECURSION: " + str(end_time - start_time) + " milliseconds", 4)
 	return valid_moves.keys()
+
+
+# TODO: If these two funcs are never used for anything besides getting proximal target skills they should eventually be rolled into one to avoid calling the point map dicts multiple times.
+
+## Returns an array of all the cells adjacent to the starting position which are actually connected to it. Useful for getting targets for proximal skills.
+func get_valid_adjacent_cells(point_position : Vector3i) -> Array[Vector3i]:
+	var grid_point = point_map_by_grid_coords[point_position]
+	var result : Array[Vector3i]
+	for potential_connection in [Vector3i(1, 0, 0), Vector3i(-1, 0, 0), Vector3i(0, 0, 1), Vector3i(0, 0, -1)]:
+		var real_position = point_position + potential_connection
+		if grid_point.real_connections.has(real_position):
+			result.append(real_position)
+	return result
+
+
+## Returns the scene occupying a point, or Null if it is empty.
+func get_point_occupier(point_position : Vector3i) -> Node3D:
+	return point_map_by_grid_coords[point_position].occupier

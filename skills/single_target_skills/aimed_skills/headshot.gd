@@ -19,7 +19,7 @@ func disarm() -> void:
 
 func use() -> void:
 	var dice_roll = randf()
-	DebugConsole.log(['dice roll: ', dice_roll, 'odds of hitting: ', 1 - chance])
+	DebugConsole.log(['dice roll: ', dice_roll, 'min roll to hit: ', 1 - chance])
 	if dice_roll >= 1 - chance:
 		DebugConsole.log('headshot hits')
 	else:
