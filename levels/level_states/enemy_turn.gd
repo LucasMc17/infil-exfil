@@ -9,7 +9,7 @@ func _ready() -> void:
 
 func enter(previous_state : State, ext : Dictionary):
 	super(previous_state, ext)
-	enemy_units = level.enemies
+	enemy_units = level.live_enemies
 	for enemy : EnemyUnit in enemy_units:
 		enemy.reset()
 	level.is_player_turn = false
@@ -28,4 +28,4 @@ func cycle_enemy() -> void:
 		await enemy.forfeited_turn
 		cycle_enemy()
 	else:
-		transition('PlayerTurn')
+		transition.call_deferred('PlayerTurn')

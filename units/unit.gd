@@ -3,6 +3,18 @@
 class_name Unit
 extends AnimatableBody3D
 
+## Enum representing all the possible statuses for a unit, from alive and acting to dead and out of play.
+enum Status {
+	## Alive, aware and responsive.
+	ALIVE,
+	## Alive, but stunned and unable to move or act for the moment.
+	STUNNED,
+	## Alive, but unconscious and unable to move or act until awoken by another unit. Does not block space.
+	UNCONSCIOUS,
+	## Dead and permanently unable to move or act.
+	DEAD
+}
+
 ## Signal emitted when the unit begins moving along a navigation path.
 signal started_moving(unit : Unit)
 ## Signal emitted when the unit stops moving along a navigation path for any reason.
@@ -13,6 +25,12 @@ signal started_acting(unit : Unit)
 signal finished_acting(unit : Unit)
 ## Signal emitted when the unit ends its turn without exhausting all available AP/MP/other possible actions.
 signal forfeited_turn(unit : Unit)
+
+@export_group('Status')
+## The unit's maximum health value.
+@export var max_health_points := 5
+## The unit's status, either alive, unconscious, stunned or dead.
+@export var unit_status := Status.ALIVE
 
 @export_group('Capabilities')
 ## The unit's main weapon.
@@ -38,6 +56,15 @@ signal forfeited_turn(unit : Unit)
 ## The maximum action points for this unit, to which they are restored at the beginning of each new turn.
 @export var max_action_points := 1
 
+## The number of health points this unit has.
+var health_points := max_health_points:
+	set(val):
+		if val < 0:
+			health_points = 0
+		else:
+			health_points = val
+		if flag:
+			flag.refresh(self)
 ## The number of movement points this unit has. Restored to the maximum at the start of a turn.
 var movement_points := max_movement_points:
 	set(val):
@@ -87,6 +114,7 @@ var aimed_skills : Array[AimedSkill]:
 @onready var debug_label : DebugLabel = %DebugLabel
 @onready var skill_holder : Node3D = %Skills
 @onready var seen_zone : SeenZone = %SeenZone
+@onready var _mesh_instance : MeshInstance3D = %MeshInstance3D
 
 func _ready():
 	Events.skill_disarmed.connect(refresh_valid_moves)
@@ -104,19 +132,6 @@ func _ready():
 	# _set_up_skills()
 
 	flag.refresh(self)
-
-
-## Initialize the skills for this unit as an actor within the level.
-# func _set_up_skills() -> void:
-# 	for skill : AimedSkill in all_skills:
-# 		var skill_instance = skill.make_instance(self)
-# 		skill_holder.add_child(skill_instance)
-# 		# if skill is AimedSkill:
-# 		# 	var targeting_area = SKILL_TARGETING_AREA.instantiate()
-# 		# 	targeting_area.skill = skill
-# 		# 	targeting_area.area_radius = skill.effective_range
-# 		# 	skill.skill_area = targeting_area
-# 		# 	skill_holder.add_child(targeting_area)
 
 
 ## Update the list of valid moves for this unit based on their maximum move distance and what positions within that range are navigable to.
@@ -155,14 +170,33 @@ func reset():
 	action_points = 100 if DebugOptions.unlimited_ap else max_action_points
 
 
+## Take appropriate amount of damage and kill the unit if health drops to zero.
+func damage(amount : int) -> void:
+	health_points -= amount
+	if health_points < 1:
+		die()
+
+
+## Kill the unit and remove them from play.
+func die() -> void:
+	DebugConsole.log("Unit " + name + " dies.", 2)
+	_mesh_instance.position.y = 0.0
+	unit_status = Status.DEAD
+
+
+## Returns true if the unit is incapacitated (dead or unconscious).
+func is_incapacitated() -> bool:
+	return unit_status == Status.UNCONSCIOUS or unit_status == Status.DEAD
+
+
 ## Returns true if the unit is still capable of moving this turn.
 func can_move() -> bool:
-	return movement_points > 0 and movement_machine.current_state is NoMovement
+	return unit_status == Status.ALIVE and movement_points > 0 and movement_machine.current_state is NoMovement
 
 
 ## Returns true if the unit is still capable of acting this turn.
 func can_act() -> bool:
-	return action_points > 0 and action_machine.current_state is NoAction
+	return unit_status == Status.ALIVE and action_points > 0 and action_machine.current_state is NoAction
 
 
 ## Mark this unit as finished acting and set their MP/AP to 0.

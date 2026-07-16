@@ -22,6 +22,7 @@ func use() -> void:
 	DebugConsole.log(['dice roll: ', dice_roll, 'min roll to hit: ', 1 - chance])
 	if dice_roll >= 1 - chance:
 		DebugConsole.log('headshot hits')
+		target.die()
 	else:
 		DebugConsole.log('Headshot misses')
 	super()

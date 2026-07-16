@@ -145,13 +145,13 @@ func _disconnect_point_from_neighbors(point : GridPoint, two_way := true, ingoin
 func _resolve_occupied_spaces() -> void:
 	# var to_block = {}
 	# NOTE: When scenes other than Units are able to block spaces, this will change.
-	for occupier : Unit in World.level.units:
+	for occupier : Unit in World.level.all_units:
 		var occupier_id := occupier.get_instance_id()
 		if occupation_map.has(occupier_id):
 			var old_point = occupation_map[occupier_id]
 			old_point.occupier = null
 			enable_point(old_point.position)
-		if point_map_by_grid_coords.has(occupier.actual_position):
+		if !occupier.is_incapacitated() and point_map_by_grid_coords.has(occupier.actual_position):
 			var new_point = point_map_by_grid_coords[occupier.actual_position]
 			occupation_map[occupier_id] = new_point
 			new_point.occupier = occupier

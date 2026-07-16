@@ -3,9 +3,9 @@ extends LevelState
 func enter(previous_state : State, ext : Dictionary):
 	super(previous_state, ext)
 	level.is_player_turn = true
-	for friendly : FriendlyUnit in level.friendlies:
+	for friendly : FriendlyUnit in level.live_friendlies:
 		friendly.reset()
-	level.set_active_unit.call_deferred(level.friendlies[0])
+	level.set_active_unit.call_deferred(level.live_friendlies[0])
 	Events.player_turn_ended.connect(_on_player_turn_ended)
 
 
