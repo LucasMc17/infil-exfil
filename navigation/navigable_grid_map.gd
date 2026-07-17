@@ -171,6 +171,7 @@ func enable_point(point_position : Vector3i) -> void:
 	astar.set_point_disabled(point, false)
 
 
+# TODO: Update this to block ladders (and some other connections) when holding a hostage. May take an update to the GridPoint data type.
 ## Utility function handling the recursion necessary to find all valid moves.
 func _recursively_get_valid_pos(last_point_ring: Array[Vector3i], moves_left: int, potential_moves : Dictionary[Vector3i, bool], starting_point : Vector3i) -> void:
 	var next_point_ring : Dictionary[Vector3i, bool] = {}

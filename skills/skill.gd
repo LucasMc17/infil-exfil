@@ -86,3 +86,4 @@ func use() -> void:
 	if ammo_cost and user.primary_weapon is RangedWeapon:
 		user.primary_weapon.current_ammunition -= ammo_cost
 	Events.skill_used.emit(self)
+	Events.refresh_unit_skills.emit()
