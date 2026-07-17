@@ -9,24 +9,27 @@
 [ext_resource type="PackedScene" uid="uid://bvcn4atewj3ts" path="res://skills/single_target_skills/aimed_skills/mozambique_drill.tscn" id="7_dnhmq"]
 [ext_resource type="PackedScene" uid="uid://bx51qf8ln0h18" path="res://skills/targetless_skills/reload.tscn" id="8_v7e1a"]
 [ext_resource type="PackedScene" uid="uid://d2fryaamv5psc" path="res://skills/targetless_skills/tactical_reload.tscn" id="9_5d6y8"]
-[ext_resource type="Script" uid="uid://c4sr4g0fkoxwr" path="res://skills/single_target_skills/proximal_skills/proximal_skill.gd" id="10_5d6y8"]
+[ext_resource type="PackedScene" uid="uid://pjntjfibxgpo" path="res://skills/single_target_skills/proximal_skills/take_hostage.tscn" id="10_5d6y8"]
+[ext_resource type="PackedScene" uid="uid://ccfg0ds2matqq" path="res://skills/single_target_skills/proximal_skills/kill_hostage.tscn" id="11_f0n28"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_5d6y8"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_f0n28"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ipgw"]
 albedo_color = Color(0.27409065, 0.7122239, 0.12106868, 1)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_f0n28"]
-viewport_path = NodePath("DebugLabel/@SubViewport@19841")
+[sub_resource type="ViewportTexture" id="ViewportTexture_h7wl1"]
+viewport_path = NodePath("DebugLabel/@SubViewport@25245")
 
 [node name="FriendlyUnit" unique_id=1676765037 groups=["friendlies"] instance=ExtResource("1_7ia1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
 script = ExtResource("2_3ipgw")
+max_health_points = 5
+unit_status = 0
 primary_weapon = ExtResource("3_dnhmq")
 
 [node name="UnitFlag" parent="." index="0" unique_id=710425423]
-texture = SubResource("ViewportTexture_5d6y8")
+texture = SubResource("ViewportTexture_f0n28")
 
 [node name="MeshInstance3D" parent="." index="1" unique_id=1987464459]
 surface_material_override/0 = SubResource("StandardMaterial3D_3ipgw")
@@ -35,7 +38,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_3ipgw")
 surface_material_override/0 = ExtResource("3_ikcby")
 
 [node name="DebugLabel" parent="." index="4" unique_id=607303816]
-texture = SubResource("ViewportTexture_f0n28")
+texture = SubResource("ViewportTexture_h7wl1")
 _text = "FRIENDLY UNIT
 Position: (x: {x}, y: {y}, z: {z})
 Current Movement: {movement_state}
@@ -59,9 +62,10 @@ user = NodePath("../..")
 [node name="TacticalReload" parent="Skills" parent_id_path=PackedInt32Array(397221885) index="3" unique_id=408227528 node_paths=PackedStringArray("user") instance=ExtResource("9_5d6y8")]
 user = NodePath("../..")
 
-[node name="ProximalSkill" type="Node3D" parent="Skills" parent_id_path=PackedInt32Array(397221885) index="5" unique_id=1517950902 node_paths=PackedStringArray("user")]
-script = ExtResource("10_5d6y8")
+[node name="TakeHostage" parent="Skills" parent_id_path=PackedInt32Array(397221885) index="5" unique_id=1162393534 node_paths=PackedStringArray("user") instance=ExtResource("10_5d6y8")]
 user = NodePath("../..")
-metadata/_custom_type_script = "uid://c4sr4g0fkoxwr"
+
+[node name="KillHostage" parent="Skills" parent_id_path=PackedInt32Array(397221885) index="6" unique_id=945442073 node_paths=PackedStringArray("user") instance=ExtResource("11_f0n28")]
+user = NodePath("../..")
 
 [connection signal="seen_by_enemies" from="SeenZone" to="." method="_on_seen_zone_seen_by_enemies"]

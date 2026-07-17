@@ -9,6 +9,8 @@ enum Status {
 	ALIVE,
 	## Alive, but stunned and unable to move or act for the moment.
 	STUNNED,
+	## Alive, but held hostage by another [Unit].
+	CAPTIVE,
 	## Alive, but unconscious and unable to move or act until awoken by another unit. Does not block space.
 	UNCONSCIOUS,
 	## Dead and permanently unable to move or act.
@@ -106,7 +108,12 @@ var aimed_skills : Array[AimedSkill]:
 			if skill is AimedSkill:
 				result.append(skill)
 		return result
-		
+
+## The unit this unit is currently holding captive, if one exists.
+var captive : Unit
+## The unit that is currently holding this unit as a captive, if one exists.
+var captor : Unit
+	
 @onready var _cell_highlight := %CellHighlight
 @onready var flag : UnitFlag = %UnitFlag
 @onready var movement_machine : MovementMachine = %MovementMachine
@@ -115,6 +122,8 @@ var aimed_skills : Array[AimedSkill]:
 @onready var skill_holder : Node3D = %Skills
 @onready var seen_zone : SeenZone = %SeenZone
 @onready var _mesh_instance : MeshInstance3D = %MeshInstance3D
+@onready var _hostage_marker : Marker3D = %HostageMarker
+@onready var _collision : CollisionShape3D = %CollisionShape3D
 
 func _ready():
 	Events.skill_disarmed.connect(refresh_valid_moves)
@@ -180,13 +189,37 @@ func damage(amount : int) -> void:
 ## Kill the unit and remove them from play.
 func die() -> void:
 	DebugConsole.log("Unit " + name + " dies.", 2)
+	_collision.disabled = true
 	_mesh_instance.position.y = 0.0
 	unit_status = Status.DEAD
 
 
+## Runs when the unit grabs another unit as a captive.
+func take_captive(captured : Unit) -> void:
+	captive = captured
+	captive.captor = self
+	captive.unit_status = Status.CAPTIVE
+	captive.global_position = _hostage_marker.global_position
+	captive.rotation.y = rotation.y
+	if captive is EnemyUnit:
+		captive.awareness.alarm(self)
+
+
+## Runs when the unit releases their captive. Takes in a boolean representing whether or not the captive was killed before being released.
+func release_captive(was_killed := false) -> void:
+	if captive:
+		captive.tile_position = tile_position
+		captive.captor = null
+		if was_killed:
+			captive.die()
+		else:
+			captive.unit_status = Status.ALIVE
+		captive = null
+
+
 ## Returns true if the unit is incapacitated (dead or unconscious).
 func is_incapacitated() -> bool:
-	return unit_status == Status.UNCONSCIOUS or unit_status == Status.DEAD
+	return unit_status == Status.UNCONSCIOUS or unit_status == Status.DEAD or unit_status == Status.CAPTIVE
 
 
 ## Returns true if the unit is still capable of moving this turn.
@@ -212,6 +245,7 @@ func check_for_detection() -> void:
 
 
 # TODO: Enemy unit's should extend this to accidentally bump into unseen friendly units rather than blindly pathing around them.
+# TODO: There should also be a more elegant turning solution that only updates rotation.y when required, not every frame.
 ## Move along a navigable path towards a destination point.
 func follow_path(delta : float, path : Array, mps := 1.0) -> void:
 	if path.is_empty():
@@ -219,8 +253,12 @@ func follow_path(delta : float, path : Array, mps := 1.0) -> void:
 		return
 	var direction = (path[0] - tile_position).normalized()
 	var angle = atan2(-direction.x, -direction.z)
-	rotation.y = angle
+	if rotation.y != angle:
+		rotation.y = angle
 	tile_position = tile_position.move_toward(path[0], mps * delta)
 	if tile_position == path[0]:
 		path.pop_front()
 		check_for_detection()
+	if captive:
+		captive.global_position = _hostage_marker.global_position
+		captive.rotation.y = angle

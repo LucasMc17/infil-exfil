@@ -42,7 +42,9 @@ func alert():
 
 
 ## Update the unit's awareness level to [ALARMED], instantly stopping the unit if they are moving, and adding all sighted friendlies to their list of targets.
-func alarm(spotted_friendlies : Array[FriendlyUnit] = []):
+func alarm(spotted_friendlies : Variant = []):
+	if spotted_friendlies is FriendlyUnit:
+		spotted_friendlies = [spotted_friendlies]
 	if !is_alarmed():
 		awareness_level = AwarenessLevel.ALARMED
 		unit.movement_machine.current_state.transition('NoMovement')

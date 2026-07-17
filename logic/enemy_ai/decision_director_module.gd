@@ -3,6 +3,8 @@
 class_name DecisionDirectorModule
 extends Resource
 
+static var no_directive = preload('res://units/ai/directive/no_directive.gd')
+
 ## The Unit for whom this director is making decisions.
 var unit : EnemyUnit
 ## The awareness module for this director (and the unit)
@@ -42,7 +44,10 @@ func _init(u : EnemyUnit, a : EnemyUnitAwarenessModule) -> void:
 ## Take the next directive from the appropriate queue and assign it as the current directive. If the current directive queue is empty, it will restart the unaware or alerted queue, where as if the unit is alarmed, it will utilize the [_decide_alarmed_directive] function to determine what action to take next.
 func take_directive_from_queue():
 	var next_directive : Directive
-	if awareness.is_unaware():
+	if unit.unit_status == Unit.Status.CAPTIVE:
+		next_directive = no_directive.new()
+		add_directive(next_directive)
+	elif awareness.is_unaware():
 		if unaware_directive_queue.is_empty():
 			unaware_directive_queue = unaware_base_directives.duplicate()
 		next_directive = unaware_directive_queue[0]
