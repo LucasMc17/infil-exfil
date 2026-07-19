@@ -26,13 +26,13 @@ var all_friendlies : Array[FriendlyUnit]:
 				result.append(friendly)
 		return result
 
-## All still alive [FriendlyUnit]s in the level.
+## All still alive (not dead or unconscious) [FriendlyUnit]s in the level.
 var live_friendlies : Array[FriendlyUnit]:
 	get():
 		var result : Array[FriendlyUnit] = []
 		var true_friendlies = _friendlies_node.get_children()
 		for friendly in true_friendlies:
-			if friendly is FriendlyUnit and friendly.unit_status != Unit.Status.DEAD:
+			if friendly is FriendlyUnit and friendly.unit_status != Unit.Status.DEAD and friendly.unit_status != Unit.Status.UNCONSCIOUS:
 				result.append(friendly)
 		return result
 
@@ -46,13 +46,13 @@ var all_enemies : Array[EnemyUnit]:
 				result.append(enemy)
 		return result
 
-## All still alive [EnemyUnit]s in the level.
+## All still alive (not dead or unconscious) [EnemyUnit]s in the level.
 var live_enemies : Array[EnemyUnit]:
 	get():
 		var result : Array[EnemyUnit] = []
 		var true_enemies = _enemies_node.get_children()
 		for enemy in true_enemies:
-			if enemy is EnemyUnit and enemy.unit_status != Unit.Status.DEAD:
+			if enemy is EnemyUnit and enemy.unit_status != Unit.Status.DEAD and enemy.unit_status != Unit.Status.UNCONSCIOUS:
 				result.append(enemy)
 		return result
 
@@ -68,15 +68,15 @@ var all_units : Array[Unit]:
 				result.append(enemy)
 		return result
 
-## All still alive [Unit]s in the level, including both friendlies and enemies.
+## All still alive (not dead or unconscious) [Unit]s in the level, including both friendlies and enemies.
 var live_units : Array[Unit]:
 	get():
 		var result : Array[Unit] = []
 		for friendly in all_friendlies:
-			if friendly is Unit and friendly.unit_status != Unit.Status.DEAD:
+			if friendly is Unit and friendly.unit_status != Unit.Status.DEAD and friendly.unit_status != Unit.Status.UNCONSCIOUS:
 				result.append(friendly)
 		for enemy in all_enemies:
-			if enemy is Unit and enemy.unit_status != Unit.Status.DEAD:
+			if enemy is Unit and enemy.unit_status != Unit.Status.DEAD and enemy.unit_status != Unit.Status.UNCONSCIOUS:
 				result.append(enemy)
 		return result
 

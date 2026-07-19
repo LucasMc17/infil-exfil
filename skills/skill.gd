@@ -24,7 +24,9 @@ enum SkillType {
 @export var skill_type := SkillType.GENERAL
 
 
-@export_group("Cost")
+@export_group("Conditions")
+## Whether or not this skill will be shown to the player while holding a hostage.
+@export var visible_with_hostage := false
 ## The cost of performing this skill, in terms of action points.
 @export var action_cost := 1
 ## The cost of performing this skill, in terms of movement points.
@@ -49,6 +51,8 @@ var is_armed : bool:
 
 ## Returns true if this skill is visible to the user, considering context.
 func get_visibility() -> bool:
+	if !visible_with_hostage and user.captive:
+		return false
 	return true
 
 

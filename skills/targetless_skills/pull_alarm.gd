@@ -2,6 +2,8 @@ class_name PullAlarm
 extends Skill
 
 func get_visibility() -> bool:
+	if !super():
+		return false
 	return World.level.nav_map.alarms.has(user.actual_position)
 
 

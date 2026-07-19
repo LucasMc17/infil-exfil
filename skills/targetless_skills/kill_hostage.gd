@@ -1,3 +1,4 @@
+class_name KillHostage
 extends Skill
 
 func get_visibility() -> bool:
@@ -5,5 +6,5 @@ func get_visibility() -> bool:
 
 
 func use() -> void:
-	user.release_captive(true)
+	user.release_captive(true, true)
 	super()

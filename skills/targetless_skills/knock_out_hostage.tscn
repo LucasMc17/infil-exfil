@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://pqidaqkdmijd"]
+
+[ext_resource type="Script" uid="uid://cohl8ain2kxtv" path="res://skills/targetless_skills/knock_out_hostage.gd" id="1_km1he"]
+
+[node name="KnockOutHostage" type="Node3D" unique_id=509140707]
+script = ExtResource("1_km1he")
+skill_name = "Knock Out Hostage"
+description = "Knock out the hostage."
+visible_with_hostage = true

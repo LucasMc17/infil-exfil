@@ -194,6 +194,22 @@ func die() -> void:
 	unit_status = Status.DEAD
 
 
+## Knock out the unit and remove them from play.
+func lose_consciousness() -> void:
+	DebugConsole.log("Unit " + name + " loses consciousness.", 2)
+	_collision.disabled = true
+	_mesh_instance.position.y = 0.0
+	unit_status = Status.UNCONSCIOUS
+
+
+## Bring the unit back from unconsciousness.
+func regain_consciousness() -> void:
+	DebugConsole.log("Unit " + name + " regains consciousness.", 2)
+	_collision.disabled = false
+	_mesh_instance.position.y = 1.0
+	unit_status = Status.ALIVE
+
+
 ## Runs when the unit grabs another unit as a captive.
 func take_captive(captured : Unit) -> void:
 	captive = captured
@@ -206,12 +222,15 @@ func take_captive(captured : Unit) -> void:
 
 
 ## Runs when the unit releases their captive. Takes in a boolean representing whether or not the captive was killed before being released.
-func release_captive(was_killed := false) -> void:
+func release_captive(was_incapacitated := false, was_killed := false) -> void:
 	if captive:
 		captive.tile_position = tile_position
 		captive.captor = null
-		if was_killed:
-			captive.die()
+		if was_incapacitated:
+			if was_killed:
+				captive.die()
+			else:
+				captive.lose_consciousness()
 		else:
 			captive.unit_status = Status.ALIVE
 		captive = null
