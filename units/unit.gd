@@ -88,9 +88,7 @@ var is_active : bool:
 			return false
 
 ## The unit's [TilePosition] converted to a Vector3i so that it will reflect a specific tile on the grid.
-var actual_position : Vector3i:
-	get():
-		return tile_position as Vector3i
+var actual_position : Vector3i
 ## The full array of skills available to this unit, including their own, and those associated with their primary weapon.
 var all_skills : Array[Skill]:
 	get():
@@ -126,6 +124,7 @@ var captor : Unit
 @onready var _collision : CollisionShape3D = %CollisionShape3D
 
 func _ready():
+	actual_position = Vector3i(tile_position)
 	Events.skill_disarmed.connect(refresh_valid_moves)
 	if primary_weapon:
 		primary_weapon = primary_weapon.make_unique()
@@ -216,6 +215,7 @@ func take_captive(captured : Unit) -> void:
 	captive.captor = self
 	captive.unit_status = Status.CAPTIVE
 	captive.global_position = _hostage_marker.global_position
+	captive.actual_position = actual_position
 	captive.rotation.y = rotation.y
 	if captive is EnemyUnit:
 		captive.awareness.alarm(self, true)
@@ -276,8 +276,10 @@ func follow_path(delta : float, path : Array, mps := 1.0) -> void:
 		rotation.y = angle
 	tile_position = tile_position.move_toward(path[0], mps * delta)
 	if tile_position == path[0]:
+		actual_position = path[0]
 		path.pop_front()
 		check_for_detection()
 	if captive:
 		captive.global_position = _hostage_marker.global_position
+		captive.actual_position = actual_position
 		captive.rotation.y = angle
