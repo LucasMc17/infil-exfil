@@ -2,6 +2,9 @@
 @abstract class_name TargetedSkill
 extends Skill
 
+## The type of this skill, determining what targets it can be used on.
+@export var skill_type := SkillType.GENERAL
+
 ## An array of potential targets which are currently valid for this skill.
 var potential_targets : Array[Unit] = []
 ## The currently selected target.
@@ -46,3 +49,26 @@ func clear_target() -> void:
 	target = null
 	World.level.level_camera.fix_to_actor(World.level.active_unit)
 	World.level.target_retical.visible = false
+
+
+## Filter targets based on this skill being intended only for enemies unaware of the active player unit.
+func _filter_stealth(target_unit : Unit) -> bool:
+	if target_unit is EnemyUnit:
+		return !target_unit.awareness.targeted_friendlies.has(user)
+	return true
+
+
+## Filter targets based on this skill being intended only for enemies aware of the active player unit.
+func _filter_combat(target_unit : Unit) -> bool:
+	if target_unit is EnemyUnit:
+		return target_unit.awareness.targeted_friendlies.has(user)
+	return true
+
+
+## Filter the available targets based on the type of the skill. Should be used at the end of the [get_all_targets] method.
+func _filter_targets(targets : Array[Unit]) -> Array[Unit]:
+	if skill_type == SkillType.COMBAT:
+		return targets.filter(_filter_combat)
+	if skill_type == SkillType.STEALTH:
+		return targets.filter(_filter_stealth)
+	return targets

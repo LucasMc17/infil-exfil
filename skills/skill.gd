@@ -20,8 +20,6 @@ enum SkillType {
 @export var skill_name := "Skill Name"
 ## A description of this skill for the player's benefit.
 @export_multiline var description := "Skill description"
-## The type of this skill.
-@export var skill_type := SkillType.GENERAL
 
 
 @export_group("Conditions")

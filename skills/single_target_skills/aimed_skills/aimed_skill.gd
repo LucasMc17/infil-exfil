@@ -27,7 +27,7 @@ func get_all_targets() -> void:
 		(overlapper is EnemyUnit if is_friendly else overlapper is FriendlyUnit):
 			if user.seen_zone.get_line_of_sight(overlapper.seen_zone.global_position, overlapper):
 				result.append(overlapper)
-	potential_targets = result
+	potential_targets = _filter_targets(result)
 
 
 ## Initializes the circle which indicates the skill radius to the player.

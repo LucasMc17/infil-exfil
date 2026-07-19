@@ -18,9 +18,10 @@ enum AwarenessLevel {
 ## The enemy's current awareness level.
 var awareness_level := AwarenessLevel.UNAWARE:
 	set(val):
-		awareness_changed.emit(awareness_level, val)
+		var old_val = awareness_level
 		awareness_level = val
 		unit.debug_label.change_param('awareness_level', AwarenessLevel.find_key(val))
+		awareness_changed.emit(old_val, val)
 ## The unit to whom this awareness module belongs.
 var unit : EnemyUnit
 ## The [FriendlyUnit]s which the Enemy is aware of specifically. This should always be an empty array unless the Unit is in the [ALARMED] [AwarenessLevel].

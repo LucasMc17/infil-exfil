@@ -9,4 +9,4 @@ func get_all_targets() -> void:
 		var occupier = World.level.nav_map.get_point_occupier(point)
 		if occupier is Unit and (occupier is EnemyUnit if is_friendly else occupier is FriendlyUnit):
 			result.append(occupier)
-	potential_targets = result
+	potential_targets = _filter_targets(result)
