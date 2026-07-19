@@ -218,7 +218,7 @@ func take_captive(captured : Unit) -> void:
 	captive.global_position = _hostage_marker.global_position
 	captive.rotation.y = rotation.y
 	if captive is EnemyUnit:
-		captive.awareness.alarm(self)
+		captive.awareness.alarm(self, true)
 
 
 ## Runs when the unit releases their captive. Takes in a boolean representing whether or not the captive was killed before being released.

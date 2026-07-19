@@ -41,7 +41,7 @@ func check_for_detection() -> void:
 
 func _on_seeing_zone_friendly_seen(friendlies: Array[FriendlyUnit]) -> void:
 	DebugConsole.log("Enemy Sees Friendly/Friendlies", 2)
-	awareness.alarm(friendlies)
+	awareness.alarm(friendlies, true)
 
 
 func _on_awareness_changed(_old_awareness, _new_awareness):
@@ -50,7 +50,13 @@ func _on_awareness_changed(_old_awareness, _new_awareness):
 
 
 func _on_alarm_raised(_alarm, _raiser) -> void:
-	awareness.alarm([])
+	awareness.alarm([], false)
+
+
+func activate():
+	super()
+	awareness.resolve_grace_period()
+	update_indicator()
 
 
 func lose_consciousness() -> void:
@@ -77,6 +83,9 @@ func update_indicator() -> void:
 	elif unit_status == Status.STUNNED:
 		_status_indicator.texture = STUN_IMAGE
 	elif awareness.is_alarmed():
-		_status_indicator.texture = FULL_ALERT_IMAGE
+		if awareness.is_in_grace_period:
+			_status_indicator.texture = HALF_ALERT_IMAGE
+		else:
+			_status_indicator.texture = FULL_ALERT_IMAGE
 	else:
 		_status_indicator.texture = null
