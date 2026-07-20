@@ -49,7 +49,7 @@ func mark_hovered_path(end_point : Vector3) -> void:
 		var last_subpath = planned_path[planned_path.size() - 1]
 		starting_point = last_subpath[last_subpath.size() - 1]
 	else:
-		starting_point = level.active_unit.actual_position
+		starting_point = level.active_unit.board_position
 	hovered_path = level.nav_map.find_path(starting_point, end_point).slice(1)
 	for cell in hovered_path:
 		var path_marker_scene = PATH_MARKER_SMALL.instantiate()
@@ -97,7 +97,7 @@ func place_waymarker(point : Vector3) -> void:
 		var last_subpath = planned_path[planned_path.size() - 1]
 		starting_point = last_subpath[last_subpath.size() - 1]
 	else:
-		starting_point = level.active_unit.actual_position
+		starting_point = level.active_unit.board_position
 	var subpath = level.nav_map.find_path(starting_point, point).slice(1)
 	mp_cost += subpath.size()
 	# set_viable_moves(point, level.active_unit.movement_points - mp_cost)
@@ -129,13 +129,13 @@ func _draw_available_moves():
 	for move in viable_moves:
 		seen[move] = true
 		var highlight_scene = HIGHLIGHT.instantiate()
-		highlight_scene.position = NavigableGridMap.convert_grid_to_global_position(move, true)
+		highlight_scene.position = NavigableGridMap.convert_grid_to_global_position(move)
 		_viable_move_holder.add_child(highlight_scene)
 	if !planned_path.is_empty():
 		for move in all_unit_moves:
 			if !seen.has(move):
 				var highlight_scene = UNAVAILABLE_HIGHLIGHT.instantiate()
-				highlight_scene.position = NavigableGridMap.convert_grid_to_global_position(move, true)
+				highlight_scene.position = NavigableGridMap.convert_grid_to_global_position(move)
 				_all_move_holder.add_child(highlight_scene)
 
 # LIFE CYCLE
@@ -143,7 +143,7 @@ func _draw_available_moves():
 ## Called when the movement options are initialized, usually when a unit activates or becomes able to move again.
 func activate(unit : Unit) -> void:
 	active_unit = unit
-	all_unit_moves = level.nav_map.get_all_valid_moves(unit.actual_position, unit.movement_points)
+	all_unit_moves = level.nav_map.get_all_valid_moves(unit.board_position, unit.movement_points)
 	viable_moves = all_unit_moves
 	planned_path = []
 	hovered_path = []

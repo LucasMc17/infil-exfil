@@ -31,7 +31,7 @@ func use() -> void:
 func retarget(new_target : Unit) -> void:
 	super(new_target)
 	if new_target:
-		var distance = user.global_position.distance_to(new_target.global_position)
+		var distance = user.position.distance_to(new_target.position)
 		var chance_range = max_chance - min_chance
 		var percent_per_meter = chance_range / (effective_range - 1) 
 		chance = min_chance + ((effective_range - distance) * percent_per_meter) 

@@ -40,18 +40,6 @@ signal forfeited_turn(unit : Unit)
 ## The unit's skills, associated with this particular unit as opposed to the weapons they are equipped with.
 # @export var skills : Array[Skill] = []
 
-@export_group('Position')
-## The unit's current position in tile coordinates on the navgrid.
-@export var tile_position := Vector3.ZERO:
-	set(val):
-		tile_position = val
-		if is_node_ready():
-			global_position = NavigableGridMap.convert_grid_to_global_position(tile_position, true)
-		if debug_label:
-			debug_label.change_param('x', str(round(tile_position.x)))
-			debug_label.change_param('y', str(round(tile_position.y)))
-			debug_label.change_param('z', str(round(tile_position.z)))
-
 @export_group('Points')
 ## The maximum movement points for this unit, to which they are restored at the beginning of each new turn.
 @export var max_movement_points := 5
@@ -87,8 +75,8 @@ var is_active : bool:
 		else:
 			return false
 
-## The unit's [TilePosition] converted to a Vector3i so that it will reflect a specific tile on the grid.
-var actual_position : Vector3i
+## The unit's position in terms of the NavigableGridMap's coordinate system.
+var board_position : Vector3i
 ## The full array of skills available to this unit, including their own, and those associated with their primary weapon.
 var all_skills : Array[Skill]:
 	get():
@@ -124,7 +112,7 @@ var captor : Unit
 @onready var _collision : CollisionShape3D = %CollisionShape3D
 
 func _ready():
-	actual_position = Vector3i(tile_position)
+	board_position = NavigableGridMap.convert_global_to_grid_position(Vector3i(position))
 	Events.skill_disarmed.connect(refresh_valid_moves)
 	if primary_weapon:
 		primary_weapon = primary_weapon.make_unique()
@@ -134,9 +122,9 @@ func _ready():
 	# for skill in temp:
 	# 	skills.append(skill.make_unique())
 
-	debug_label.change_param('x', str(round(tile_position.x)))
-	debug_label.change_param('y', str(round(tile_position.y)))
-	debug_label.change_param('z', str(round(tile_position.z)))
+	debug_label.change_param('x', str(round(position.x)))
+	debug_label.change_param('y', str(round(position.y)))
+	debug_label.change_param('z', str(round(position.z)))
 	# _set_up_skills()
 
 	flag.refresh(self)
@@ -214,8 +202,8 @@ func take_captive(captured : Unit) -> void:
 	captive = captured
 	captive.captor = self
 	captive.unit_status = Status.CAPTIVE
-	captive.global_position = _hostage_marker.global_position
-	captive.actual_position = actual_position
+	captive.position = _hostage_marker.global_position
+	captive.board_position = board_position
 	captive.rotation.y = rotation.y
 	if captive is EnemyUnit:
 		captive.awareness.alarm(self, true)
@@ -224,7 +212,7 @@ func take_captive(captured : Unit) -> void:
 ## Runs when the unit releases their captive. Takes in a boolean representing whether or not the captive was killed before being released.
 func release_captive(was_incapacitated := false, was_killed := false) -> void:
 	if captive:
-		captive.tile_position = tile_position
+		captive.position = position
 		captive.captor = null
 		if was_incapacitated:
 			if was_killed:
@@ -270,16 +258,18 @@ func follow_path(delta : float, path : Array, mps := 1.0) -> void:
 	if path.is_empty():
 		movement_machine.current_state.transition('NoMovement')
 		return
-	var direction = (path[0] - tile_position).normalized()
+	var next_board_pos = path[0]
+	var next_global_pos = NavigableGridMap.convert_grid_to_global_position(next_board_pos)
+	var direction = (next_global_pos - position).normalized()
 	var angle = atan2(-direction.x, -direction.z)
 	if rotation.y != angle:
 		rotation.y = angle
-	tile_position = tile_position.move_toward(path[0], mps * delta)
-	if tile_position == path[0]:
-		actual_position = path[0]
+	position = position.move_toward(next_global_pos, mps * delta)
+	if position == next_global_pos:
+		board_position = next_board_pos
 		path.pop_front()
 		check_for_detection()
 	if captive:
-		captive.global_position = _hostage_marker.global_position
-		captive.actual_position = actual_position
+		captive.position = _hostage_marker.global_position
+		captive.board_position = board_position
 		captive.rotation.y = angle

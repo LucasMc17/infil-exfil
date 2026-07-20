@@ -19,7 +19,7 @@ func enter(previous_state : State, ext : Dictionary):
 	unit.debug_label.change_param('movement_state', name)
 	unit.started_moving.emit(unit)
 	if ext.has('end_point'):
-		path = World.level.nav_map.find_path(unit.actual_position, end_point).slice(1, unit.movement_points + 1)
+		path = World.level.nav_map.find_path(unit.board_position, end_point).slice(1, unit.movement_points + 1)
 		unit.movement_points = 0
 	elif ext.has('path'):
 		unit.movement_points -= path.size()

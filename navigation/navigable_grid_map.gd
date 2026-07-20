@@ -4,7 +4,7 @@ class_name NavigableGridMap
 extends GridMap
 
 ## The size of the basic cell in the gridmap, as a Vector3.
-static var CELL_SIZE := Vector3(1.0, 4.0, 1.0)
+static var CELL_SIZE := Vector3i(1, 4, 1)
 
 ## Floor [Tile] resource.
 const FLOOR := preload("./tiles/floor.tres")
@@ -89,18 +89,14 @@ var alarms : Dictionary[Vector3i, bool] = {}
 var occupation_map : Dictionary[int, GridPoint] = {}
 
 ## Takes in a global position and converts it to it's nearest position on the grid.
-static func convert_global_to_grid_position(pos : Vector3) -> Vector3:
-	var result = pos.round()
-	return result / CELL_SIZE
+static func convert_global_to_grid_position(pos : Vector3i) -> Vector3:
+	return pos / CELL_SIZE
 
 
 ## Takes in a grid local position and converts it to it's equivalent global position.[br]
 ## If [should_center] is true, it will add 0.5 to the x and z axis so that the resulting global position is centered on the grid tile.
-static func convert_grid_to_global_position(pos : Vector3, should_center := false) -> Vector3:
-	var result = Vector3(pos) * CELL_SIZE
-	if should_center:
-		result.x += 0.5 * CELL_SIZE.x
-		result.z += 0.5 * CELL_SIZE.z
+static func convert_grid_to_global_position(pos : Vector3i) -> Vector3:
+	var result = pos * CELL_SIZE
 	return result
 
 
@@ -143,7 +139,7 @@ func _disconnect_point_from_neighbors(point : GridPoint, two_way := true, ingoin
 
 ## Utility function which takes in a list of point-blocking scenes and marks their positions as un-navigable, so that units may block each other's paths.
 func _resolve_occupied_spaces() -> void:
-	# var to_block = {}
+	var to_block = {}
 	# NOTE: When scenes other than Units are able to block spaces, this will change.
 	for occupier : Unit in World.level.all_units:
 		var occupier_id := occupier.get_instance_id()
@@ -151,13 +147,12 @@ func _resolve_occupied_spaces() -> void:
 			var old_point = occupation_map[occupier_id]
 			old_point.occupier = null
 			enable_point(old_point.position)
-		if !occupier.is_incapacitated() and point_map_by_grid_coords.has(occupier.actual_position):
-			var new_point = point_map_by_grid_coords[occupier.actual_position]
+		if !occupier.is_incapacitated() and point_map_by_grid_coords.has(occupier.board_position):
+			var new_point = point_map_by_grid_coords[occupier.board_position]
 			occupation_map[occupier_id] = new_point
 			new_point.occupier = occupier
 			if occupier != World.level.active_unit:
-				disable_point(occupier.actual_position)
-
+				disable_point(occupier.board_position)
 
 ## Disable a point arbitrarily in the nav map by its coordinates.
 func disable_point(point_position : Vector3i) -> void:
@@ -273,18 +268,18 @@ func get_closest_point(pos : Vector3i, points_to_check : Array[Vector3i]) -> Var
 
 
 ## Debug function for highlighting a square in the grid.
-func paint_grid_square(tile_position: Vector3, color : Color):
-	var temp = tile_position
+func paint_grid_square(grid_position: Vector3, color : Color):
+	var temp = grid_position
 	temp.y += 1
 	DebugDraw3D.draw_box.call_deferred(temp, Quaternion.IDENTITY, Vector3(0.9, 0.9, 0.9), color, true, INF)
 
 
 ## Utilizes recursion to find all valid moves from a valid position, assuming a certain max movement distance. The recursion makes it considerably faster than using the old, naive function for the same purpose.
-func get_all_valid_moves(tile_position: Vector3i, max_moves: int) -> Array[Vector3i]:
+func get_all_valid_moves(grid_position: Vector3i, max_moves: int) -> Array[Vector3i]:
 	var start_time = Time.get_ticks_msec()
 	_resolve_occupied_spaces()
 	var valid_moves : Dictionary[Vector3i, bool] = {}
-	_recursively_get_valid_pos([tile_position], max_moves, valid_moves, tile_position)
+	_recursively_get_valid_pos([grid_position], max_moves, valid_moves, grid_position)
 	var end_time = Time.get_ticks_msec()
 	DebugConsole.log("Execution time to find all valid moves with RECURSION: " + str(end_time - start_time) + " milliseconds", 4)
 	return valid_moves.keys()
