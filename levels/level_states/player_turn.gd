@@ -10,7 +10,7 @@ func enter(previous_state : State, ext : Dictionary):
 
 
 func input(_event : InputEvent):
-	if active:
+	if level.allow_inputs:
 		if Input.is_action_just_pressed('cycle_unit'):
 			level.cycle_active_unit()
 
@@ -30,7 +30,7 @@ func unhandled_input(event: InputEvent) -> void:
 				var real_position = mouse_target.position
 				real_position.y += 0.1
 				var coords = target_object.local_to_map(target_object.to_local(real_position))
-				if level.path_marking_system.viable_moves.has(coords):
+				if World.level.allow_inputs and level.path_marking_system.viable_moves.has(coords):
 					if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT and level.path_marking_system.path.size() >= 1:
 						level.active_unit.movement_machine.current_state.transition('Sneak', { "path": World.level.path_marking_system.path })
 						level.path_marking_system.wipe_planned_path()

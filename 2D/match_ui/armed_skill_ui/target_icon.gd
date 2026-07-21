@@ -9,7 +9,8 @@ signal target_selected(target_icon : TargetIcon)
 var target : Unit
 
 func _pressed() -> void:
-	target_selected.emit(self)
+	if World.level.allow_inputs:
+		target_selected.emit(self)
 
 
 ## Initialize the button with a target and set a number key short cut based on the index of the button. Must be called before adding to scene.

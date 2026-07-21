@@ -22,10 +22,12 @@ func _on_planned_path_cleared() -> void:
 
 func _on_confirm_button_pressed() -> void:
 	# TODO: There's a case to be made that a lot more of the movement system should operate on global signals.
-	World.level.active_unit.movement_machine.current_state.transition('Sneak', { "path": World.level.path_marking_system.path })
-	World.level.path_marking_system.wipe_planned_path()
+	if World.level.allow_inputs:
+		World.level.active_unit.movement_machine.current_state.transition('Sneak', { "path": World.level.path_marking_system.path })
+		World.level.path_marking_system.wipe_planned_path()
 
 
 func _on_cancel_button_pressed() -> void:
-	World.level.path_marking_system.wipe_planned_path()
-	World.level.path_marking_system.activate(World.level.active_unit)
+	if World.level.allow_inputs:
+		World.level.path_marking_system.wipe_planned_path()
+		World.level.path_marking_system.activate(World.level.active_unit)

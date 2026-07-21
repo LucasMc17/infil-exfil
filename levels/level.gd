@@ -80,6 +80,9 @@ var live_units : Array[Unit]:
 				result.append(enemy)
 		return result
 
+## Whether or not to completely block the player's game play inputs, such as when a unit is moving.
+var allow_inputs := true
+
 @onready var _friendlies_node := %Friendlies
 @onready var _enemies_node := %Enemies
 @onready var path_marking_system : MovementSystem = %MovementSystem
