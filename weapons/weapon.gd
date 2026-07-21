@@ -14,7 +14,7 @@ extends Resource
 
 @export_group("Weapon Skills")
 ## The skills which this weapon allows to be performed when equipped.
-@export var skills : Array[Skill]
+# @export var skills : Array[Skill]
 
 ## The unit who has this weapon equipped.
 var wielder : Unit
@@ -27,8 +27,6 @@ func initialize(unit : Unit) -> void:
 ## Returns a unique instance of this weapon, including its sub resources.
 func make_unique() -> Weapon:
 	var result = self.duplicate(true)
-	var temp = skills.duplicate()
-	skills = []
-	for skill in temp:
-		skills.append(skill.make_unique())
+	# var temp = skills.duplicate()
+	# skills = []
 	return result

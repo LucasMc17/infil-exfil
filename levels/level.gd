@@ -2,8 +2,6 @@
 class_name BaseLevel
 extends Node3D
 
-## Logic module for handling the usage of skills.
-var skill_handler := SkillHandlerModule.new()
 ## Logic module for handling the enemy's awareness of the player's units.
 var enemy_awareness := EnemyTeamAwarenessModule.new()
 
@@ -15,9 +13,11 @@ var active_unit : Unit:
 	set(val):
 		active_unit = val
 		level_camera.fix_to_actor(val)
+## The currently armed skill.
+var armed_skill : Skill
 
 ## All [FriendlyUnit]s in the level.
-var friendlies : Array[FriendlyUnit]:
+var all_friendlies : Array[FriendlyUnit]:
 	get():
 		var result : Array[FriendlyUnit] = []
 		var true_friendlies = _friendlies_node.get_children()
@@ -26,8 +26,18 @@ var friendlies : Array[FriendlyUnit]:
 				result.append(friendly)
 		return result
 
+## All still alive (not dead or unconscious) [FriendlyUnit]s in the level.
+var live_friendlies : Array[FriendlyUnit]:
+	get():
+		var result : Array[FriendlyUnit] = []
+		var true_friendlies = _friendlies_node.get_children()
+		for friendly in true_friendlies:
+			if friendly is FriendlyUnit and friendly.unit_status != Unit.Status.DEAD and friendly.unit_status != Unit.Status.UNCONSCIOUS:
+				result.append(friendly)
+		return result
+
 ## All [EnemyUnit]s in the level.
-var enemies : Array[EnemyUnit]:
+var all_enemies : Array[EnemyUnit]:
 	get():
 		var result : Array[EnemyUnit] = []
 		var true_enemies = _enemies_node.get_children()
@@ -36,16 +46,37 @@ var enemies : Array[EnemyUnit]:
 				result.append(enemy)
 		return result
 
+## All still alive (not dead or unconscious) [EnemyUnit]s in the level.
+var live_enemies : Array[EnemyUnit]:
+	get():
+		var result : Array[EnemyUnit] = []
+		var true_enemies = _enemies_node.get_children()
+		for enemy in true_enemies:
+			if enemy is EnemyUnit and enemy.unit_status != Unit.Status.DEAD and enemy.unit_status != Unit.Status.UNCONSCIOUS:
+				result.append(enemy)
+		return result
 
 ## All [Unit]s in the level, including both friendlies and enemies.
-var units : Array[Unit]:
+var all_units : Array[Unit]:
 	get():
 		var result : Array[Unit] = []
-		for friendly in friendlies:
+		for friendly in all_friendlies:
 			if friendly is Unit:
 				result.append(friendly)
-		for enemy in enemies:
+		for enemy in all_enemies:
 			if enemy is Unit:
+				result.append(enemy)
+		return result
+
+## All still alive (not dead or unconscious) [Unit]s in the level, including both friendlies and enemies.
+var live_units : Array[Unit]:
+	get():
+		var result : Array[Unit] = []
+		for friendly in all_friendlies:
+			if friendly is Unit and friendly.unit_status != Unit.Status.DEAD and friendly.unit_status != Unit.Status.UNCONSCIOUS:
+				result.append(friendly)
+		for enemy in all_enemies:
+			if enemy is Unit and enemy.unit_status != Unit.Status.DEAD and enemy.unit_status != Unit.Status.UNCONSCIOUS:
 				result.append(enemy)
 		return result
 
@@ -60,6 +91,8 @@ var units : Array[Unit]:
 @onready var target_retical : Sprite3D = %TargetRetical
 
 func _ready() -> void:
+	Events.skill_armed.connect(_on_skill_armed)
+	Events.skill_disarmed.connect(_on_skill_disarmed)
 	nav_map.setup_astar_grid()
 	World.level = self
 	ConsoleEvents.command_submitted.connect(func (command_name, _parameters):
@@ -90,10 +123,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		level_camera.zoom_camera(false)
 	
 	elif Input.is_action_just_pressed('escape'):
-		if World.targeting.armed_skill:
-			Events.skill_disarmed.emit()
-		else:
-			DebugConsole.log("Pausing")
+		DebugConsole.log("Pausing")
 	
 	elif Input.is_action_just_pressed('force_exit'):
 		get_tree().quit()
@@ -101,20 +131,21 @@ func _unhandled_input(event: InputEvent) -> void:
 
 ## Update the active unit to a given actor.
 func set_active_unit(unit : Unit):
-	if active_unit:
-		active_unit.deactivate()
-	active_unit = unit
-	if active_unit:
-		active_unit.activate()
+	if unit.unit_status != Unit.Status.DEAD:
+		if active_unit:
+			active_unit.deactivate()
+		active_unit = unit
+		if active_unit:
+			active_unit.activate()
 
 
 ## Cycle the active unit to the next in the list.
 func cycle_active_unit():
 	var faction : Array
 	if is_player_turn:
-		faction = friendlies
+		faction = live_friendlies
 	else:
-		faction = enemies
+		faction = live_enemies
 	if active_unit:
 		var index = faction.find(active_unit) + 1
 		if index < faction.size():
@@ -123,3 +154,19 @@ func cycle_active_unit():
 			set_active_unit(faction[0])
 	else:
 		set_active_unit(faction[0])
+
+
+func _on_skill_armed(skill : Skill) -> void:
+	if armed_skill:
+		armed_skill.disarm()
+		match_ui.disarm_skill_ui()
+	armed_skill = skill
+	armed_skill.arm()
+	match_ui.arm_skill_ui(armed_skill)
+
+
+func _on_skill_disarmed() -> void:
+	if armed_skill:
+		armed_skill.disarm()
+		match_ui.disarm_skill_ui()
+	armed_skill = null

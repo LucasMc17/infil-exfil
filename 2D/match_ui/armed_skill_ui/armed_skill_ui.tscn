@@ -3,6 +3,20 @@
 [ext_resource type="Script" uid="uid://klrus35hygey" path="res://2D/match_ui/armed_skill_ui/armed_skill_ui.gd" id="1_g0rmj"]
 [ext_resource type="PackedScene" uid="uid://im51q8i00gny" path="res://2D/match_ui/armed_skill_ui/targets_section.tscn" id="2_vgs5q"]
 
+[sub_resource type="InputEventKey" id="InputEventKey_vgs5q"]
+device = -1
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_wqcmw"]
+events = [SubResource("InputEventKey_vgs5q")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_caxo1"]
+device = -1
+keycode = 4194309
+
+[sub_resource type="Shortcut" id="Shortcut_caxo1"]
+events = [SubResource("InputEventKey_caxo1")]
+
 [node name="ArmedSkillUI" type="VBoxContainer" unique_id=1804961802]
 anchors_preset = -1
 anchor_left = 0.3
@@ -45,11 +59,13 @@ alignment = 1
 
 [node name="CancelButton" type="Button" parent="HBoxContainer" unique_id=1501893847]
 layout_mode = 2
+shortcut = SubResource("Shortcut_wqcmw")
 text = "Cancel"
 
 [node name="ConfirmButton" type="Button" parent="HBoxContainer" unique_id=1303727834]
 unique_name_in_owner = true
 layout_mode = 2
+shortcut = SubResource("Shortcut_caxo1")
 text = "Confirm"
 
 [connection signal="pressed" from="HBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]

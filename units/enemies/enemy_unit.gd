@@ -3,6 +3,12 @@
 class_name EnemyUnit
 extends Unit
 
+const STUN_IMAGE := preload('res://assets/images/stun.png')
+const SLEEP_IMAGE := preload('res://assets/images/sleep.png')
+const INVESTIGATING_IMAGE := preload('res://assets/images/investigating.png')
+const HALF_ALERT_IMAGE := preload('res://assets/images/half_alert.png')
+const FULL_ALERT_IMAGE := preload('res://assets/images/full_alert.png')
+
 ## Starting queue of directives to perform when unaware. Passed directly to the [DecisionDirectorModule].
 @export var unaware_base_directives : Array[Directive] = []
 ## Starting queue of directives to perform when alerted. Passed directly to the [DecisionDirectorModule].
@@ -17,6 +23,7 @@ var awareness := EnemyUnitAwarenessModule.new(self)
 var decision_director : DecisionDirectorModule
 
 @onready var seeing_zone : SeeingZone = %SeeingZone
+@onready var _status_indicator : Sprite3D = %StatusIndicator
 
 func _ready():
 	super()
@@ -34,12 +41,51 @@ func check_for_detection() -> void:
 
 func _on_seeing_zone_friendly_seen(friendlies: Array[FriendlyUnit]) -> void:
 	DebugConsole.log("Enemy Sees Friendly/Friendlies", 2)
-	awareness.alarm(friendlies)
+	awareness.alarm(friendlies, true)
 
 
 func _on_awareness_changed(_old_awareness, _new_awareness):
 	decision_director.clear_directive()
+	update_indicator()
 
 
 func _on_alarm_raised(_alarm, _raiser) -> void:
-	awareness.alarm([])
+	awareness.alarm([], false)
+
+
+func activate():
+	super()
+	awareness.resolve_grace_period()
+	update_indicator()
+
+
+func lose_consciousness() -> void:
+	super()
+	update_indicator()
+
+
+func die() -> void:
+	super()
+	update_indicator()
+
+
+func regain_consciousness() -> void:
+	super()
+	update_indicator()
+
+
+## Update the enemy's icon status indicator.
+func update_indicator() -> void:
+	if unit_status == Status.DEAD:
+		_status_indicator.texture = null
+	elif unit_status == Status.UNCONSCIOUS:
+		_status_indicator.texture = SLEEP_IMAGE
+	elif unit_status == Status.STUNNED:
+		_status_indicator.texture = STUN_IMAGE
+	elif awareness.is_alarmed():
+		if awareness.is_in_grace_period:
+			_status_indicator.texture = HALF_ALERT_IMAGE
+		else:
+			_status_indicator.texture = FULL_ALERT_IMAGE
+	else:
+		_status_indicator.texture = null

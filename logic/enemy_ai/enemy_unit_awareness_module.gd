@@ -18,9 +18,10 @@ enum AwarenessLevel {
 ## The enemy's current awareness level.
 var awareness_level := AwarenessLevel.UNAWARE:
 	set(val):
-		awareness_changed.emit(awareness_level, val)
+		var old_val = awareness_level
 		awareness_level = val
 		unit.debug_label.change_param('awareness_level', AwarenessLevel.find_key(val))
+		awareness_changed.emit(old_val, val)
 ## The unit to whom this awareness module belongs.
 var unit : EnemyUnit
 ## The [FriendlyUnit]s which the Enemy is aware of specifically. This should always be an empty array unless the Unit is in the [ALARMED] [AwarenessLevel].
@@ -29,6 +30,8 @@ var targeted_friendlies : Array[FriendlyUnit] = []
 var targeted_friendly_count : int:
 	get():
 		return targeted_friendlies.size()
+## Whether the unit is in the detection grace period. This occurs when the unit sees a friendly unit during the player turn. While in the grace period, stealth skills are still usable on this unit. The grace period ends as soon as the enemy unit begins its next turn.
+var is_in_grace_period := false
 
 func _init(u : EnemyUnit) -> void:
 	unit = u
@@ -36,14 +39,19 @@ func _init(u : EnemyUnit) -> void:
 
 ## Update the unit's awareness level to [ALERTED]
 func alert():
+	is_in_grace_period = false
 	awareness_level = AwarenessLevel.ALERTED
 	targeted_friendlies = []
 	unit.debug_label.change_param('targets', '[]')
 
 
 ## Update the unit's awareness level to [ALARMED], instantly stopping the unit if they are moving, and adding all sighted friendlies to their list of targets.
-func alarm(spotted_friendlies : Array[FriendlyUnit] = []):
+func alarm(spotted_friendlies : Variant = [], skip_grace_period := false):
+	if spotted_friendlies is FriendlyUnit:
+		spotted_friendlies = [spotted_friendlies]
 	if !is_alarmed():
+		if !skip_grace_period:
+			is_in_grace_period = true
 		awareness_level = AwarenessLevel.ALARMED
 		unit.movement_machine.current_state.transition('NoMovement')
 		unit.forfeit_turn()
@@ -55,9 +63,15 @@ func alarm(spotted_friendlies : Array[FriendlyUnit] = []):
 
 ## Update the unit's awareness level to [UNAWARE], clearing their list of targets.
 func drop_guard():
+	is_in_grace_period = false
 	awareness_level = AwarenessLevel.UNAWARE
 	targeted_friendlies = []
 	unit.debug_label.change_param('targets', '[]')
+
+
+## Reset the grace period bool to false.
+func resolve_grace_period():
+	is_in_grace_period = false
 
 
 ## Checks whether the unit is alarmed.

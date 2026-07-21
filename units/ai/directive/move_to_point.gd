@@ -11,7 +11,7 @@ func begin(unit : EnemyUnit) -> void:
 
 
 func check_if_finished() -> bool:
-	return acting_unit.tile_position == _end_point
+	return acting_unit.position == _end_point
 
 
 func _on_finished_moving(unit : Unit):

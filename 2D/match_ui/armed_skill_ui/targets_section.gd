@@ -11,7 +11,7 @@ var selected_target_icon : TargetIcon = null
 @onready var _targets : HBoxContainer = %Targets
 
 ## Creates the [TargetIcon] scenes in the scene tree and connects their output signals.
-func build(skill : SingleTargetSkill) -> void:
+func build(skill : TargetedSkill) -> void:
 	Events.target_cleared.emit()
 	selected_target_icon = null
 	var index := 1
@@ -36,7 +36,7 @@ func _on_target_icon_clicked(target_icon : TargetIcon):
 		selected_target_icon.button_pressed = false
 	if selected_target_icon == target_icon:
 		selected_target_icon = null
-		Events.target_cleared.emit()
+		Events.target_selected.emit(null)
 	else:
 		selected_target_icon = target_icon
-		Events.target_selected.emit(World.level.active_unit, target_icon.target)
+		Events.target_selected.emit(target_icon.target)

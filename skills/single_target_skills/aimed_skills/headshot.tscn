@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bk3sio8wshyga"]
+
+[ext_resource type="PackedScene" uid="uid://dulcusx643qk8" path="res://skills/aimed_skill.tscn" id="1_yj7rw"]
+[ext_resource type="Script" uid="uid://gkl7jbp5tbe6" path="res://skills/single_target_skills/aimed_skills/headshot.gd" id="2_tp3ka"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tp3ka"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_kyx41"]
+top_radius = -0.05
+bottom_radius = 0.0
+height = 0.001
+cap_top = false
+cap_bottom = false
+
+[node name="Headshot" unique_id=1362204123 instance=ExtResource("1_yj7rw")]
+script = ExtResource("2_tp3ka")
+min_chance = 0.1
+max_chance = 0.85
+effective_range = 10.0
+skill_name = "Headshot"
+skill_type = 1
+ammo_cost = 1
+
+[node name="CollisionShape3D" parent="Area3D" parent_id_path=PackedInt32Array(1854330789) index="0" unique_id=1223890083]
+shape = SubResource("SphereShape3D_tp3ka")
+
+[node name="MeshInstance3D" parent="Area3D" parent_id_path=PackedInt32Array(1854330789) index="1" unique_id=640202467]
+mesh = SubResource("CylinderMesh_kyx41")

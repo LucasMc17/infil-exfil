@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://pjntjfibxgpo"]
+
+[ext_resource type="Script" uid="uid://bceli2v8ahqd4" path="res://skills/single_target_skills/proximal_skills/take_hostage.gd" id="1_wv7ac"]
+
+[node name="TakeHostage" type="Node3D" unique_id=1162393534]
+script = ExtResource("1_wv7ac")
+skill_name = "Take Hostage"
+description = "Grab and take hostage an adjacent enemy unit."
+skill_type = 1
+metadata/_custom_type_script = "uid://c4sr4g0fkoxwr"

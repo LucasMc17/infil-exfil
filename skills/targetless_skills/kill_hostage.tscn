@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://ccfg0ds2matqq"]
+
+[ext_resource type="Script" uid="uid://bjb3dfpcg17em" path="res://skills/targetless_skills/kill_hostage.gd" id="1_5vu5l"]
+
+[node name="KillHostage" type="Node3D" unique_id=945442073]
+script = ExtResource("1_5vu5l")
+skill_name = "Kill Hostage"
+description = "Execute the hostage with a single shot."
+visible_with_hostage = true
+ammo_cost = 1
+metadata/_custom_type_script = "uid://c4sr4g0fkoxwr"

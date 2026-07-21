@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bvcn4atewj3ts"]
+
+[ext_resource type="PackedScene" uid="uid://dulcusx643qk8" path="res://skills/aimed_skill.tscn" id="1_ruh51"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ruh51"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_dusew"]
+top_radius = -0.05
+bottom_radius = 0.0
+height = 0.001
+cap_top = false
+cap_bottom = false
+
+[node name="MozambiqueDrill" unique_id=1362204123 instance=ExtResource("1_ruh51")]
+effective_range = 8.0
+skill_name = "Mozambique Drill"
+skill_type = 1
+ammo_cost = 3
+
+[node name="CollisionShape3D" parent="Area3D" parent_id_path=PackedInt32Array(1854330789) index="0" unique_id=1223890083]
+shape = SubResource("SphereShape3D_ruh51")
+
+[node name="MeshInstance3D" parent="Area3D" parent_id_path=PackedInt32Array(1854330789) index="1" unique_id=640202467]
+mesh = SubResource("CylinderMesh_dusew")

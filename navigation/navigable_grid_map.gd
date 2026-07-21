@@ -4,7 +4,7 @@ class_name NavigableGridMap
 extends GridMap
 
 ## The size of the basic cell in the gridmap, as a Vector3.
-static var CELL_SIZE := Vector3(1.0, 4.0, 1.0)
+static var CELL_SIZE := Vector3i(1, 4, 1)
 
 ## Floor [Tile] resource.
 const FLOOR := preload("./tiles/floor.tres")
@@ -43,6 +43,8 @@ class GridPoint:
 	var mesh_name : String:
 		get():
 			return TILE_PALETTE[mesh_id].name
+	## The movable object occupying this point (and blocking it for use in pathing).
+	var occupier : Node3D = null
 
 	func _init(p_position: Vector3i, p_mesh_id : int, p_a_star_point : int, p_basis : Basis, p_tile : Tile):
 		mesh_id = p_mesh_id
@@ -83,22 +85,18 @@ var point_map_by_astar_ids: Dictionary[int, GridPoint] = {}
 var points : PackedVector3Array
 ## A dictionary of alarms in the level.
 var alarms : Dictionary[Vector3i, bool] = {}
-## A dictionary representing spaces temporarily blocked by Units standing on them.
-var blocked_spaces : Dictionary[Vector3i, GridPoint] = {}
+## A dictionary tracking the positions of all tile blocking scenes in the level.
+var occupation_map : Dictionary[int, GridPoint] = {}
 
 ## Takes in a global position and converts it to it's nearest position on the grid.
-static func convert_global_to_grid_position(pos : Vector3) -> Vector3:
-	var result = pos.round()
-	return result / CELL_SIZE
+static func convert_global_to_grid_position(pos : Vector3i) -> Vector3:
+	return pos / CELL_SIZE
 
 
 ## Takes in a grid local position and converts it to it's equivalent global position.[br]
 ## If [should_center] is true, it will add 0.5 to the x and z axis so that the resulting global position is centered on the grid tile.
-static func convert_grid_to_global_position(pos : Vector3, should_center := false) -> Vector3:
-	var result = Vector3(pos) * CELL_SIZE
-	if should_center:
-		result.x += 0.5 * CELL_SIZE.x
-		result.z += 0.5 * CELL_SIZE.z
+static func convert_grid_to_global_position(pos : Vector3i) -> Vector3:
+	var result = pos * CELL_SIZE
 	return result
 
 
@@ -139,41 +137,50 @@ func _disconnect_point_from_neighbors(point : GridPoint, two_way := true, ingoin
 			astar.disconnect_points(point.a_star_point, connection, two_way)
 
 
-# NOTE: I'm still not completely in love with this solution but it works. I tried disabling one way connections to specific cells but it seemed to work really inconsistently.
-## Utility function which takes in a list of units and marks their positions as un-navigable, so that units may block each other's paths.
-func _update_block_spaces(units : Array[Unit], active_unit : Unit) -> void:
+## Utility function which takes in a list of point-blocking scenes and marks their positions as un-navigable, so that units may block each other's paths.
+func _resolve_occupied_spaces() -> void:
 	var to_block = {}
-	for unit : Unit in units:
-		if unit != active_unit:
-			to_block[unit.actual_position] = true
-	for pos : Vector3i in blocked_spaces.keys():
-		if !to_block.has(pos):
-			var point = point_map_by_grid_coords[pos]
-			astar.set_point_disabled(point.a_star_point, false)
-			blocked_spaces.erase(pos)
-	for pos : Vector3i in to_block.keys():
-		if !blocked_spaces.has(pos):
-			var point = point_map_by_grid_coords[pos]
-			astar.set_point_disabled(point.a_star_point, true)
-			blocked_spaces[pos] = point
+	# NOTE: When scenes other than Units are able to block spaces, this will change.
+	for occupier : Unit in World.level.all_units:
+		var occupier_id := occupier.get_instance_id()
+		if occupation_map.has(occupier_id):
+			var old_point = occupation_map[occupier_id]
+			old_point.occupier = null
+			enable_point(old_point.position)
+		if !occupier.is_incapacitated() and point_map_by_grid_coords.has(occupier.board_position):
+			var new_point = point_map_by_grid_coords[occupier.board_position]
+			occupation_map[occupier_id] = new_point
+			new_point.occupier = occupier
+			if occupier != World.level.active_unit:
+				disable_point(occupier.board_position)
+
+## Disable a point arbitrarily in the nav map by its coordinates.
+func disable_point(point_position : Vector3i) -> void:
+	var point = point_map_by_grid_coords[point_position].a_star_point
+	astar.set_point_disabled(point)
 
 
+## Enable a point arbitrarily in the nav map by its coordinates.
+func enable_point(point_position : Vector3i) -> void:
+	var point = point_map_by_grid_coords[point_position].a_star_point
+	astar.set_point_disabled(point, false)
+
+
+# TODO: Update this to block ladders (and some other connections) when holding a hostage. May take an update to the GridPoint data type.
 ## Utility function handling the recursion necessary to find all valid moves.
-func _recursively_get_valid_pos(last_point_ring: Array[Vector3i], moves_left: int, potential_moves : Dictionary[Vector3i, bool], base_level : bool, starting_point : Vector3i) -> void:
-	if base_level:
-		_update_block_spaces(World.level.units, World.level.active_unit)
-	
+func _recursively_get_valid_pos(last_point_ring: Array[Vector3i], moves_left: int, potential_moves : Dictionary[Vector3i, bool], starting_point : Vector3i) -> void:
 	var next_point_ring : Dictionary[Vector3i, bool] = {}
 	for point : Vector3i in last_point_ring:
-		if point != starting_point and !blocked_spaces.has(point):
+		if point != starting_point:
 			potential_moves[point] = true
 		var grid_point = point_map_by_grid_coords[point]
 		for connection : Vector3i in grid_point.real_connections:
-			if connection != starting_point and !potential_moves.has(connection) and !blocked_spaces.has(point):
+			if connection != starting_point and !potential_moves.has(connection) and !point_map_by_grid_coords[connection].occupier:
+			# if connection != starting_point and !potential_moves.has(connection):
 				next_point_ring[connection] = true
 	
 	if moves_left > 0 and next_point_ring.size() > 0:
-		_recursively_get_valid_pos(next_point_ring.keys(), moves_left - 1, potential_moves, false, starting_point)
+		_recursively_get_valid_pos(next_point_ring.keys(), moves_left - 1, potential_moves, starting_point)
 
 
 ## Function for drawing viable paths in the editor, for testing.
@@ -261,41 +268,36 @@ func get_closest_point(pos : Vector3i, points_to_check : Array[Vector3i]) -> Var
 
 
 ## Debug function for highlighting a square in the grid.
-func paint_grid_square(tile_position: Vector3, color : Color):
-	var temp = tile_position
+func paint_grid_square(grid_position: Vector3, color : Color):
+	var temp = grid_position
 	temp.y += 1
 	DebugDraw3D.draw_box.call_deferred(temp, Quaternion.IDENTITY, Vector3(0.9, 0.9, 0.9), color, true, INF)
 
 
 ## Utilizes recursion to find all valid moves from a valid position, assuming a certain max movement distance. The recursion makes it considerably faster than using the old, naive function for the same purpose.
-func get_all_valid_moves(tile_position: Vector3i, max_moves: int) -> Array[Vector3i]:
+func get_all_valid_moves(grid_position: Vector3i, max_moves: int) -> Array[Vector3i]:
 	var start_time = Time.get_ticks_msec()
+	_resolve_occupied_spaces()
 	var valid_moves : Dictionary[Vector3i, bool] = {}
-	_recursively_get_valid_pos([tile_position], max_moves, valid_moves, true, tile_position)
+	_recursively_get_valid_pos([grid_position], max_moves, valid_moves, grid_position)
 	var end_time = Time.get_ticks_msec()
 	DebugConsole.log("Execution time to find all valid moves with RECURSION: " + str(end_time - start_time) + " milliseconds", 4)
 	return valid_moves.keys()
 
 
-## DEPRECATED: Takes in a starting position and a maximum move distance and returns an array of all valid positions to move to from that position. Will be removed in future commits.
-func get_all_valid_moves_OLD(tile_position: Vector3i, max_moves : int) -> Array[Vector3i]:
-	_update_block_spaces(World.level.units, World.level.active_unit)
-	var start_time = Time.get_ticks_msec()
-	var true_max_moves = max_moves * 2
-	var potential_moves : Array[Vector3i]
-	var final_moves : Array[Vector3i]
-	for x in range(-true_max_moves, true_max_moves + 1):
-		for y in range(-true_max_moves, true_max_moves + 1):
-			for z in range(-true_max_moves, true_max_moves + 1):
-				var vector = Vector3i(x, y, z)
-				if vector != Vector3i.ZERO and point_map_by_grid_coords.has(vector + tile_position) and absi(x) + absi(y) + absi(z) <= true_max_moves :
-					potential_moves.append(vector + tile_position)
-	
-	for move in potential_moves:
-		var path = find_path(tile_position, move)
-		if !path.is_empty() and path.size() - 1 <= max_moves:
-			final_moves.append(move)
-	
-	var end_time = Time.get_ticks_msec()
-	DebugConsole.log("Execution time to find all valid moves: " + str(end_time - start_time) + " milliseconds", 4)
-	return final_moves
+# TODO: If these two funcs are never used for anything besides getting proximal target skills they should eventually be rolled into one to avoid calling the point map dicts multiple times.
+
+## Returns an array of all the cells adjacent to the starting position which are actually connected to it. Useful for getting targets for proximal skills.
+func get_valid_adjacent_cells(point_position : Vector3i) -> Array[Vector3i]:
+	var grid_point = point_map_by_grid_coords[point_position]
+	var result : Array[Vector3i]
+	for potential_connection in [Vector3i(1, 0, 0), Vector3i(-1, 0, 0), Vector3i(0, 0, 1), Vector3i(0, 0, -1)]:
+		var real_position = point_position + potential_connection
+		if grid_point.real_connections.has(real_position):
+			result.append(real_position)
+	return result
+
+
+## Returns the scene occupying a point, or Null if it is empty.
+func get_point_occupier(point_position : Vector3i) -> Node3D:
+	return point_map_by_grid_coords[point_position].occupier
