@@ -54,14 +54,14 @@ func clear_target() -> void:
 ## Filter targets based on this skill being intended only for enemies unaware of the active player unit.
 func _filter_stealth(target_unit : Unit) -> bool:
 	if target_unit is EnemyUnit:
-		return !target_unit.awareness.targeted_friendlies.has(user) or target_unit.awareness.is_in_grace_period
+		return !target_unit.awareness.targeted_friendlies.has(user.get_instance_id()) or target_unit.awareness.is_in_grace_period
 	return true
 
 
 ## Filter targets based on this skill being intended only for enemies aware of the active player unit.
 func _filter_combat(target_unit : Unit) -> bool:
 	if target_unit is EnemyUnit:
-		return target_unit.awareness.targeted_friendlies.has(user)
+		return target_unit.awareness.targeted_friendlies.has(user.get_instance_id())
 	return true
 
 
