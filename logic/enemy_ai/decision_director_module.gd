@@ -88,8 +88,7 @@ func add_directive(directive : Directive, priority : int = current_directive_que
 ## Main function for determining what Directive to take while alarmed, and in combat with the player.
 func _decide_alarmed_directive():
 	if !World.level.enemy_awareness.alarm_active:
-		var dice_roll = randf()
-		if dice_roll <= unit.alarm_run_chance:
+		if Utilities.dice_roll(unit.alarm_run_chance):
 			add_directive(RunForAlarm.new())
 		else:
 			add_directive(NoDirective.new())
