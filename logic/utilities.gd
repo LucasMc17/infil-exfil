@@ -21,3 +21,8 @@ static func convert_range_to_odds(distance : float, max_distance : float, min_di
 	var chance_range := max_chance - min_chance
 	var percent_per_meter := chance_range / (max_distance - min_distance)
 	return min_chance + ((max_distance - distance) * percent_per_meter)
+
+
+# FEATURE WISHLIST
+# - Hostile units should attempt to take captives under certain conditions. each unit should start with a will_take_captives boolean set to true. This is set to false when the unit is shot at by a friendly unit, sees one move after they have given warning to freeze, when hearing a gunshot, when encountering another enemy unit with this already set to false, or when a unit with this already set to false reaches the alarm. When encountering units, captive takers should immediately say freeze, then on their next turn, the first one should run for the alarm, no dice roll needed. The rest should begin moving in to take captives, and when all known friendlies are detained, begin moving them to holding cells. The regular combat flow should happen only when the captives boolean is set to false.
+# Path markers and room naming for maps. The game maps should have points highlighted to indicate the flow of the space. Units pursuing sighted friendlies can reference this information to determine which way they may have gone and pursue them a reasonable distance. This sounds complicated but I think a very simple version of it can be accomplished. Relatedly, we should be able to mark certain zones within maps, and give them names. This will allow the enemy units to refer to them by name when reporting enemy locations, and also allow them to path to specific rooms for specific tasks, such as moving detained units to holding cells.
