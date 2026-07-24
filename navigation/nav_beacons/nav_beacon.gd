@@ -6,7 +6,6 @@ const CONNECTION_SCENE = preload('./beacon_connection.tscn')
 
 @export var connections : Array[NavBeacon]:
 	set(val):
-		print('setting!!!')
 		connections = val
 		_connect()
 

@@ -92,8 +92,10 @@ var allow_inputs := true
 @onready var state_machine : StateMachine = %StateMachine
 @onready var match_ui : MatchUI = %MatchUi
 @onready var target_retical : Sprite3D = %TargetRetical
+@onready var _beacon_holder : Node3D = %BeaconHolder
 
 func _ready() -> void:
+	_beacon_holder.visible = false
 	Events.skill_armed.connect(_on_skill_armed)
 	Events.skill_disarmed.connect(_on_skill_disarmed)
 	nav_map.setup_astar_grid()

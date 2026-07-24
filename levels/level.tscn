@@ -36,6 +36,10 @@ show_debug = false
 metadata/_custom_type_script = "uid://ch5vn3soxrapt"
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
+[node name="BeaconHolder" type="Node3D" parent="NavigableGridMap" unique_id=34241682]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
+
 [node name="LevelCamera" parent="." unique_id=864095843 instance=ExtResource("6_kogck")]
 unique_name_in_owner = true
 
