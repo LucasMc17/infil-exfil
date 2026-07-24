@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://d30fjuh7ph6d6" path="res://navigation/nav_beacons/nav_beacon.tscn" id="2_53l1m"]
 [ext_resource type="PackedScene" uid="uid://b6h1160eunshj" path="res://units/friendlies/friendly_unit.tscn" id="2_81yhl"]
 [ext_resource type="PackedScene" uid="uid://bup8e1flyaj0p" path="res://units/enemies/enemy_unit.tscn" id="3_53l1m"]
+[ext_resource type="PackedScene" uid="uid://dygqxfucs53hc" path="res://levels/geometry/debug_wall.tscn" id="3_uslpm"]
 [ext_resource type="Script" uid="uid://bp1pubml3l0d7" path="res://units/ai/directive/directive.gd" id="4_uslpm"]
 [ext_resource type="Script" uid="uid://cvy611uxolcnt" path="res://units/ai/directive/move_to_point.gd" id="5_3og0o"]
 
@@ -99,6 +100,125 @@ connections = [NodePath("../16")]
 [node name="18" parent="NavigableGridMap/BeaconHolder" parent_id_path=PackedInt32Array(34241682) index="18" unique_id=1962992870 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0, 2.5)
 connections = [NodePath("../11"), NodePath("../1")]
+
+[node name="Floor1" type="Node3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="0" unique_id=1601135492]
+
+[node name="DebugWall" parent="NavigableGridMap/Geometry/Floor1" index="0" unique_id=1729299196 instance=ExtResource("3_uslpm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+width = 5.0
+
+[node name="DebugWall3" parent="NavigableGridMap/Geometry/Floor1" index="1" unique_id=1433311968 instance=ExtResource("3_uslpm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -2)
+width = 5.0
+
+[node name="DebugWall4" parent="NavigableGridMap/Geometry/Floor1" index="2" unique_id=451247433 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3, 0, 3)
+width = 2.0
+
+[node name="DebugWall5" parent="NavigableGridMap/Geometry/Floor1" index="3" unique_id=1011425453 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 3)
+width = 2.0
+
+[node name="DebugWall2" parent="NavigableGridMap/Geometry/Floor1" index="4" unique_id=1398813643 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2, 0, -2)
+width = 5.0
+
+[node name="DebugWall6" parent="NavigableGridMap/Geometry/Floor1" index="5" unique_id=1145143964 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4, 0, 5)
+width = 9.0
+
+[node name="DebugWall14" parent="NavigableGridMap/Geometry/Floor1" index="6" unique_id=1671132353 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -5, 0, 5)
+width = 3.0
+
+[node name="DebugWall15" parent="NavigableGridMap/Geometry/Floor1" index="7" unique_id=1553546375 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -5, 0, 1)
+width = 3.0
+
+[node name="DebugWall16" parent="NavigableGridMap/Geometry/Floor1" index="8" unique_id=858529200 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -5, 0, -3)
+
+[node name="DebugWall17" parent="NavigableGridMap/Geometry/Floor1" index="9" unique_id=2081999682 instance=ExtResource("3_uslpm")]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -9, 0, -4)
+
+[node name="DebugWall24" parent="NavigableGridMap/Geometry/Floor1" index="10" unique_id=1235659574 instance=ExtResource("3_uslpm")]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -9, 0, -1)
+width = 4.0
+
+[node name="DebugWall25" parent="NavigableGridMap/Geometry/Floor1" index="11" unique_id=1181124610 instance=ExtResource("3_uslpm")]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -9, 0, 0)
+width = 4.0
+
+[node name="DebugWall26" parent="NavigableGridMap/Geometry/Floor1" index="12" unique_id=1956278867 instance=ExtResource("3_uslpm")]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -9, 0, 3)
+
+[node name="DebugWall27" parent="NavigableGridMap/Geometry/Floor1" index="13" unique_id=329100169 instance=ExtResource("3_uslpm")]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -9, 0, 4)
+
+[node name="DebugWall28" parent="NavigableGridMap/Geometry/Floor1" index="14" unique_id=808064038 instance=ExtResource("3_uslpm")]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -7, 0, 4)
+width = 2.0
+
+[node name="DebugWall29" parent="NavigableGridMap/Geometry/Floor1" index="15" unique_id=2104987993 instance=ExtResource("3_uslpm")]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -7, 0, 3)
+width = 2.0
+
+[node name="DebugWall30" parent="NavigableGridMap/Geometry/Floor1" index="16" unique_id=419256597 instance=ExtResource("3_uslpm")]
+transform = Transform3D(1, 0, -1.7484555e-07, 0, 1, 0, 1.7484555e-07, 0, 1, -7, 0, 3)
+
+[node name="DebugWall31" parent="NavigableGridMap/Geometry/Floor1" index="17" unique_id=1489137538 instance=ExtResource("3_uslpm")]
+transform = Transform3D(1, 0, -1.7484555e-07, 0, 1, 0, 1.7484555e-07, 0, 1, -8, 0, 3)
+
+[node name="DebugWall18" parent="NavigableGridMap/Geometry/Floor1" index="18" unique_id=184959344 instance=ExtResource("3_uslpm")]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -7, 0, -4)
+width = 5.0
+
+[node name="DebugWall19" parent="NavigableGridMap/Geometry/Floor1" index="19" unique_id=1877458312 instance=ExtResource("3_uslpm")]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -1, 0, -4)
+width = 3.0
+
+[node name="DebugWall20" parent="NavigableGridMap/Geometry/Floor1" index="20" unique_id=885933992 instance=ExtResource("3_uslpm")]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 3, 0, -4)
+
+[node name="DebugWall7" parent="NavigableGridMap/Geometry/Floor1" index="21" unique_id=400848486 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 4, 0, 0)
+width = 8.0
+
+[node name="DebugWall21" parent="NavigableGridMap/Geometry/Floor1" index="22" unique_id=1919792409 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 1, 0, -4)
+width = 4.0
+
+[node name="DebugWall22" parent="NavigableGridMap/Geometry/Floor1" index="23" unique_id=477618301 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, -4)
+width = 4.0
+
+[node name="DebugWall23" parent="NavigableGridMap/Geometry/Floor1" index="24" unique_id=2127664434 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -3, 0, -4)
+width = 4.0
+
+[node name="DebugWall8" parent="NavigableGridMap/Geometry/Floor1" index="25" unique_id=697659666 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 4, 0, 6)
+width = 5.0
+
+[node name="DebugWall9" parent="NavigableGridMap/Geometry/Floor1" index="26" unique_id=1856136527 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 4, 0, 9)
+width = 2.0
+
+[node name="DebugWall10" parent="NavigableGridMap/Geometry/Floor1" index="27" unique_id=1763497073 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 8, 0, 9)
+width = 17.0
+
+[node name="DebugWall13" parent="NavigableGridMap/Geometry/Floor1" index="28" unique_id=1441094909 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 8, 0, -8)
+width = 17.0
+
+[node name="DebugWall11" parent="NavigableGridMap/Geometry/Floor1" index="29" unique_id=1310843265 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 8, 0, 9)
+width = 17.0
+
+[node name="DebugWall12" parent="NavigableGridMap/Geometry/Floor1" index="30" unique_id=919595343 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -9, 0, 9)
+width = 17.0
 
 [node name="FriendlyUnit" parent="Friendlies" parent_id_path=PackedInt32Array(926091492) index="0" unique_id=1676765037 instance=ExtResource("2_81yhl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 5)

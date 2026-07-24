@@ -100,6 +100,7 @@ escape={
 3d_physics/layer_1="Units"
 3d_physics/layer_2="Walls"
 3d_physics/layer_3="Physics Props"
+3d_physics/layer_4="Board"
 
 [physics]
 
