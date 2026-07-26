@@ -67,7 +67,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 8.5)
 connections = [NodePath("../8")]
 
 [node name="Floor1" type="Node3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="0" unique_id=1042763582]
-visible = false
 
 [node name="DebugWall" parent="NavigableGridMap/Geometry/Floor1" index="0" unique_id=1729299196 instance=ExtResource("7_xdsd3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -6)
@@ -134,7 +133,6 @@ width = 7.0
 
 [node name="Floor2" type="Node3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="1" unique_id=1731482940]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
-visible = false
 
 [node name="DebugFloor" parent="NavigableGridMap/Geometry/Floor2" index="0" unique_id=1895375244 instance=ExtResource("4_7her1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)

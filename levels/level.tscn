@@ -42,6 +42,7 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
 
 [node name="Geometry" type="Node3D" parent="NavigableGridMap" unique_id=2043084881]
+visible = false
 
 [node name="LevelCamera" parent="." unique_id=864095843 instance=ExtResource("6_kogck")]
 unique_name_in_owner = true
