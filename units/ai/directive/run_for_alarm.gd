@@ -19,7 +19,14 @@ func begin(unit : EnemyUnit) -> void:
 
 func _on_finished_moving(_unit : Unit):
 	if acting_unit.board_position == _alarm_point:
-		acting_unit.action_machine.current_state.transition("PullAlarm")
+		DebugConsole.log("well, here's where I would pull the alarm.")
+		acting_unit.action_machine.current_state.transition("Action")
+		# acting_unit.action_machine.current_state.transition("PullAlarm")
+	else:
+		acting_unit.forfeit_turn()
+
+
+func _on_finished_acting(_unit : Unit):
 	acting_unit.forfeit_turn()
 
 

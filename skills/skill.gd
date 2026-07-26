@@ -20,6 +20,9 @@ enum SkillType {
 @export var skill_name := "Skill Name"
 ## A description of this skill for the player's benefit.
 @export_multiline var description := "Skill description"
+# NOTE: Long term, the below variable will be replaced with the length of the animation associated with this particular skill. This is strictly for the time being.
+## The time in seconds it takes to perform the skill.
+@export var time_to_perform := 1.0
 
 
 @export_group("Conditions")
@@ -83,6 +86,7 @@ func disarm() -> void:
 
 ## Use this skill, and send all relevant signals in the global context.
 func use() -> void:
+	user.action_machine.current_state.transition("Action")
 	user.action_points -= action_cost
 	user.movement_points -= movement_cost
 	if ammo_cost and user.primary_weapon is RangedWeapon:
