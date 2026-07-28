@@ -46,3 +46,17 @@ signal alarm_raised(alarm, raiser : Unit)
 
 ## Signal emitted when the enemy's alarm is canceled.
 signal alarm_ended()
+
+# Unit Lifecycle
+
+## Signal emitted when a unit is disabled, either by dying, being taken captive, or losing consciousness.
+signal unit_disabled(unit : Unit)
+
+## Signal emitted when a unit dies.
+signal unit_died(unit : Unit)
+
+## Signal emitted when a unit is taken captive.
+signal unit_taken_captive(unit : Unit)
+
+## Signal emitted when a unit loses consciousness.
+signal unit_lost_consciousness(unit : Unit)

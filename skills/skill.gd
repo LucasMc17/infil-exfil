@@ -86,7 +86,7 @@ func disarm() -> void:
 
 ## Use this skill, and send all relevant signals in the global context.
 func use() -> void:
-	user.action_machine.current_state.transition("Action")
+	user.action_machine.current_state.transition("Action", {"skill": self})
 	user.action_points -= action_cost
 	user.movement_points -= movement_cost
 	if ammo_cost and user.primary_weapon is RangedWeapon:

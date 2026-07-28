@@ -21,12 +21,16 @@ const FULL_ALERT_IMAGE := preload('res://assets/images/full_alert.png')
 var awareness := EnemyUnitAwarenessModule.new(self)
 ## The enemy unit's decision director.
 var decision_director : DecisionDirectorModule
+## Dictionary of skills usable by this enemy unit by name.
+var available_skills : Dictionary[String, Skill] = {}
 
 @onready var seeing_zone : SeeingZone = %SeeingZone
 @onready var _status_indicator : Sprite3D = %StatusIndicator
 
 func _ready():
 	super()
+	for child in skill_holder.get_children():
+		available_skills[child.name] = child
 	awareness.awareness_changed.connect(_on_awareness_changed)
 	decision_director = DecisionDirectorModule.new(self, awareness)
 	debug_label.change_param('awareness_level', awareness.AwarenessLevel.find_key(awareness.awareness_level))

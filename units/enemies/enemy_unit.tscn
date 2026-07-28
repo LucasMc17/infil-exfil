@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://cda3qe2hu7vct" path="res://units/enemies/enemy_unit.gd" id="2_klayc"]
 [ext_resource type="Material" uid="uid://cfxlo28yuwser" path="res://assets/materials/enemy_highlight.tres" id="2_lmb8q"]
 [ext_resource type="Script" uid="uid://bp1pubml3l0d7" path="res://units/ai/directive/directive.gd" id="3_i6gcf"]
+[ext_resource type="PackedScene" uid="uid://b4fdedj3jqur3" path="res://skills/single_target_skills/aimed_skills/enemy_attack.tscn" id="7_i6gcf"]
 [ext_resource type="PackedScene" uid="uid://cof3le0rdxhxw" path="res://units/vision_zones/seeing_zone.tscn" id="8_j686a"]
 [ext_resource type="Script" uid="uid://dsirg6rpatadl" path="res://units/movement/movement_state.gd" id="8_mer0c"]
 
@@ -63,5 +64,8 @@ script = ExtResource("8_mer0c")
 unit = NodePath("../..")
 mps = 3.0
 metadata/_custom_type_script = "uid://dsirg6rpatadl"
+
+[node name="EnemyAttack" parent="Skills" parent_id_path=PackedInt32Array(397221885) index="1" unique_id=1362204123 node_paths=PackedStringArray("user") instance=ExtResource("7_i6gcf")]
+user = NodePath("../..")
 
 [connection signal="friendly_seen" from="SeeingZone" to="." method="_on_seeing_zone_friendly_seen"]

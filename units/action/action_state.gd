@@ -10,13 +10,13 @@ var skill_name := ""
 ## The skill the unit is using when in this action state.
 var skill : Skill
 ## The timer keeping track of how long it has been since this action was triggered.
-var timer := 10.0
+var timer := 1.0
 
 func enter(previous_state : State, ext : Dictionary):
 	super(previous_state, ext)
 	if unit is FriendlyUnit:
 		World.level.allow_inputs = false
-	timer = 10.0
+	timer = skill.time_to_perform
 	unit.debug_label.change_param('action_state', name)
 	unit.started_acting.emit(unit)
 
@@ -30,7 +30,7 @@ func update(delta: float):
 
 func exit():
 	super()
-	timer = 10.0
+	timer = 1.0
 	skill = null
 	unit.finished_acting.emit(unit)
 	if unit is FriendlyUnit:

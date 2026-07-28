@@ -14,4 +14,5 @@ func get_affordability() -> bool:
 
 
 func use() -> void:
+	super()
 	Events.alarm_raised.emit(null, user)

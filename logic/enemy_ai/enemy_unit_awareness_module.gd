@@ -47,6 +47,10 @@ var targeted_friendlies : Dictionary[int, FriendlySighting] = {}
 var targeted_friendly_count : int:
 	get():
 		return targeted_friendlies.size()
+## The targeted friendlies which are still in this unit's sights.
+var friendlies_in_sight : Array[FriendlyUnit]:
+	get():
+		return targeted_friendlies.values().filter(func(sighting : FriendlySighting): return sighting.still_in_sight)
 ## Whether the unit is in the detection grace period. This occurs when the unit sees a friendly unit during the player turn. While in the grace period, stealth skills are still usable on this unit. The grace period ends as soon as the enemy unit begins its next turn.
 var is_in_grace_period := false
 

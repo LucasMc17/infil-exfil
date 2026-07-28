@@ -176,6 +176,8 @@ func damage(amount : int) -> void:
 ## Kill the unit and remove them from play.
 func die() -> void:
 	DebugConsole.log("Unit " + name + " dies.", 2)
+	Events.unit_disabled.emit(self)
+	Events.unit_died.emit(self)
 	_collision.disabled = true
 	_mesh_instance.position.y = 0.0
 	unit_status = Status.DEAD
@@ -184,6 +186,8 @@ func die() -> void:
 ## Knock out the unit and remove them from play.
 func lose_consciousness() -> void:
 	DebugConsole.log("Unit " + name + " loses consciousness.", 2)
+	Events.unit_disabled.emit(self)
+	Events.unit_lost_consciousness.emit(self)
 	_collision.disabled = true
 	_mesh_instance.position.y = 0.0
 	unit_status = Status.UNCONSCIOUS
@@ -202,6 +206,8 @@ func take_captive(captured : Unit) -> void:
 	captive = captured
 	captive.captor = self
 	captive.unit_status = Status.CAPTIVE
+	Events.unit_disabled.emit(captive)
+	Events.unit_taken_captive.emit(captive)
 	captive.position = _hostage_marker.global_position
 	captive.board_position = board_position
 	captive.rotation.y = rotation.y

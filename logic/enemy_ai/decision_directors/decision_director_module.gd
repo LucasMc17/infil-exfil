@@ -11,6 +11,8 @@ var unit : EnemyUnit
 var awareness : EnemyUnitAwarenessModule
 ## The currently actioned directive
 var current_directive : Directive
+## The combat decision director
+var combat_director : CombatDirectorSubmodule
 
 ## The starting queue of directives to follow when unaware. Will be restarted when ended.
 var unaware_base_directives : Array[Directive]
@@ -36,12 +38,13 @@ var current_directive_queue : Array[Directive]:
 func _init(u : EnemyUnit, a : EnemyUnitAwarenessModule) -> void:
 	unit = u
 	awareness = a
+	combat_director = CombatDirectorSubmodule.new(unit, awareness)
 
 	unaware_base_directives = unit.unaware_base_directives
 	alerted_base_directives = unit.alerted_base_directives
 
 
-## Take the next directive from the appropriate queue and assign it as the current directive. If the current directive queue is empty, it will restart the unaware or alerted queue, where as if the unit is alarmed, it will utilize the [_decide_alarmed_directive] function to determine what action to take next.
+## Take the next directive from the appropriate queue and assign it as the current directive. If the current directive queue is empty, it will restart the unaware or alerted queue, where as if the unit is alarmed, it will consult the combat director for a new directive.
 func take_directive_from_queue():
 	var next_directive : Directive
 	if unit.unit_status == Unit.Status.CAPTIVE:
@@ -57,7 +60,7 @@ func take_directive_from_queue():
 		next_directive = alerted_directive_queue[0]
 	elif awareness.is_alarmed():
 		if alarmed_directive_queue.is_empty():
-			_decide_alarmed_directive()
+			add_directive(combat_director.choose_combat_directive())
 		next_directive = alarmed_directive_queue[0]
 	current_directive = next_directive
 	current_directive.begin(unit)
@@ -83,14 +86,3 @@ func add_directive(directive : Directive, priority : int = current_directive_que
 	if priority == 0:
 		clear_directive()
 
-
-# NOTE: This will likely get pretty big.
-## Main function for determining what Directive to take while alarmed, and in combat with the player.
-func _decide_alarmed_directive():
-	if !World.level.enemy_awareness.alarm_active:
-		if Utilities.dice_roll(unit.alarm_run_chance):
-			add_directive(RunForAlarm.new())
-		else:
-			add_directive(NoDirective.new())
-	else:
-		add_directive(NoDirective.new())

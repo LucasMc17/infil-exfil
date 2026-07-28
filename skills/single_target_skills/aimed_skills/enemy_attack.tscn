@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://b4fdedj3jqur3"]
+
+[ext_resource type="PackedScene" uid="uid://dulcusx643qk8" path="res://skills/aimed_skill.tscn" id="1_g5n3w"]
+[ext_resource type="Script" uid="uid://bxg3n67354mfc" path="res://skills/single_target_skills/aimed_skills/enemy_attack.gd" id="2_l1fuk"]
+
+[node name="EnemyAttack" unique_id=1362204123 instance=ExtResource("1_g5n3w")]
+script = ExtResource("2_l1fuk")
+effective_range = 10.0
