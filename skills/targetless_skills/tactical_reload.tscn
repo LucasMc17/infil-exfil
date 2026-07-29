@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cjcd6has15bsb" path="res://skills/targetless_skills/reload.gd" id="1_4h5sq"]
 
-[node name="TacticalReload" type="Node3D" unique_id=408227528]
+[node name="TacticalReload" type="Node" unique_id=2056288068]
 script = ExtResource("1_4h5sq")
 is_tactical = true
-metadata/_custom_type_script = "uid://jqofrsmmq5y"

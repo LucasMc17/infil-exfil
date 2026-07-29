@@ -14,7 +14,14 @@ func _init(t : FriendlyUnit) -> void:
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
 	# TODO: There is no actual logic about movement here yet. Will have to set that up soon.
+	acting_unit.use_skill("EnemyAttack", { "target": target})
 	# acting_unit.available_skills["EnemyAttack"].enemy_use()
+
+
+func _on_finished_acting(_unit : Unit):
+	super(acting_unit)
+	finished = true
+	acting_unit.forfeit_turn()
 
 
 func check_if_finished() -> bool:

@@ -3,7 +3,7 @@ extends AimedSkill
 
 const CHANCE := 0.4
 
-func use() -> void:
+func begin_use() -> void:
 	if Utilities.dice_roll(CHANCE):
 		DebugConsole.log('Enemy attack hits.')
 	else:

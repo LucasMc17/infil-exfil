@@ -1,6 +1,6 @@
 ## Class representing a particular instance of a skill, as belonging to a specific unit. This is done so that we may store a mutable instance of a skill and treat the original resource as a read only data source. It also allows us to host the skill in physical space, which is useful for finding potential targets and locating an AOE on the grid.
 @abstract class_name Skill
-extends Node3D
+extends Node
 
 ## The type of this skill, as defined as what states it can be used from.
 enum SkillType {
@@ -74,6 +74,11 @@ func get_usability() -> bool:
 	return true
 
 
+## Set up the skill with overrides, used only when the skill is being used by an enemy unit.
+func setup_overrides(_overrides : Dictionary) -> void:
+	pass
+	
+
 ## Arm this skill in the UI, and perform relevant checks to gather usability.
 func arm() -> void:
 	pass
@@ -85,11 +90,15 @@ func disarm() -> void:
 
 
 ## Use this skill, and send all relevant signals in the global context.
-func use() -> void:
-	user.action_machine.current_state.transition("Action", {"skill": self})
+func begin_use() -> void:
+	# user.action_machine.current_state.transition("Action", {"skill": self})
 	user.action_points -= action_cost
 	user.movement_points -= movement_cost
 	if ammo_cost and user.primary_weapon is RangedWeapon:
 		user.primary_weapon.current_ammunition -= ammo_cost
 	Events.skill_used.emit(self)
 	Events.refresh_unit_skills.emit()
+
+
+func end_use() -> void:
+	pass

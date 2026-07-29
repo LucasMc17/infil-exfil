@@ -20,7 +20,7 @@ viewport_path = NodePath("SubViewport")
 albedo_color = Color(0.27409065, 0.7122239, 0.12106868, 1)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_xp7jh"]
-viewport_path = NodePath("DebugLabel/@SubViewport@40931")
+viewport_path = NodePath("DebugLabel/@SubViewport@75945")
 
 [node name="FriendlyUnit" unique_id=1676765037 groups=["friendlies"] instance=ExtResource("1_7ia1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
@@ -41,7 +41,7 @@ texture = SubResource("ViewportTexture_xp7jh")
 _text = "FRIENDLY UNIT
 Position: (x: {x}, y: {y}, z: {z})
 Current Movement: {movement_state}
-Current Action: {action_state}"
+Current Skill: {current_skill}"
 
 [node name="Sneak" type="Node" parent="MovementMachine" parent_id_path=PackedInt32Array(1758725307) index="1" unique_id=178902922 node_paths=PackedStringArray("unit")]
 script = ExtResource("6_wqcmw")
@@ -49,25 +49,25 @@ unit = NodePath("../..")
 mps = 2.0
 metadata/_custom_type_script = "uid://dsirg6rpatadl"
 
-[node name="Headshot" parent="Skills" parent_id_path=PackedInt32Array(397221885) index="0" unique_id=1362204123 node_paths=PackedStringArray("user") instance=ExtResource("6_dnhmq")]
+[node name="Headshot" parent="SkillMachine" parent_id_path=PackedInt32Array(397221885) index="0" unique_id=1362204123 node_paths=PackedStringArray("user") instance=ExtResource("6_dnhmq")]
 user = NodePath("../..")
 
-[node name="MozambiqueDrill" parent="Skills" parent_id_path=PackedInt32Array(397221885) index="1" unique_id=1347050520 node_paths=PackedStringArray("user") instance=ExtResource("7_dnhmq")]
+[node name="MozambiqueDrill" parent="SkillMachine" parent_id_path=PackedInt32Array(397221885) index="1" unique_id=1347050520 node_paths=PackedStringArray("user") instance=ExtResource("7_dnhmq")]
 user = NodePath("../..")
 
-[node name="Reload" parent="Skills" parent_id_path=PackedInt32Array(397221885) index="2" unique_id=1063694174 node_paths=PackedStringArray("user") instance=ExtResource("8_v7e1a")]
+[node name="Reload" parent="SkillMachine" parent_id_path=PackedInt32Array(397221885) index="2" unique_id=1063694174 node_paths=PackedStringArray("user") instance=ExtResource("8_v7e1a")]
 user = NodePath("../..")
 
-[node name="TacticalReload" parent="Skills" parent_id_path=PackedInt32Array(397221885) index="3" unique_id=408227528 node_paths=PackedStringArray("user") instance=ExtResource("9_5d6y8")]
+[node name="TacticalReload" parent="SkillMachine" parent_id_path=PackedInt32Array(397221885) index="3" unique_id=408227528 node_paths=PackedStringArray("user") instance=ExtResource("9_5d6y8")]
 user = NodePath("../..")
 
-[node name="TakeHostage" parent="Skills" parent_id_path=PackedInt32Array(397221885) index="5" unique_id=1162393534 node_paths=PackedStringArray("user") instance=ExtResource("10_5d6y8")]
+[node name="TakeHostage" parent="SkillMachine" parent_id_path=PackedInt32Array(397221885) index="5" unique_id=1162393534 node_paths=PackedStringArray("user") instance=ExtResource("10_5d6y8")]
 user = NodePath("../..")
 
-[node name="KillHostage" parent="Skills" parent_id_path=PackedInt32Array(397221885) index="6" unique_id=945442073 node_paths=PackedStringArray("user") instance=ExtResource("11_f0n28")]
+[node name="KillHostage" parent="SkillMachine" parent_id_path=PackedInt32Array(397221885) index="6" unique_id=945442073 node_paths=PackedStringArray("user") instance=ExtResource("11_f0n28")]
 user = NodePath("../..")
 
-[node name="KnockOutHostage" parent="Skills" parent_id_path=PackedInt32Array(397221885) index="7" unique_id=509140707 node_paths=PackedStringArray("user") instance=ExtResource("12_h7wl1")]
+[node name="KnockOutHostage" parent="SkillMachine" parent_id_path=PackedInt32Array(397221885) index="7" unique_id=509140707 node_paths=PackedStringArray("user") instance=ExtResource("12_h7wl1")]
 user = NodePath("../..")
 
 [connection signal="seen_by_enemies" from="SeenZone" to="." method="_on_seen_zone_seen_by_enemies"]

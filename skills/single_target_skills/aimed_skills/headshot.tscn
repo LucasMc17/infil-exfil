@@ -19,6 +19,7 @@ max_chance = 0.85
 effective_range = 10.0
 skill_type = 1
 skill_name = "Headshot"
+time_to_perform = 10.0
 ammo_cost = 1
 
 [node name="CollisionShape3D" parent="Area3D" parent_id_path=PackedInt32Array(1854330789) index="0" unique_id=1223890083]

@@ -74,6 +74,12 @@ var is_active : bool:
 			return World.level.active_unit == self
 		else:
 			return false
+## Whether or not this unit is in the middle of using a skill.
+var is_using_skill : bool:
+	get():
+		return !!skill_machine.current_skill
+## Whether or not this unit is moving to a point.
+var is_moving := false
 
 ## The unit's position in terms of the NavigableGridMap's coordinate system.
 var board_position : Vector3i
@@ -81,7 +87,7 @@ var board_position : Vector3i
 var all_skills : Array[Skill]:
 	get():
 		var result : Array[Skill] = []
-		var skills = skill_holder.get_children()
+		var skills = skill_machine.get_children()
 		for skill in skills:
 			if skill is Skill:
 				result.append(skill)
@@ -103,9 +109,9 @@ var captor : Unit
 @onready var _cell_highlight := %CellHighlight
 @onready var flag : UnitFlag = %UnitFlag
 @onready var movement_machine : MovementMachine = %MovementMachine
-@onready var action_machine : ActionMachine = %ActionMachine
+# @onready var action_machine : ActionMachine = %ActionMachine
 @onready var debug_label : DebugLabel = %DebugLabel
-@onready var skill_holder : Node3D = %Skills
+@onready var skill_machine : SkillMachine = %SkillMachine
 @onready var seen_zone : SeenZone = %SeenZone
 @onready var _mesh_instance : MeshInstance3D = %MeshInstance3D
 @onready var _hostage_marker : Marker3D = %HostageMarker
@@ -117,15 +123,10 @@ func _ready():
 	if primary_weapon:
 		primary_weapon = primary_weapon.make_unique()
 		primary_weapon.initialize(self)
-	# var temp = skills.duplicate()
-	# skills = []
-	# for skill in temp:
-	# 	skills.append(skill.make_unique())
 
 	debug_label.change_param('x', str(round(position.x)))
 	debug_label.change_param('y', str(round(position.y)))
 	debug_label.change_param('z', str(round(position.z)))
-	# _set_up_skills()
 
 	flag.refresh(self)
 
@@ -141,7 +142,7 @@ func activate():
 	_cell_highlight.visible = true
 	flag.refresh(self)
 	flag.expand()
-	skill_holder.visible = true
+	skill_machine.visible = true
 	refresh_valid_moves()
 	# _refresh_skills()
 	Events.unit_activated.emit(self)
@@ -152,7 +153,7 @@ func activate():
 func deactivate():
 	_cell_highlight.visible = false
 	flag.collapse()
-	skill_holder.visible = false
+	skill_machine.visible = false
 	# TODO: Make this a signal	
 	World.level.path_marking_system.deactivate()
 	Events.unit_deactivated.emit(self)
@@ -242,7 +243,7 @@ func can_move() -> bool:
 
 ## Returns true if the unit is still capable of acting this turn.
 func can_act() -> bool:
-	return unit_status == Status.ALIVE and action_points > 0 and action_machine.current_state is NoAction
+	return unit_status == Status.ALIVE and action_points > 0 # and action_machine.current_state is NoAction
 
 
 ## Mark this unit as finished acting and set their MP/AP to 0.
@@ -255,6 +256,20 @@ func forfeit_turn() -> void:
 ## Function for updating detected units, either by checking if this unit is being detected or if it is detecting any other units.
 func check_for_detection() -> void:
 	pass
+
+
+## Use a skill by name.
+func use_skill(skill_name : String, overrides := {}) -> void:
+	if !is_active:
+		DebugConsole.error("Skill used while unit not active!")
+		return
+	if is_using_skill:
+		DebugConsole.error("Skill used while another skill still in use!")
+		return
+	if is_using_skill:
+		DebugConsole.error("Skill used while unit in motion!")
+		return
+	skill_machine.use_skill(skill_name, overrides)
 
 
 # TODO: Enemy unit's should extend this to accidentally bump into unseen friendly units rather than blindly pathing around them.

@@ -4,16 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://dmkx4m8je1llw" path="res://levels/navigation/cell_highlight.tscn" id="2_gxe1c"]
 [ext_resource type="PackedScene" uid="uid://ti3t66b32e4c" path="res://units/unit_flag/unit_flag.tscn" id="2_urgnh"]
 [ext_resource type="Script" uid="uid://8lotdfrh5t6l" path="res://addons/debug_label_3d/debug_label.gd" id="6_3nj72"]
+[ext_resource type="Script" uid="uid://cym4ut6g1x4nr" path="res://units/action/skill_machine.gd" id="7_d7xs0"]
 [ext_resource type="Script" uid="uid://4lx7x7dl2ekr" path="res://units/movement/movement_machine.gd" id="8_hyvs3"]
-[ext_resource type="Script" uid="uid://b4pr0pkxi4p80" path="res://units/action/action_state.gd" id="9_aa1dw"]
 [ext_resource type="Script" uid="uid://db1xkfe2r44vj" path="res://units/movement/no_movement.gd" id="9_d7xs0"]
-[ext_resource type="Script" uid="uid://dpwkeyrf5khee" path="res://units/action/action_machine.gd" id="9_urgnh"]
 [ext_resource type="PackedScene" uid="uid://dmk66566638rw" path="res://skills/targetless_skills/pull_alarm.tscn" id="10_aa1dw"]
 [ext_resource type="PackedScene" uid="uid://1lky50pj0tct" path="res://units/vision_zones/seen_zone.tscn" id="10_ysu83"]
 [ext_resource type="Script" uid="uid://8c6xrxfefw3o" path="res://units/friendlies/visibility_point.gd" id="11_aa1dw"]
-[ext_resource type="Script" uid="uid://d2agcqikuidqx" path="res://units/action/no_action.gd" id="11_ysu83"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ysu83"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_aa1dw"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_8orno"]
@@ -22,8 +20,8 @@ radius = 0.45
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2atv2"]
 radius = 0.45
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_aa1dw"]
-viewport_path = NodePath("DebugLabel/@SubViewport@30955")
+[sub_resource type="ViewportTexture" id="ViewportTexture_qdbvd"]
+viewport_path = NodePath("DebugLabel/@SubViewport@25520")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vsw5j"]
 radius = 0.45
@@ -35,7 +33,7 @@ script = ExtResource("1_2atv2")
 [node name="UnitFlag" parent="." unique_id=710425423 instance=ExtResource("2_urgnh")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25, 0)
-texture = SubResource("ViewportTexture_ysu83")
+texture = SubResource("ViewportTexture_aa1dw")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1987464459]
 unique_name_in_owner = true
@@ -58,12 +56,12 @@ visibility_range_end = 20.0
 pixel_size = 0.005
 billboard = 1
 no_depth_test = true
-texture = SubResource("ViewportTexture_aa1dw")
+texture = SubResource("ViewportTexture_qdbvd")
 script = ExtResource("6_3nj72")
 _text = "UNIT
 Position: (x: {x}, y: {y}, z: {z})
 Current Movement: {movement_state}
-Current Action: {action_state}"
+Current Skill: {current_skill}"
 metadata/_custom_type_script = "uid://8lotdfrh5t6l"
 
 [node name="MovementMachine" type="Node" parent="." unique_id=1758725307 node_paths=PackedStringArray("current_state")]
@@ -77,27 +75,13 @@ script = ExtResource("9_d7xs0")
 unit = NodePath("../..")
 metadata/_custom_type_script = "uid://db1xkfe2r44vj"
 
-[node name="ActionMachine" type="Node" parent="." unique_id=155581739 node_paths=PackedStringArray("current_state")]
-unique_name_in_owner = true
-script = ExtResource("9_urgnh")
-current_state = NodePath("NoAction")
-metadata/_custom_type_script = "uid://dpwkeyrf5khee"
-
-[node name="NoAction" type="Node" parent="ActionMachine" unique_id=803163594 node_paths=PackedStringArray("unit")]
-script = ExtResource("11_ysu83")
-unit = NodePath("../..")
-metadata/_custom_type_script = "uid://d2agcqikuidqx"
-
-[node name="Action" type="Node" parent="ActionMachine" unique_id=906642561 node_paths=PackedStringArray("unit")]
-script = ExtResource("9_aa1dw")
-unit = NodePath("../..")
-metadata/_custom_type_script = "uid://b4pr0pkxi4p80"
-
-[node name="Skills" type="Node3D" parent="." unique_id=397221885]
+[node name="SkillMachine" type="Node3D" parent="." unique_id=397221885 node_paths=PackedStringArray("unit")]
 unique_name_in_owner = true
 visible = false
+script = ExtResource("7_d7xs0")
+unit = NodePath("..")
 
-[node name="PullAlarm" parent="Skills" unique_id=1709122393 node_paths=PackedStringArray("user") instance=ExtResource("10_aa1dw")]
+[node name="PullAlarm" parent="SkillMachine" unique_id=1709122393 node_paths=PackedStringArray("user") instance=ExtResource("10_aa1dw")]
 user = NodePath("../..")
 
 [node name="SeenZone" parent="." unique_id=1411709038 node_paths=PackedStringArray("unit") instance=ExtResource("10_ysu83")]

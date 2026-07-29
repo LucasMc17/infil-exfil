@@ -29,7 +29,7 @@ var available_skills : Dictionary[String, Skill] = {}
 
 func _ready():
 	super()
-	for child in skill_holder.get_children():
+	for child in skill_machine.get_children():
 		available_skills[child.name] = child
 	awareness.awareness_changed.connect(_on_awareness_changed)
 	decision_director = DecisionDirectorModule.new(self, awareness)

@@ -17,7 +17,7 @@ func disarm() -> void:
 	chance = 0.1
 
 
-func use() -> void:
+func begin_use() -> void:
 	if Utilities.dice_roll(chance):
 		DebugConsole.log('headshot hits')
 		target.die()

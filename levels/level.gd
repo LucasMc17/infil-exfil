@@ -81,7 +81,9 @@ var live_units : Array[Unit]:
 		return result
 
 ## Whether or not to completely block the player's game play inputs, such as when a unit is moving.
-var allow_inputs := true
+var allow_inputs : bool:
+	get():
+		return is_player_turn and active_unit and !active_unit.is_using_skill and !active_unit.is_moving
 
 @onready var _friendlies_node := %Friendlies
 @onready var _enemies_node := %Enemies

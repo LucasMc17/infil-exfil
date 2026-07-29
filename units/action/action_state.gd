@@ -14,8 +14,6 @@ var timer := 1.0
 
 func enter(previous_state : State, ext : Dictionary):
 	super(previous_state, ext)
-	if unit is FriendlyUnit:
-		World.level.allow_inputs = false
 	timer = skill.time_to_perform
 	unit.debug_label.change_param('action_state', name)
 	unit.started_acting.emit(unit)
@@ -33,5 +31,3 @@ func exit():
 	timer = 1.0
 	skill = null
 	unit.finished_acting.emit(unit)
-	if unit is FriendlyUnit:
-		World.level.allow_inputs = true

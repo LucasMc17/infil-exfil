@@ -22,6 +22,9 @@ func choose_combat_directive() -> Directive:
 		# elif awareness.friendlies_in_sight.size() > 0:
 		# 	return Attack.new()
 		else:
+			var friendlies_in_sight = awareness.friendlies_in_sight
+			if !friendlies_in_sight.is_empty():
+				return Attack.new(friendlies_in_sight[0].friendly)
 			return NoDirective.new()
 	else:
 		return NoDirective.new()

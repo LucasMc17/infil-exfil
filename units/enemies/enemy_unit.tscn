@@ -8,15 +8,15 @@
 [ext_resource type="PackedScene" uid="uid://cof3le0rdxhxw" path="res://units/vision_zones/seeing_zone.tscn" id="8_j686a"]
 [ext_resource type="Script" uid="uid://dsirg6rpatadl" path="res://units/movement/movement_state.gd" id="8_mer0c"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ijy6f"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_i6gcf"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lmb8q"]
 albedo_color = Color(0.95711046, 0, 0.2486856, 1)
 stencil_flags = 2
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_i6gcf"]
-viewport_path = NodePath("DebugLabel/@SubViewport@50937")
+[sub_resource type="ViewportTexture" id="ViewportTexture_j686a"]
+viewport_path = NodePath("DebugLabel/@SubViewport@75178")
 
 [node name="EnemyUnit" unique_id=1676765037 instance=ExtResource("1_nlthm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
@@ -26,7 +26,7 @@ alerted_base_directives = Array[ExtResource("3_i6gcf")]([])
 alarm_run_chance = 0.5
 
 [node name="UnitFlag" parent="." index="0" unique_id=710425423]
-texture = SubResource("ViewportTexture_ijy6f")
+texture = SubResource("ViewportTexture_i6gcf")
 
 [node name="MeshInstance3D" parent="." index="1" unique_id=1987464459 groups=["enemies"]]
 surface_material_override/0 = SubResource("StandardMaterial3D_lmb8q")
@@ -46,11 +46,11 @@ enemy = NodePath("..")
 surface_material_override/0 = ExtResource("2_lmb8q")
 
 [node name="DebugLabel" parent="." index="5" unique_id=607303816]
-texture = SubResource("ViewportTexture_i6gcf")
+texture = SubResource("ViewportTexture_j686a")
 _text = "ENEMY UNIT
 Position: (x: {x}, y: {y}, z: {z})
 Current Movement: {movement_state}
-Current Action: {action_state}
+Current skill: {current_skill}
 Awareness Level: {awareness_level}
 Targets: {targets}"
 
@@ -65,7 +65,7 @@ unit = NodePath("../..")
 mps = 3.0
 metadata/_custom_type_script = "uid://dsirg6rpatadl"
 
-[node name="EnemyAttack" parent="Skills" parent_id_path=PackedInt32Array(397221885) index="1" unique_id=1362204123 node_paths=PackedStringArray("user") instance=ExtResource("7_i6gcf")]
+[node name="EnemyAttack" parent="SkillMachine" parent_id_path=PackedInt32Array(397221885) index="1" unique_id=1362204123 node_paths=PackedStringArray("user") instance=ExtResource("7_i6gcf")]
 user = NodePath("../..")
 
 [connection signal="friendly_seen" from="SeeingZone" to="." method="_on_seeing_zone_friendly_seen"]

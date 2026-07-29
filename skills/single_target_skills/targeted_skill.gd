@@ -28,6 +28,21 @@ func disarm() -> void:
 	clear_target()
 
 
+func setup_overrides(overrides : Dictionary) -> void:
+	get_all_targets()
+	var chosen_target = overrides.get("target")
+	if !potential_targets.has(chosen_target):
+		DebugConsole.error('Skill overrides set up with target not listed in potential targets!')
+		return
+	target = chosen_target
+
+
+func begin_use() -> void:
+	super()
+	target = null
+	potential_targets = []
+
+
 ## Updates the list of viable targets based on this skill's custom rules.
 @abstract func get_all_targets() -> void
 
