@@ -4,8 +4,6 @@ extends Directive
 
 ## The target of this attack.
 var target : FriendlyUnit
-## Whether or not the unit has finished this attack.
-var finished := false
 
 func _init(t : FriendlyUnit) -> void:
 	target = t
@@ -20,9 +18,5 @@ func begin(unit : EnemyUnit) -> void:
 
 func _on_finished_acting(_unit : Unit):
 	super(acting_unit)
-	finished = true
+	end()
 	acting_unit.forfeit_turn()
-
-
-func check_if_finished() -> bool:
-	return finished

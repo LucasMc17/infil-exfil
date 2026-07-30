@@ -115,7 +115,6 @@ func confirm_all_sightings() -> void:
 		_confirm_sighting(sighting)
 
 
-# TODO: we have a bug where enemy's will still take a shot at an enemy they've lost sight of for some reason. But only once.
 ## Confirm a specific sighting. Like the [confirm_all_sightings] function, but for checking only a specific sighting. Most useful for checking for sighting continuity after the friendly moves, as opposed to the enemy.
 func confirm_specific_sighting(friendly_id : int) -> void:
 	if unit.is_incapacitated() or !is_alarmed() or !targeted_friendlies.has(friendly_id):

@@ -21,7 +21,6 @@ func enter(previous_state : State, ext : Dictionary):
 
 func update(delta: float):
 	timer -= delta
-	print(timer)
 	if timer <= 0.0:
 		transition("NoAction")
 

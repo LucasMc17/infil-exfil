@@ -8,12 +8,12 @@
 [ext_resource type="Script" uid="uid://bp1pubml3l0d7" path="res://units/ai/directive/directive.gd" id="4_uslpm"]
 [ext_resource type="Script" uid="uid://cvy611uxolcnt" path="res://units/ai/directive/move_to_point.gd" id="5_3og0o"]
 
-[sub_resource type="Resource" id="Resource_hqfjm"]
+[sub_resource type="Resource" id="Resource_gfecl"]
 script = ExtResource("5_3og0o")
-_end_point = Vector3(-8, 0, -5)
+_end_point = Vector3(-8, 0, -7)
 metadata/_custom_type_script = "uid://cvy611uxolcnt"
 
-[sub_resource type="Resource" id="Resource_v7ycg"]
+[sub_resource type="Resource" id="Resource_53l1m"]
 script = ExtResource("5_3og0o")
 _end_point = Vector3(5, 0, -5)
 metadata/_custom_type_script = "uid://cvy611uxolcnt"
@@ -225,5 +225,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 5)
 
 [node name="EnemyUnit" parent="Enemies" parent_id_path=PackedInt32Array(182952236) index="0" unique_id=1682874516 instance=ExtResource("3_53l1m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -5)
-unaware_base_directives = Array[ExtResource("4_uslpm")]([SubResource("Resource_hqfjm"), SubResource("Resource_v7ycg")])
-alarm_run_chance = 1.0
+unaware_base_directives = Array[ExtResource("4_uslpm")]([SubResource("Resource_gfecl"), SubResource("Resource_53l1m")])
+alarm_run_chance = 0.0

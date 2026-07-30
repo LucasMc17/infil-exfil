@@ -85,4 +85,3 @@ func add_directive(directive : Directive, priority : int = current_directive_que
 	current_directive_queue.insert(priority, directive)
 	if priority == 0:
 		clear_directive()
-

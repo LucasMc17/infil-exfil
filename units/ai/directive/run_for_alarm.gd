@@ -27,8 +27,5 @@ func _on_finished_moving(_unit : Unit):
 
 func _on_finished_acting(_unit : Unit):
 	super(acting_unit)
+	end()
 	acting_unit.forfeit_turn()
-
-
-func check_if_finished() -> bool:
-	return World.level.enemy_awareness.alarm_active
