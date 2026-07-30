@@ -109,7 +109,6 @@ var captor : Unit
 @onready var _cell_highlight := %CellHighlight
 @onready var flag : UnitFlag = %UnitFlag
 @onready var movement_machine : MovementMachine = %MovementMachine
-# @onready var action_machine : ActionMachine = %ActionMachine
 @onready var debug_label : DebugLabel = %DebugLabel
 @onready var skill_machine : SkillMachine = %SkillMachine
 @onready var seen_zone : SeenZone = %SeenZone
@@ -243,7 +242,7 @@ func can_move() -> bool:
 
 ## Returns true if the unit is still capable of acting this turn.
 func can_act() -> bool:
-	return unit_status == Status.ALIVE and action_points > 0 # and action_machine.current_state is NoAction
+	return unit_status == Status.ALIVE and action_points > 0
 
 
 ## Mark this unit as finished acting and set their MP/AP to 0.

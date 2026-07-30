@@ -77,7 +77,7 @@ func get_usability() -> bool:
 ## Set up the skill with overrides, used only when the skill is being used by an enemy unit.
 func setup_overrides(_overrides : Dictionary) -> void:
 	pass
-	
+
 
 ## Arm this skill in the UI, and perform relevant checks to gather usability.
 func arm() -> void:
@@ -91,7 +91,6 @@ func disarm() -> void:
 
 ## Use this skill, and send all relevant signals in the global context.
 func begin_use() -> void:
-	# user.action_machine.current_state.transition("Action", {"skill": self})
 	user.action_points -= action_cost
 	user.movement_points -= movement_cost
 	if ammo_cost and user.primary_weapon is RangedWeapon:
