@@ -133,7 +133,7 @@ func _ready():
 ## Update the list of valid moves for this unit based on their maximum move distance and what positions within that range are navigable to.
 func refresh_valid_moves() -> void:
 	if World.level and can_move() and is_active:
-		World.level.path_marking_system.activate(self)
+		World.level.movement_system.activate(self)
 
 
 ## Executed when the unit becomes the active unit within the level.
@@ -154,7 +154,7 @@ func deactivate():
 	flag.collapse()
 	skill_machine.visible = false
 	# TODO: Make this a signal	
-	World.level.path_marking_system.deactivate()
+	World.level.movement_system.deactivate()
 	Events.unit_deactivated.emit(self)
 	if World.level.armed_skill:
 		Events.skill_disarmed.emit()
@@ -255,20 +255,6 @@ func forfeit_turn() -> void:
 ## Function for updating detected units, either by checking if this unit is being detected or if it is detecting any other units.
 func check_for_detection() -> void:
 	pass
-
-
-## Use a skill by name.
-func use_skill(skill_name : String, overrides := {}) -> void:
-	if !is_active:
-		DebugConsole.error("Skill used while unit not active!")
-		return
-	if is_using_skill:
-		DebugConsole.error("Skill used while another skill still in use!")
-		return
-	if is_using_skill:
-		DebugConsole.error("Skill used while unit in motion!")
-		return
-	skill_machine.use_skill(skill_name, overrides)
 
 
 # TODO: Enemy unit's should extend this to accidentally bump into unseen friendly units rather than blindly pathing around them.

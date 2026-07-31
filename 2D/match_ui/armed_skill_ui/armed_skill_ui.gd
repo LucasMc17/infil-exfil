@@ -40,8 +40,7 @@ func _on_cancel_button_pressed() -> void:
 
 func _on_confirm_button_pressed() -> void:
 	if World.level.allow_inputs:
-		# skill_res.use()
-		World.level.active_unit.use_skill(skill_res.name)
+		skill_res.use()
 		Events.skill_disarmed.emit()
 
 

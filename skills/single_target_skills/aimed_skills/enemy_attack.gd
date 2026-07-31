@@ -1,4 +1,5 @@
 ## A basic enemy attack skill, not meant to be used by the player.
+class_name EnemyAttack
 extends AimedSkill
 
 const CHANCE := 0.4

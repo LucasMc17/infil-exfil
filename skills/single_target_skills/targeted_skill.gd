@@ -18,12 +18,22 @@ func arm() -> void:
 	super()
 	get_all_targets()
 	Events.target_selected.connect(retarget)
-	get_usability()
+
+
+func arm_as_enemy() -> void:
+	super()
+	get_all_targets()
 
 
 func disarm() -> void:
 	super()
 	Events.target_selected.disconnect(retarget)
+	potential_targets = []
+	clear_target()
+
+
+func disarm_as_enemy() -> void:
+	super()
 	potential_targets = []
 	clear_target()
 

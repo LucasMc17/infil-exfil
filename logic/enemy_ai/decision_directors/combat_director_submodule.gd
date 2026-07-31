@@ -18,13 +18,10 @@ func choose_combat_directive() -> Directive:
 		if Utilities.dice_roll(unit.alarm_run_chance):
 			World.level.enemy_awareness.alarm_runner = unit
 			return RunForAlarm.new()
-		# TODO: A LOT of work to do here, including changing the skill holder to a sort of state machine and defining rules for how the enemy can use skills.
-		# elif awareness.friendlies_in_sight.size() > 0:
-		# 	return Attack.new()
 		else:
 			var friendlies_in_sight = awareness.friendlies_in_sight
 			if !friendlies_in_sight.is_empty():
-				return Attack.new(friendlies_in_sight[0].friendly)
+				return MoveAndAttack.new(friendlies_in_sight[0].friendly)
 			return NoDirective.new()
 	else:
 		return NoDirective.new()

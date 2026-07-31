@@ -67,7 +67,7 @@ func _confirm_sighting(sighting : FriendlySighting) -> void:
 		sighting.still_in_sight = false
 
 
-## Update the unit's awareness level to [ALERTED]
+## Update the unit's awareness level to [ALERTED].
 func alert():
 	is_in_grace_period = false
 	awareness_level = AwarenessLevel.ALERTED

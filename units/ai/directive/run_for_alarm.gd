@@ -20,7 +20,8 @@ func begin(unit : EnemyUnit) -> void:
 func _on_finished_moving(_unit : Unit):
 	super(acting_unit)
 	if acting_unit.board_position == _alarm_point:
-		acting_unit.use_skill("PullAlarm")
+		var pull_alarm : PullAlarm = acting_unit.skill_machine.skills["PullAlarm"]
+		pull_alarm.use()
 	else:
 		acting_unit.forfeit_turn()
 

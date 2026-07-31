@@ -5,13 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b6h1160eunshj" path="res://units/friendlies/friendly_unit.tscn" id="2_hqfjm"]
 [ext_resource type="PackedScene" uid="uid://bup8e1flyaj0p" path="res://units/enemies/enemy_unit.tscn" id="3_v7ycg"]
 [ext_resource type="PackedScene" uid="uid://d1i1gcecs1k5t" path="res://levels/geometry/debug_floor.tscn" id="4_7her1"]
-[ext_resource type="Script" uid="uid://bp1pubml3l0d7" path="res://units/ai/directive/directive.gd" id="4_56l4f"]
 [ext_resource type="PackedScene" uid="uid://dygqxfucs53hc" path="res://levels/geometry/debug_wall.tscn" id="7_xdsd3"]
-[ext_resource type="Script" uid="uid://c6ncfb6ch5khu" path="res://units/ai/directive/no_directive.gd" id="8_7her1"]
-
-[sub_resource type="Resource" id="Resource_7her1"]
-script = ExtResource("8_7her1")
-metadata/_custom_type_script = "uid://c6ncfb6ch5khu"
 
 [node name="Level" unique_id=1510169201 instance=ExtResource("1_b2wko")]
 
@@ -218,5 +212,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 4, 1)
 
 [node name="EnemyUnit" parent="Enemies" parent_id_path=PackedInt32Array(182952236) index="0" unique_id=1682874516 instance=ExtResource("3_v7ycg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -4)
-unaware_base_directives = Array[ExtResource("4_56l4f")]([SubResource("Resource_7her1")])
 alarm_run_chance = 0.0

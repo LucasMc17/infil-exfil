@@ -87,7 +87,7 @@ var allow_inputs : bool:
 
 @onready var _friendlies_node := %Friendlies
 @onready var _enemies_node := %Enemies
-@onready var path_marking_system : MovementSystem = %MovementSystem
+@onready var movement_system : MovementSystem = %MovementSystem
 @onready var nav_map : NavigableGridMap = %NavigableGridMap
 @onready var click_handler : ClickHandler3D = %ClickHandler3D
 @onready var level_camera : LevelCamera = %LevelCamera

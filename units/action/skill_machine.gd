@@ -16,6 +16,7 @@ func _ready() -> void:
 	for child in get_children():
 		if child is Skill:
 			skills[child.name] = child
+			child.used.connect(_on_skill_used)
 		else:
 			push_warning("Skill machine contains incompatible child node")
 	
@@ -30,17 +31,13 @@ func _process(delta: float) -> void:
 			end_skill()
 
 
-## Use a skill and temporarily transition to it as the current skill. The second parameter is a dictionary of setup overrides, designed specifically for when an enemy unit is using a skill without the manual setup performed by the playter through game UI (choosing a target, for example). As such, only enemy units should include an override object when using this method.
-func use_skill(skill_name : String, overrides := {}):
-	var skill = skills.get(skill_name)
-	if !overrides.is_empty():
-		skill.setup_overrides(overrides)
-	current_skill = skill
-	if current_skill:
+func _on_skill_used(skill : Skill) -> void:
+	if !current_skill:
+		current_skill = skill
 		timer = current_skill.time_to_perform
 		unit.debug_label.change_param('current_skill', current_skill.name)
 		unit.started_acting.emit(unit)
-		current_skill.begin_use()
+		current_skill.begin_use()	
 
 
 func end_skill() -> void:

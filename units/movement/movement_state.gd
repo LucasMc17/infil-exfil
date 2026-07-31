@@ -26,7 +26,7 @@ func enter(previous_state : State, ext : Dictionary):
 		unit.movement_points -= path.size()
 	else:
 		DebugConsole.error('Must pass MovementState an end_point or a path array of points.')
-	World.level.path_marking_system.deactivate()
+	World.level.movement_system.deactivate()
 
 
 func physics_update(delta: float):

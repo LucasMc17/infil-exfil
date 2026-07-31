@@ -2,6 +2,9 @@
 @abstract class_name Skill
 extends Node
 
+## Emitted to the skill machine when this skill is used.
+signal used(skill : Skill)
+
 ## The type of this skill, as defined as what states it can be used from.
 enum SkillType {
 	## Skill can be used from any state.
@@ -84,9 +87,25 @@ func arm() -> void:
 	pass
 
 
+## Arm this skill as an enemy unit, skipping UI changes.
+func arm_as_enemy() -> void:
+	pass
+
+
 ## Disarm this skill, reset appropriate variables.
 func disarm() -> void:
 	pass
+
+
+## Disarm this skill as an enemy, skipping UI changes.
+func disarm_as_enemy() -> void:
+	pass
+
+
+func use(overrides := {}) -> void:
+	if !overrides.is_empty():
+		setup_overrides(overrides)
+	used.emit(self)
 
 
 ## Use this skill, and send all relevant signals in the global context.
