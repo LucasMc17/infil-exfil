@@ -22,6 +22,9 @@ func choose_combat_directive() -> Directive:
 			var friendlies_in_sight = awareness.friendlies_in_sight
 			if !friendlies_in_sight.is_empty():
 				return MoveAndAttack.new(friendlies_in_sight[0].friendly)
+			else:
+				var pursued = awareness.targeted_friendlies.values()[0]
+				return Pursue.new(pursued.friendly, pursued.last_known_position)
 			return NoDirective.new()
 	else:
 		return NoDirective.new()

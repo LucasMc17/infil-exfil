@@ -13,10 +13,6 @@ func _init(t : FriendlyUnit) -> void:
 
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
-	# TODO: The movement should be handled by picking a point and going to it, not checking for a chance to hit after every single step.
-		# 1. Can i target the enemy? If so, do it.
-		# 2. If not, are there are any moves of mine that are within striking distance of the friendly? If so, which of them also have line of sight? Move to one, then attack
-		# 3. If no moves pass the above check, move as far as I can towards the enemy unit and try the whole flow again next turn.
 	attack_skill = acting_unit.skill_machine.skills["EnemyAttack"]
 	attack_skill.arm_as_enemy()
 	if attack_skill.potential_targets.has(target):
@@ -58,6 +54,6 @@ func _on_finished_moving(_unit : Unit):
 		attack_skill.disarm_as_enemy()
 		acting_unit.forfeit_turn()
 
-
+# TODO: This doesn't test for line of sight yet
 func _filter_move(move : Vector3) -> bool:
 	return move.distance_to(target.board_position) <= attack_skill.effective_range
