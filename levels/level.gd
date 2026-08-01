@@ -146,6 +146,42 @@ func set_active_unit(unit : Unit):
 			active_unit.activate()
 
 
+## Generates an array of likely nav beacon positions visited by a fleeing friendlty unit, in order, based on that unit's last known position.
+func get_likely_path(last_known_position : Vector3i) -> Array[Vector3i]:
+	var result : Array[Vector3i] = []
+
+	var nearest_beacon : NavBeacon
+	var nb_distance = null
+	
+	for beacon : NavBeacon in _beacon_holder.get_child(last_known_position.y / 4).get_children():
+		var distance = beacon.position.distance_to(last_known_position)
+		if !nearest_beacon or nb_distance > distance:
+			nearest_beacon = beacon
+			nb_distance = distance
+	
+
+	var first_point : NavBeacon
+	var fP_distance = null
+	
+	for connection : NavBeacon in nearest_beacon.connections:
+		var distance = connection.position.distance_to(last_known_position)
+		if !first_point or fP_distance > distance:
+			first_point = connection
+			fP_distance = distance
+	
+
+	result.append(first_point.position)
+
+	var connections = first_point.connections.filter(func (conn): return conn != nearest_beacon)
+
+	if !connections.is_empty():
+		result.append(connections.pick_random().position)
+	
+	return result
+
+
+
+
 ## Cycle the active unit to the next in the list.
 func cycle_active_unit():
 	var faction : Array
