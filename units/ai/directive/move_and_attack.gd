@@ -25,10 +25,21 @@ func begin(unit : EnemyUnit) -> void:
 		attack_skill.disarm_as_enemy()
 		var potential_moves = Array(World.level.movement_system.all_unit_moves).filter(_filter_move)
 		if !potential_moves.is_empty():
-			acting_unit.movement_machine.current_state.transition('Run', { "end_point": potential_moves[0]})
+			acting_unit.movement_machine.current_state.transition('Run', { "end_point": potential_moves[0] })
 		else:
-			end()
-			acting_unit.forfeit_turn.call_deferred()
+			# NOTE: Should this be a built in function of the nav map?
+			var neighbors : Array[Vector3i] = [
+				target.board_position + Vector3i(1, 0, 0),
+				target.board_position + Vector3i(-1, 0, 0),
+				target.board_position + Vector3i(0, 0, 1),
+				target.board_position + Vector3i(0, 0, -1)
+			]
+			var target_point = World.level.nav_map.get_closest_point(acting_unit.board_position, neighbors)
+			if target_point:
+				acting_unit.movement_machine.current_state.transition('Run', { "end_point": target_point })
+			else:
+				end()
+				acting_unit.forfeit_turn.call_deferred()
 
 
 func _on_finished_acting(_unit : Unit):
