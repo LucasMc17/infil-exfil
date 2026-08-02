@@ -164,7 +164,8 @@ func get_likely_path(last_known_position : Vector3i) -> Array[Vector3i]:
 	var fP_distance = null
 	
 	for connection : NavBeacon in nearest_beacon.connections:
-		var distance = connection.position.distance_to(last_known_position)
+		# NOTE: This compares the distance of connected beacons based on their distance from the root beacon. It's not perfect but its better than a raw distance comparison.
+		var distance = connection.position.distance_to(last_known_position) / connection.position.distance_to(nearest_beacon.position)
 		if !first_point or fP_distance > distance:
 			first_point = connection
 			fP_distance = distance

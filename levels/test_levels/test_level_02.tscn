@@ -85,7 +85,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 6)
 connections = [NodePath("../12"), NodePath("../14")]
 
 [node name="14" parent="NavigableGridMap/BeaconHolder/Floor1" index="14" unique_id=1903357529 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 6)
 connections = [NodePath("../13"), NodePath("../15")]
 
 [node name="15" parent="NavigableGridMap/BeaconHolder/Floor1" index="15" unique_id=126706731 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
