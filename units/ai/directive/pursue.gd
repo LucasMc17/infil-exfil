@@ -52,7 +52,7 @@ func _on_finished_moving(unit : Unit):
 			pursuit_index += 1
 			if pursuit_index >= pursuit_path.size():
 				end()
-				acting_unit.awareness.drop_guard()
+				acting_unit.awareness.alert()
 		acting_unit.forfeit_turn()
 
 

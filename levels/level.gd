@@ -165,6 +165,7 @@ func get_likely_path(last_known_position : Vector3i) -> Array[Vector3i]:
 	
 	for connection : NavBeacon in nearest_beacon.connections:
 		# NOTE: This compares the distance of connected beacons based on their distance from the root beacon. It's not perfect but its better than a raw distance comparison.
+		# TODO: In a future iteration, I think this system should trace the user to the first anf second positions along their path where the path branches (ie nav beacon has three or more connections.) This will let me place more arbitrary nav beacons and make the path following more meaningful. All of this is of course also going to be impacted by whatever room labeling sustem i end up creating.
 		var distance = connection.position.distance_to(last_known_position) / connection.position.distance_to(nearest_beacon.position)
 		if !first_point or fP_distance > distance:
 			first_point = connection

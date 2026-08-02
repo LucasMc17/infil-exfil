@@ -40,8 +40,14 @@ func _init(u : EnemyUnit, a : EnemyUnitAwarenessModule) -> void:
 	awareness = a
 	combat_director = CombatDirectorSubmodule.new(unit, awareness)
 
-	unaware_base_directives = unit.unaware_base_directives
-	alerted_base_directives = unit.alerted_base_directives
+	if unit.unaware_base_directives.is_empty():
+		unaware_base_directives = [NoDirective.new()]
+	else:
+		unaware_base_directives = unit.unaware_base_directives
+	if unit.alerted_base_directives.is_empty():
+		alerted_base_directives = [NoDirective.new()]
+	else:
+		alerted_base_directives = unit.alerted_base_directives
 
 
 ## Take the next directive from the appropriate queue and assign it as the current directive. If the current directive queue is empty, it will restart the unaware or alerted queue, where as if the unit is alarmed, it will consult the combat director for a new directive.
@@ -56,7 +62,7 @@ func take_directive_from_queue():
 		next_directive = unaware_directive_queue[0]
 	elif awareness.is_alerted():
 		if alerted_directive_queue.is_empty():
-			alerted_directive_queue = alerted_directive_queue.duplicate()
+			alerted_directive_queue = alerted_base_directives.duplicate()
 		next_directive = alerted_directive_queue[0]
 	elif awareness.is_alarmed():
 		if alarmed_directive_queue.is_empty():
