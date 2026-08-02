@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://c1p3epsiesjoj" path="res://levels/geometry/debug_wall.gd" id="1_cu6e8"]
 [ext_resource type="Material" uid="uid://b0rlusiqnnw7i" path="res://assets/materials/debug_geometry_material.tres" id="2_ruveg"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_42x51"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_ruveg"]
 size = Vector3(0.15, 4, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_2q0yv"]
+[sub_resource type="BoxMesh" id="BoxMesh_42x51"]
 material = ExtResource("2_ruveg")
 size = Vector3(0.15, 4, 1)
 
@@ -18,9 +18,9 @@ script = ExtResource("1_cu6e8")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1490587641]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0.5)
-shape = SubResource("BoxShape3D_42x51")
+shape = SubResource("BoxShape3D_ruveg")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=651137775]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0.5)
-mesh = SubResource("BoxMesh_2q0yv")
+mesh = SubResource("BoxMesh_42x51")
