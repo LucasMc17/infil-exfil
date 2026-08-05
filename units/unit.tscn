@@ -21,7 +21,7 @@ radius = 0.45
 radius = 0.45
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ysu83"]
-viewport_path = NodePath("DebugLabel/@SubViewport@73912")
+viewport_path = NodePath("DebugLabel/@SubViewport@45774")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vsw5j"]
 radius = 0.45
