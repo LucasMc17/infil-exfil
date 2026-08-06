@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="NavZoneConfigFile" format=3 uid="uid://ccsh82dwxe3dg"]
+
+[ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_beacons/nav_zone_configs.gd" id="1_cdi1x"]
+
+[resource]
+script = ExtResource("1_cdi1x")
+areas = Array[Rect2i]([Rect2i(0, 0, 4, 17)])
+points = Array[Vector2i]([Vector2i(1, 2), Vector2i(1, 8), Vector2i(1, 14)])
+exits = Array[Vector2i]([Vector2i(-1, 8), Vector2i(-1, 14)])
+metadata/_custom_type_script = "uid://wjvqhhryw4h4"

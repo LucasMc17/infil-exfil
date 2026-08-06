@@ -6,4 +6,5 @@
 script = ExtResource("1_1ef1k")
 areas = Array[Rect2i]([Rect2i(0, 0, 1, 1), Rect2i(-1, 1, 4, 5), Rect2i(3, 2, 9, 4)])
 points = Array[Vector2i]([Vector2i(0, 3), Vector2i(9, 3)])
+exits = Array[Vector2i]([Vector2i(0, -1), Vector2i(12, 3)])
 metadata/_custom_type_script = "uid://wjvqhhryw4h4"
