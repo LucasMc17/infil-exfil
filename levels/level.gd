@@ -168,12 +168,13 @@ func get_likely_path_v2(pursuer_position : Vector3i, last_known_position : Vecto
 	for i in range(pursuit_depth):
 		var next_exit : NavZoneExit = current_zone.get_nearest_exit(current_position, banned_zones)
 		if !next_exit:
+			result.append(current_zone.get_nearest_point(current_position))
 			print(result)
 			return result
 		current_zone = load(next_exit.to_zone_uid)
 		print(current_zone)
-		result.append(next_exit.board_position)
 		current_position = next_exit.board_position
+		result.append(current_zone.get_nearest_point(current_position))
 		banned_zones.append(current_zone)
 
 	print(result)

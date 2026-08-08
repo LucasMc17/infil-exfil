@@ -27,6 +27,17 @@ func has_point(point : Vector3i) -> bool:
 	return false
 
 
+func get_nearest_point(pos : Vector3i) -> Vector3i:
+	var result = null
+	var distance_to_result = null
+	for point : Vector3i in board_points:
+		var distance = pos.distance_to(point)
+		if !distance_to_result or distance < distance_to_result:
+			distance_to_result = distance
+			result = point
+	return result
+
+
 func get_nearest_exit(pos : Vector3i, banned_zones : Array[NavZoneConfigFile]) -> NavZoneExit:
 	var result = null
 	var distance_to_result = null
