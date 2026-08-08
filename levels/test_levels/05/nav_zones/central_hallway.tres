@@ -41,6 +41,7 @@ metadata/_custom_type_script = "uid://c7xqovr73fsq5"
 
 [resource]
 script = ExtResource("1_37wvy")
+base_position = Vector2i(-5, -4)
 areas = Array[Rect2i]([Rect2i(0, 0, 2, 9), Rect2i(2, 0, 5, 2), Rect2i(2, 7, 5, 2), Rect2i(7, 0, 2, 9)])
 points = Array[Vector2i]([Vector2i(1, 1), Vector2i(1, 5), Vector2i(4, 7), Vector2i(3, 1), Vector2i(7, 1), Vector2i(7, 4)])
 exits = Array[ExtResource("1_ism71")]([SubResource("Resource_y24si"), SubResource("Resource_y4utj"), SubResource("Resource_qrsxq"), SubResource("Resource_oll5c"), SubResource("Resource_ism71"), SubResource("Resource_0r2nh")])

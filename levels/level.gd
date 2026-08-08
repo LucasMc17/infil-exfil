@@ -148,18 +148,27 @@ func set_active_unit(unit : Unit):
 			active_unit.activate()
 
 
-func get_zone_from_position(pos : Vector3i) -> NavZone:
+func get_zone_from_position(pos : Vector3i) -> NavZoneConfigFile:
 	for zone : NavZone in _beacon_holder.get_child(pos.y / 4).get_children():
-		if zone.has_point(Vector2i(pos.x, pos.z)):
-			return zone
+		if zone.configs.has_point(Vector2i(pos.x, pos.z)):
+			return zone.configs
 	return null
 
 
-func get_likely_path_v2(last_known_position : Vector3i) -> Array[Vector3i]:
+func get_likely_path_v2(pursuer_position : Vector3i, last_known_position : Vector3i, pursuit_depth := 2) -> Array[Vector3i]:
 	var result : Array[Vector3i] = []
+	var current_zone = get_zone_from_position(pursuer_position)
+	var banned_zones : Array[NavZoneConfigFile] = [current_zone]
 	var last_known_zone = get_zone_from_position(last_known_position)
-	DebugConsole.log(last_known_position)
-	DebugConsole.log(last_known_zone.name)
+	# print(last_known_zone)
+	# print(last_known_zone.get_nearest_exit(Vector2i(last_known_position.x, last_known_position.y), banned_zones))
+
+	for i in range(pursuit_depth):
+		var next_zone = last_known_zone.get_nearest_exit(Vector2i(last_known_position.x, last_known_position.y), banned_zones)
+		if !next_zone:
+			return result
+		last_known_zone = next_zone
+		banned_zones.append(last_known_zone)
 
 	return result
 

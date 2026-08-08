@@ -36,7 +36,7 @@ var plane_material : StandardMaterial3D
 @export var test_point := Vector2i(0,0):
 	set(val):
 		test_point = val
-		print(has_point(test_point))
+		print(configs.has_point(test_point))
 
 func _ready() -> void:
 	print("ENTERING")
@@ -47,14 +47,6 @@ func _ready() -> void:
 		plane_material.albedo_color = debug_color
 		# _redraw_meshes()
 
-
-func has_point(point : Vector2i) -> bool:
-	# Translate to local space
-	# var local_point = point - Vector2i(position.x, position.z)
-	for rect : Rect2i in configs.areas:
-		if rect.has_point(point):
-			return true
-	return false
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint() and show_visuals:

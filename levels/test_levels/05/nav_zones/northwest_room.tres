@@ -11,6 +11,7 @@ metadata/_custom_type_script = "uid://c7xqovr73fsq5"
 
 [resource]
 script = ExtResource("1_tu80y")
+base_position = Vector2i(-9, -8)
 areas = Array[Rect2i]([Rect2i(0, 0, 6, 4)])
 points = Array[Vector2i]([Vector2i(1, 2)])
 exits = Array[ExtResource("1_casx3")]([SubResource("Resource_oh6eq")])

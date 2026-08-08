@@ -21,12 +21,13 @@ var attack_skill : EnemyAttack
 func _init(t : FriendlyUnit, lkp : Vector3i) -> void:
 	target = t
 	last_known_pos = lkp
-	pursuit_path = World.level.get_likely_path_v2(last_known_pos)
 	print(pursuit_path)
 
 
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
+	if !pursuit_path:
+		pursuit_path = World.level.get_likely_path_v2(acting_unit.position, last_known_pos)
 	attack_skill = acting_unit.skill_machine.skills["EnemyAttack"]
 	attack_skill.arm_as_enemy()
 	if !attack_skill.potential_targets.is_empty():
