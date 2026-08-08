@@ -8,6 +8,5 @@ extends Resource
 
 @export_group("READ ONLY")
 @export var board_position : Vector2i
-@export var board_points : Vector2i
 @export var to_zone_uid : String
 

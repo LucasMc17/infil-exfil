@@ -2,18 +2,17 @@
 class_name NavZoneConfigFile
 extends Resource
 
-@export var base_position := Vector2i.ZERO
-
-
+@export_group("Configs")
 @export var areas : Array[Rect2i]
-
 @export var points : Array[Vector2i]
-
 @export var exits : Array[NavZoneExit]
 
+@export_group("READ ONLY")
+@export var base_position := Vector2i.ZERO
+@export var board_points : Array[Vector2i]
 
 func _to_board_space(point : Vector2i) -> Vector2i:
-	return point - base_position
+	return point + base_position
 
 
 func has_point(point : Vector2i) -> bool:
