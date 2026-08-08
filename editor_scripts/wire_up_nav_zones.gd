@@ -27,11 +27,11 @@ func _run() -> void:
 				
 				var board_points : Array[Vector2i] = []
 				for point : Vector2i in configs.points:
-					board_points.append(configs._to_board_space(point))
+					board_points.append(configs.to_board_space(point))
 				configs.board_points = board_points
 			
 				for exit : NavZoneExit in configs.exits:
-					exit.board_position = configs._to_board_space(exit.local_position)
+					exit.board_position = configs.to_board_space(exit.local_position)
 					var to_zone = find_nav_zone_by_name(exit.to_zone_name, nav_zone_system)
 					if !to_zone:
 						print("FOR EXIT OF ZONE " + zone_holder.name + ", NO CONNECTING ZONE WITH NAME " + exit.to_zone_name + 'FOUND')

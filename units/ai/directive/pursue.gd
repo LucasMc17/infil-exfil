@@ -21,7 +21,6 @@ var attack_skill : EnemyAttack
 func _init(t : FriendlyUnit, lkp : Vector3i) -> void:
 	target = t
 	last_known_pos = lkp
-	print(pursuit_path)
 
 
 func begin(unit : EnemyUnit) -> void:

@@ -11,25 +11,29 @@ extends Resource
 @export var base_position := Vector2i.ZERO
 @export var board_points : Array[Vector2i]
 
-func _to_board_space(point : Vector2i) -> Vector2i:
+func to_board_space(point : Vector2i) -> Vector2i:
 	return point + base_position
 
 
+func to_local_space(point : Vector2i) -> Vector2i:
+	return point - base_position
+
+
 func has_point(point : Vector2i) -> bool:
-	var true_point = _to_board_space(point)
+	var true_point = to_local_space(point)
 	for rect : Rect2i in areas:
 		if rect.has_point(true_point):
 			return true
 	return false
 
 
-func get_nearest_exit(pos : Vector2i, banned_zones : Array[NavZoneConfigFile]) -> NavZoneConfigFile:
+func get_nearest_exit(pos : Vector2i, banned_zones : Array[NavZoneConfigFile]) -> NavZoneExit:
 	var result = null
-	var nearest = null
+	var distance_to_result = null
 	for exit in exits:
-		var zone = load(exit.to_zone)
-		var distance = exit.local_position.distance_to(_to_board_space(pos))
-		if !banned_zones.has(zone) and (!nearest or distance < nearest):
-			nearest = distance
-			result = zone
+		var zone = load(exit.to_zone_uid)
+		var distance = exit.board_position.distance_to(pos)
+		if !banned_zones.has(zone) and (!distance_to_result or distance < distance_to_result):
+			distance_to_result = distance
+			result = exit
 	return result
