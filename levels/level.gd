@@ -1,3 +1,4 @@
+@tool
 ## A level for one match between player and enemy to take place in.
 class_name BaseLevel
 extends Node3D
@@ -97,15 +98,16 @@ var allow_inputs : bool:
 @onready var _beacon_holder : Node3D = %BeaconHolder
 
 func _ready() -> void:
-	_beacon_holder.visible = false
-	Events.skill_armed.connect(_on_skill_armed)
-	Events.skill_disarmed.connect(_on_skill_disarmed)
-	nav_map.setup_astar_grid()
-	World.level = self
-	ConsoleEvents.command_submitted.connect(func (command_name, _parameters):
-		if command_name == "exit":
-			get_tree().quit()
-	)
+	if !Engine.is_editor_hint():
+		_beacon_holder.visible = false
+		Events.skill_armed.connect(_on_skill_armed)
+		Events.skill_disarmed.connect(_on_skill_disarmed)
+		nav_map.setup_astar_grid()
+		World.level = self
+		ConsoleEvents.command_submitted.connect(func (command_name, _parameters):
+			if command_name == "exit":
+				get_tree().quit()
+		)
 
 
 func _unhandled_input(event: InputEvent) -> void:

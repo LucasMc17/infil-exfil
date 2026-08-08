@@ -2,11 +2,7 @@
 class_name NavZoneConfigFile
 extends Resource
 
-# @export var base_position : Vector3i:
-# 	set(val):
-# 		base_position = val
-# 		if Engine.is_editor_hint():
-# 			emit_changed()
+var base_position := Vector2i.ZERO
 
 
 @export var areas : Array[Rect2i]
@@ -28,5 +24,5 @@ extends Resource
 	# 		emit_changed()
 
 
-func _to_board_space(point : Vector2i) -> Vector2i:
-	return point - zone_position
+# func _to_board_space(point : Vector2i) -> Vector2i:
+# 	return point - zone_position
