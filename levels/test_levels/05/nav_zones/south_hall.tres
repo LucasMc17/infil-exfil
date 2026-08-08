@@ -1,10 +1,22 @@
 [gd_resource type="Resource" script_class="NavZoneConfigFile" format=3 uid="uid://b887chbu27m44"]
 
 [ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_beacons/nav_zone_configs.gd" id="1_1ef1k"]
+[ext_resource type="Script" uid="uid://c7xqovr73fsq5" path="res://navigation/nav_beacons/nav_zone_exit.gd" id="1_jpdc1"]
+
+[sub_resource type="Resource" id="Resource_1j87o"]
+script = ExtResource("1_jpdc1")
+to_zone = "uid://3atogghfi1ss"
+metadata/_custom_type_script = "uid://c7xqovr73fsq5"
+
+[sub_resource type="Resource" id="Resource_2kupl"]
+script = ExtResource("1_jpdc1")
+position = Vector2i(11, 3)
+to_zone = "uid://ccsh82dwxe3dg"
+metadata/_custom_type_script = "uid://c7xqovr73fsq5"
 
 [resource]
 script = ExtResource("1_1ef1k")
 areas = Array[Rect2i]([Rect2i(0, 0, 1, 1), Rect2i(-1, 1, 4, 5), Rect2i(3, 2, 9, 4)])
 points = Array[Vector2i]([Vector2i(0, 3), Vector2i(9, 3)])
-exits = Array[Vector2i]([Vector2i(0, -1), Vector2i(12, 3)])
+exits = Array[ExtResource("1_jpdc1")]([SubResource("Resource_1j87o"), SubResource("Resource_2kupl")])
 metadata/_custom_type_script = "uid://wjvqhhryw4h4"

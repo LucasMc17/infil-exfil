@@ -142,8 +142,24 @@ func set_active_unit(unit : Unit):
 		if active_unit:
 			active_unit.deactivate()
 		active_unit = unit
-		if active_unit:
+		if active_unit: 
 			active_unit.activate()
+
+
+func get_zone_from_position(pos : Vector3i) -> NavZone:
+	for zone : NavZone in _beacon_holder.get_child(pos.y / 4).get_children():
+		if zone.has_point(Vector2i(pos.x, pos.z)):
+			return zone
+	return null
+
+
+func get_likely_path_v2(last_known_position : Vector3i) -> Array[Vector3i]:
+	var result : Array[Vector3i] = []
+	var last_known_zone = get_zone_from_position(last_known_position)
+	DebugConsole.log(last_known_position)
+	DebugConsole.log(last_known_zone.name)
+
+	return result
 
 
 ## Generates an array of likely nav beacon positions visited by a fleeing friendlty unit, in order, based on that unit's last known position.

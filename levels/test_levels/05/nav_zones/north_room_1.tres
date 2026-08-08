@@ -1,10 +1,17 @@
 [gd_resource type="Resource" script_class="NavZoneConfigFile" format=3 uid="uid://db5ee61ervws5"]
 
 [ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_beacons/nav_zone_configs.gd" id="1_0du42"]
+[ext_resource type="Script" uid="uid://c7xqovr73fsq5" path="res://navigation/nav_beacons/nav_zone_exit.gd" id="1_xif8u"]
+
+[sub_resource type="Resource" id="Resource_oh6eq"]
+script = ExtResource("1_xif8u")
+position = Vector2i(1, 3)
+to_zone = "uid://0dxsj43fe112"
+metadata/_custom_type_script = "uid://c7xqovr73fsq5"
 
 [resource]
 script = ExtResource("1_0du42")
 areas = Array[Rect2i]([Rect2i(0, 0, 3, 4)])
 points = Array[Vector2i]([Vector2i(1, 1)])
-exits = Array[Vector2i]([Vector2i(1, 4)])
+exits = Array[ExtResource("1_xif8u")]([SubResource("Resource_oh6eq")])
 metadata/_custom_type_script = "uid://wjvqhhryw4h4"

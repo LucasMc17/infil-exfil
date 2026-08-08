@@ -1,21 +1,20 @@
 [gd_scene format=3 uid="uid://cr1fabbq8qekt"]
 
 [ext_resource type="PackedScene" uid="uid://dt305x7b2byrv" path="res://levels/level.tscn" id="1_bgn5r"]
-[ext_resource type="PackedScene" uid="uid://dv37xnp2oonws" path="res://navigation/nav_beacons/nav_zone.tscn" id="2_ik5qm"]
-[ext_resource type="Resource" uid="uid://3atogghfi1ss" path="res://levels/test_levels/05/nav_zones/ladder_room.tres" id="3_1j87o"]
 [ext_resource type="Script" uid="uid://7xjtskn0u7u" path="res://navigation/nav_beacons/nav_zone.gd" id="3_b83sn"]
-[ext_resource type="Resource" uid="uid://c5o7a0s0ij50u" path="res://levels/test_levels/05/nav_zones/west_room.tres" id="3_ik5qm"]
-[ext_resource type="Resource" uid="uid://b887chbu27m44" path="res://levels/test_levels/05/nav_zones/south_hall.tres" id="4_1j87o"]
+[ext_resource type="Resource" uid="uid://0dxsj43fe112" path="res://levels/test_levels/05/nav_zones/central_hallway.tres" id="4_bgn5r"]
 [ext_resource type="PackedScene" uid="uid://dygqxfucs53hc" path="res://levels/geometry/debug_wall.tscn" id="5_2kupl"]
+[ext_resource type="Resource" uid="uid://3atogghfi1ss" path="res://levels/test_levels/05/nav_zones/ladder_room.tres" id="5_ik5qm"]
+[ext_resource type="Resource" uid="uid://b887chbu27m44" path="res://levels/test_levels/05/nav_zones/south_hall.tres" id="6_b83sn"]
 [ext_resource type="PackedScene" uid="uid://b6h1160eunshj" path="res://units/friendlies/friendly_unit.tscn" id="6_peql8"]
-[ext_resource type="Resource" uid="uid://0dxsj43fe112" path="res://levels/test_levels/05/nav_zones/central_hallway.tres" id="7_1j87o"]
+[ext_resource type="Resource" uid="uid://ccsh82dwxe3dg" path="res://levels/test_levels/05/nav_zones/east_hall.tres" id="7_1j87o"]
 [ext_resource type="PackedScene" uid="uid://bup8e1flyaj0p" path="res://units/enemies/enemy_unit.tscn" id="7_p8x4w"]
-[ext_resource type="Resource" uid="uid://ccsh82dwxe3dg" path="res://levels/test_levels/05/nav_zones/east_hall.tres" id="8_2kupl"]
 [ext_resource type="Script" uid="uid://bp1pubml3l0d7" path="res://units/ai/directive/directive.gd" id="8_m0sp5"]
+[ext_resource type="Resource" uid="uid://db5ee61ervws5" path="res://levels/test_levels/05/nav_zones/north_room_1.tres" id="8_peql8"]
 [ext_resource type="Script" uid="uid://cvy611uxolcnt" path="res://units/ai/directive/move_to_point.gd" id="9_h35ky"]
-[ext_resource type="Resource" uid="uid://ded6tnoxp2oxd" path="res://levels/test_levels/05/nav_zones/northwest_room.tres" id="9_peql8"]
-[ext_resource type="Resource" uid="uid://db5ee61ervws5" path="res://levels/test_levels/05/nav_zones/north_room_1.tres" id="10_p8x4w"]
-[ext_resource type="Resource" uid="uid://b85e1hsm15332" path="res://levels/test_levels/05/nav_zones/north_room_2.tres" id="11_m0sp5"]
+[ext_resource type="Resource" uid="uid://b85e1hsm15332" path="res://levels/test_levels/05/nav_zones/north_room_2.tres" id="9_p8x4w"]
+[ext_resource type="Resource" uid="uid://ded6tnoxp2oxd" path="res://levels/test_levels/05/nav_zones/northwest_room.tres" id="10_m0sp5"]
+[ext_resource type="Resource" uid="uid://c5o7a0s0ij50u" path="res://levels/test_levels/05/nav_zones/west_room.tres" id="11_h35ky"]
 [ext_resource type="Resource" uid="uid://ckgikmtpfx4ig" path="res://levels/test_levels/05/nav_zones/center_room.tres" id="12_h35ky"]
 
 [sub_resource type="Resource" id="Resource_gfecl"]
@@ -38,63 +37,67 @@ data = {
 [node name="Floor1" type="Node3D" parent="NavigableGridMap/BeaconHolder" parent_id_path=PackedInt32Array(34241682) index="0" unique_id=842466025]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -0.5)
 
-[node name="WestRoom" parent="NavigableGridMap/BeaconHolder/Floor1" index="0" unique_id=441860338 instance=ExtResource("2_ik5qm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -4)
-configs = ExtResource("3_ik5qm")
-debug_color = Color(0.91857594, 0.31533042, 0.67274904, 1)
-
-[node name="SouthHall" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="1" unique_id=1793694957]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 3)
-script = ExtResource("3_b83sn")
-configs = ExtResource("4_1j87o")
-debug_color = Color(0.44099495, 0.33158675, 0.92607886, 1)
-metadata/_custom_type_script = "uid://7xjtskn0u7u"
-
-[node name="LadderRoom" parent="NavigableGridMap/BeaconHolder/Floor1" index="2" unique_id=1604017771 instance=ExtResource("2_ik5qm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 0)
-configs = ExtResource("3_1j87o")
-debug_color = Color(0, 0.55924636, 0.29549313, 1)
-
-[node name="CentralHallway" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="3" unique_id=350266098]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -4)
-script = ExtResource("3_b83sn")
-configs = ExtResource("7_1j87o")
-debug_color = Color(0.6180394, 0.66081566, 0.16465053, 1)
-metadata/_custom_type_script = "uid://7xjtskn0u7u"
-
-[node name="EastHall" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="4" unique_id=53736384]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -8)
-script = ExtResource("3_b83sn")
-configs = ExtResource("8_2kupl")
-debug_color = Color(0.31081986, 0.0898122, 0.28823188, 1)
-metadata/_custom_type_script = "uid://7xjtskn0u7u"
-
-[node name="NorthwestRoom" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="5" unique_id=843238417]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -8)
-script = ExtResource("3_b83sn")
-configs = ExtResource("9_peql8")
-debug_color = Color(0.8487629, 0.39310127, 0.23244563, 1)
-metadata/_custom_type_script = "uid://7xjtskn0u7u"
-
-[node name="NorthRoom1" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="6" unique_id=871831105]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -8)
-script = ExtResource("3_b83sn")
-configs = ExtResource("10_p8x4w")
-debug_color = Color(6.738305e-07, 0.58351105, 0.18778002, 1)
-metadata/_custom_type_script = "uid://7xjtskn0u7u"
-
-[node name="NorthRoom2" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="7" unique_id=1440576193]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -8)
-script = ExtResource("3_b83sn")
-configs = ExtResource("11_m0sp5")
-debug_color = Color(0.9999998, 0.10077178, 0.28263795, 1)
-metadata/_custom_type_script = "uid://7xjtskn0u7u"
-
-[node name="CenterRoom" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="8" unique_id=143846389]
+[node name="CenterRoom" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="0" unique_id=143846389]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -2)
 script = ExtResource("3_b83sn")
 configs = ExtResource("12_h35ky")
 debug_color = Color(8.663535e-07, 0.46397173, 0.59394896, 1)
+metadata/_custom_type_script = "uid://7xjtskn0u7u"
+
+[node name="CentralHallway" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="1" unique_id=320762810]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -4)
+script = ExtResource("3_b83sn")
+configs = ExtResource("4_bgn5r")
+debug_color = Color(0.31620854, 0.08143318, 0.8143316, 1)
+metadata/_custom_type_script = "uid://7xjtskn0u7u"
+
+[node name="LadderRoom" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="2" unique_id=1701652218]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 0)
+script = ExtResource("3_b83sn")
+configs = ExtResource("5_ik5qm")
+debug_color = Color(0.043797314, 0.43797305, 0.20613463, 1)
+metadata/_custom_type_script = "uid://7xjtskn0u7u"
+
+[node name="SouthHall" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="3" unique_id=692197678]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 3)
+script = ExtResource("3_b83sn")
+configs = ExtResource("6_b83sn")
+debug_color = Color(0.7410973, 0.07410975, 0.53463554, 1)
+metadata/_custom_type_script = "uid://7xjtskn0u7u"
+
+[node name="EastHall" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="4" unique_id=241499898]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -8)
+script = ExtResource("3_b83sn")
+configs = ExtResource("7_1j87o")
+debug_color = Color(0.05673008, 0.5673007, 0.38947117, 1)
+metadata/_custom_type_script = "uid://7xjtskn0u7u"
+
+[node name="NorthRoom1" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="5" unique_id=954113888]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -8)
+script = ExtResource("3_b83sn")
+configs = ExtResource("8_peql8")
+debug_color = Color(0.0689826, 0.6564892, 0.68982583, 1)
+metadata/_custom_type_script = "uid://7xjtskn0u7u"
+
+[node name="NorthRoom2" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="6" unique_id=1702898923]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -8)
+script = ExtResource("3_b83sn")
+configs = ExtResource("9_p8x4w")
+debug_color = Color(0.33712578, 0.057391442, 0.5739143, 1)
+metadata/_custom_type_script = "uid://7xjtskn0u7u"
+
+[node name="NorthWestRoom" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="7" unique_id=1435505427]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -8)
+script = ExtResource("3_b83sn")
+configs = ExtResource("10_m0sp5")
+debug_color = Color(0.6322201, 0.06322202, 0.11016164, 1)
+metadata/_custom_type_script = "uid://7xjtskn0u7u"
+
+[node name="WestRoom" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="8" unique_id=1430237219]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -4)
+script = ExtResource("3_b83sn")
+configs = ExtResource("11_h35ky")
+debug_color = Color(0.74940455, 0.2956445, 0.07494047, 1)
 metadata/_custom_type_script = "uid://7xjtskn0u7u"
 
 [node name="Floor1" type="Node3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="0" unique_id=1601135492]

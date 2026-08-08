@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://dv37xnp2oonws"]
-
-[ext_resource type="Script" uid="uid://7xjtskn0u7u" path="res://navigation/nav_beacons/nav_zone.gd" id="1_5je1r"]
-
-[node name="NavZone" type="Node3D" unique_id=654761591]
-script = ExtResource("1_5je1r")
-debug_color = null

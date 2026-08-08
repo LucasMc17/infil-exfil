@@ -21,7 +21,7 @@ var attack_skill : EnemyAttack
 func _init(t : FriendlyUnit, lkp : Vector3i) -> void:
 	target = t
 	last_known_pos = lkp
-	pursuit_path = World.level.get_likely_path(last_known_pos)
+	pursuit_path = World.level.get_likely_path_v2(last_known_pos)
 	print(pursuit_path)
 
 
