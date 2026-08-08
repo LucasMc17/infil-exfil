@@ -95,8 +95,8 @@ func _redraw_meshes() -> void:
 			if exit:
 				var mesh_instance = MeshInstance3D.new()
 				var cylinder_mesh = CylinderMesh.new()
-				mesh_instance.position.x = exit.position.x + 0.5
-				mesh_instance.position.z = exit.position.y + 0.5
+				mesh_instance.position.x = exit.local_position.x + 0.5
+				mesh_instance.position.z = exit.local_position.y + 0.5
 				_exit_meshes.append(mesh_instance)
 
 				mesh_instance.mesh = cylinder_mesh

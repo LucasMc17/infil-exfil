@@ -5,8 +5,10 @@
 
 [sub_resource type="Resource" id="Resource_sbnsv"]
 script = ExtResource("1_1slw0")
-position = Vector2i(2, 4)
-to_zone = "uid://0dxsj43fe112"
+local_position = Vector2i(2, 4)
+to_zone_name = "CentralHallway"
+board_position = null
+board_points = null
 metadata/_custom_type_script = "uid://c7xqovr73fsq5"
 
 [resource]

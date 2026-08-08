@@ -5,8 +5,10 @@
 
 [sub_resource type="Resource" id="Resource_oh6eq"]
 script = ExtResource("1_casx3")
-position = Vector2i(1, 3)
-to_zone = "uid://c5o7a0s0ij50u"
+local_position = Vector2i(1, 3)
+to_zone_name = "WestRoom"
+board_position = null
+board_points = null
 metadata/_custom_type_script = "uid://c7xqovr73fsq5"
 
 [resource]

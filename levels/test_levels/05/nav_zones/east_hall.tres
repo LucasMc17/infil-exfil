@@ -5,14 +5,18 @@
 
 [sub_resource type="Resource" id="Resource_o6vb7"]
 script = ExtResource("1_52cn6")
-position = Vector2i(0, 8)
-to_zone = "uid://0dxsj43fe112"
+local_position = Vector2i(0, 8)
+to_zone_name = "CentralHallway"
+board_position = null
+board_points = null
 metadata/_custom_type_script = "uid://c7xqovr73fsq5"
 
 [sub_resource type="Resource" id="Resource_ya7ln"]
 script = ExtResource("1_52cn6")
-position = Vector2i(0, 14)
-to_zone = "uid://b887chbu27m44"
+local_position = Vector2i(0, 14)
+to_zone_name = "SouthHall"
+board_position = null
+board_points = null
 metadata/_custom_type_script = "uid://c7xqovr73fsq5"
 
 [resource]

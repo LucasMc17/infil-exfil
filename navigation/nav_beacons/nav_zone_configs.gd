@@ -29,7 +29,7 @@ func get_nearest_exit(pos : Vector2i, banned_zones : Array[NavZoneConfigFile]) -
 	var nearest = null
 	for exit in exits:
 		var zone = load(exit.to_zone)
-		var distance = exit.position.distance_to(_to_board_space(pos))
+		var distance = exit.local_position.distance_to(_to_board_space(pos))
 		if !banned_zones.has(zone) and (!nearest or distance < nearest):
 			nearest = distance
 			result = zone

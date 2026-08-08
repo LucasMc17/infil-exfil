@@ -5,13 +5,17 @@
 
 [sub_resource type="Resource" id="Resource_1j87o"]
 script = ExtResource("1_jpdc1")
-to_zone = "uid://3atogghfi1ss"
+to_zone_name = "LadderRoom"
+board_position = null
+board_points = null
 metadata/_custom_type_script = "uid://c7xqovr73fsq5"
 
 [sub_resource type="Resource" id="Resource_2kupl"]
 script = ExtResource("1_jpdc1")
-position = Vector2i(11, 3)
-to_zone = "uid://ccsh82dwxe3dg"
+local_position = Vector2i(11, 3)
+to_zone_name = "EastHall"
+board_position = null
+board_points = null
 metadata/_custom_type_script = "uid://c7xqovr73fsq5"
 
 [resource]
