@@ -7,6 +7,6 @@ extends Resource
 @export var to_zone_name : String
 
 @export_group("READ ONLY")
-@export var board_position : Vector2i
+@export var board_position : Vector3i
 @export var to_zone_uid : String
 

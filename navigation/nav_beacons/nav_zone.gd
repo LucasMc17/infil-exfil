@@ -33,7 +33,7 @@ var _exit_meshes : Array[MeshInstance3D]
 
 var plane_material : StandardMaterial3D
 
-@export var test_point := Vector2i(0,0):
+@export var test_point := Vector3i.ZERO:
 	set(val):
 		test_point = val
 		print(configs.has_point(test_point))

@@ -23,9 +23,9 @@ func _run() -> void:
 				print("NAV ZONE " + zone_holder.name + "HAS NO CONFIGURED CONFIG FILE")
 				errors += 1
 			else:
-				configs.base_position = Vector2i(zone_holder.position.x, zone_holder.position.z)
+				configs.base_position = zone_holder.position
 				
-				var board_points : Array[Vector2i] = []
+				var board_points : Array[Vector3i] = []
 				for point : Vector2i in configs.points:
 					board_points.append(configs.to_board_space(point))
 				configs.board_points = board_points

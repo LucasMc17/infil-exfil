@@ -7,7 +7,7 @@
 script = ExtResource("1_52cn6")
 local_position = Vector2i(0, 8)
 to_zone_name = "CentralHallway"
-board_position = Vector2i(4, 0)
+board_position = Vector3i(4, 0, 0)
 to_zone_uid = "uid://0dxsj43fe112"
 metadata/_custom_type_script = "uid://c7xqovr73fsq5"
 
@@ -15,7 +15,7 @@ metadata/_custom_type_script = "uid://c7xqovr73fsq5"
 script = ExtResource("1_52cn6")
 local_position = Vector2i(0, 14)
 to_zone_name = "SouthHall"
-board_position = Vector2i(4, 6)
+board_position = Vector3i(4, 0, 6)
 to_zone_uid = "uid://b887chbu27m44"
 metadata/_custom_type_script = "uid://c7xqovr73fsq5"
 
@@ -24,6 +24,6 @@ script = ExtResource("1_cdi1x")
 areas = Array[Rect2i]([Rect2i(0, 0, 4, 17)])
 points = Array[Vector2i]([Vector2i(1, 2), Vector2i(1, 8), Vector2i(1, 14)])
 exits = Array[ExtResource("1_52cn6")]([SubResource("Resource_o6vb7"), SubResource("Resource_ya7ln")])
-base_position = Vector2i(4, -8)
-board_points = Array[Vector2i]([Vector2i(5, -6), Vector2i(5, 0), Vector2i(5, 6)])
+base_position = Vector3i(4, 0, -8)
+board_points = Array[Vector3i]([Vector3i(5, 0, -6), Vector3i(5, 0, 0), Vector3i(5, 0, 6)])
 metadata/_custom_type_script = "uid://wjvqhhryw4h4"

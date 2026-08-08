@@ -42,6 +42,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -2)
 script = ExtResource("3_b83sn")
 configs = ExtResource("12_h35ky")
 debug_color = Color(8.663535e-07, 0.46397173, 0.59394896, 1)
+test_point = Vector2i(0, 0)
 metadata/_custom_type_script = "uid://7xjtskn0u7u"
 
 [node name="CentralHallway" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="1" unique_id=320762810]
@@ -49,6 +50,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -4)
 script = ExtResource("3_b83sn")
 configs = ExtResource("4_bgn5r")
 debug_color = Color(0.31620854, 0.08143318, 0.8143316, 1)
+test_point = Vector2i(0, 0)
 metadata/_custom_type_script = "uid://7xjtskn0u7u"
 
 [node name="LadderRoom" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="2" unique_id=1701652218]
@@ -56,6 +58,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 0)
 script = ExtResource("3_b83sn")
 configs = ExtResource("5_ik5qm")
 debug_color = Color(0.043797314, 0.43797305, 0.20613463, 1)
+test_point = Vector2i(0, 0)
 metadata/_custom_type_script = "uid://7xjtskn0u7u"
 
 [node name="SouthHall" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="3" unique_id=692197678]
@@ -63,6 +66,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 3)
 script = ExtResource("3_b83sn")
 configs = ExtResource("6_b83sn")
 debug_color = Color(0.7410973, 0.07410975, 0.53463554, 1)
+test_point = Vector2i(0, 0)
 metadata/_custom_type_script = "uid://7xjtskn0u7u"
 
 [node name="EastHall" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="4" unique_id=241499898]
@@ -70,6 +74,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -8)
 script = ExtResource("3_b83sn")
 configs = ExtResource("7_1j87o")
 debug_color = Color(0.05673008, 0.5673007, 0.38947117, 1)
+test_point = Vector2i(0, 0)
 metadata/_custom_type_script = "uid://7xjtskn0u7u"
 
 [node name="NorthRoom1" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="5" unique_id=954113888]
@@ -77,6 +82,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -8)
 script = ExtResource("3_b83sn")
 configs = ExtResource("8_peql8")
 debug_color = Color(0.0689826, 0.6564892, 0.68982583, 1)
+test_point = Vector2i(0, 0)
 metadata/_custom_type_script = "uid://7xjtskn0u7u"
 
 [node name="NorthRoom2" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="6" unique_id=1702898923]
@@ -84,13 +90,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -8)
 script = ExtResource("3_b83sn")
 configs = ExtResource("9_p8x4w")
 debug_color = Color(0.33712578, 0.057391442, 0.5739143, 1)
+test_point = Vector2i(0, 0)
 metadata/_custom_type_script = "uid://7xjtskn0u7u"
 
 [node name="NorthWestRoom" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="7" unique_id=1435505427]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -8)
 script = ExtResource("3_b83sn")
 configs = ExtResource("10_m0sp5")
-debug_color = Color(0.6322201, 0.06322202, 0.11016164, 1)
+debug_color = Color(0.40820923, 0.040820934, 0.07642962, 1)
+test_point = Vector2i(0, 0)
 metadata/_custom_type_script = "uid://7xjtskn0u7u"
 
 [node name="WestRoom" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="8" unique_id=1430237219]
@@ -98,6 +106,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -4)
 script = ExtResource("3_b83sn")
 configs = ExtResource("11_h35ky")
 debug_color = Color(0.74940455, 0.2956445, 0.07494047, 1)
+test_point = Vector2i(0, 0)
 metadata/_custom_type_script = "uid://7xjtskn0u7u"
 
 [node name="Floor1" type="Node3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="0" unique_id=1601135492]

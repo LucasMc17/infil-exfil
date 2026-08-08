@@ -150,7 +150,7 @@ func set_active_unit(unit : Unit):
 
 func get_zone_from_position(pos : Vector3i) -> NavZoneConfigFile:
 	for zone : NavZone in _beacon_holder.get_child(pos.y / 4).get_children():
-		if zone.configs.has_point(Vector2i(pos.x, pos.z)):
+		if zone.configs.has_point(pos):
 			return zone.configs
 	return null
 
@@ -158,23 +158,25 @@ func get_zone_from_position(pos : Vector3i) -> NavZoneConfigFile:
 func get_likely_path_v2(pursuer_position : Vector3i, last_known_position : Vector3i, pursuit_depth := 2) -> Array[Vector3i]:
 	var result : Array[Vector3i] = []
 	var starting_zone = get_zone_from_position(pursuer_position)
-	var banned_zones : Array[NavZoneConfigFile] = [starting_zone]
 	var last_known_zone = get_zone_from_position(last_known_position)
+	var banned_zones : Array[NavZoneConfigFile] = [last_known_zone, starting_zone]
 	var current_zone = last_known_zone
 	var current_position = last_known_position
 	# print(last_known_zone)
 	# print(last_known_zone.get_nearest_exit(Vector2i(last_known_position.x, last_known_position.y), banned_zones))
 
 	for i in range(pursuit_depth):
-		var next_exit : NavZoneExit = current_zone.get_nearest_exit(Vector2i(current_position.x, current_position.y), banned_zones)
+		var next_exit : NavZoneExit = current_zone.get_nearest_exit(current_position, banned_zones)
 		if !next_exit:
-			# result.append
+			print(result)
 			return result
 		current_zone = load(next_exit.to_zone_uid)
 		print(current_zone)
+		result.append(next_exit.board_position)
 		current_position = next_exit.board_position
 		banned_zones.append(current_zone)
 
+	print(result)
 	return result
 
 
