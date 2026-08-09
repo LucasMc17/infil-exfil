@@ -1,63 +1,48 @@
 @tool
+## The holder for a [NavZone] resource in 3D game space. This class has two main purposes: [br]
+## 1. To provide a spot in the scene tree for holding the NavZone resources which make up the Ai-enabled navigation layer of a level.
+## 2. To draw debug visuals representing the NavZones in 3D space for ease of editing in the editor. In the compiled game, these scenes should have no visual component at all.
 class_name NavZone
 extends Node3D
 
+## The material to apply to meshes representing navigation points within this NavZone.
 const POINT_MATERIAL = preload("uid://cvcg462nivceg")
 
 @export_tool_button("Start/Stop Debug Visuals") var start_stop_button = func():
 	show_visuals = !show_visuals
-
 @export_tool_button("Assign Random Color") var random_color_button = func():
 	debug_color = Utilities.random_color()
 
+## The NavZone resource file which populates this holder.
 @export var configs : NavZoneConfigFile:
 	set(val):
 		configs = val
 		# _redraw_meshes()
-
+## The color to assign to the debug meshes for this NavZone in editor
 @export var debug_color : Color:
 	set(val):
 		debug_color = val
 		if Engine.is_editor_hint() and plane_material:
 			plane_material.albedo_color = debug_color
 
-
+## Whether or not to create and update debug meshes in the editor for this NavZone. Can be turned off in order to declutter the editor space.
 var show_visuals := true
-				
-
-var _debug_meshes : Array[MeshInstance3D]
-
-var _nav_meshes : Array[MeshInstance3D]
-
-var _exit_meshes : Array[MeshInstance3D]
-
+## The material to apply to the debug mesh of this NavZone (when drawn).
 var plane_material : StandardMaterial3D
 
-@export var test_point := Vector3i.ZERO:
-	set(val):
-		test_point = val
-		print(configs.has_point(test_point))
-
 func _ready() -> void:
-	print("ENTERING")
 	if Engine.is_editor_hint():
-		# if configs:
-		# 	configs.changed.connect(_redraw_meshes)
 		plane_material = StandardMaterial3D.new()
 		plane_material.albedo_color = debug_color
-		# _redraw_meshes()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Engine.is_editor_hint() and show_visuals:
 		_redraw_meshes()
 
 
+## The function which continually redraws the mesh in editor to visualize this NavZone.
 func _redraw_meshes() -> void:
-	_debug_meshes.clear()
-	_nav_meshes.clear()
-	_exit_meshes.clear()
-
 	for child in get_children():
 		child.queue_free()
 
@@ -68,7 +53,6 @@ func _redraw_meshes() -> void:
 				var plane_mesh = PlaneMesh.new()
 				plane_mesh.material = plane_material
 				mesh_instance.mesh = plane_mesh
-				_debug_meshes.append(mesh_instance)
 
 				mesh_instance.mesh.size.x = abs(rect.size.x)
 				mesh_instance.mesh.size.y = abs(rect.size.y)
@@ -85,7 +69,6 @@ func _redraw_meshes() -> void:
 				box_mesh.material = POINT_MATERIAL
 				mesh_instance.position.x = point.x + 0.5
 				mesh_instance.position.z = point.y + 0.5
-				_nav_meshes.append(mesh_instance)
 
 				mesh_instance.mesh = box_mesh
 
@@ -97,18 +80,9 @@ func _redraw_meshes() -> void:
 				var cylinder_mesh = CylinderMesh.new()
 				mesh_instance.position.x = exit.local_position.x + 0.5
 				mesh_instance.position.z = exit.local_position.y + 0.5
-				_exit_meshes.append(mesh_instance)
 
 				mesh_instance.mesh = cylinder_mesh
 
 				add_child(mesh_instance)
 
 			
-# func _resize() -> void:
-# 	rect = Rect2(Vector2(global_position.x, global_position.z), Vector2(width, depth))
-# 	if _editor_mesh:
-# 		_editor_mesh.mesh.size.x = width - 0.2
-# 		_editor_mesh.mesh.size.y = depth - 0.2
-# 		_editor_mesh.position.y = 0.1
-# 		_editor_mesh.position.x = (width) / 2
-# 		_editor_mesh.position.z = (depth) / 2
