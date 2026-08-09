@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="NavZoneConfigFile" format=3 uid="uid://ckgikmtpfx4ig"]
 
 [ext_resource type="Script" uid="uid://c7xqovr73fsq5" path="res://navigation/nav_beacons/nav_zone_exit.gd" id="1_1slw0"]
-[ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_beacons/nav_zone_configs.gd" id="1_l5smo"]
+[ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_beacons/nav_zone.gd" id="1_l5smo"]
 
 [sub_resource type="Resource" id="Resource_sbnsv"]
 script = ExtResource("1_1slw0")
