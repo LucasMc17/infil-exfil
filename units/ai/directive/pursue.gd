@@ -11,6 +11,8 @@ var target : FriendlyUnit
 var visisted_last_seen := false
 ## The last seen position of the enem/y.
 var last_known_pos : Vector3i
+## Boolean tracking whether or not the pursuit path has already been calculated.
+var _is_pursuit_path_set := false
 ## The path this enemy will follow in pursuit if they don't reacquire the friendly at their last known position.
 var pursuit_path : Array[Vector3i] = []
 ## The index of the pursuit path which this unit is moving to as part of the pursuit.
@@ -25,8 +27,9 @@ func _init(t : FriendlyUnit, lkp : Vector3i) -> void:
 
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
-	if !pursuit_path:
+	if !_is_pursuit_path_set:
 		pursuit_path = World.level.get_likely_path_v2(acting_unit.position, last_known_pos)
+		_is_pursuit_path_set = true
 	attack_skill = acting_unit.skill_machine.skills["EnemyAttack"]
 	attack_skill.arm_as_enemy()
 	if !attack_skill.potential_targets.is_empty():
@@ -45,6 +48,9 @@ func _on_finished_moving(unit : Unit):
 	elif !visisted_last_seen:
 		if acting_unit.board_position == last_known_pos:
 			visisted_last_seen = true
+			if !pursuit_path:
+				end()
+				acting_unit.awareness.alert()
 		acting_unit.forfeit_turn()
 	else:
 		var target_position = pursuit_path[pursuit_index]

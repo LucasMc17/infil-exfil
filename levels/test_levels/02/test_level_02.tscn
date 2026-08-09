@@ -1,16 +1,26 @@
 [gd_scene format=3 uid="uid://pogqdn4ot8ht"]
 
 [ext_resource type="PackedScene" uid="uid://dt305x7b2byrv" path="res://levels/level.tscn" id="1_gfecl"]
-[ext_resource type="PackedScene" uid="uid://d30fjuh7ph6d6" path="res://navigation/nav_beacons/nav_beacon.tscn" id="2_53l1m"]
+[ext_resource type="Script" uid="uid://7xjtskn0u7u" path="res://navigation/nav_beacons/nav_zone.gd" id="2_5qx6c"]
 [ext_resource type="PackedScene" uid="uid://b6h1160eunshj" path="res://units/friendlies/friendly_unit.tscn" id="2_81yhl"]
 [ext_resource type="PackedScene" uid="uid://bup8e1flyaj0p" path="res://units/enemies/enemy_unit.tscn" id="3_53l1m"]
+[ext_resource type="Script" uid="uid://c7xqovr73fsq5" path="res://navigation/nav_beacons/nav_zone_exit.gd" id="3_qr3q2"]
 [ext_resource type="PackedScene" uid="uid://dygqxfucs53hc" path="res://levels/geometry/debug_wall.tscn" id="3_uslpm"]
+[ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_beacons/nav_zone_configs.gd" id="4_1icgt"]
 [ext_resource type="Script" uid="uid://bp1pubml3l0d7" path="res://units/ai/directive/directive.gd" id="4_uslpm"]
 [ext_resource type="Script" uid="uid://cvy611uxolcnt" path="res://units/ai/directive/move_to_point.gd" id="5_3og0o"]
 
+[sub_resource type="Resource" id="Resource_oh6eq"]
+script = ExtResource("4_1icgt")
+areas = Array[Rect2i]([Rect2i(0, 0, 4, 16), Rect2i(-15, 13, 15, 3), Rect2i(-15, 0, 15, 3), Rect2i(-15, 3, 4, 10)])
+points = Array[Vector2i]([Vector2i(1, 3), Vector2i(1, 14), Vector2i(-13, 14)])
+base_position = Vector3i(4, 0, -8)
+board_points = Array[Vector3i]([Vector3i(5, 0, -5), Vector3i(5, 0, 6), Vector3i(-9, 0, 6)])
+metadata/_custom_type_script = "uid://wjvqhhryw4h4"
+
 [sub_resource type="Resource" id="Resource_gfecl"]
 script = ExtResource("5_3og0o")
-_end_point = Vector3(-8, 0, -7)
+_end_point = Vector3(5, 0, 0)
 metadata/_custom_type_script = "uid://cvy611uxolcnt"
 
 [sub_resource type="Resource" id="Resource_53l1m"]
@@ -22,212 +32,58 @@ metadata/_custom_type_script = "uid://cvy611uxolcnt"
 
 [node name="NavigableGridMap" parent="." index="3" unique_id=805823171]
 data = {
-"cells": PackedInt32Array(65533, 65534, 4, 65533, 65535, 1048577, 65533, 0, 1048577, 65533, 1, 1048577, 65533, 2, 1048580, 65534, 65534, 1, 65534, 65535, 1048576, 65534, 0, 1048576, 65534, 1, 1048576, 65534, 2, 655361, 65535, 65534, 3, 65535, 65535, 1048576, 65535, 0, 1048576, 65535, 1, 1048576, 65535, 2, 1048576, 0, 65534, 1, 0, 65535, 1048576, 0, 0, 1048576, 0, 1, 1048576, 0, 2, 655361, 1, 65534, 1441796, 1, 65535, 1441793, 1, 0, 1441793, 1, 1, 1441793, 1, 2, 655364, 65531, 65533, 1048576, 65531, 65534, 1048577, 65531, 65535, 1048577, 65531, 0, 1048577, 65531, 1, 1048576, 65531, 2, 1048577, 65531, 3, 1048577, 65531, 4, 1048580, 65532, 4, 655361, 65533, 4, 655361, 65534, 4, 655361, 65535, 4, 655361, 0, 4, 655361, 1, 4, 655361, 2, 4, 655361, 3, 4, 655364, 3, 3, 1441793, 3, 2, 1441793, 3, 1, 1441793, 3, 0, 1048576, 3, 65535, 1441793, 3, 65534, 1441793, 3, 65533, 1441793, 3, 65532, 1441796, 2, 65532, 1048576, 1, 65532, 1, 0, 65532, 1, 65535, 65532, 1, 65534, 65532, 1048576, 65533, 65532, 1, 65532, 65532, 1, 65531, 65532, 4, 5, 65529, 0, 6, 65529, 0, 7, 65529, 1441793, 5, 65530, 0, 5, 65531, 0, 5, 65532, 0, 5, 65533, 0, 5, 65534, 0, 5, 65535, 0, 5, 0, 0, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 4, 0, 5, 5, 1048576, 5, 6, 0, 5, 7, 0, 6, 65530, 0, 6, 65531, 0, 6, 65532, 0, 6, 65533, 0, 6, 65534, 0, 6, 65535, 0, 6, 0, 0, 6, 1, 0, 6, 2, 0, 6, 3, 0, 6, 4, 0, 6, 5, 1048576, 6, 6, 0, 6, 7, 0, 7, 65530, 1441793, 7, 65531, 1441793, 7, 65532, 1441793, 7, 65533, 1441793, 7, 65534, 1441793, 7, 65535, 1441793, 7, 0, 1441793, 7, 1, 1441793, 7, 2, 1441793, 7, 3, 1441793, 7, 4, 1441793, 7, 5, 1441793, 7, 6, 1441793, 7, 7, 1441793, 5, 65528, 1, 6, 65528, 1, 7, 65528, 1441796, 5, 8, 655361, 6, 8, 655361, 7, 8, 655364, 1, 65528, 4, 1, 65529, 1048577, 1, 65530, 1048577, 2, 65528, 1, 2, 65529, 0, 2, 65530, 0, 3, 65528, 1441796, 3, 65529, 1441793, 3, 65530, 1441793, 65533, 65528, 4, 65533, 65529, 1048577, 65533, 65530, 1048577, 65534, 65528, 1, 65534, 65529, 0, 65534, 65530, 0, 65535, 65528, 1441796, 65535, 65529, 1441793, 65535, 65530, 1441793, 65529, 65528, 1, 65529, 65529, 0, 65529, 65530, 0, 65530, 65528, 1, 65530, 65529, 0, 65530, 65530, 0, 65531, 65528, 1, 65531, 65529, 0, 65531, 65530, 0, 65527, 65532, 4, 65527, 65533, 1048577, 65527, 65534, 1048580, 65528, 65532, 1048576, 65528, 65533, 0, 65528, 65534, 655361, 65529, 65532, 1, 65529, 65533, 0, 65529, 65534, 655361, 65527, 0, 4, 65527, 1, 1048577, 65527, 2, 1048580, 65528, 0, 1, 65528, 1, 1048578, 65528, 2, 0, 65529, 0, 1, 65529, 1, 0, 65529, 2, 655361, 65530, 6, 0, 65530, 7, 0, 65530, 8, 655361, 65531, 6, 0, 65531, 7, 0, 65531, 8, 655361, 65532, 6, 0, 65532, 7, 0, 65532, 8, 655361, 65533, 6, 0, 65533, 7, 0, 65533, 8, 655361, 65534, 6, 0, 65534, 7, 0, 65534, 8, 655361, 65535, 6, 0, 65535, 7, 0, 65535, 8, 655361, 0, 6, 0, 0, 7, 0, 0, 8, 655361, 1, 6, 0, 1, 7, 0, 1, 8, 655361, 2, 6, 0, 2, 7, 0, 2, 8, 655361, 3, 6, 1048576, 3, 7, 1441793, 3, 8, 655364, 65527, 65528, 4, 65527, 65529, 1048577, 65527, 65530, 1048577, 65528, 65528, 1, 65528, 65529, 0, 65528, 65530, 0, 65527, 4, 4, 65527, 5, 1048577, 65527, 6, 1048577, 65527, 7, 1048577, 65527, 8, 1048580, 65528, 4, 0, 65528, 5, 0, 65528, 6, 0, 65528, 7, 0, 65528, 8, 655361, 65529, 4, 1, 65529, 5, 0, 65529, 6, 0, 65529, 7, 0, 65529, 8, 655361, 3, 5, 1441796, 2, 5, 1, 1, 5, 1, 0, 5, 1, 65535, 5, 1, 65534, 5, 1, 65533, 5, 1, 65532, 5, 1, 65531, 5, 1, 65530, 4, 1441796, 65530, 2, 655364, 65530, 1, 1048576, 65530, 0, 1441796, 65530, 65534, 655364, 65530, 65533, 1048576, 65530, 65532, 1441796, 65527, 65531, 1048580, 65528, 65531, 1048576, 65529, 65531, 655361, 65530, 65531, 655361, 65531, 65531, 655361, 65533, 65531, 1048580, 65534, 65531, 1048576, 65535, 65531, 655364, 1, 65531, 1048580, 2, 65531, 1048576, 3, 65531, 655364, 2, 2, 1048577, 2, 1, 1048577, 2, 0, 1048577, 2, 65535, 1048577, 2, 65534, 1048577, 1, 65533, 655361, 0, 65533, 655361, 65535, 65533, 655361, 65534, 65533, 655361, 65533, 65533, 655361, 65532, 65534, 1441793, 65532, 65535, 1441793, 65532, 0, 1441793, 65532, 1, 1441793, 65532, 2, 1441793, 65533, 3, 1, 65534, 3, 1, 65535, 3, 1048576, 0, 3, 1, 1, 3, 1, 2, 3, 0, 65532, 3, 0, 65532, 65533, 0, 2, 65533, 0, 4, 65529, 1048577, 4, 65530, 1048577, 4, 65531, 1048577, 4, 65532, 1048577, 4, 65533, 1048577, 4, 65534, 1048577, 4, 65535, 1048577, 4, 0, 1048576, 4, 1, 1048577, 4, 2, 1048577, 4, 3, 1048577, 4, 4, 1048577, 4, 5, 1048577, 4, 6, 1048576, 4, 7, 1048577, 4, 8, 1048580, 4, 65528, 4, 65530, 5, 1048576, 65528, 3, 6, 65532, 65529, 1441793, 65532, 65530, 1441793, 65532, 65528, 1441796, 65532, 65531, 655364)
+"cells": PackedInt32Array(65525, 5, 1048577, 65525, 6, 1048577, 65525, 7, 1048580, 65526, 5, 655360, 65526, 6, 655360, 65526, 7, 655361, 65527, 5, 655360, 65527, 6, 655360, 65527, 7, 655361, 65528, 5, 1441792, 65528, 6, 0, 65528, 7, 655361, 65529, 5, 1, 65529, 6, 0, 65529, 7, 655361, 65530, 5, 1, 65530, 6, 0, 65530, 7, 655361, 65531, 5, 1, 65531, 6, 0, 65531, 7, 655361, 65532, 5, 1, 65532, 6, 0, 65532, 7, 655361, 65533, 5, 1, 65533, 6, 0, 65533, 7, 655361, 65534, 5, 1, 65534, 6, 0, 65534, 7, 655361, 65535, 5, 1, 65535, 6, 0, 65535, 7, 655361, 0, 5, 1, 0, 6, 0, 0, 7, 655361, 1, 5, 1, 1, 6, 0, 1, 7, 655361, 2, 5, 1441796, 2, 6, 0, 2, 7, 655361, 3, 5, 4, 3, 6, 0, 3, 7, 655361, 4, 5, 0, 4, 6, 0, 4, 7, 655361, 5, 5, 0, 5, 6, 0, 5, 7, 655361, 6, 5, 0, 6, 6, 0, 6, 7, 655361, 7, 5, 1441793, 7, 6, 1441793, 7, 7, 655364, 4, 65528, 1, 4, 65529, 655360, 4, 65530, 0, 4, 65531, 1048577, 4, 65532, 1048577, 4, 65533, 1048577, 4, 65534, 1048577, 4, 65535, 1048577, 4, 0, 1048577, 4, 1, 1048577, 4, 2, 1048577, 4, 3, 1048577, 4, 4, 1048577, 5, 65528, 1, 5, 65529, 0, 5, 65530, 0, 5, 65531, 0, 5, 65532, 0, 5, 65533, 0, 5, 65534, 0, 5, 65535, 0, 5, 0, 0, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 4, 0, 6, 65528, 1, 6, 65529, 0, 6, 65530, 0, 6, 65531, 0, 6, 65532, 0, 6, 65533, 0, 6, 65534, 0, 6, 65535, 0, 6, 0, 0, 6, 1, 0, 6, 2, 0, 6, 3, 0, 6, 4, 0, 7, 65528, 1441796, 7, 65529, 1441793, 7, 65530, 1441793, 7, 65531, 1441793, 7, 65532, 1441793, 7, 65533, 1441793, 7, 65534, 1441793, 7, 65535, 1441793, 7, 0, 1441793, 7, 1, 1441793, 7, 2, 1441793, 7, 3, 1441793, 7, 4, 1441793, 65526, 65530, 655360, 65526, 65531, 655360, 65526, 65532, 655360, 65526, 65533, 655360, 65526, 65534, 655360, 65526, 65535, 655360, 65526, 0, 655360, 65526, 1, 655360, 65526, 2, 655360, 65526, 3, 655360, 65526, 4, 655360, 65527, 65530, 655360, 65527, 65531, 655360, 65527, 65532, 655360, 65527, 65533, 655360, 65527, 65534, 655360, 65527, 65535, 655360, 65527, 0, 655360, 65527, 1, 655360, 65527, 2, 655360, 65527, 3, 655360, 65527, 4, 655360, 65526, 65529, 655360, 65527, 65529, 655360, 65528, 65529, 655360, 65529, 65529, 655360, 65530, 65529, 655360, 65531, 65529, 655360, 65532, 65529, 655360, 65533, 65529, 655360, 65534, 65529, 655360, 65535, 65529, 655360, 0, 65529, 655360, 1, 65529, 655360, 2, 65529, 655360, 3, 65529, 655360, 3, 65530, 655361, 2, 65530, 655361, 1, 65530, 655361, 0, 65530, 655361, 65535, 65530, 655361, 65534, 65530, 655361, 65533, 65530, 655361, 65532, 65530, 655361, 65531, 65530, 655361, 65530, 65530, 655361, 65529, 65530, 655361, 65528, 65530, 1441792, 65528, 65531, 1441793, 65528, 65532, 1441793, 65528, 65533, 1441793, 65528, 65534, 1441793, 65528, 65535, 1441793, 65528, 0, 1441793, 65528, 1, 1441793, 65528, 2, 1441793, 65528, 3, 1441793, 65528, 4, 1441793, 65525, 65528, 4, 65526, 65528, 1, 65527, 65528, 1, 65528, 65528, 1, 65529, 65528, 1, 65530, 65528, 1, 65531, 65528, 1, 65532, 65528, 1, 65533, 65528, 1, 65534, 65528, 1, 65535, 65528, 1, 0, 65528, 1, 1, 65528, 1, 2, 65528, 1, 3, 65528, 1, 65525, 65529, 1048577, 65525, 65530, 1048577, 65525, 65531, 1048577, 65525, 65532, 1048577, 65525, 65533, 1048577, 65525, 65534, 1048577, 65525, 65535, 1048577, 65525, 0, 1048577, 65525, 1, 1048577, 65525, 2, 1048577, 65525, 3, 1048577, 65525, 4, 1048577)
 }
 
 [node name="Floor1" type="Node3D" parent="NavigableGridMap/BeaconHolder" parent_id_path=PackedInt32Array(34241682) index="0" unique_id=842466025]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -0.5)
 
-[node name="0" parent="NavigableGridMap/BeaconHolder/Floor1" index="0" unique_id=441934578 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
-connections = [NodePath("../1")]
-
-[node name="1" parent="NavigableGridMap/BeaconHolder/Floor1" index="1" unique_id=1369272926 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 3)
-connections = [NodePath("../18"), NodePath("../2"), NodePath("../0")]
-
-[node name="2" parent="NavigableGridMap/BeaconHolder/Floor1" index="2" unique_id=166578040 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 3)
-connections = [NodePath("../1"), NodePath("../3")]
-
-[node name="3" parent="NavigableGridMap/BeaconHolder/Floor1" index="3" unique_id=2050322789 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
-connections = [NodePath("../2"), NodePath("../16"), NodePath("../4")]
-
-[node name="4" parent="NavigableGridMap/BeaconHolder/Floor1" index="4" unique_id=217051900 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -3)
-connections = [NodePath("../5"), NodePath("../3"), NodePath("../6")]
-
-[node name="5" parent="NavigableGridMap/BeaconHolder/Floor1" index="5" unique_id=953921722 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -7)
-connections = [NodePath("../4")]
-
-[node name="6" parent="NavigableGridMap/BeaconHolder/Floor1" index="6" unique_id=104139479 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -3)
-connections = [NodePath("../7"), NodePath("../4"), NodePath("../8")]
-
-[node name="7" parent="NavigableGridMap/BeaconHolder/Floor1" index="7" unique_id=1574214900 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -7)
-connections = [NodePath("../6")]
-
-[node name="8" parent="NavigableGridMap/BeaconHolder/Floor1" index="8" unique_id=207862774 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -3)
-connections = [NodePath("../6"), NodePath("../11"), NodePath("../9")]
-
-[node name="9" parent="NavigableGridMap/BeaconHolder/Floor1" index="9" unique_id=975270768 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -3)
-connections = [NodePath("../10"), NodePath("../8")]
-
-[node name="10" parent="NavigableGridMap/BeaconHolder/Floor1" index="10" unique_id=1451859372 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -7)
-connections = [NodePath("../9")]
-
-[node name="11" parent="NavigableGridMap/BeaconHolder/Floor1" index="11" unique_id=1867510371 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 1)
-connections = [NodePath("../18"), NodePath("../12"), NodePath("../8")]
-
-[node name="12" parent="NavigableGridMap/BeaconHolder/Floor1" index="12" unique_id=1924258660 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 1)
-connections = [NodePath("../13"), NodePath("../11")]
-
-[node name="13" parent="NavigableGridMap/BeaconHolder/Floor1" index="13" unique_id=534838577 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 6)
-connections = [NodePath("../12"), NodePath("../14")]
-
-[node name="14" parent="NavigableGridMap/BeaconHolder/Floor1" index="14" unique_id=1903357529 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 6)
-connections = [NodePath("../13"), NodePath("../15")]
-
-[node name="15" parent="NavigableGridMap/BeaconHolder/Floor1" index="15" unique_id=126706731 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 6)
-connections = [NodePath("../16"), NodePath("../14")]
-
-[node name="16" parent="NavigableGridMap/BeaconHolder/Floor1" index="16" unique_id=928708196 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
-connections = [NodePath("../3"), NodePath("../17"), NodePath("../15")]
-
-[node name="17" parent="NavigableGridMap/BeaconHolder/Floor1" index="17" unique_id=1386079802 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -7)
-connections = [NodePath("../16")]
-
-[node name="18" parent="NavigableGridMap/BeaconHolder/Floor1" index="18" unique_id=1962992870 node_paths=PackedStringArray("connections") instance=ExtResource("2_53l1m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 3)
-connections = [NodePath("../11"), NodePath("../1")]
+[node name="NavZone" type="Node3D" parent="NavigableGridMap/BeaconHolder/Floor1" index="0" unique_id=1568278590]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -8)
+script = ExtResource("2_5qx6c")
+configs = SubResource("Resource_oh6eq")
+debug_color = Color(0.7656241, 0.6304058, 0.07656243, 1)
+metadata/_custom_type_script = "uid://7xjtskn0u7u"
 
 [node name="Floor1" type="Node3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="0" unique_id=1601135492]
 
 [node name="DebugWall" parent="NavigableGridMap/Geometry/Floor1" index="0" unique_id=1729299196 instance=ExtResource("3_uslpm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
-width = 5.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -5)
+width = 10.0
 
-[node name="DebugWall3" parent="NavigableGridMap/Geometry/Floor1" index="1" unique_id=1433311968 instance=ExtResource("3_uslpm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -2)
-width = 5.0
+[node name="DebugWall3" parent="NavigableGridMap/Geometry/Floor1" index="1" unique_id=1262419976 instance=ExtResource("3_uslpm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -8)
+width = 16.0
 
-[node name="DebugWall4" parent="NavigableGridMap/Geometry/Floor1" index="2" unique_id=451247433 instance=ExtResource("3_uslpm")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3, 0, 3)
-width = 2.0
+[node name="DebugWall4" parent="NavigableGridMap/Geometry/Floor1" index="2" unique_id=2081192430 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -7, 0, 5)
+width = 11.0
 
-[node name="DebugWall5" parent="NavigableGridMap/Geometry/Floor1" index="3" unique_id=1011425453 instance=ExtResource("3_uslpm")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 3)
-width = 2.0
+[node name="DebugWall5" parent="NavigableGridMap/Geometry/Floor1" index="3" unique_id=1021136715 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -11, 0, 8)
+width = 19.0
 
-[node name="DebugWall2" parent="NavigableGridMap/Geometry/Floor1" index="4" unique_id=1398813643 instance=ExtResource("3_uslpm")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2, 0, -2)
-width = 5.0
+[node name="DebugWall6" parent="NavigableGridMap/Geometry/Floor1" index="4" unique_id=398379133 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -11, 0, -8)
+width = 19.0
 
-[node name="DebugWall6" parent="NavigableGridMap/Geometry/Floor1" index="5" unique_id=1145143964 instance=ExtResource("3_uslpm")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4, 0, 5)
-width = 9.0
+[node name="DebugWall7" parent="NavigableGridMap/Geometry/Floor1" index="5" unique_id=29459670 instance=ExtResource("3_uslpm")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -7, 0, -5)
+width = 11.0
 
-[node name="DebugWall14" parent="NavigableGridMap/Geometry/Floor1" index="6" unique_id=1671132353 instance=ExtResource("3_uslpm")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -5, 0, 5)
-width = 3.0
+[node name="DebugWall8" parent="NavigableGridMap/Geometry/Floor1" index="6" unique_id=971305766 instance=ExtResource("3_uslpm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -5)
+width = 10.0
 
-[node name="DebugWall15" parent="NavigableGridMap/Geometry/Floor1" index="7" unique_id=1553546375 instance=ExtResource("3_uslpm")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -5, 0, 1)
-width = 3.0
+[node name="DebugWall9" parent="NavigableGridMap/Geometry/Floor1" index="7" unique_id=48937901 instance=ExtResource("3_uslpm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -8)
+width = 16.0
 
-[node name="DebugWall16" parent="NavigableGridMap/Geometry/Floor1" index="8" unique_id=858529200 instance=ExtResource("3_uslpm")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -5, 0, -3)
-
-[node name="DebugWall17" parent="NavigableGridMap/Geometry/Floor1" index="9" unique_id=2081999682 instance=ExtResource("3_uslpm")]
-transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -9, 0, -4)
-
-[node name="DebugWall24" parent="NavigableGridMap/Geometry/Floor1" index="10" unique_id=1235659574 instance=ExtResource("3_uslpm")]
-transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -9, 0, -1)
-width = 4.0
-
-[node name="DebugWall25" parent="NavigableGridMap/Geometry/Floor1" index="11" unique_id=1181124610 instance=ExtResource("3_uslpm")]
-transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -9, 0, 0)
-width = 4.0
-
-[node name="DebugWall26" parent="NavigableGridMap/Geometry/Floor1" index="12" unique_id=1956278867 instance=ExtResource("3_uslpm")]
-transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -9, 0, 3)
-
-[node name="DebugWall27" parent="NavigableGridMap/Geometry/Floor1" index="13" unique_id=329100169 instance=ExtResource("3_uslpm")]
-transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -9, 0, 4)
-
-[node name="DebugWall28" parent="NavigableGridMap/Geometry/Floor1" index="14" unique_id=808064038 instance=ExtResource("3_uslpm")]
-transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -7, 0, 4)
-width = 2.0
-
-[node name="DebugWall29" parent="NavigableGridMap/Geometry/Floor1" index="15" unique_id=2104987993 instance=ExtResource("3_uslpm")]
-transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -7, 0, 3)
-width = 2.0
-
-[node name="DebugWall30" parent="NavigableGridMap/Geometry/Floor1" index="16" unique_id=419256597 instance=ExtResource("3_uslpm")]
-transform = Transform3D(1, 0, -1.7484555e-07, 0, 1, 0, 1.7484555e-07, 0, 1, -7, 0, 3)
-
-[node name="DebugWall31" parent="NavigableGridMap/Geometry/Floor1" index="17" unique_id=1489137538 instance=ExtResource("3_uslpm")]
-transform = Transform3D(1, 0, -1.7484555e-07, 0, 1, 0, 1.7484555e-07, 0, 1, -8, 0, 3)
-
-[node name="DebugWall18" parent="NavigableGridMap/Geometry/Floor1" index="18" unique_id=184959344 instance=ExtResource("3_uslpm")]
-transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -7, 0, -4)
-width = 5.0
-
-[node name="DebugWall19" parent="NavigableGridMap/Geometry/Floor1" index="19" unique_id=1877458312 instance=ExtResource("3_uslpm")]
-transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -1, 0, -4)
-width = 3.0
-
-[node name="DebugWall20" parent="NavigableGridMap/Geometry/Floor1" index="20" unique_id=885933992 instance=ExtResource("3_uslpm")]
-transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 3, 0, -4)
-
-[node name="DebugWall7" parent="NavigableGridMap/Geometry/Floor1" index="21" unique_id=400848486 instance=ExtResource("3_uslpm")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 4, 0, 0)
-width = 8.0
-
-[node name="DebugWall21" parent="NavigableGridMap/Geometry/Floor1" index="22" unique_id=1919792409 instance=ExtResource("3_uslpm")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 1, 0, -4)
-width = 4.0
-
-[node name="DebugWall22" parent="NavigableGridMap/Geometry/Floor1" index="23" unique_id=477618301 instance=ExtResource("3_uslpm")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, -4)
-width = 4.0
-
-[node name="DebugWall23" parent="NavigableGridMap/Geometry/Floor1" index="24" unique_id=2127664434 instance=ExtResource("3_uslpm")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -3, 0, -4)
-width = 4.0
-
-[node name="DebugWall8" parent="NavigableGridMap/Geometry/Floor1" index="25" unique_id=697659666 instance=ExtResource("3_uslpm")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 4, 0, 6)
-width = 5.0
-
-[node name="DebugWall9" parent="NavigableGridMap/Geometry/Floor1" index="26" unique_id=1856136527 instance=ExtResource("3_uslpm")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 4, 0, 9)
-width = 2.0
-
-[node name="DebugWall10" parent="NavigableGridMap/Geometry/Floor1" index="27" unique_id=1763497073 instance=ExtResource("3_uslpm")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 8, 0, 9)
-width = 17.0
-
-[node name="DebugWall13" parent="NavigableGridMap/Geometry/Floor1" index="28" unique_id=1441094909 instance=ExtResource("3_uslpm")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 8, 0, -8)
-width = 17.0
-
-[node name="DebugWall11" parent="NavigableGridMap/Geometry/Floor1" index="29" unique_id=1310843265 instance=ExtResource("3_uslpm")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 8, 0, 9)
-width = 17.0
-
-[node name="DebugWall12" parent="NavigableGridMap/Geometry/Floor1" index="30" unique_id=919595343 instance=ExtResource("3_uslpm")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -9, 0, 9)
-width = 17.0
+[node name="DebugWall10" parent="NavigableGridMap/Geometry/Floor1" index="8" unique_id=80817510 instance=ExtResource("3_uslpm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 5)
 
 [node name="FriendlyUnit" parent="Friendlies" parent_id_path=PackedInt32Array(926091492) index="0" unique_id=1676765037 instance=ExtResource("2_81yhl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 7)
-
-[node name="FriendlyUnit2" parent="Friendlies" parent_id_path=PackedInt32Array(926091492) index="1" unique_id=885619942 instance=ExtResource("2_81yhl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 4)
 
 [node name="EnemyUnit" parent="Enemies" parent_id_path=PackedInt32Array(182952236) index="0" unique_id=1682874516 instance=ExtResource("3_53l1m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -5)
