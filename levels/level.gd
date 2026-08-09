@@ -148,11 +148,11 @@ func set_active_unit(unit : Unit):
 			active_unit.activate()
 
 
-## Returns the NavZone a given position is in.
+## Returns the NavZoneHolder a given position is in.
 func get_zone_from_position(pos : Vector3i) -> NavZoneConfigFile:
-	for zone : NavZone in _beacon_holder.get_child(pos.y / 4).get_children():
-		if zone.configs.has_point(pos):
-			return zone.configs
+	for zone_holder : NavZoneHolder in _beacon_holder.get_child(pos.y / 4).get_children():
+		if zone_holder.configs.has_point(pos):
+			return zone_holder.configs
 	return null
 
 

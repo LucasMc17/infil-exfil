@@ -1,11 +1,11 @@
 @tool
-## The holder for a [NavZone] resource in 3D game space. This class has two main purposes: [br]
-## 1. To provide a spot in the scene tree for holding the NavZone resources which make up the Ai-enabled navigation layer of a level.
+## The holder for a [NavZoneHolder] resource in 3D game space. This class has two main purposes: [br]
+## 1. To provide a spot in the scene tree for holding the NavZoneHolder resources which make up the Ai-enabled navigation layer of a level.
 ## 2. To draw debug visuals representing the NavZones in 3D space for ease of editing in the editor. In the compiled game, these scenes should have no visual component at all.
-class_name NavZone
+class_name NavZoneHolder
 extends Node3D
 
-## The material to apply to meshes representing navigation points within this NavZone.
+## The material to apply to meshes representing navigation points within this NavZoneHolder.
 const POINT_MATERIAL = preload("uid://cvcg462nivceg")
 
 @export_tool_button("Start/Stop Debug Visuals") var start_stop_button = func():
@@ -13,18 +13,18 @@ const POINT_MATERIAL = preload("uid://cvcg462nivceg")
 @export_tool_button("Assign Random Color") var random_color_button = func():
 	debug_color = Utilities.random_color()
 
-## The NavZone resource file which populates this holder.
+## The NavZoneHolder resource file which populates this holder.
 @export var configs : NavZoneConfigFile 
-## The color to assign to the debug meshes for this NavZone in editor
+## The color to assign to the debug meshes for this NavZoneHolder in editor
 @export var debug_color : Color:
 	set(val):
 		debug_color = val
 		if Engine.is_editor_hint() and plane_material:
 			plane_material.albedo_color = debug_color
 
-## Whether or not to create and update debug meshes in the editor for this NavZone. Can be turned off in order to declutter the editor space.
+## Whether or not to create and update debug meshes in the editor for this NavZoneHolder. Can be turned off in order to declutter the editor space.
 var show_visuals := true
-## The material to apply to the debug mesh of this NavZone (when drawn).
+## The material to apply to the debug mesh of this NavZoneHolder (when drawn).
 var plane_material : StandardMaterial3D
 
 func _ready() -> void:
@@ -38,7 +38,7 @@ func _process(_delta: float) -> void:
 		_redraw_meshes()
 
 
-## The function which continually redraws the mesh in editor to visualize this NavZone.
+## The function which continually redraws the mesh in editor to visualize this NavZoneHolder.
 func _redraw_meshes() -> void:
 	for child in get_children():
 		child.queue_free()

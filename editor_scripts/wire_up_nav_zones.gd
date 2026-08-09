@@ -14,7 +14,7 @@ func _run() -> void:
 	
 	var nav_zone_system = level._beacon_holder
 	for node : Node3D in nav_zone_system.get_children():
-		for zone_holder : NavZone in node.get_children():
+		for zone_holder : NavZoneHolder in node.get_children():
 			encountered += 1
 			var configs : NavZoneConfigFile = zone_holder.configs
 			
@@ -45,9 +45,9 @@ func _run() -> void:
 
 func find_nav_zone_by_name(name : String, nav_zone_system : Node3D) -> NavZoneConfigFile:
 	for child in nav_zone_system.get_children():
-		for zone : NavZone in child.get_children():
-			if zone.name == name:
-				return zone.configs
+		for zone_holder : NavZoneHolder in child.get_children():
+			if zone_holder.name == name:
+				return zone_holder.configs
 	return null
 
 func get_uid_from_resource(resource: Resource) -> String:
