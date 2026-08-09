@@ -148,6 +148,7 @@ func set_active_unit(unit : Unit):
 			active_unit.activate()
 
 
+## Returns the NavZone a given position is in.
 func get_zone_from_position(pos : Vector3i) -> NavZoneConfigFile:
 	for zone : NavZone in _beacon_holder.get_child(pos.y / 4).get_children():
 		if zone.configs.has_point(pos):
@@ -155,7 +156,8 @@ func get_zone_from_position(pos : Vector3i) -> NavZoneConfigFile:
 	return null
 
 
-func get_likely_path_v2(pursuer_position : Vector3i, last_known_position : Vector3i, pursuit_depth := 2) -> Array[Vector3i]:
+## Generates an array of positions to visit in pursuit of a fleeing FriendlyUnit, in order, based on that unit's last known position.
+func get_likely_path(pursuer_position : Vector3i, last_known_position : Vector3i, pursuit_depth := 2) -> Array[Vector3i]:
 	var result : Array[Vector3i] = []
 	var starting_zone = get_zone_from_position(pursuer_position)
 	var last_known_zone = get_zone_from_position(last_known_position)
@@ -173,44 +175,6 @@ func get_likely_path_v2(pursuer_position : Vector3i, last_known_position : Vecto
 		banned_zones.append(current_zone)
 
 	return result
-
-
-## Generates an array of likely nav beacon positions visited by a fleeing friendlty unit, in order, based on that unit's last known position.
-func get_likely_path(last_known_position : Vector3i) -> Array[Vector3i]:
-	var result : Array[Vector3i] = []
-
-	var nearest_beacon : NavBeacon
-	var nb_distance = null
-	
-	for beacon : NavBeacon in _beacon_holder.get_child(last_known_position.y / 4).get_children():
-		var distance = beacon.position.distance_to(last_known_position)
-		if !nearest_beacon or nb_distance > distance:
-			nearest_beacon = beacon
-			nb_distance = distance
-	
-
-	var first_point : NavBeacon
-	var fP_distance = null
-	
-	for connection : NavBeacon in nearest_beacon.connections:
-		# NOTE: This compares the distance of connected beacons based on their distance from the root beacon. It's not perfect but its better than a raw distance comparison.
-		# TODO: In a future iteration, I think this system should trace the user to the first anf second positions along their path where the path branches (ie nav beacon has three or more connections.) This will let me place more arbitrary nav beacons and make the path following more meaningful. All of this is of course also going to be impacted by whatever room labeling sustem i end up creating.
-		var distance = connection.position.distance_to(last_known_position) / connection.position.distance_to(nearest_beacon.position)
-		if !first_point or fP_distance > distance:
-			first_point = connection
-			fP_distance = distance
-	
-
-	result.append(first_point.position)
-
-	var connections = first_point.connections.filter(func (conn): return conn != nearest_beacon)
-
-	if !connections.is_empty():
-		result.append(connections.pick_random().position)
-	
-	return result
-
-
 
 
 ## Cycle the active unit to the next in the list.

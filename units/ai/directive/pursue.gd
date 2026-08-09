@@ -28,7 +28,7 @@ func _init(t : FriendlyUnit, lkp : Vector3i) -> void:
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
 	if !_is_pursuit_path_set:
-		pursuit_path = World.level.get_likely_path_v2(acting_unit.position, last_known_pos)
+		pursuit_path = World.level.get_likely_path(acting_unit.position, last_known_pos)
 		_is_pursuit_path_set = true
 	attack_skill = acting_unit.skill_machine.skills["EnemyAttack"]
 	attack_skill.arm_as_enemy()

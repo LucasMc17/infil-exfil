@@ -14,10 +14,7 @@ const POINT_MATERIAL = preload("uid://cvcg462nivceg")
 	debug_color = Utilities.random_color()
 
 ## The NavZone resource file which populates this holder.
-@export var configs : NavZoneConfigFile:
-	set(val):
-		configs = val
-		# _redraw_meshes()
+@export var configs : NavZoneConfigFile 
 ## The color to assign to the debug meshes for this NavZone in editor
 @export var debug_color : Color:
 	set(val):
