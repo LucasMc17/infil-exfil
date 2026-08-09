@@ -16,7 +16,7 @@ func _run() -> void:
 	for node : Node3D in nav_zone_system.get_children():
 		for zone_holder : NavZoneHolder in node.get_children():
 			encountered += 1
-			var configs : NavZoneConfigFile = zone_holder.configs
+			var configs : NavZone = zone_holder.configs
 			
 			# Setting base position
 			if !configs:
@@ -43,7 +43,7 @@ func _run() -> void:
 	
 
 
-func find_nav_zone_by_name(name : String, nav_zone_system : Node3D) -> NavZoneConfigFile:
+func find_nav_zone_by_name(name : String, nav_zone_system : Node3D) -> NavZone:
 	for child in nav_zone_system.get_children():
 		for zone_holder : NavZoneHolder in child.get_children():
 			if zone_holder.name == name:

@@ -1,5 +1,5 @@
 @tool
-class_name NavZoneConfigFile
+class_name NavZone
 extends Resource
 
 @export_group("Configs")
@@ -38,7 +38,7 @@ func get_nearest_point(pos : Vector3i) -> Vector3i:
 	return result
 
 
-func get_nearest_exit(pos : Vector3i, banned_zones : Array[NavZoneConfigFile]) -> NavZoneExit:
+func get_nearest_exit(pos : Vector3i, banned_zones : Array[NavZone]) -> NavZoneExit:
 	var result = null
 	var distance_to_result = null
 	for exit in exits:

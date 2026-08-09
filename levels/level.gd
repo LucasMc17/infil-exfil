@@ -149,7 +149,7 @@ func set_active_unit(unit : Unit):
 
 
 ## Returns the NavZoneHolder a given position is in.
-func get_zone_from_position(pos : Vector3i) -> NavZoneConfigFile:
+func get_zone_from_position(pos : Vector3i) -> NavZone:
 	for zone_holder : NavZoneHolder in _beacon_holder.get_child(pos.y / 4).get_children():
 		if zone_holder.configs.has_point(pos):
 			return zone_holder.configs
@@ -161,7 +161,7 @@ func get_likely_path(pursuer_position : Vector3i, last_known_position : Vector3i
 	var result : Array[Vector3i] = []
 	var starting_zone = get_zone_from_position(pursuer_position)
 	var last_known_zone = get_zone_from_position(last_known_position)
-	var banned_zones : Array[NavZoneConfigFile] = [last_known_zone, starting_zone]
+	var banned_zones : Array[NavZone] = [last_known_zone, starting_zone]
 	var current_zone = last_known_zone
 	var current_position = last_known_position
 
