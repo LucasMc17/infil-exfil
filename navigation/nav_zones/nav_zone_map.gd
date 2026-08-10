@@ -8,7 +8,7 @@ var floors : Array[NavZoneFloor] = []
 
 func _ready() -> void:
 	var children = get_children()
-	for i in range(children):
+	for i in range(children.size()):
 		var child = children[i]
 		if child is NavZoneFloor:
 			child.floor_number = i

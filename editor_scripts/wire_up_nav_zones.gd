@@ -12,7 +12,7 @@ func _run() -> void:
 		print("ERROR: CURRENT SCENE IS NOT A LEVEL. EXITING SCRIPT")
 		return
 	
-	var nav_zone_system = level._beacon_holder
+	var nav_zone_system = level.nav_zone_map
 	for node : Node3D in nav_zone_system.get_children():
 		for zone_holder : NavZoneHolder in node.get_children():
 			encountered += 1

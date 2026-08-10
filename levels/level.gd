@@ -95,11 +95,11 @@ var allow_inputs : bool:
 @onready var state_machine : StateMachine = %StateMachine
 @onready var match_ui : MatchUI = %MatchUi
 @onready var target_retical : Sprite3D = %TargetRetical
-@onready var _beacon_holder : Node3D = %BeaconHolder
+@onready var nav_zone_map : NavZoneMap = %NavZoneMap
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
-		_beacon_holder.visible = false
+		nav_zone_map.visible = false
 		Events.skill_armed.connect(_on_skill_armed)
 		Events.skill_disarmed.connect(_on_skill_disarmed)
 		nav_map.setup_astar_grid()
@@ -150,7 +150,7 @@ func set_active_unit(unit : Unit):
 
 ## Returns the NavZoneHolder a given position is in.
 func get_zone_from_position(pos : Vector3i) -> NavZone:
-	for zone_holder : NavZoneHolder in _beacon_holder.get_child(pos.y / 4).get_children():
+	for zone_holder : NavZoneHolder in nav_zone_map.get_child(pos.y / 4).get_children():
 		if zone_holder.configs.has_point(pos):
 			return zone_holder.configs
 	return null
