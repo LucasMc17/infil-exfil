@@ -12,6 +12,7 @@ func begin(unit : EnemyUnit) -> void:
 
 func _on_finished_moving(unit : Unit):
 	super(unit)
+	# NOTE: position? or board position? Not sure but this might break when end point is on a different floor than 0.
 	if acting_unit.position == _end_point:
 		end()
 	unit.forfeit_turn()

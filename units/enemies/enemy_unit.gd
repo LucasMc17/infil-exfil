@@ -29,13 +29,14 @@ var available_skills : Dictionary[String, Skill] = {}
 
 func _ready():
 	super()
-	for child in skill_machine.get_children():
-		available_skills[child.name] = child
-	awareness.awareness_changed.connect(_on_awareness_changed)
-	decision_director = DecisionDirectorModule.new(self, awareness)
-	debug_label.change_param('awareness_level', awareness.AwarenessLevel.find_key(awareness.awareness_level))
-	debug_label.change_param('targets', '[]')
-	Events.alarm_raised.connect(_on_alarm_raised)
+	if !Engine.is_editor_hint():
+		for child in skill_machine.get_children():
+			available_skills[child.name] = child
+		awareness.awareness_changed.connect(_on_awareness_changed)
+		decision_director = DecisionDirectorModule.new(self, awareness)
+		debug_label.change_param('awareness_level', awareness.AwarenessLevel.find_key(awareness.awareness_level))
+		debug_label.change_param('targets', '[]')
+		Events.alarm_raised.connect(_on_alarm_raised)
 
 
 func check_for_detection() -> void:

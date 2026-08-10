@@ -38,9 +38,10 @@ var known_friendly_count := 0:
 # 		return targeted_friendlies.size()
 
 func _init() -> void:
-	Events.alarm_raised.connect(_on_alarm_raised)
-	Events.alarm_ended.connect(_on_alarm_ended)
-	Events.unit_disabled.connect(_on_unit_disabled)
+	if !Engine.is_editor_hint():
+		Events.alarm_raised.connect(_on_alarm_raised)
+		Events.alarm_ended.connect(_on_alarm_ended)
+		Events.unit_disabled.connect(_on_unit_disabled)
 
 
 func _on_alarm_raised(raised_alarm, raiser : Unit):

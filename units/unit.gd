@@ -118,16 +118,17 @@ var captor : Unit
 
 func _ready():
 	board_position = NavigableGridMap.convert_global_to_grid_position(Vector3i(position))
-	Events.skill_disarmed.connect(refresh_valid_moves)
-	if primary_weapon:
-		primary_weapon = primary_weapon.make_unique()
-		primary_weapon.initialize(self)
+	if !Engine.is_editor_hint():
+		Events.skill_disarmed.connect(refresh_valid_moves)
+		if primary_weapon:
+			primary_weapon = primary_weapon.make_unique()
+			primary_weapon.initialize(self)
 
-	debug_label.change_param('x', str(round(position.x)))
-	debug_label.change_param('y', str(round(position.y)))
-	debug_label.change_param('z', str(round(position.z)))
+		debug_label.change_param('x', str(round(position.x)))
+		debug_label.change_param('y', str(round(position.y)))
+		debug_label.change_param('z', str(round(position.z)))
 
-	flag.refresh(self)
+		flag.refresh(self)
 
 
 ## Update the list of valid moves for this unit based on their maximum move distance and what positions within that range are navigable to.
