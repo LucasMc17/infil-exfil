@@ -26,11 +26,9 @@ metadata/_editor_floor_ = Vector3(0, 2, 0)
 
 [node name="FriendlyUnit" parent="Friendlies" parent_id_path=PackedInt32Array(926091492) index="0" unique_id=1676765037 instance=ExtResource("2_2d8tk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 5.5)
-tile_position = Vector3(6, 0, 5)
 
 [node name="EnemyUnit" parent="Enemies" parent_id_path=PackedInt32Array(182952236) index="0" unique_id=1682874516 instance=ExtResource("3_xewlq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, -4.5)
 unaware_base_directives = Array[ExtResource("4_t0qv6")]([SubResource("Resource_hqfjm"), SubResource("Resource_v7ycg")])
 alarm_run_chance = 1.0
-tile_position = Vector3(5, 0, -5)
 max_movement_points = 1

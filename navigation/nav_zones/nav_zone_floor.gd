@@ -7,3 +7,6 @@ var floor_number := 0:
 	set(val):
 		floor_number = val
 		position.y = floor_number * 4
+		for child in get_children():
+			if child is NavZoneHolder:
+				child.floor_number = floor_number

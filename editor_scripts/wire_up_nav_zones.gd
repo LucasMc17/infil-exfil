@@ -23,6 +23,7 @@ func _run() -> void:
 				print("NAV ZONE " + zone_holder.name + "HAS NO CONFIGURED CONFIG FILE")
 				errors += 1
 			else:
+				configs.floor_number = zone_holder.floor_number
 				configs.base_position = zone_holder.position
 				
 				var board_points : Array[Vector3i] = []

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="NavZoneConfigFile" format=3 uid="uid://b887chbu27m44"]
+[gd_resource type="Resource" script_class="NavZone" format=3 uid="uid://b887chbu27m44"]
 
 [ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_zones/nav_zone.gd" id="1_1ef1k"]
 [ext_resource type="Script" uid="uid://c7xqovr73fsq5" path="res://navigation/nav_zones/nav_zone_exit.gd" id="1_jpdc1"]

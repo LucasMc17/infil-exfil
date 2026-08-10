@@ -7,6 +7,11 @@ extends Node3D
 var floors : Array[NavZoneFloor] = []
 
 func _ready() -> void:
+	child_order_changed.connect(_assign_floor_heights)
+	_assign_floor_heights()
+
+
+func _assign_floor_heights() -> void:
 	var children = get_children()
 	for i in range(children.size()):
 		var child = children[i]

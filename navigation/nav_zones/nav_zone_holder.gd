@@ -26,6 +26,8 @@ const POINT_MATERIAL = preload("uid://cvcg462nivceg")
 var show_visuals := true
 ## The material to apply to the debug mesh of this NavZoneHolder (when drawn).
 var plane_material : StandardMaterial3D
+## The floor number of this zone.
+var floor_number := 0
 
 func _ready() -> void:
 	if Engine.is_editor_hint():

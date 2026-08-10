@@ -13,7 +13,7 @@ extends Resource
 @export var floor_number := 0
 
 func to_board_space(point : Vector2i) -> Vector3i:
-	return Vector3i(point.x, 0, point.y) + base_position
+	return Vector3i(point.x, floor_number, point.y) + base_position
 
 
 func to_local_space(point : Vector3i) -> Vector2i:
