@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="NavZoneConfigFile" format=3 uid="uid://dnvujsguaswek"]
 
-[ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_beacons/nav_zone.gd" id="1_njds1"]
+[ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_zones/nav_zone.gd" id="1_njds1"]
 
 [resource]
 script = ExtResource("1_njds1")

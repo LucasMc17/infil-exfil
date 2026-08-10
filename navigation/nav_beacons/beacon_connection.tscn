@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://c4aqjbsiqd7k4"]
-
-[ext_resource type="Script" uid="uid://bhlbbjwqkv80s" path="res://navigation/nav_beacons/beacon_connection.gd" id="1_esi4m"]
-
-[node name="BeaconConnection" type="MeshInstance3D" unique_id=263738621]
-script = ExtResource("1_esi4m")

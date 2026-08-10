@@ -10,6 +10,7 @@ extends Resource
 @export_group("READ ONLY")
 @export var base_position := Vector3i.ZERO
 @export var board_points : Array[Vector3i]
+@export var floor_number := 0
 
 func to_board_space(point : Vector2i) -> Vector3i:
 	return Vector3i(point.x, 0, point.y) + base_position
@@ -18,6 +19,7 @@ func to_board_space(point : Vector2i) -> Vector3i:
 func to_local_space(point : Vector3i) -> Vector2i:
 	var temp = point - base_position
 	return Vector2i(temp.x, temp.z)
+
 
 func has_point(point : Vector3i) -> bool:
 	var true_point = to_local_space(point)

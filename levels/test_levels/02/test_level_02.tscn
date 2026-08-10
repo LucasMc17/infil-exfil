@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://pogqdn4ot8ht"]
 
 [ext_resource type="PackedScene" uid="uid://dt305x7b2byrv" path="res://levels/level.tscn" id="1_gfecl"]
-[ext_resource type="Script" uid="uid://7xjtskn0u7u" path="res://navigation/nav_beacons/nav_zone_holder.gd" id="2_5qx6c"]
+[ext_resource type="Script" uid="uid://7xjtskn0u7u" path="res://navigation/nav_zones/nav_zone_holder.gd" id="2_5qx6c"]
 [ext_resource type="PackedScene" uid="uid://b6h1160eunshj" path="res://units/friendlies/friendly_unit.tscn" id="2_81yhl"]
 [ext_resource type="PackedScene" uid="uid://bup8e1flyaj0p" path="res://units/enemies/enemy_unit.tscn" id="3_53l1m"]
-[ext_resource type="Script" uid="uid://c7xqovr73fsq5" path="res://navigation/nav_beacons/nav_zone_exit.gd" id="3_qr3q2"]
+[ext_resource type="Script" uid="uid://c7xqovr73fsq5" path="res://navigation/nav_zones/nav_zone_exit.gd" id="3_qr3q2"]
 [ext_resource type="PackedScene" uid="uid://dygqxfucs53hc" path="res://levels/geometry/debug_wall.tscn" id="3_uslpm"]
-[ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_beacons/nav_zone.gd" id="4_1icgt"]
+[ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_zones/nav_zone.gd" id="4_1icgt"]
 [ext_resource type="Script" uid="uid://bp1pubml3l0d7" path="res://units/ai/directive/directive.gd" id="4_uslpm"]
 [ext_resource type="Script" uid="uid://cvy611uxolcnt" path="res://units/ai/directive/move_to_point.gd" id="5_3og0o"]
 
