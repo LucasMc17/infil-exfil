@@ -96,6 +96,7 @@ var allow_inputs : bool:
 @onready var match_ui : MatchUI = %MatchUi
 @onready var target_retical : Sprite3D = %TargetRetical
 @onready var nav_zone_map : NavZoneMap = %NavZoneMap
+@onready var geometry : Node3D = %Geometry
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():

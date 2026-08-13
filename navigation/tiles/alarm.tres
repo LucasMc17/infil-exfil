@@ -10,4 +10,5 @@
 script = ExtResource("1_pmsjl")
 name = "Alarm"
 viable_neighbors = Array[ExtResource("2_fcdjs")]([ExtResource("3_atdc0"), ExtResource("4_pw7qo"), ExtResource("5_p8epa")])
+wall_front = true
 metadata/_custom_type_script = "uid://dh08xpx10ru7"

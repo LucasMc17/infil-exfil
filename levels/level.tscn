@@ -44,6 +44,7 @@ script = ExtResource("7_d7v53")
 metadata/_custom_type_script = "uid://bd48odhjxtett"
 
 [node name="Geometry" type="Node3D" parent="NavigableGridMap" unique_id=2043084881]
+unique_name_in_owner = true
 visible = false
 
 [node name="LevelCamera" parent="." unique_id=864095843 instance=ExtResource("6_kogck")]
