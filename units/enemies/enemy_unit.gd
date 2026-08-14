@@ -21,21 +21,27 @@ const FULL_ALERT_IMAGE := preload('res://assets/images/full_alert.png')
 var awareness := EnemyUnitAwarenessModule.new(self)
 ## The enemy unit's decision director.
 var decision_director : DecisionDirectorModule
+## Dictionary of skills usable by this enemy unit by name.
+var available_skills : Dictionary[String, Skill] = {}
 
 @onready var seeing_zone : SeeingZone = %SeeingZone
 @onready var _status_indicator : Sprite3D = %StatusIndicator
 
 func _ready():
 	super()
-	awareness.awareness_changed.connect(_on_awareness_changed)
-	decision_director = DecisionDirectorModule.new(self, awareness)
-	debug_label.change_param('awareness_level', awareness.AwarenessLevel.find_key(awareness.awareness_level))
-	debug_label.change_param('targets', '[]')
-	Events.alarm_raised.connect(_on_alarm_raised)
+	if !Engine.is_editor_hint():
+		for child in skill_machine.get_children():
+			available_skills[child.name] = child
+		awareness.awareness_changed.connect(_on_awareness_changed)
+		decision_director = DecisionDirectorModule.new(self, awareness)
+		debug_label.change_param('awareness_level', awareness.AwarenessLevel.find_key(awareness.awareness_level))
+		debug_label.change_param('targets', '[]')
+		Events.alarm_raised.connect(_on_alarm_raised)
 
 
 func check_for_detection() -> void:
 	DebugConsole.log("Checking for detection", 2)
+	awareness.confirm_all_sightings()
 	return seeing_zone.check_detection()
 
 

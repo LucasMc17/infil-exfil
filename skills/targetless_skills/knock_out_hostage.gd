@@ -5,6 +5,6 @@ func get_visibility() -> bool:
 	return !!user.captive
 
 
-func use() -> void:
+func begin_use() -> void:
 	user.release_captive(true, false)
 	super()

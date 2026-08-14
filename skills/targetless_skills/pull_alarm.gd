@@ -13,5 +13,6 @@ func get_affordability() -> bool:
 	return World.level.nav_map.alarms.has(user.board_position)
 
 
-func use() -> void:
+func begin_use() -> void:
+	super()
 	Events.alarm_raised.emit(null, user)

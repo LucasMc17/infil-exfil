@@ -11,6 +11,12 @@ extends Resource
 @export var should_respect_rotation := true
 ## Array of potential connections for this tile.
 @export var viable_neighbors : Array[TileConnection] = []
+## The directions on which a debug wall should be automatically added for this tile during the BuildDebugWalls editor script.
+@export var wall_front := false
+@export var wall_back := false
+@export var wall_right := false
+@export var wall_left := false
+@export var wall_floor := true
 
 ## Returns a dictionary of relative positions to which this tile should connect.
 func get_viable_connections(position : Vector3i, basis : Basis) -> Dictionary[Vector3i, bool]:

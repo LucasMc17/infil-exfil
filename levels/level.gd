@@ -1,3 +1,4 @@
+@tool
 ## A level for one match between player and enemy to take place in.
 class_name BaseLevel
 extends Node3D
@@ -81,27 +82,33 @@ var live_units : Array[Unit]:
 		return result
 
 ## Whether or not to completely block the player's game play inputs, such as when a unit is moving.
-var allow_inputs := true
+var allow_inputs : bool:
+	get():
+		return is_player_turn and active_unit and !active_unit.is_using_skill and !active_unit.is_moving
 
 @onready var _friendlies_node := %Friendlies
 @onready var _enemies_node := %Enemies
-@onready var path_marking_system : MovementSystem = %MovementSystem
+@onready var movement_system : MovementSystem = %MovementSystem
 @onready var nav_map : NavigableGridMap = %NavigableGridMap
 @onready var click_handler : ClickHandler3D = %ClickHandler3D
 @onready var level_camera : LevelCamera = %LevelCamera
 @onready var state_machine : StateMachine = %StateMachine
 @onready var match_ui : MatchUI = %MatchUi
 @onready var target_retical : Sprite3D = %TargetRetical
+@onready var nav_zone_map : NavZoneMap = %NavZoneMap
+@onready var geometry : Node3D = %Geometry
 
 func _ready() -> void:
-	Events.skill_armed.connect(_on_skill_armed)
-	Events.skill_disarmed.connect(_on_skill_disarmed)
-	nav_map.setup_astar_grid()
-	World.level = self
-	ConsoleEvents.command_submitted.connect(func (command_name, _parameters):
-		if command_name == "exit":
-			get_tree().quit()
-	)
+	if !Engine.is_editor_hint():
+		nav_zone_map.visible = false
+		Events.skill_armed.connect(_on_skill_armed)
+		Events.skill_disarmed.connect(_on_skill_disarmed)
+		nav_map.setup_astar_grid()
+		World.level = self
+		ConsoleEvents.command_submitted.connect(func (command_name, _parameters):
+			if command_name == "exit":
+				get_tree().quit()
+		)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -138,8 +145,37 @@ func set_active_unit(unit : Unit):
 		if active_unit:
 			active_unit.deactivate()
 		active_unit = unit
-		if active_unit:
+		if active_unit: 
 			active_unit.activate()
+
+
+## Returns the NavZoneHolder a given position is in.
+func get_zone_from_position(pos : Vector3i) -> NavZone:
+	for zone_holder : NavZoneHolder in nav_zone_map.get_child(pos.y).get_children():
+		if zone_holder.configs.has_point(pos):
+			return zone_holder.configs
+	return null
+
+
+## Generates an array of positions to visit in pursuit of a fleeing FriendlyUnit, in order, based on that unit's last known position.
+func get_likely_path(pursuer_position : Vector3i, last_known_position : Vector3i, pursuit_depth := 6) -> Array[Vector3i]:
+	var result : Array[Vector3i] = []
+	var starting_zone = get_zone_from_position(pursuer_position)
+	var last_known_zone = get_zone_from_position(last_known_position)
+	var banned_zones : Array[NavZone] = [last_known_zone, starting_zone]
+	var current_zone = last_known_zone
+	var current_position = last_known_position
+
+	for i in range(pursuit_depth):
+		var next_exit : NavZoneExit = current_zone.get_nearest_exit(current_position, banned_zones)
+		if !next_exit:
+			return result
+		current_zone = load(next_exit.to_zone_uid)
+		current_position = next_exit.board_position
+		result.append(current_zone.get_nearest_point(current_position))
+		banned_zones.append(current_zone)
+
+	return result
 
 
 ## Cycle the active unit to the next in the list.

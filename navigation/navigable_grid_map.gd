@@ -257,11 +257,12 @@ func find_path(start: Vector3i, end: Vector3i) -> PackedVector3Array:
 
 ## Takes in a starting position and an array of positions to check, and returns the position from the array which can be reached from the starting position with the shortest navigable path. If no position is found to be reachable, returns null.
 func get_closest_point(pos : Vector3i, points_to_check : Array[Vector3i]) -> Variant:
+	# TODO: In a future version this should also return the path to avoid recalculating it.
 	var result = null
 	var result_path = null
 	for point : Vector3i in points_to_check:
 		var path = find_path(pos, point)
-		if !result or path.size() < result_path.size():
+		if !path.is_empty() and (!result or path.size() < result_path.size()):
 			result = point
 			result_path = path
 	return result

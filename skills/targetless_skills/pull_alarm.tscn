@@ -2,7 +2,5 @@
 
 [ext_resource type="Script" uid="uid://r8igmjs2f7gw" path="res://skills/targetless_skills/pull_alarm.gd" id="1_dpblr"]
 
-[node name="PullAlarm" type="Node3D" unique_id=1709122393]
+[node name="PullAlarm" type="Node" unique_id=1812319113]
 script = ExtResource("1_dpblr")
-skill_name = "Pull Alarm"
-metadata/_custom_type_script = "uid://r8igmjs2f7gw"

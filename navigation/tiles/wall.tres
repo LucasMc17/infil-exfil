@@ -10,4 +10,5 @@
 script = ExtResource("1_kurj0")
 name = "Wall"
 viable_neighbors = Array[ExtResource("2_jovae")]([ExtResource("3_f00gp"), ExtResource("4_olcu6"), ExtResource("5_0fr7a")])
+wall_front = true
 metadata/_custom_type_script = "uid://dh08xpx10ru7"

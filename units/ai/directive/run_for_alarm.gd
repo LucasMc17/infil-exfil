@@ -18,10 +18,15 @@ func begin(unit : EnemyUnit) -> void:
 
 
 func _on_finished_moving(_unit : Unit):
+	super(acting_unit)
 	if acting_unit.board_position == _alarm_point:
-		acting_unit.action_machine.current_state.transition("PullAlarm")
+		var pull_alarm : PullAlarm = acting_unit.skill_machine.skills["PullAlarm"]
+		pull_alarm.use()
+	else:
+		acting_unit.forfeit_turn()
+
+
+func _on_finished_acting(_unit : Unit):
+	super(acting_unit)
+	end()
 	acting_unit.forfeit_turn()
-
-
-func check_if_finished() -> bool:
-	return World.level.enemy_awareness.alarm_active

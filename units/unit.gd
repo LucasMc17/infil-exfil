@@ -74,6 +74,12 @@ var is_active : bool:
 			return World.level.active_unit == self
 		else:
 			return false
+## Whether or not this unit is in the middle of using a skill.
+var is_using_skill : bool:
+	get():
+		return !!skill_machine.current_skill
+## Whether or not this unit is moving to a point.
+var is_moving := false
 
 ## The unit's position in terms of the NavigableGridMap's coordinate system.
 var board_position : Vector3i
@@ -81,7 +87,7 @@ var board_position : Vector3i
 var all_skills : Array[Skill]:
 	get():
 		var result : Array[Skill] = []
-		var skills = skill_holder.get_children()
+		var skills = skill_machine.get_children()
 		for skill in skills:
 			if skill is Skill:
 				result.append(skill)
@@ -103,9 +109,8 @@ var captor : Unit
 @onready var _cell_highlight := %CellHighlight
 @onready var flag : UnitFlag = %UnitFlag
 @onready var movement_machine : MovementMachine = %MovementMachine
-@onready var action_machine : ActionMachine = %ActionMachine
 @onready var debug_label : DebugLabel = %DebugLabel
-@onready var skill_holder : Node3D = %Skills
+@onready var skill_machine : SkillMachine = %SkillMachine
 @onready var seen_zone : SeenZone = %SeenZone
 @onready var _mesh_instance : MeshInstance3D = %MeshInstance3D
 @onready var _hostage_marker : Marker3D = %HostageMarker
@@ -113,27 +118,23 @@ var captor : Unit
 
 func _ready():
 	board_position = NavigableGridMap.convert_global_to_grid_position(Vector3i(position))
-	Events.skill_disarmed.connect(refresh_valid_moves)
-	if primary_weapon:
-		primary_weapon = primary_weapon.make_unique()
-		primary_weapon.initialize(self)
-	# var temp = skills.duplicate()
-	# skills = []
-	# for skill in temp:
-	# 	skills.append(skill.make_unique())
+	if !Engine.is_editor_hint():
+		Events.skill_disarmed.connect(refresh_valid_moves)
+		if primary_weapon:
+			primary_weapon = primary_weapon.make_unique()
+			primary_weapon.initialize(self)
 
-	debug_label.change_param('x', str(round(position.x)))
-	debug_label.change_param('y', str(round(position.y)))
-	debug_label.change_param('z', str(round(position.z)))
-	# _set_up_skills()
+		debug_label.change_param('x', str(round(position.x)))
+		debug_label.change_param('y', str(round(position.y)))
+		debug_label.change_param('z', str(round(position.z)))
 
-	flag.refresh(self)
+		flag.refresh(self)
 
 
 ## Update the list of valid moves for this unit based on their maximum move distance and what positions within that range are navigable to.
 func refresh_valid_moves() -> void:
 	if World.level and can_move() and is_active:
-		World.level.path_marking_system.activate(self)
+		World.level.movement_system.activate(self)
 
 
 ## Executed when the unit becomes the active unit within the level.
@@ -141,7 +142,7 @@ func activate():
 	_cell_highlight.visible = true
 	flag.refresh(self)
 	flag.expand()
-	skill_holder.visible = true
+	skill_machine.visible = true
 	refresh_valid_moves()
 	# _refresh_skills()
 	Events.unit_activated.emit(self)
@@ -152,9 +153,9 @@ func activate():
 func deactivate():
 	_cell_highlight.visible = false
 	flag.collapse()
-	skill_holder.visible = false
+	skill_machine.visible = false
 	# TODO: Make this a signal	
-	World.level.path_marking_system.deactivate()
+	World.level.movement_system.deactivate()
 	Events.unit_deactivated.emit(self)
 	if World.level.armed_skill:
 		Events.skill_disarmed.emit()
@@ -176,6 +177,8 @@ func damage(amount : int) -> void:
 ## Kill the unit and remove them from play.
 func die() -> void:
 	DebugConsole.log("Unit " + name + " dies.", 2)
+	Events.unit_disabled.emit(self)
+	Events.unit_died.emit(self)
 	_collision.disabled = true
 	_mesh_instance.position.y = 0.0
 	unit_status = Status.DEAD
@@ -184,6 +187,8 @@ func die() -> void:
 ## Knock out the unit and remove them from play.
 func lose_consciousness() -> void:
 	DebugConsole.log("Unit " + name + " loses consciousness.", 2)
+	Events.unit_disabled.emit(self)
+	Events.unit_lost_consciousness.emit(self)
 	_collision.disabled = true
 	_mesh_instance.position.y = 0.0
 	unit_status = Status.UNCONSCIOUS
@@ -202,6 +207,8 @@ func take_captive(captured : Unit) -> void:
 	captive = captured
 	captive.captor = self
 	captive.unit_status = Status.CAPTIVE
+	Events.unit_disabled.emit(captive)
+	Events.unit_taken_captive.emit(captive)
 	captive.position = _hostage_marker.global_position
 	captive.board_position = board_position
 	captive.rotation.y = rotation.y
@@ -236,7 +243,7 @@ func can_move() -> bool:
 
 ## Returns true if the unit is still capable of acting this turn.
 func can_act() -> bool:
-	return unit_status == Status.ALIVE and action_points > 0 and action_machine.current_state is NoAction
+	return unit_status == Status.ALIVE and action_points > 0
 
 
 ## Mark this unit as finished acting and set their MP/AP to 0.

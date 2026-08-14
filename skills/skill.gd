@@ -1,6 +1,9 @@
 ## Class representing a particular instance of a skill, as belonging to a specific unit. This is done so that we may store a mutable instance of a skill and treat the original resource as a read only data source. It also allows us to host the skill in physical space, which is useful for finding potential targets and locating an AOE on the grid.
 @abstract class_name Skill
-extends Node3D
+extends Node
+
+## Emitted to the skill machine when this skill is used.
+signal used(skill : Skill)
 
 ## The type of this skill, as defined as what states it can be used from.
 enum SkillType {
@@ -20,6 +23,9 @@ enum SkillType {
 @export var skill_name := "Skill Name"
 ## A description of this skill for the player's benefit.
 @export_multiline var description := "Skill description"
+# NOTE: Long term, the below variable will be replaced with the length of the animation associated with this particular skill. This is strictly for the time being.
+## The time in seconds it takes to perform the skill.
+@export var time_to_perform := 1.0
 
 
 @export_group("Conditions")
@@ -71,8 +77,18 @@ func get_usability() -> bool:
 	return true
 
 
+## Set up the skill with overrides, used only when the skill is being used by an enemy unit.
+func setup_overrides(_overrides : Dictionary) -> void:
+	pass
+
+
 ## Arm this skill in the UI, and perform relevant checks to gather usability.
 func arm() -> void:
+	pass
+
+
+## Arm this skill as an enemy unit, skipping UI changes.
+func arm_as_enemy() -> void:
 	pass
 
 
@@ -81,11 +97,26 @@ func disarm() -> void:
 	pass
 
 
+## Disarm this skill as an enemy, skipping UI changes.
+func disarm_as_enemy() -> void:
+	pass
+
+
+func use(overrides := {}) -> void:
+	if !overrides.is_empty():
+		setup_overrides(overrides)
+	used.emit(self)
+
+
 ## Use this skill, and send all relevant signals in the global context.
-func use() -> void:
+func begin_use() -> void:
 	user.action_points -= action_cost
 	user.movement_points -= movement_cost
 	if ammo_cost and user.primary_weapon is RangedWeapon:
 		user.primary_weapon.current_ammunition -= ammo_cost
 	Events.skill_used.emit(self)
 	Events.refresh_unit_skills.emit()
+
+
+func end_use() -> void:
+	pass

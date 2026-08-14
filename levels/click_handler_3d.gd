@@ -11,7 +11,7 @@ func get_clicked_object() -> Variant:
 	var ray_from = camera.project_ray_origin(mouse_pos)
 	var ray_to = ray_from + camera.project_ray_normal(mouse_pos) * 1000
 
-	var ray_params = PhysicsRayQueryParameters3D.create(ray_from, ray_to)
+	var ray_params = PhysicsRayQueryParameters3D.create(ray_from, ray_to, 9)
 	var result = get_world_3d().direct_space_state.intersect_ray(ray_params)
 
 	if result.is_empty():

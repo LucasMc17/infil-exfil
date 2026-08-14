@@ -10,10 +10,9 @@ func begin(unit : EnemyUnit) -> void:
 	unit.movement_machine.current_state.transition('Walk', { "end_point": _end_point})
 
 
-func check_if_finished() -> bool:
-	return acting_unit.position == _end_point
-
-
 func _on_finished_moving(unit : Unit):
 	super(unit)
+	# NOTE: position? or board position? Not sure but this might break when end point is on a different floor than 0.
+	if acting_unit.position == _end_point:
+		end()
 	unit.forfeit_turn()

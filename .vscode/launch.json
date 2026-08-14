@@ -20,35 +20,35 @@
       "name": "Debug Level 1",
       "type": "godot",
       "request": "launch",
-      "scene": "res://levels/test_levels/test_level_01.tscn",
+      "scene": "res://levels/test_levels/01/test_level_01.tscn",
       "additional_options": "-f"
     },
     {
       "name": "Debug Level 2",
       "type": "godot",
       "request": "launch",
-      "scene": "res://levels/test_levels/test_level_02.tscn",
+      "scene": "res://levels/test_levels/02/test_level_02.tscn",
       "additional_options": "-f"
     },
     {
       "name": "Debug Level 3",
       "type": "godot",
       "request": "launch",
-      "scene": "res://levels/test_levels/test_level_03.tscn",
+      "scene": "res://levels/test_levels/03/test_level_03.tscn",
       "additional_options": "-f"
     },
     {
       "name": "Debug Level 4",
       "type": "godot",
       "request": "launch",
-      "scene": "res://levels/test_levels/test_level_04.tscn",
+      "scene": "res://levels/test_levels/04/test_level_04.tscn",
       "additional_options": "-f"
     },
     {
       "name": "Debug Level 5",
       "type": "godot",
       "request": "launch",
-      "scene": "res://levels/test_levels/test_level_05.tscn",
+      "scene": "res://levels/test_levels/05/test_level_05.tscn",
       "additional_options": "-f"
     }
   ]

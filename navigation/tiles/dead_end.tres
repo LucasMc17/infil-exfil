@@ -8,4 +8,7 @@
 script = ExtResource("1_gsaf8")
 name = "Dead End"
 viable_neighbors = Array[ExtResource("2_mdb0b")]([ExtResource("3_mdb0b")])
+wall_front = true
+wall_right = true
+wall_left = true
 metadata/_custom_type_script = "uid://dh08xpx10ru7"

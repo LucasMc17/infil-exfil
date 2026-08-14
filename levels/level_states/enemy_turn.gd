@@ -9,17 +9,11 @@ func _ready() -> void:
 
 func enter(previous_state : State, ext : Dictionary):
 	super(previous_state, ext)
-	World.level.allow_inputs = false
 	enemy_units = level.live_enemies
 	for enemy : EnemyUnit in enemy_units:
 		enemy.reset()
 	level.is_player_turn = false
 	cycle_enemy()
-
-
-func exit():
-	super()
-	World.level.allow_inputs = true
 
 
 ## Change the active unit from the current enemy to the next in the list. If there is no next enemy in the list, cycle back to the player turn.

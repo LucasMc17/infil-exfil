@@ -15,7 +15,7 @@ var path := []
 func enter(previous_state : State, ext : Dictionary):
 	super(previous_state, ext)
 	if unit is FriendlyUnit:
-		World.level.allow_inputs = false
+		unit.is_moving = true
 		Events.skill_disarmed.emit()
 	unit.debug_label.change_param('movement_state', name)
 	unit.started_moving.emit(unit)
@@ -26,7 +26,7 @@ func enter(previous_state : State, ext : Dictionary):
 		unit.movement_points -= path.size()
 	else:
 		DebugConsole.error('Must pass MovementState an end_point or a path array of points.')
-	World.level.path_marking_system.deactivate()
+	World.level.movement_system.deactivate()
 
 
 func physics_update(delta: float):
@@ -36,5 +36,4 @@ func physics_update(delta: float):
 func exit():
 	unit.refresh_valid_moves.call_deferred()
 	unit.finished_moving.emit(unit)
-	if unit is FriendlyUnit:
-		World.level.allow_inputs = true
+	unit.is_moving = false

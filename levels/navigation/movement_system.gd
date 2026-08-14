@@ -23,7 +23,7 @@ const PATH_MARKER_SMALL := preload('./path_marker_small.tscn')
 var planned_path : Array[PackedVector3Array] = []
 ## The path plotted to the point that the player is hovering their mouse over, either from the player's current position or the last point on the last array in the [planned_path].
 var hovered_path : PackedVector3Array = []
-## All theoretical moves the currently active unit can make. Those nor also found in the [viable_moves] array will be grayed out to show their unavailability.
+## All theoretical moves the currently active unit can make. Those not also found in the [viable_moves] array will be grayed out to show their unavailability.
 var all_unit_moves : PackedVector3Array = []
 ## The highlighted, viable moves at a this moment.
 var viable_moves : PackedVector3Array = []

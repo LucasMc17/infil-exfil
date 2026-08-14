@@ -9,4 +9,6 @@
 script = ExtResource("1_8jhj1")
 name = "Passage"
 viable_neighbors = Array[ExtResource("2_mea28")]([ExtResource("3_6cavn"), ExtResource("4_rqe6o")])
+wall_right = true
+wall_left = true
 metadata/_custom_type_script = "uid://dh08xpx10ru7"

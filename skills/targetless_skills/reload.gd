@@ -10,6 +10,6 @@ func get_affordability() -> bool:
 	user.primary_weapon.current_reserve_ammo > 0
 
 
-func use() -> void:
+func begin_use() -> void:
 	user.primary_weapon.reload(is_tactical)
 	super()

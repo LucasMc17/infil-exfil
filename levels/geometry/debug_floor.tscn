@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://d1i1gcecs1k5t"]
+
+[ext_resource type="Script" uid="uid://ofvs8i5p325p" path="res://levels/geometry/debug_floor.gd" id="1_qb01c"]
+[ext_resource type="Material" uid="uid://b0rlusiqnnw7i" path="res://assets/materials/debug_geometry_material.tres" id="2_b35yr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qb01c"]
+size = Vector3(1, 0.1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b35yr"]
+material = ExtResource("2_b35yr")
+size = Vector3(1, 0.1, 1)
+
+[node name="DebugFloor" type="StaticBody3D" unique_id=1729299196]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_qb01c")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1490587641]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.05, 0.5)
+shape = SubResource("BoxShape3D_qb01c")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=651137775]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.05, 0.5)
+mesh = SubResource("BoxMesh_b35yr")

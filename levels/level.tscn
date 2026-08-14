@@ -7,6 +7,7 @@
 [ext_resource type="MeshLibrary" uid="uid://crn4m7ftmqgqh" path="res://navigation/grid_library_source.tres" id="4_368ro"]
 [ext_resource type="Script" uid="uid://ch5vn3soxrapt" path="res://navigation/navigable_grid_map.gd" id="5_3ca7f"]
 [ext_resource type="PackedScene" uid="uid://cfeifk7bnyc0h" path="res://levels/level_camera.tscn" id="6_kogck"]
+[ext_resource type="Script" uid="uid://bd48odhjxtett" path="res://navigation/nav_zones/nav_zone_map.gd" id="7_d7v53"]
 [ext_resource type="Script" uid="uid://bsxnir3r10yla" path="res://logic/state_management/state_machine.gd" id="8_tn76l"]
 [ext_resource type="Script" uid="uid://cvky17ch66rjs" path="res://levels/level_states/player_turn.gd" id="9_werwd"]
 [ext_resource type="Script" uid="uid://cu06vvfrrxrxs" path="res://levels/level_states/enemy_turn.gd" id="10_of21v"]
@@ -30,11 +31,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -0.5)
 mesh_library = ExtResource("4_368ro")
 cell_size = Vector3(1, 4, 1)
 cell_center_y = false
+collision_layer = 8
 script = ExtResource("5_3ca7f")
 level = NodePath("..")
 show_debug = false
 metadata/_custom_type_script = "uid://ch5vn3soxrapt"
 metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="NavZoneMap" type="Node3D" parent="NavigableGridMap" unique_id=1688252954]
+unique_name_in_owner = true
+script = ExtResource("7_d7v53")
+metadata/_custom_type_script = "uid://bd48odhjxtett"
+
+[node name="Geometry" type="Node3D" parent="NavigableGridMap" unique_id=2043084881]
+unique_name_in_owner = true
+visible = false
 
 [node name="LevelCamera" parent="." unique_id=864095843 instance=ExtResource("6_kogck")]
 unique_name_in_owner = true

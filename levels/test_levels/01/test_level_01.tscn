@@ -1,0 +1,2932 @@
+[gd_scene format=3 uid="uid://lgvhad4u5hfp"]
+
+[ext_resource type="PackedScene" uid="uid://dt305x7b2byrv" path="res://levels/level.tscn" id="1_b2wko"]
+[ext_resource type="PackedScene" uid="uid://b6h1160eunshj" path="res://units/friendlies/friendly_unit.tscn" id="2_hqfjm"]
+[ext_resource type="Script" uid="uid://ofvs8i5p325p" path="res://levels/geometry/debug_floor.gd" id="3_8yv05"]
+[ext_resource type="PackedScene" uid="uid://bup8e1flyaj0p" path="res://units/enemies/enemy_unit.tscn" id="3_v7ycg"]
+[ext_resource type="PackedScene" uid="uid://d1i1gcecs1k5t" path="res://levels/geometry/debug_floor.tscn" id="4_7her1"]
+[ext_resource type="PackedScene" uid="uid://dygqxfucs53hc" path="res://levels/geometry/debug_wall.tscn" id="7_xdsd3"]
+
+[node name="Level" unique_id=1510169201 instance=ExtResource("1_b2wko")]
+
+[node name="NavigableGridMap" parent="." index="3" unique_id=805823171]
+data = {
+"cells": PackedInt32Array(65528, 65530, 1, 65528, 65531, 1441792, 65528, 65532, 1441792, 65528, 65533, 1441792, 65528, 65534, 1441792, 65528, 65535, 1441792, 65528, 0, 1441792, 65528, 1, 1441792, 65528, 2, 1441792, 65528, 3, 1441792, 65528, 4, 1441792, 65528, 5, 1441792, 65528, 6, 1441792, 65529, 65530, 1, 65529, 65531, 1441792, 65529, 65532, 1441792, 65529, 65533, 1441792, 65529, 65534, 1441792, 65529, 65535, 1441792, 65529, 0, 1441792, 65529, 1, 1441792, 65529, 2, 1441792, 65529, 3, 1441792, 65529, 4, 1441792, 65529, 5, 1441792, 65529, 6, 1441792, 65530, 65530, 1, 65530, 65531, 1441792, 65530, 65532, 1441792, 65530, 65533, 1441792, 65530, 65534, 1441792, 65530, 65535, 1441792, 65530, 0, 1441793, 65530, 1, 1441792, 65530, 2, 1441792, 65530, 3, 1441792, 65530, 4, 1441793, 65530, 5, 1441792, 65530, 6, 1441792, 65531, 65530, 1, 65531, 65531, 1441792, 65531, 65532, 1441792, 65531, 65533, 1441792, 65531, 65534, 1441792, 65531, 65535, 655361, 65531, 0, 4, 65531, 1, 1441792, 65531, 2, 1441792, 65531, 3, 1441792, 65531, 4, 1048580, 65531, 5, 1, 65531, 6, 1441792, 65532, 65530, 1, 65532, 65531, 1441792, 65532, 65532, 1441792, 65532, 65533, 1441792, 65532, 65534, 1441792, 65532, 65535, 655361, 65532, 0, 1, 65532, 1, 1441792, 65532, 2, 1441792, 65532, 3, 1441792, 65532, 4, 655361, 65532, 5, 1, 65532, 6, 1441792, 65533, 65530, 1, 65533, 65531, 1441792, 65533, 65532, 1441792, 65533, 65533, 1441792, 65533, 65534, 1441792, 65533, 65535, 655361, 65533, 0, 1, 65533, 1, 1441792, 65533, 2, 1441792, 65533, 3, 1441792, 65533, 4, 655361, 65533, 5, 1, 65533, 6, 1441792, 65534, 65530, 1, 65534, 65531, 1441792, 65534, 65532, 1441792, 65534, 65533, 1441792, 65534, 65534, 1441792, 65534, 65535, 655361, 65534, 0, 1, 65534, 1, 1441792, 65534, 2, 1441793, 65534, 3, 1441792, 65534, 4, 655361, 65534, 5, 1, 65534, 6, 1441792, 65535, 65530, 1, 65535, 65531, 1441792, 65535, 65532, 1441792, 65535, 65533, 1441792, 65535, 65534, 1441792, 65535, 65535, 655361, 65535, 0, 1, 65535, 1, 655361, 65535, 2, 1048581, 65535, 3, 1, 65535, 4, 655361, 65535, 5, 1, 65535, 6, 1441792, 0, 65530, 1, 0, 65531, 1441792, 0, 65532, 1441792, 0, 65533, 1441792, 0, 65534, 1441792, 0, 65535, 655361, 0, 0, 1, 0, 1, 655361, 0, 2, 1441798, 0, 3, 1, 0, 4, 655361, 0, 5, 1, 0, 6, 1441792, 1, 65530, 1, 1, 65531, 1441792, 1, 65532, 1441792, 1, 65533, 1441792, 1, 65534, 1441792, 1, 65535, 655361, 1, 0, 1441796, 1, 1, 1441792, 1, 2, 1441792, 1, 3, 1441792, 1, 4, 655361, 1, 5, 1, 1, 6, 1441792, 2, 65530, 1, 2, 65531, 1441792, 2, 65532, 1441792, 2, 65533, 1441792, 2, 65534, 1441792, 2, 65535, 1441792, 2, 0, 1048580, 2, 1, 1441796, 2, 2, 1441792, 2, 3, 1441792, 2, 4, 655364, 2, 5, 1, 2, 6, 1441792, 3, 65530, 1, 3, 65531, 1441792, 3, 65532, 1441792, 3, 65533, 1441792, 3, 65534, 1441792, 3, 65535, 1441792, 3, 0, 1441792, 3, 1, 1048577, 3, 2, 1441792, 3, 3, 1441792, 3, 4, 1048577, 3, 5, 1441792, 3, 6, 1441792, 4, 65530, 1, 4, 65531, 1441792, 4, 65532, 1441792, 4, 65533, 1441792, 4, 65534, 1441792, 4, 65535, 1441793, 4, 0, 1441793, 4, 1, 1441793, 4, 2, 1441793, 4, 3, 1441792, 4, 4, 1441792, 4, 5, 1441792, 4, 6, 1441792, 5, 65530, 1, 5, 65531, 1441792, 5, 65532, 1441792, 5, 65533, 1441792, 5, 65534, 1441792, 5, 65535, 655366, 5, 0, 655366, 5, 1, 655366, 5, 2, 655366, 5, 3, 1441792, 5, 4, 1441792, 5, 5, 1441792, 5, 6, 1441792, 6, 65530, 1, 6, 65531, 1441792, 6, 65532, 1441792, 6, 65533, 1441792, 6, 65534, 1441792, 6, 65535, 1048577, 6, 0, 1048577, 6, 1, 1048577, 6, 2, 1048577, 6, 3, 1441792, 6, 4, 1441792, 6, 5, 1441792, 6, 6, 1441792, 7, 65530, 1441796, 7, 65531, 1441793, 7, 65532, 1441793, 7, 65533, 1441793, 7, 65534, 1441793, 7, 65535, 1441793, 7, 0, 1441793, 7, 1, 1441793, 7, 2, 1441793, 7, 3, 1441793, 7, 4, 1441793, 7, 5, 1441793, 7, 6, 1441793, 65527, 6, 1048578, 65527, 1, 1048578, 131062, 6, 1048576, 131062, 5, 1, 131061, 5, 1, 131060, 5, 1, 131059, 5, 1, 131058, 5, 1048576, 131057, 5, 1, 131056, 5, 1, 131056, 6, 1048576, 131057, 6, 1048576, 131057, 7, 655361, 131056, 7, 655361, 131058, 7, 655361, 131059, 7, 655361, 131060, 7, 655361, 131061, 7, 655361, 131062, 7, 655361, 131061, 6, 1048576, 131060, 6, 1048576, 131059, 6, 1048576, 131058, 6, 1048576, 131055, 5, 4, 131055, 6, 1048577, 131055, 7, 1048580, 131062, 1, 1048576, 131062, 0, 1, 131062, 2, 655361, 131061, 2, 655361, 131060, 2, 655361, 131059, 2, 655361, 131058, 2, 1048576, 131057, 2, 655361, 131056, 2, 655361, 131055, 2, 1048580, 131055, 1, 1048579, 131055, 0, 4, 131056, 0, 1, 131057, 0, 1, 131058, 0, 1, 131059, 0, 1, 131060, 0, 1, 131061, 0, 1, 131061, 1, 1048576, 131060, 1, 1048576, 131059, 1, 1048576, 131058, 1, 1048576, 131057, 1, 1048576, 131056, 1, 1048576, 131058, 3, 6, 131058, 4, 6, 65527, 0, 1048577, 65527, 65535, 1048577, 65527, 65534, 1048577, 65527, 65533, 1048577, 65527, 65532, 1048577, 65527, 65531, 1048577, 65527, 65530, 4, 65527, 2, 1048577, 65527, 3, 1048577, 65527, 4, 1048577, 65527, 5, 1048577, 65527, 7, 1048580, 7, 7, 655364, 6, 7, 655361, 5, 7, 655361, 4, 7, 655361, 3, 7, 655361, 2, 7, 655361, 1, 7, 655361, 0, 7, 655361, 65535, 7, 655361, 65534, 7, 655361, 65533, 7, 655360, 65532, 7, 655361, 65531, 7, 655361, 65530, 7, 655361, 65529, 7, 655361, 65528, 7, 655361, 65533, 8, 655360, 65532, 8, 1, 65531, 8, 4, 65531, 9, 1048577, 65531, 10, 1048580, 65532, 10, 655361, 65533, 10, 655361, 65534, 10, 655361, 65535, 10, 655364, 65535, 9, 1441793, 65535, 8, 1441796, 65534, 8, 1, 65534, 9, 655360, 65533, 9, 655360, 65532, 9, 655360, 131063, 5, 1, 131064, 6, 1441793, 131063, 7, 655361, 131063, 2, 655361, 131064, 1, 1441793, 131063, 0, 1, 131064, 7, 655364, 131064, 5, 1441796, 131064, 0, 1441796, 131064, 2, 655364)
+}
+
+[node name="DebugFloor" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="0" unique_id=1729299196 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918735" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="1" unique_id=1503404362 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918736" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="2" unique_id=795811134 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918737" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="3" unique_id=1683310289 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918738" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="4" unique_id=2034410861 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918739" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="5" unique_id=859601359 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918740" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="6" unique_id=331101696 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918741" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="7" unique_id=298153572 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918742" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="8" unique_id=1231089848 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918743" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="9" unique_id=678876040 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918744" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="10" unique_id=826782036 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918745" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="11" unique_id=309521101 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918746" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="12" unique_id=551718827 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918747" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="13" unique_id=545226820 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918748" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="14" unique_id=1360984720 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918749" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="15" unique_id=393907673 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918750" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="16" unique_id=580478453 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918751" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="17" unique_id=1833964333 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918752" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="18" unique_id=977798766 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918753" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="19" unique_id=483311123 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918754" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="20" unique_id=2120642931 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918755" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="21" unique_id=1695253939 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918756" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="22" unique_id=1909071814 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918757" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="23" unique_id=1397645546 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918758" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="24" unique_id=303677600 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918759" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="25" unique_id=1042568844 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918760" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="26" unique_id=845560140 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918761" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="27" unique_id=899501788 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918762" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="28" unique_id=1297120287 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918763" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="29" unique_id=825677469 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918764" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="30" unique_id=268003160 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918765" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="31" unique_id=1540753700 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918766" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="32" unique_id=1607932070 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918767" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="33" unique_id=828177708 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918768" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="34" unique_id=1204022475 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918769" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="35" unique_id=1124426708 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918770" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="36" unique_id=1134995273 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918771" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="37" unique_id=471960378 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918772" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="38" unique_id=339946591 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918773" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="39" unique_id=353506803 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918774" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="40" unique_id=1488623979 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918775" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="41" unique_id=1331706586 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918776" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="42" unique_id=179620058 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918777" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="43" unique_id=1505350961 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918778" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="44" unique_id=454025519 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918779" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="45" unique_id=463736905 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918780" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="46" unique_id=430086763 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918781" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="47" unique_id=1793595034 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918782" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="48" unique_id=1565846691 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918783" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="49" unique_id=361391446 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918784" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="50" unique_id=543918461 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918785" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="51" unique_id=25536364 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918786" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="52" unique_id=1430265689 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918787" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="53" unique_id=2006699502 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918788" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="54" unique_id=420143877 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918789" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="55" unique_id=1587909579 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918790" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="56" unique_id=858869121 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918791" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="57" unique_id=1921653096 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918792" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="58" unique_id=247013431 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918793" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="59" unique_id=1304899493 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918794" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="60" unique_id=230457261 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918795" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="61" unique_id=300083773 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918796" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="62" unique_id=1380976525 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918797" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="63" unique_id=1961239607 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918798" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="64" unique_id=1411942232 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918799" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="65" unique_id=1579910036 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918800" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="66" unique_id=1949692940 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918801" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="67" unique_id=1248752137 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918802" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="68" unique_id=216959346 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918803" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="69" unique_id=25027386 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918804" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="70" unique_id=1840938683 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918805" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="71" unique_id=825771367 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918806" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="72" unique_id=759414723 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918807" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="73" unique_id=21712288 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918808" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="74" unique_id=1043856797 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918809" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="75" unique_id=1868420891 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918810" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="76" unique_id=412915912 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918811" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="77" unique_id=1374110630 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918812" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="78" unique_id=2120689676 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918813" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="79" unique_id=438604176 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918814" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="80" unique_id=1660875457 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918815" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="81" unique_id=1096175242 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918816" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="82" unique_id=1156135689 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918817" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="83" unique_id=1608114077 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918818" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="84" unique_id=1024829238 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918819" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="85" unique_id=707345251 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918820" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="86" unique_id=1190043238 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918821" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="87" unique_id=302023702 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918822" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="88" unique_id=1459723807 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918823" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="89" unique_id=1584236021 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918824" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="90" unique_id=1825587421 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918825" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="91" unique_id=574671209 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918826" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="92" unique_id=2017069081 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918827" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="93" unique_id=140288277 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918828" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="94" unique_id=912075178 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918829" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="95" unique_id=628717245 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918830" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="96" unique_id=2118697988 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918831" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="97" unique_id=57544042 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918832" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="98" unique_id=2023293855 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918833" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="99" unique_id=1038200867 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918834" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="100" unique_id=722696820 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918835" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="101" unique_id=836533792 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918836" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="102" unique_id=314107368 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918837" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="103" unique_id=18251808 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918838" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="104" unique_id=295738777 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918839" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="105" unique_id=1015597141 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918840" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="106" unique_id=902860493 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918841" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="107" unique_id=957616755 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918842" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="108" unique_id=582544669 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918843" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="109" unique_id=2075693095 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918844" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="110" unique_id=2143049140 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918845" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="111" unique_id=1550156446 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918846" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="112" unique_id=1752155950 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918847" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="113" unique_id=1885981250 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918848" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="114" unique_id=57334311 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918849" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="115" unique_id=557618290 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918850" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="116" unique_id=233531174 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918851" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="117" unique_id=1401888895 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918852" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="118" unique_id=398683649 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918853" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="119" unique_id=2046553372 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918854" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="120" unique_id=1894563254 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918855" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="121" unique_id=1281945503 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918856" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="122" unique_id=538887491 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918857" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="123" unique_id=747290248 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918858" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="124" unique_id=94491577 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918859" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="125" unique_id=1703669142 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 4, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918860" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="126" unique_id=861668013 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 4, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918861" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="127" unique_id=164406555 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 4, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918862" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="128" unique_id=349255816 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 4, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918863" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="129" unique_id=437784188 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 4, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918864" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="130" unique_id=181738835 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 4, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918865" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="131" unique_id=1707974831 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 4, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918866" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="132" unique_id=1708221540 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 4, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918867" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="133" unique_id=2062810926 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 4, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918868" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="134" unique_id=1941384637 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 4, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918869" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="135" unique_id=2066730061 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 4, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918870" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="136" unique_id=998078130 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 4, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918871" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="137" unique_id=90296765 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 4, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918872" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="138" unique_id=875228053 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 4, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918873" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="139" unique_id=1934419267 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 4, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918874" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="140" unique_id=1132460330 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 4, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918875" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="141" unique_id=1951463045 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918876" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="142" unique_id=886989649 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 8)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918877" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="143" unique_id=892389524 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 9)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918878" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="144" unique_id=1376702785 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 9)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918879" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="145" unique_id=200484059 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 9)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918880" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="146" unique_id=887019620 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="DebugWall" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="147" unique_id=383027990 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 0, -5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918881" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="148" unique_id=404824176 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918882" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="149" unique_id=2021555440 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 0, -5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918883" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="150" unique_id=1822382125 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918884" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="151" unique_id=1028244532 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0, -5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918885" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="152" unique_id=2029783301 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918886" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="153" unique_id=1897731033 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -5.5, 0, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918887" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="154" unique_id=561118734 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918888" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="155" unique_id=691393975 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -5.5, 0, 4.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918889" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="156" unique_id=1084172474 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918890" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="157" unique_id=42094699 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0, -5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918891" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="158" unique_id=2056502230 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918892" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="159" unique_id=671246266 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -4.5, 0, -0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918893" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="160" unique_id=1634653494 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918894" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="161" unique_id=695306059 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918895" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="162" unique_id=1069795585 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918896" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="163" unique_id=1879990791 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918897" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="164" unique_id=1076527040 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918898" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="165" unique_id=1581612427 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -3.5, 0, -0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918899" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="166" unique_id=928271167 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918900" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="167" unique_id=552673022 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918901" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="168" unique_id=1810358474 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918902" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="169" unique_id=1717590953 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -3.5, 0, 4.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918903" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="170" unique_id=407057842 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918904" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="171" unique_id=1529653943 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918905" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="172" unique_id=1165482345 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918906" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="173" unique_id=860504656 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918907" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="174" unique_id=614938569 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918908" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="175" unique_id=1544332343 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -2.5, 0, -0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918909" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="176" unique_id=1102908031 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918910" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="177" unique_id=1146336055 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918911" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="178" unique_id=490412233 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918912" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="179" unique_id=333377450 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -2.5, 0, 4.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918913" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="180" unique_id=976287262 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918914" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="181" unique_id=1542480158 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918915" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="182" unique_id=1710117136 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918916" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="183" unique_id=481869217 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, -5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918917" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="184" unique_id=709092101 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918918" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="185" unique_id=1914198671 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -1.5, 0, -0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918919" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="186" unique_id=879831069 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918920" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="187" unique_id=599010043 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918921" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="188" unique_id=707853318 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918922" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="189" unique_id=503825584 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1.5, 0, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918923" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="190" unique_id=1950282661 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918924" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="191" unique_id=1987702491 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -1.5, 0, 4.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918925" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="192" unique_id=2076137294 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918926" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="193" unique_id=990522787 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918927" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="194" unique_id=1251848098 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918928" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="195" unique_id=514929000 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918929" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="196" unique_id=374183305 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918930" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="197" unique_id=1664627712 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.5, 0, -0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918931" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="198" unique_id=1292584216 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918932" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="199" unique_id=849657040 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918933" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="200" unique_id=1338679506 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918934" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="201" unique_id=1591667477 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.5, 0, 1.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918935" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="202" unique_id=1028992212 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918936" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="203" unique_id=77487274 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 3.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918937" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="204" unique_id=1798363401 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918938" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="205" unique_id=185088408 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.5, 0, 4.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918939" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="206" unique_id=1659917312 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918940" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="207" unique_id=925941218 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918941" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="208" unique_id=1484860790 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918942" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="209" unique_id=459512283 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918943" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="210" unique_id=1206160986 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918944" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="211" unique_id=1554216150 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0.5, 0, -0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918945" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="212" unique_id=1219186849 instance=ExtResource("4_7her1")]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918946" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="213" unique_id=1740496235 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918947" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="214" unique_id=373530912 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918948" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="215" unique_id=873470504 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0.5, 0, 1.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918949" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="216" unique_id=1328704671 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918950" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="217" unique_id=189448249 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 3.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918951" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="218" unique_id=769466003 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918952" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="219" unique_id=164550037 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0.5, 0, 4.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918953" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="220" unique_id=1074331543 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918954" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="221" unique_id=2046424679 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918955" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="222" unique_id=924938187 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918956" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="223" unique_id=665063872 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918957" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="224" unique_id=876991477 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918958" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="225" unique_id=1445092823 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 1.5, 0, -0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918959" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="226" unique_id=786814633 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918960" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="227" unique_id=1653109415 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 1.5, 0, 4.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918961" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="228" unique_id=772009438 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918962" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="229" unique_id=167739871 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918963" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="230" unique_id=280155109 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918964" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="231" unique_id=578226803 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918965" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="232" unique_id=1908793832 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918966" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="233" unique_id=254943965 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918967" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="234" unique_id=167749913 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918968" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="235" unique_id=967711907 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, -5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918969" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="236" unique_id=898636457 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918970" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="237" unique_id=414118253 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.5, 0, 1.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918971" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="238" unique_id=28445079 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918972" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="239" unique_id=1722462696 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.5, 0, 4.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918973" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="240" unique_id=1379804909 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918974" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="241" unique_id=1273098346 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, -5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918975" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="242" unique_id=2048565186 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918976" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="243" unique_id=1391631391 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4.5, 0, -0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918977" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="244" unique_id=592405375 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918978" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="245" unique_id=881169903 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4.5, 0, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918979" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="246" unique_id=1353011746 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918980" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="247" unique_id=1938772898 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4.5, 0, 1.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918981" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="248" unique_id=367529650 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918982" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="249" unique_id=410084324 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4.5, 0, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918983" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="250" unique_id=406922233 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918984" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="251" unique_id=1554174876 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, -5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918985" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="252" unique_id=1145530896 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918986" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="253" unique_id=406090912 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, -5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918987" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="254" unique_id=1167618033 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918988" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="255" unique_id=1856696509 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6.5, 0, -0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918989" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="256" unique_id=2056279313 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918990" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="257" unique_id=1838002054 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6.5, 0, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918991" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="258" unique_id=1886380008 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918992" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="259" unique_id=1487668225 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6.5, 0, 1.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918993" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="260" unique_id=1169133305 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918994" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="261" unique_id=2118805527 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6.5, 0, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918995" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="262" unique_id=60376543 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918996" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="263" unique_id=1445617188 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.5, 0, -4.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918997" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="264" unique_id=618166293 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3918998" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="265" unique_id=1472711815 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.5, 0, -3.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3918999" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="266" unique_id=1471685484 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919000" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="267" unique_id=29627772 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.5, 0, -2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919001" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="268" unique_id=1368221248 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919002" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="269" unique_id=277676356 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.5, 0, -1.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919003" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="270" unique_id=1104140221 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919004" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="271" unique_id=193789966 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.5, 0, -0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919005" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="272" unique_id=406004566 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919006" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="273" unique_id=584919499 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.5, 0, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919007" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="274" unique_id=1612886252 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919008" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="275" unique_id=363379917 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.5, 0, 1.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919009" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="276" unique_id=504455545 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919010" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="277" unique_id=721205341 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.5, 0, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919011" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="278" unique_id=2091665729 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919012" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="279" unique_id=175874587 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.5, 0, 3.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919013" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="280" unique_id=1593933709 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919014" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="281" unique_id=371197572 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.5, 0, 4.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919015" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="282" unique_id=1142953531 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919016" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="283" unique_id=552738434 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.5, 0, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919017" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="284" unique_id=645539034 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919018" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="285" unique_id=1316210906 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.5, 0, 6.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919019" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="286" unique_id=2029521011 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 4, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919020" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="287" unique_id=413368290 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 4, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919021" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="288" unique_id=90698614 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 4, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919022" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="289" unique_id=1119587682 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 4, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919023" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="290" unique_id=1639807307 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 4, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919024" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="291" unique_id=1771382582 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.5, 4, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919025" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="292" unique_id=1033681208 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 4, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919026" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="293" unique_id=400831377 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 4, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919027" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="294" unique_id=887312195 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 4, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919028" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="295" unique_id=319238798 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.5, 4, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919029" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="296" unique_id=1276792756 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 4, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919030" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="297" unique_id=575004640 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5, 4, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919031" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="298" unique_id=190126626 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 4, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919032" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="299" unique_id=143271962 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -14.5, 4, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919033" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="300" unique_id=340706730 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 4, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919034" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="301" unique_id=911801306 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -15.5, 4, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919035" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="302" unique_id=1083549920 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 4, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919036" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="303" unique_id=628712458 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -13.5, 4, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919037" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="304" unique_id=1426040307 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 4, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919038" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="305" unique_id=859647940 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -12.5, 4, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919039" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="306" unique_id=1279234584 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 4, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919040" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="307" unique_id=355420871 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -11.5, 4, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919041" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="308" unique_id=1622531439 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 4, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919042" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="309" unique_id=1519863440 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -10.5, 4, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919043" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="310" unique_id=1989203625 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 4, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919044" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="311" unique_id=1603228158 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -9.5, 4, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919045" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="312" unique_id=1781066361 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 4, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919046" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="313" unique_id=2085507352 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -16.5, 4, 6.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919047" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="314" unique_id=1578937008 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 4, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919048" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="315" unique_id=1300536044 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 4, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919049" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="316" unique_id=163718366 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 4, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919050" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="317" unique_id=1001644091 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -9.5, 4, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919051" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="318" unique_id=1099853323 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 4, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919052" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="319" unique_id=607548947 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -10.5, 4, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919053" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="320" unique_id=104989841 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 4, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919054" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="321" unique_id=1194183590 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -11.5, 4, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919055" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="322" unique_id=541655559 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 4, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919056" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="323" unique_id=2027848652 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -12.5, 4, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919057" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="324" unique_id=2123150157 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 4, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919058" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="325" unique_id=975700753 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -14.5, 4, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919059" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="326" unique_id=236709474 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 4, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919060" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="327" unique_id=249717099 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -15.5, 4, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919061" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="328" unique_id=517882345 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 4, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919062" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="329" unique_id=1733618356 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5, 4, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919063" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="330" unique_id=1143242410 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 4, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919064" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="331" unique_id=1678197408 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.5, 4, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919065" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="332" unique_id=865665226 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 4, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919066" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="333" unique_id=1529646701 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.5, 4, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919067" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="334" unique_id=1226303527 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 4, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919068" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="335" unique_id=1425558169 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 4, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919069" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="336" unique_id=147322598 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 4, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919070" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="337" unique_id=271116850 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.5, 4, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919071" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="338" unique_id=456468861 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 4, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919072" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="339" unique_id=1565004167 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 4, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919073" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="340" unique_id=1049430196 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919074" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="341" unique_id=1497623437 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.5, 0, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919075" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="342" unique_id=407724772 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919076" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="343" unique_id=2021070275 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.5, 0, -0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919077" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="344" unique_id=585515299 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919078" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="345" unique_id=687330935 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.5, 0, -1.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919079" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="346" unique_id=461675983 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919080" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="347" unique_id=64060380 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.5, 0, -2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919081" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="348" unique_id=1550406810 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919082" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="349" unique_id=1140183050 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.5, 0, -3.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919083" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="350" unique_id=2056915754 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919084" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="351" unique_id=1517319418 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.5, 0, -4.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919085" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="352" unique_id=1085259110 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919086" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="353" unique_id=1725332987 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.5, 0, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919087" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="354" unique_id=651081724 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919088" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="355" unique_id=1748698661 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.5, 0, 3.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919089" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="356" unique_id=1461092981 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919090" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="357" unique_id=862935358 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.5, 0, 4.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919091" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="358" unique_id=2010944089 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919092" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="359" unique_id=930422049 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.5, 0, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919093" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="360" unique_id=729195501 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919094" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="361" unique_id=1132761204 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 6.5, 0, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919095" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="362" unique_id=1438705227 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919096" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="363" unique_id=2140799305 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 5.5, 0, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919097" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="364" unique_id=1328733028 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919098" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="365" unique_id=1720503275 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 4.5, 0, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919099" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="366" unique_id=643811985 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919100" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="367" unique_id=51359326 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 3.5, 0, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919101" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="368" unique_id=1402030698 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919102" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="369" unique_id=768033167 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2.5, 0, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919103" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="370" unique_id=101273959 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919104" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="371" unique_id=905516397 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 1.5, 0, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919105" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="372" unique_id=1613977224 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919106" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="373" unique_id=1191188649 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0.5, 0, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919107" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="374" unique_id=350239016 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919108" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="375" unique_id=924820166 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.5, 0, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919109" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="376" unique_id=1407526635 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919110" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="377" unique_id=1798710567 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -1.5, 0, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919111" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="378" unique_id=1075589501 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919112" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="379" unique_id=2115252059 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -3.5, 0, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919113" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="380" unique_id=665000451 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919114" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="381" unique_id=1296361813 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -4.5, 0, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919115" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="382" unique_id=1535814237 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919116" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="383" unique_id=1136403828 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -5.5, 0, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919117" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="384" unique_id=1453976493 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919118" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="385" unique_id=401307223 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -6.5, 0, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919119" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="386" unique_id=1995274106 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919120" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="387" unique_id=2098304875 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -7.5, 0, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919121" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="388" unique_id=1732710058 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 8)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919122" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="389" unique_id=1334643563 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 8.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919123" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="390" unique_id=1122440131 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 9)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919124" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="391" unique_id=198208085 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.5, 0, 9.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919125" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="392" unique_id=2144165701 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 10)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919126" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="393" unique_id=115238371 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -3.5, 0, 10.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919127" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="394" unique_id=1555568479 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 10)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919128" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="395" unique_id=1318575403 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -2.5, 0, 10.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919129" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="396" unique_id=1195158514 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 10)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919130" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="397" unique_id=1022246325 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -1.5, 0, 10.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919131" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="398" unique_id=1153924679 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 9)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919132" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="399" unique_id=1204796924 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.5, 0, 9.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919133" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="400" unique_id=92976457 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 8)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919134" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="401" unique_id=1693957198 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 8.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919135" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="402" unique_id=1319440988 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 4, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919136" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="403" unique_id=2089418609 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 4, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919137" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="404" unique_id=73734908 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 4, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919138" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="405" unique_id=1743483341 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -7.5, 4, 6.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919139" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="406" unique_id=1837576433 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 4, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919140" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="407" unique_id=1030521068 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -8.5, 4, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919141" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="408" unique_id=181754961 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 4, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919142" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="409" unique_id=1758288928 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -8.5, 4, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919143" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="410" unique_id=1619368570 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 4, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919144" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="411" unique_id=1477512649 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -7.5, 4, 1.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919145" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="412" unique_id=969812676 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 4, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919146" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="413" unique_id=674113849 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 4, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919147" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="414" unique_id=711409519 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919148" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="415" unique_id=2054044620 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.5, 0, 6.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919149" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="416" unique_id=507861610 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919150" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="417" unique_id=173457209 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.5, 0, 1.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919151" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="418" unique_id=92474381 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 4, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919152" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="419" unique_id=1060579905 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -16.5, 4, 1.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919153" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="420" unique_id=924694048 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919154" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="421" unique_id=1055631770 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919155" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="422" unique_id=924112563 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, -4.5, 0, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919156" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="423" unique_id=151809508 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919157" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="424" unique_id=1491889754 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.5, 0, 4.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919158" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="425" unique_id=1577970362 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, -3.6637014e-06, 0, 1, 0, 3.6637014e-06, 0, -1, -4.5, 0, 4.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919159" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="426" unique_id=1284334265 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919160" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="427" unique_id=1165494534 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.5, 0, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919161" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="428" unique_id=1260311744 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 3.6294937e-06, 0, 1, 0, -3.6294937e-06, 0, 1, 1.5, 0, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919162" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="429" unique_id=1585509778 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919163" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="430" unique_id=1361573507 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2.5, 0, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919164" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="431" unique_id=160303540 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, -3.6637014e-06, 0, 1, 0, 3.6637014e-06, 0, -1, 2.5, 0, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919165" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="432" unique_id=731946489 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919166" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="433" unique_id=1596344822 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.5, 0, 1.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919167" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="434" unique_id=2000584718 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 3.6294937e-06, 0, 1, 0, -3.6294937e-06, 0, 1, 2.5, 0, 1.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919168" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="435" unique_id=230129261 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919169" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="436" unique_id=1478139231 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2.5, 0, 4.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919170" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="437" unique_id=1610720124 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(3.5325672e-06, 0, -1, 0, 1, 0, 1, 0, 3.5325672e-06, 2.5, 0, 4.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919171" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="438" unique_id=1643337592 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919172" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="439" unique_id=651062399 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.5, 0, -5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919173" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="440" unique_id=1287284734 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 3.6294937e-06, 0, 1, 0, -3.6294937e-06, 0, 1, 7.5, 0, -5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919174" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="441" unique_id=2097670911 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 4, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919175" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="442" unique_id=875372423 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.5, 4, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919176" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="443" unique_id=802222130 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, -16.5, 4, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919177" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="444" unique_id=1222060655 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 4, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919178" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="445" unique_id=1629649596 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -16.5, 4, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919179" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="446" unique_id=2094681963 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, -3.6637014e-06, 0, 1, 0, 3.6637014e-06, 0, -1, -16.5, 4, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919180" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="447" unique_id=1179573964 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 4, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919181" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="448" unique_id=2052916451 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -16.5, 4, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919182" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="449" unique_id=344135595 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, -3.6637014e-06, 0, 1, 0, 3.6637014e-06, 0, -1, -16.5, 4, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919183" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="450" unique_id=1691416570 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 4, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919184" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="451" unique_id=1548987512 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.5, 4, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919185" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="452" unique_id=640036930 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, -16.5, 4, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919186" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="453" unique_id=1381805911 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -6)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919187" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="454" unique_id=158543398 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0, -5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919188" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="455" unique_id=807923201 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, -8.5, 0, -5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919189" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="456" unique_id=383193184 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919190" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="457" unique_id=2112519216 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.5, 0, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919191" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="458" unique_id=1621165601 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, -3.6637014e-06, 0, 1, 0, 3.6637014e-06, 0, -1, -8.5, 0, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919192" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="459" unique_id=1715076058 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919193" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="460" unique_id=992353749 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 7.5, 0, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919194" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="461" unique_id=789379773 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(3.5325672e-06, 0, -1, 0, 1, 0, 1, 0, 3.5325672e-06, 7.5, 0, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919195" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="462" unique_id=180790870 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 8)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919196" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="463" unique_id=856191498 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0, 8.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919197" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="464" unique_id=2066643353 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, -4.5, 0, 8.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919198" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="465" unique_id=26143975 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 10)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919199" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="466" unique_id=1974012061 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.5, 0, 10.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919200" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="467" unique_id=1999601022 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, -3.6637014e-06, 0, 1, 0, 3.6637014e-06, 0, -1, -4.5, 0, 10.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919201" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="468" unique_id=576572793 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 10)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919202" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="469" unique_id=637417386 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.5, 0, 10.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919203" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="470" unique_id=385069408 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(3.5325672e-06, 0, -1, 0, 1, 0, 1, 0, 3.5325672e-06, -0.5, 0, 10.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919204" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="471" unique_id=427795893 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 8)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919205" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="472" unique_id=2094279937 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.5, 0, 8.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919206" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="473" unique_id=2023488477 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 3.6294937e-06, 0, 1, 0, -3.6294937e-06, 0, 1, -0.5, 0, 8.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919207" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="474" unique_id=1579573891 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 4, 7)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919208" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="475" unique_id=1506374929 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -7.5, 4, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919209" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="476" unique_id=474109222 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(3.5325672e-06, 0, -1, 0, 1, 0, 1, 0, 3.5325672e-06, -7.5, 4, 7.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919210" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="477" unique_id=1068938719 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 4, 5)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919211" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="478" unique_id=43750564 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -7.5, 4, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919212" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="479" unique_id=522230147 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 3.6294937e-06, 0, 1, 0, -3.6294937e-06, 0, 1, -7.5, 4, 5.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919213" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="480" unique_id=426837728 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 4, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919214" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="481" unique_id=1355375934 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -7.5, 4, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919215" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="482" unique_id=732952178 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 3.6294937e-06, 0, 1, 0, -3.6294937e-06, 0, 1, -7.5, 4, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919216" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="483" unique_id=1109235585 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 4, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919217" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="484" unique_id=2076076379 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -7.5, 4, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919218" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="485" unique_id=97897948 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(3.5325672e-06, 0, -1, 0, 1, 0, 1, 0, 3.5325672e-06, -7.5, 4, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919219" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="486" unique_id=1172843191 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919220" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="487" unique_id=1027430286 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.5, 0, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919221" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="488" unique_id=1308993111 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, -3.6294937e-06, 0, 1, 0, 3.6294937e-06, 0, 1, -0.5, 0, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919222" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="489" unique_id=672055523 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, -3.6637014e-06, 0, 1, 0, 3.6637014e-06, 0, -1, -0.5, 0, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919223" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="490" unique_id=226095271 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, -3.6294937e-06, 0, 1, 0, 3.6294937e-06, 0, 1, -0.5, 0, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919224" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="491" unique_id=891591600 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919225" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="492" unique_id=1460951273 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 3.6637014e-06, 0, 1, 0, -3.6637014e-06, 0, -1, 0.5, 0, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919226" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="493" unique_id=1350806006 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(1, 0, 3.6294937e-06, 0, 1, 0, -3.6294937e-06, 0, 1, 0.5, 0, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919227" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="494" unique_id=2022850901 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-1, 0, 3.6637014e-06, 0, 1, 0, -3.6637014e-06, 0, -1, 0.5, 0, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919228" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="495" unique_id=427330576 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919229" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="496" unique_id=1195871061 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(3.826622e-06, 0, 1, 0, 1, 0, -1, 0, 3.826622e-06, 5.5, 0, -0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919230" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="497" unique_id=1345707032 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(3.5325672e-06, 0, -1, 0, 1, 0, 1, 0, 3.5325672e-06, 5.5, 0, -0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919231" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="498" unique_id=1892031183 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(3.826622e-06, 0, 1, 0, 1, 0, -1, 0, 3.826622e-06, 5.5, 0, -0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919232" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="499" unique_id=2085913772 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919233" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="500" unique_id=793272969 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(3.826622e-06, 0, 1, 0, 1, 0, -1, 0, 3.826622e-06, 5.5, 0, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919234" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="501" unique_id=532433693 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(3.5325672e-06, 0, -1, 0, 1, 0, 1, 0, 3.5325672e-06, 5.5, 0, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919235" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="502" unique_id=950933497 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(3.826622e-06, 0, 1, 0, 1, 0, -1, 0, 3.826622e-06, 5.5, 0, 0.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919236" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="503" unique_id=1327827704 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 1)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919237" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="504" unique_id=1859661432 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(3.826622e-06, 0, 1, 0, 1, 0, -1, 0, 3.826622e-06, 5.5, 0, 1.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919238" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="505" unique_id=262025715 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(3.5325672e-06, 0, -1, 0, 1, 0, 1, 0, 3.5325672e-06, 5.5, 0, 1.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919239" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="506" unique_id=717948891 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(3.826622e-06, 0, 1, 0, 1, 0, -1, 0, 3.826622e-06, 5.5, 0, 1.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919240" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="507" unique_id=1017253450 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 2)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919241" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="508" unique_id=837281773 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(3.826622e-06, 0, 1, 0, 1, 0, -1, 0, 3.826622e-06, 5.5, 0, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919242" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="509" unique_id=1707880552 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(3.5325672e-06, 0, -1, 0, 1, 0, 1, 0, 3.5325672e-06, 5.5, 0, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919243" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="510" unique_id=1216851426 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(3.826622e-06, 0, 1, 0, 1, 0, -1, 0, 3.826622e-06, 5.5, 0, 2.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919244" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="511" unique_id=2022917336 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 4, 3)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919245" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="512" unique_id=1708715104 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-3.6199901e-06, 0, -1, 0, 1, 0, 1, 0, -3.6199901e-06, -13.5, 4, 3.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919246" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="513" unique_id=922432353 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, -13.5, 4, 3.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919247" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="514" unique_id=2110254917 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-3.6199901e-06, 0, -1, 0, 1, 0, 1, 0, -3.6199901e-06, -13.5, 4, 3.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919248" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="515" unique_id=795032173 instance=ExtResource("4_7her1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 4, 4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("3_8yv05")
+
+[node name="@StaticBody3D@3919249" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="516" unique_id=510412893 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-3.6199901e-06, 0, -1, 0, 1, 0, 1, 0, -3.6199901e-06, -13.5, 4, 4.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919250" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="517" unique_id=1695790809 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, -13.5, 4, 4.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="@StaticBody3D@3919251" type="StaticBody3D" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="518" unique_id=570584208 instance=ExtResource("7_xdsd3")]
+transform = Transform3D(-3.6199901e-06, 0, -1, 0, 1, 0, 1, 0, -3.6199901e-06, -13.5, 4, 4.5)
+collision_layer = 2
+collision_mask = 5
+
+[node name="FriendlyUnit" parent="Friendlies" parent_id_path=PackedInt32Array(926091492) index="0" unique_id=1676765037 instance=ExtResource("2_hqfjm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -3)
+
+[node name="FriendlyUnit2" parent="Friendlies" parent_id_path=PackedInt32Array(926091492) index="1" unique_id=277037639 instance=ExtResource("2_hqfjm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 4, 1)
+
+[node name="EnemyUnit" parent="Enemies" parent_id_path=PackedInt32Array(182952236) index="0" unique_id=1682874516 instance=ExtResource("3_v7ycg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -4)
+alarm_run_chance = 0.0

@@ -17,14 +17,12 @@ func disarm() -> void:
 	chance = 0.1
 
 
-func use() -> void:
-	var dice_roll = randf()
-	DebugConsole.log(['dice roll: ', dice_roll, 'min roll to hit: ', 1 - chance])
-	if dice_roll >= 1 - chance:
+func begin_use() -> void:
+	if Utilities.dice_roll(chance):
 		DebugConsole.log('headshot hits')
 		target.die()
 	else:
-		DebugConsole.log('Headshot misses')
+		DebugConsole.log('headshot misses')
 	super()
 
 
@@ -32,8 +30,6 @@ func retarget(new_target : Unit) -> void:
 	super(new_target)
 	if new_target:
 		var distance = user.position.distance_to(new_target.position)
-		var chance_range = max_chance - min_chance
-		var percent_per_meter = chance_range / (effective_range - 1) 
-		chance = min_chance + ((effective_range - distance) * percent_per_meter) 
+		chance = Utilities.convert_range_to_odds(distance, effective_range, 1, max_chance, min_chance)
 	else:
 		chance = 0.1

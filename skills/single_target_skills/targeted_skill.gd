@@ -18,7 +18,11 @@ func arm() -> void:
 	super()
 	get_all_targets()
 	Events.target_selected.connect(retarget)
-	get_usability()
+
+
+func arm_as_enemy() -> void:
+	super()
+	get_all_targets()
 
 
 func disarm() -> void:
@@ -26,6 +30,27 @@ func disarm() -> void:
 	Events.target_selected.disconnect(retarget)
 	potential_targets = []
 	clear_target()
+
+
+func disarm_as_enemy() -> void:
+	super()
+	potential_targets = []
+	clear_target()
+
+
+func setup_overrides(overrides : Dictionary) -> void:
+	get_all_targets()
+	var chosen_target = overrides.get("target")
+	if !potential_targets.has(chosen_target):
+		DebugConsole.error('Skill overrides set up with target not listed in potential targets!')
+		return
+	target = chosen_target
+
+
+func begin_use() -> void:
+	super()
+	target = null
+	potential_targets = []
 
 
 ## Updates the list of viable targets based on this skill's custom rules.
@@ -54,14 +79,14 @@ func clear_target() -> void:
 ## Filter targets based on this skill being intended only for enemies unaware of the active player unit.
 func _filter_stealth(target_unit : Unit) -> bool:
 	if target_unit is EnemyUnit:
-		return !target_unit.awareness.targeted_friendlies.has(user) or target_unit.awareness.is_in_grace_period
+		return !target_unit.awareness.targeted_friendlies.has(user.get_instance_id()) or target_unit.awareness.is_in_grace_period
 	return true
 
 
 ## Filter targets based on this skill being intended only for enemies aware of the active player unit.
 func _filter_combat(target_unit : Unit) -> bool:
 	if target_unit is EnemyUnit:
-		return target_unit.awareness.targeted_friendlies.has(user)
+		return target_unit.awareness.targeted_friendlies.has(user.get_instance_id())
 	return true
 
 

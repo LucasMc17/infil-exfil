@@ -31,15 +31,9 @@ func end() -> void:
 	acting_unit.decision_director.finish_directive()
 
 
-## Logic for determining if the current directive has been finished, and should run in its [end] method. The directive will automatically check if it is finished every time the unit executing it finishes moving or acting.
-@abstract func check_if_finished() -> bool
-
-
 func _on_finished_moving(_unit : Unit):
-	if check_if_finished():
-		end()
+	pass
 
 
 func _on_finished_acting(_unit : Unit):
-	if check_if_finished():
-		end()
+	pass
