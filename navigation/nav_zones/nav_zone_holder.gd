@@ -8,8 +8,6 @@ extends Node3D
 ## The material to apply to meshes representing navigation points within this NavZoneHolder.
 const POINT_MATERIAL = preload("uid://cvcg462nivceg")
 
-@export_tool_button("Start/Stop Debug Visuals") var start_stop_button = func():
-	show_visuals = !show_visuals
 @export_tool_button("Assign Random Color") var random_color_button = func():
 	debug_color = Utilities.random_color()
 
@@ -22,8 +20,6 @@ const POINT_MATERIAL = preload("uid://cvcg462nivceg")
 		if Engine.is_editor_hint() and plane_material:
 			plane_material.albedo_color = debug_color
 
-## Whether or not to create and update debug meshes in the editor for this NavZoneHolder. Can be turned off in order to declutter the editor space.
-var show_visuals := true
 ## The material to apply to the debug mesh of this NavZoneHolder (when drawn).
 var plane_material : StandardMaterial3D
 ## The floor number of this zone.
@@ -36,7 +32,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if Engine.is_editor_hint() and show_visuals:
+	if Engine.is_editor_hint() and is_visible_in_tree():
 		_redraw_meshes()
 
 
