@@ -15,6 +15,7 @@ func _ready() -> void:
 	_assign_floor_heights()
 
 
+## Utility function for assigning each child's floor index within the map.
 func _assign_floor_heights() -> void:
 	var children = get_children()
 	for i in range(children.size()):
