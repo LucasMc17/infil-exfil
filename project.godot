@@ -39,7 +39,7 @@ window/vsync/vsync_mode=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/debug_console/plugin.cfg", "res://addons/debug_label_3d/plugin.cfg")
+enabled=PackedStringArray("res://addons/debug_console/plugin.cfg", "res://addons/debug_label_3d/plugin.cfg", "res://addons/grid_map_chunks/plugin.cfg")
 
 [global_group]
 

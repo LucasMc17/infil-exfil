@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cwc2ggd4rigaw"]
+
+[ext_resource type="Script" uid="uid://df81wdhpvpy1v" path="res://addons/grid_map_chunks/chunk_option.gd" id="1_u34na"]
+
+[node name="ChunkOption" type="HBoxContainer" unique_id=1603628026]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u34na")
+
+[node name="Label" type="Label" parent="." unique_id=1197437377]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "example_chunk.tres"
+
+[node name="PreviewButton" type="Button" parent="." unique_id=1734603049]
+layout_mode = 2
+text = "Preview Chunk"
+
+[node name="LoadButton" type="Button" parent="." unique_id=382595720]
+layout_mode = 2
+text = "Load Chunk"
+
+[connection signal="pressed" from="PreviewButton" to="." method="_on_preview_button_pressed"]
+[connection signal="pressed" from="LoadButton" to="." method="_on_load_button_pressed"]
