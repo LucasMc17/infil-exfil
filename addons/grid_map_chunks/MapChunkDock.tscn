@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://ckwj7tuo85a75"]
+
+[ext_resource type="Script" uid="uid://cnu6xuy25vqgu" path="res://addons/grid_map_chunks/map_chunk_dock.gd" id="1_g0utw"]
+
+[node name="MapChunkDock" type="Control" unique_id=1254279580]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g0utw")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1106284037]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1437126756]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=1876205127]
+layout_mode = 2
+text = "Chunk Name: "
+
+[node name="FileNameEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer" unique_id=362377064]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "my_chunk"
+
+[node name="SaveButton" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1489025249]
+layout_mode = 2
+text = "Save Chunk"
+
+[node name="OptionHolder" type="VBoxContainer" parent="VBoxContainer" unique_id=902841019]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RefreshButton" type="Button" parent="VBoxContainer" unique_id=213891869]
+layout_mode = 2
+text = "Refresh Chunk List"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/RefreshButton" to="." method="_refresh_chunks"]
