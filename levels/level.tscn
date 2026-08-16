@@ -36,7 +36,7 @@ script = ExtResource("5_3ca7f")
 level = NodePath("..")
 show_debug = false
 metadata/_custom_type_script = "uid://ch5vn3soxrapt"
-metadata/_editor_floor_ = Vector3(0, 0, 0)
+metadata/_editor_floor_ = Vector3(0, -1, 0)
 
 [node name="NavZoneMap" type="Node3D" parent="NavigableGridMap" unique_id=1688252954]
 unique_name_in_owner = true

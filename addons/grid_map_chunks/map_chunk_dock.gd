@@ -12,6 +12,7 @@ const SAVED_CHUNKS_PATH : String = "res://addons/grid_map_chunks/saved_chunks/"
 var file_name : String:
 	get():
 		return name_edit.text
+var chunk_loader : ChunkLoader = ChunkLoader.new()
 
 func _ready() -> void:
 	_refresh_chunks()
@@ -21,7 +22,7 @@ func _ready() -> void:
 func _refresh_chunks() -> void:
 	for child : ChunkOption in _option_holder.get_children():
 		child.previewed.disconnect(_preview_chunk)
-		child.loaded.disconnect(_load_chunk)
+		child.loaded.disconnect(_on_chunk_loaded)
 		child.queue_free()
 	var dir = DirAccess.open(SAVED_CHUNKS_PATH)
 	if dir:
@@ -32,7 +33,7 @@ func _refresh_chunks() -> void:
 				var chunk : Chunk = load(SAVED_CHUNKS_PATH + file_name) as Chunk
 				var option_scene = ChunkOption.new_option(chunk, file_name)
 				option_scene.previewed.connect(_preview_chunk)
-				option_scene.loaded.connect(_load_chunk)
+				option_scene.loaded.connect(_on_chunk_loaded)
 				_option_holder.add_child(option_scene)
 			file_name = dir.get_next()
 	else:
@@ -92,12 +93,6 @@ func _stringify_vector3(vector : Variant) -> String:
 		return ""
 
 
-## Return a stringified vector to a full vector format ("0/1/2" -> Vector3(0.0, 1.0, 1.0)).
-func _unstringify_vector3(string : String) -> Vector3:
-	var axes = Array(string.split('/')).map(func (i): return int(i))
-	return Vector3(axes[0], axes[1], axes[2])
-
-
 ## Serialize a chunk of map data as a reusable Chunk, and save that chunk to a tres in the file system.
 func _save_chunk(name : String, points : Array, selection : AABB, grid_map : GridMap) -> void:
 	var chunk = Chunk.new()
@@ -123,17 +118,11 @@ func _preview_chunk(chunk : Chunk) -> void:
 	grid_map_plugin.set_selection(position, Vector3i(position) + chunk.dimensions)
 
 
-## Load a Chunk resource and reconstruct it in the GridMap, at the current selection's root position.
-func _load_chunk(chunk : Chunk) -> void:
-	var grid_map_plugin : GridMapEditorPlugin = _get_grid_map_plugin()
-	var local_root = grid_map_plugin.get_selection().position
-	var grid_map = grid_map_plugin.get_current_grid_map()
+## Load a Chunk resource via the ChunkLoader and reconstruct it in the GridMap, at the current selection's root position.
+func _on_chunk_loaded(chunk : Chunk) -> void:
+	var grid_map_plugin = _get_grid_map_plugin()
+	chunk_loader.load_chunk(grid_map_plugin, chunk)
 
-	var data = JSON.parse_string(chunk.content)
-	for key in data.keys():
-		var position = _unstringify_vector3(key)
-		var value = data[key].split('-')
-		var cell_item = int(value[0])
-		var cell_rotation = int(value[1])
-
-		grid_map.set_cell_item(local_root + position, cell_item, cell_rotation)
+# TODO:
+	# Better chunk visualization
+	# Rotation solution
