@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://dmk66566638rw" path="res://skills/targetless_skills/pull_alarm.tscn" id="10_aa1dw"]
 [ext_resource type="PackedScene" uid="uid://1lky50pj0tct" path="res://units/vision_zones/seen_zone.tscn" id="10_ysu83"]
 [ext_resource type="Script" uid="uid://8c6xrxfefw3o" path="res://units/friendlies/visibility_point.gd" id="11_aa1dw"]
+[ext_resource type="Script" uid="uid://bhcrnp1pgw4g5" path="res://audio/static_audio_machine.gd" id="11_ysu83"]
+[ext_resource type="AudioStream" uid="uid://bevw360ab1jqj" path="res://assets/audio/test_gunshot.ogg" id="12_aa1dw"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_d7xs0"]
 viewport_path = NodePath("SubViewport")
@@ -21,7 +23,7 @@ radius = 0.45
 radius = 0.45
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ysu83"]
-viewport_path = NodePath("DebugLabel/@SubViewport@45774")
+viewport_path = NodePath("DebugLabel/@SubViewport@22415")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vsw5j"]
 radius = 0.45
@@ -137,3 +139,11 @@ debug_color = Color(2.2862107e-06, 0.6497064, 0.14529341, 0.41960785)
 [node name="HostageMarker" type="Marker3D" parent="." unique_id=1504207559]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+
+[node name="StaticAudioMachine" type="AudioStreamPlayer" parent="." unique_id=325227163]
+unique_name_in_owner = true
+script = ExtResource("11_ysu83")
+audio_list = Dictionary[String, AudioStream]({
+"gunshot": ExtResource("12_aa1dw")
+})
+metadata/_custom_type_script = "uid://bhcrnp1pgw4g5"
