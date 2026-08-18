@@ -5,6 +5,7 @@ extends AimedSkill
 const CHANCE := 0.4
 
 func begin_use() -> void:
+	user.audio_machine.play_audio('gunshot')
 	if Utilities.dice_roll(CHANCE):
 		DebugConsole.log('Enemy attack hits.')
 	else:

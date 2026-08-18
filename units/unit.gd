@@ -115,6 +115,7 @@ var captor : Unit
 @onready var _mesh_instance : MeshInstance3D = %MeshInstance3D
 @onready var _hostage_marker : Marker3D = %HostageMarker
 @onready var _collision : CollisionShape3D = %CollisionShape3D
+@onready var audio_machine : StaticAudioMachine = %StaticAudioMachine
 
 func _ready():
 	board_position = NavigableGridMap.convert_global_to_grid_position(Vector3i(position))

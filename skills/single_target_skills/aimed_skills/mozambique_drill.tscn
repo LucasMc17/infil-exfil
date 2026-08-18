@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bvcn4atewj3ts"]
 
 [ext_resource type="PackedScene" uid="uid://dulcusx643qk8" path="res://skills/aimed_skill.tscn" id="1_ruh51"]
+[ext_resource type="Script" uid="uid://dl30dgofqkg2" path="res://skills/single_target_skills/aimed_skills/mozambique_drill.gd" id="2_c2pc5"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ruh51"]
 
@@ -12,9 +13,10 @@ cap_top = false
 cap_bottom = false
 
 [node name="MozambiqueDrill" unique_id=1362204123 instance=ExtResource("1_ruh51")]
+script = ExtResource("2_c2pc5")
 effective_range = 8.0
-skill_name = "Mozambique Drill"
 skill_type = 1
+skill_name = "Mozambique Drill"
 ammo_cost = 3
 
 [node name="CollisionShape3D" parent="Area3D" parent_id_path=PackedInt32Array(1854330789) index="0" unique_id=1223890083]
