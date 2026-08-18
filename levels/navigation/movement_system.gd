@@ -3,7 +3,7 @@ class_name MovementSystem
 extends Node3D
 
 ## Level context for path finding.
-@export var level : BaseLevel
+@export var level : Level
 
 @onready var _planned_paths_holder := %PlannedPathsHolder
 @onready var _hovered_path_holder := %HoveredPathHolder

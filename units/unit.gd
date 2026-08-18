@@ -70,8 +70,8 @@ var action_points := max_action_points:
 ## Whether or not this unit is currently the active unit within the level.
 var is_active : bool:
 	get():
-		if World.level:
-			return World.level.active_unit == self
+		if Level.current_level:
+			return Level.current_level.active_unit == self
 		else:
 			return false
 ## Whether or not this unit is in the middle of using a skill.
@@ -134,8 +134,8 @@ func _ready():
 
 ## Update the list of valid moves for this unit based on their maximum move distance and what positions within that range are navigable to.
 func refresh_valid_moves() -> void:
-	if World.level and can_move() and is_active:
-		World.level.movement_system.activate(self)
+	if Level.current_level and can_move() and is_active:
+		Level.current_level.movement_system.activate(self)
 
 
 ## Executed when the unit becomes the active unit within the level.
@@ -156,9 +156,9 @@ func deactivate():
 	flag.collapse()
 	skill_machine.visible = false
 	# TODO: Make this a signal	
-	World.level.movement_system.deactivate()
+	Level.current_level.movement_system.deactivate()
 	Events.unit_deactivated.emit(self)
-	if World.level.armed_skill:
+	if Level.current_level.armed_skill:
 		Events.skill_disarmed.emit()
 
 

@@ -40,8 +40,8 @@ enum SkillType {
 
 var is_armed : bool:
 	get():
-		if World.level:
-			return World.level.armed_skill == self
+		if Level.current_level:
+			return Level.current_level.armed_skill == self
 		else:
 			return false
 

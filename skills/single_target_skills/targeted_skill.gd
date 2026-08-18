@@ -61,9 +61,9 @@ func begin_use() -> void:
 func retarget(new_target : Unit) -> void:
 	target = new_target
 	if target:
-		World.level.target_retical.visible = true
-		World.level.target_retical.global_position = target.global_position
-		World.level.level_camera.jump_to_point(target.global_position)
+		Level.current_level.target_retical.visible = true
+		Level.current_level.target_retical.global_position = target.global_position
+		Level.current_level.level_camera.jump_to_point(target.global_position)
 	else:
 		clear_target()
 	Events.recheck_skill_usability.emit()
@@ -72,8 +72,8 @@ func retarget(new_target : Unit) -> void:
 ## Reset the target to null.
 func clear_target() -> void:
 	target = null
-	World.level.level_camera.fix_to_actor(World.level.active_unit)
-	World.level.target_retical.visible = false
+	Level.current_level.level_camera.fix_to_actor(Level.current_level.active_unit)
+	Level.current_level.target_retical.visible = false
 
 
 ## Filter targets based on this skill being intended only for enemies unaware of the active player unit.

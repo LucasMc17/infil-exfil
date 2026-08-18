@@ -56,7 +56,7 @@ class GridPoint:
 
 @export_group("Context")
 ## The level this NavGrid lives inside of.
-@export var level : BaseLevel
+@export var level : Level
 
 @export_group("In Editor Debug")
 ## The start path [GridMap] position for in editor debugging.[br][br]
@@ -141,7 +141,7 @@ func _disconnect_point_from_neighbors(point : GridPoint, two_way := true, ingoin
 func _resolve_occupied_spaces() -> void:
 	var to_block = {}
 	# NOTE: When scenes other than Units are able to block spaces, this will change.
-	for occupier : Unit in World.level.all_units:
+	for occupier : Unit in Level.current_level.all_units:
 		var occupier_id := occupier.get_instance_id()
 		if occupation_map.has(occupier_id):
 			var old_point = occupation_map[occupier_id]
@@ -151,7 +151,7 @@ func _resolve_occupied_spaces() -> void:
 			var new_point = point_map_by_grid_coords[occupier.board_position]
 			occupation_map[occupier_id] = new_point
 			new_point.occupier = occupier
-			if occupier != World.level.active_unit:
+			if occupier != Level.current_level.active_unit:
 				disable_point(occupier.board_position)
 
 ## Disable a point arbitrarily in the nav map by its coordinates.

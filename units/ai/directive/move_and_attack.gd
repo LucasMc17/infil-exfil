@@ -19,7 +19,7 @@ func begin(unit : EnemyUnit) -> void:
 		attack_skill.use({ "target": target })
 	else:
 		attack_skill.disarm_as_enemy()
-		var potential_moves = Array(World.level.movement_system.all_unit_moves).filter(_filter_move)
+		var potential_moves = Array(Level.current_level.movement_system.all_unit_moves).filter(_filter_move)
 		if !potential_moves.is_empty():
 			acting_unit.movement_machine.current_state.transition('Run', { "end_point": potential_moves[0] })
 		else:
@@ -30,7 +30,7 @@ func begin(unit : EnemyUnit) -> void:
 				target.board_position + Vector3i(0, 0, 1),
 				target.board_position + Vector3i(0, 0, -1)
 			]
-			var target_point = World.level.nav_map.get_closest_point(acting_unit.board_position, neighbors)
+			var target_point = Level.current_level.nav_map.get_closest_point(acting_unit.board_position, neighbors)
 			if target_point:
 				acting_unit.movement_machine.current_state.transition('Run', { "end_point": target_point })
 			else:

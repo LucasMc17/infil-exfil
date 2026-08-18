@@ -16,11 +16,11 @@ func refresh_affordability() -> void:
 
 
 func _on_skill_refresh() -> void:
-	if World.level && World.level.active_unit:
+	if Level.current_level && Level.current_level.active_unit:
 		for child in get_children():
 			child.queue_free()
 		var index := 1
-		for skill in World.level.active_unit.all_skills:
+		for skill in Level.current_level.active_unit.all_skills:
 			if skill.get_visibility():
 				var skill_button = SKILL_SCENE.instantiate()
 				skill_button.build(skill, index)

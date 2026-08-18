@@ -1,7 +1,7 @@
 class_name CustomAStar
 extends AStar3D
 
-# This might be done via referenceing [World.level.active_unit] but not sure yet best, most efficient way since these functions are called a lot.
+# This might be done via referenceing [Level.current_level.active_unit] but not sure yet best, most efficient way since these functions are called a lot.
 func _compute_cost(from_id: int, to_id: int) -> float:
 	return _manhattan(from_id, to_id)
 
