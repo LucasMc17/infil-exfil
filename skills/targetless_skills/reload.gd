@@ -11,5 +11,6 @@ func get_affordability() -> bool:
 
 
 func begin_use() -> void:
+	user.audio_machine.play_audio('reload')
 	user.primary_weapon.reload(is_tactical)
 	super()

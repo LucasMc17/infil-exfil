@@ -18,6 +18,7 @@ func disarm() -> void:
 
 
 func begin_use() -> void:
+	user.audio_machine.play_audio('gunshot')
 	if Utilities.dice_roll(chance):
 		DebugConsole.log('headshot hits')
 		target.die()
