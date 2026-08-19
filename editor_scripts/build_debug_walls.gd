@@ -14,6 +14,8 @@ func _run() -> void:
 	if level is not Level:
 		print("ERROR: CURRENT SCENE IS NOT A LEVEL. EXITING SCRIPT")
 		return
+	
+	level.nav_map.setup_astar_grid()
 
 	var geometry = level.geometry
 	var nav_map : NavigableGridMap = level.nav_map
