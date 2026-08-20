@@ -37,6 +37,9 @@ static func weighted_pick_random(objects : Array[Variant], weights : Array[float
 	if objects.size() != weights.size():
 		DebugConsole.error("objects and weights array are not of the same size in weighted_pick_random function call.")
 		return
+	
+	if objects.is_empty():
+		return null
 
 	var total_weight = weights.reduce(func(a,b): return a + b, 0)
 
@@ -63,7 +66,6 @@ static func _pick_from_normalized_weights(weights : Array) -> int:
 
 	for i in range(weights.size()):
 		if roll <= weights[i] + pos:
-			print(i)
 			return i
 		else:
 			pos += weights[i]
