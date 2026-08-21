@@ -20,6 +20,7 @@ func enter(previous_state : State, ext : Dictionary):
 	unit.debug_label.change_param('movement_state', name)
 	unit.started_moving.emit(unit)
 	if ext.has('end_point'):
+		# somewhere around here is where we should start testing for unit blocking.
 		path = Level.current_level.nav_map.find_path(unit.board_position, end_point).slice(1, unit.movement_points + 1)
 		unit.movement_points = 0
 	elif ext.has('path'):

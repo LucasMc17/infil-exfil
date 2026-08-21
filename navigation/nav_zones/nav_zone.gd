@@ -60,5 +60,4 @@ func get_semirandom_exit(pos : Vector3i, banned_zones : Array[NavZone]) -> NavZo
 		if !banned_zones.has(zone):
 			potential_exits.append(exit)
 			weights.append(exit.board_position.distance_to(pos))
-	print(weights)
 	return Utilities.weighted_pick_random(potential_exits, weights, true)

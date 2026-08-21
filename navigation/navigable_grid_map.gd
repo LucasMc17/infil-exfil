@@ -157,13 +157,15 @@ func _resolve_occupied_spaces() -> void:
 ## Disable a point arbitrarily in the nav map by its coordinates.
 func disable_point(point_position : Vector3i) -> void:
 	var point = point_map_by_grid_coords[point_position].a_star_point
-	astar.set_point_disabled(point)
+	astar.set_point_weight_scale(point, 10.0)
+	# astar.set_point_disabled(point)
 
 
 ## Enable a point arbitrarily in the nav map by its coordinates.
 func enable_point(point_position : Vector3i) -> void:
 	var point = point_map_by_grid_coords[point_position].a_star_point
-	astar.set_point_disabled(point, false)
+	astar.set_point_weight_scale(point, 1.0)
+	# astar.set_point_disabled(point, false)
 
 
 # TODO: Update this to block ladders (and some other connections) when holding a hostage. May take an update to the GridPoint data type.
