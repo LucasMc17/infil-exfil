@@ -254,6 +254,8 @@ func find_path(start: Vector3i, end: Vector3i) -> PackedVector3Array:
 	
 	# Get the path as an array of Vector3 points
 	var path = astar.get_point_path(start_id, end_id)
+	if !path.is_empty():
+		return path.slice(1)
 	return path
 	
 
