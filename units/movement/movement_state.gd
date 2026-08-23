@@ -20,10 +20,15 @@ func enter(previous_state : State, ext : Dictionary):
 	unit.debug_label.change_param('movement_state', name)
 	unit.started_moving.emit(unit)
 	if ext.has('end_point'):
-		# somewhere around here is where we should start testing for unit blocking.
+		# If this is called via the end_point method, the state was entered by an AI controller working towards moving the unit to an ultimate point, as opposed to by a player planning a specific route. Hence, everything in this if statement is only relative to AI controlled units.
+		# NOTE: For the above reason, should we consider a unique enemy movement state, separate from player movement?
 		var temp_path = Level.current_level.nav_map.find_path(unit.board_position, end_point).slice(0, unit.movement_points)
 		for point in temp_path:
-			if Level.current_level.nav_map.get_point_occupier(point):
+			var blocker = Level.current_level.nav_map.get_point_occupier(point)
+			if blocker:
+				unit.temp_blocker = blocker
+				if blocker is EnemyUnit:
+					blocker.temp_blocking_path = temp_path
 				break
 			else:
 				path.append(point)
