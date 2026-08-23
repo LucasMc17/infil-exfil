@@ -21,7 +21,12 @@ func enter(previous_state : State, ext : Dictionary):
 	unit.started_moving.emit(unit)
 	if ext.has('end_point'):
 		# somewhere around here is where we should start testing for unit blocking.
-		path = Level.current_level.nav_map.find_path(unit.board_position, end_point).slice(0, unit.movement_points)
+		var temp_path = Level.current_level.nav_map.find_path(unit.board_position, end_point).slice(0, unit.movement_points)
+		for point in temp_path:
+			if Level.current_level.nav_map.get_point_occupier(point):
+				break
+			else:
+				path.append(point)
 		unit.movement_points = 0
 	elif ext.has('path'):
 		unit.movement_points -= path.size()
