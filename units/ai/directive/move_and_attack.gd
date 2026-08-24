@@ -21,6 +21,7 @@ func begin(unit : EnemyUnit) -> void:
 		attack_skill.disarm_as_enemy()
 		var valid_move = Level.current_level.nav_map.probe_for_viable_move(acting_unit.position, acting_unit.movement_points, _filter_move)
 		if valid_move:
+			# TODO: need a cleaner api for initiating movement.
 			acting_unit.movement_machine.current_state.transition('Run', { "end_point": valid_move })
 
 		else:

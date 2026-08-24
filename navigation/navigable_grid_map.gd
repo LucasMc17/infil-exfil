@@ -290,6 +290,7 @@ func get_all_valid_moves(grid_position: Vector3i, max_moves: int) -> Array[Vecto
 	return valid_moves.keys()
 
 
+# NOTE: Long term, might want to pass in de-prioritized moves in addition to hard banned ones.
 ## Iterates throughout the unit's available moves, similarly to [get_all_valid_moves], but runs a passed callable on each position, returning the first one to return true. Starts from the unit's position and moves outward, so that the nearest viable position will always be chosen. Can optionally take a list of banned positions which will not be accepted as valid. Returns null if no valid move exists.[br]
 ## For use by AI-controlled units.
 func probe_for_viable_move(grid_position : Vector3i, max_moves : int, callback : Callable, banned_moves : PackedVector3Array = []) -> Variant:
