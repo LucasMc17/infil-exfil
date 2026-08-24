@@ -57,6 +57,10 @@ func begin_use() -> void:
 @abstract func get_all_targets() -> void
 
 
+## Probes the given position for viability when targeting a specific unit by approximating what the get_all_targets function would return at that position. Used by AI-controlled units to judge viable movements before using a skill.
+@abstract func judge_position(test_position : Vector3i, test_target : Unit) -> bool
+
+
 ## Target the skill to a particular unit, change all necessary variables.
 func retarget(new_target : Unit) -> void:
 	target = new_target

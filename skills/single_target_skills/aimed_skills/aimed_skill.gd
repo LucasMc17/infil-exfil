@@ -30,6 +30,11 @@ func get_all_targets() -> void:
 	potential_targets = _filter_targets(result)
 
 
+func judge_position(test_position : Vector3i, test_target : Unit) -> bool:
+	var eyelevel = Vector3(test_position) + Vector3(0.0, 1.5, 0.0)
+	return test_position.distance_to(test_target.position) <= effective_range and Level.current_level.test_line_of_sight(eyelevel, test_target.global_position, test_target)
+
+
 ## Initializes the circle which indicates the skill radius to the player.
 func size_circle():
 	_mesh_instance.mesh.bottom_radius = effective_range

@@ -56,6 +56,6 @@ func _on_finished_moving(_unit : Unit):
 		attack_skill.disarm_as_enemy()
 		acting_unit.forfeit_turn()
 
-# TODO: This doesn't test for line of sight yet
+
 func _filter_move(move : Vector3) -> bool:
-	return move.distance_to(target.board_position) <= attack_skill.effective_range
+	return attack_skill.judge_position(move, target)

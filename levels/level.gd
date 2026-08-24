@@ -204,6 +204,16 @@ func cycle_active_unit():
 		set_active_unit(faction[0])
 
 
+## Test the theoretical line of sight from one global position to another. When a specific target is provided, the function will only return true if the ray's collider is that target. When one is not provided, it will only return true if there is no collider.
+func test_line_of_sight(start_position : Vector3, target_position : Vector3, expected_target : Node3D = null) -> bool:
+	var ray := PhysicsRayQueryParameters3D.create(start_position, target_position, 1 + 2 + 4)
+	var collision = get_world_3d().direct_space_state.intersect_ray(ray)
+	if expected_target:
+		return collision and collision.collider == expected_target
+	else:
+		return collision and !collision.collider
+
+
 func _on_skill_armed(skill : Skill) -> void:
 	if armed_skill:
 		armed_skill.disarm()

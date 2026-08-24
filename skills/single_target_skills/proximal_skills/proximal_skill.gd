@@ -10,3 +10,8 @@ func get_all_targets() -> void:
 		if occupier is Unit and (occupier is EnemyUnit if is_friendly else occupier is FriendlyUnit):
 			result.append(occupier)
 	potential_targets = _filter_targets(result)
+
+
+func judge_position(test_position : Vector3i, test_target : Unit) -> bool:
+	var adjacent_points = Level.current_level.nav_map.get_valid_adjacent_cells(test_target.board_position)
+	return adjacent_points.has(test_target.board_position)
