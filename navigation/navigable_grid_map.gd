@@ -290,6 +290,39 @@ func get_all_valid_moves(grid_position: Vector3i, max_moves: int) -> Array[Vecto
 	return valid_moves.keys()
 
 
+## Iterates throughout the unit's available moves, similarly to [get_all_valid_moves], but runs a passed callable on each position, returning the first one to return true. Starts from the unit's position and moves outward, so that the nearest viable position will always be chosen. Can optionally take a list of banned positions which will not be accepted as valid. Returns null if no valid move exists.[br]
+## For use by AI-controlled units.
+func probe_for_viable_move(grid_position : Vector3i, max_moves : int, callback : Callable, banned_moves : PackedVector3Array = []) -> Variant:
+	# NOTE: This code could be cleaned up a bit. a lot of it is also reused from the get all valid moves func, but I am not sure if that can be avoided.
+	var visited_points : Dictionary[Vector3i, bool]
+	var moves_left := max_moves
+	var last_point_ring : Array[Vector3i] = [grid_position]
+	var start_time = Time.get_ticks_msec()
+	_resolve_occupied_spaces()
+	while moves_left > 0:
+		var next_point_ring : Dictionary[Vector3i, bool] = {}
+		for point : Vector3i in last_point_ring:
+			var grid_point = point_map_by_grid_coords[point]
+			for connection : Vector3i in grid_point.real_connections:
+				if connection != grid_position and !visited_points.has(connection) and !point_map_by_grid_coords[connection].occupier:
+					if !banned_moves.has(connection) and callback.call(connection):
+						var end_time = Time.get_ticks_msec()
+						DebugConsole.log("Execution time to probe for a valid move WITH result: " + str(end_time - start_time) + " milliseconds")
+						DebugConsole.log(visited_points.size())
+						return connection
+					else:
+						next_point_ring[connection] = true
+						visited_points[connection] = true
+		moves_left -= 1
+		last_point_ring = next_point_ring.keys()
+		next_point_ring.clear()
+
+	var end_time = Time.get_ticks_msec()
+	DebugConsole.log("Execution time to probe for a valid move WITHOUT result: " + str(end_time - start_time) + " milliseconds")
+	DebugConsole.log(visited_points.size())
+	return null
+
+
 # TODO: If these two funcs are never used for anything besides getting proximal target skills they should eventually be rolled into one to avoid calling the point map dicts multiple times.
 
 ## Returns an array of all the cells adjacent to the starting position which are actually connected to it. Useful for getting targets for proximal skills.

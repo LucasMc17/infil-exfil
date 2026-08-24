@@ -19,11 +19,13 @@ func begin(unit : EnemyUnit) -> void:
 		attack_skill.use({ "target": target })
 	else:
 		attack_skill.disarm_as_enemy()
-		var potential_moves = Array(Level.current_level.movement_system.all_unit_moves).filter(_filter_move)
-		if !potential_moves.is_empty():
-			acting_unit.movement_machine.current_state.transition('Run', { "end_point": potential_moves[0] })
+		var valid_move = Level.current_level.nav_map.probe_for_viable_move(acting_unit.position, acting_unit.movement_points, _filter_move)
+		if valid_move:
+			acting_unit.movement_machine.current_state.transition('Run', { "end_point": valid_move })
+
 		else:
 			# NOTE: Should this be a built in function of the nav map?
+			# TODO: Used to have to target a neighbor of the target. not anymore. update this.
 			var neighbors : Array[Vector3i] = [
 				target.board_position + Vector3i(1, 0, 0),
 				target.board_position + Vector3i(-1, 0, 0),
