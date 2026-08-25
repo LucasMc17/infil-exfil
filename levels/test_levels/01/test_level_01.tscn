@@ -1584,4 +1584,4 @@ alarm_run_chance = 1.0
 
 [node name="EnemyUnit2" parent="Enemies" parent_id_path=PackedInt32Array(182952236) index="1" unique_id=353770401 instance=ExtResource("3_v7ycg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 1)
-alarm_run_chance = 0.0
+alarm_run_chance = 1.0
