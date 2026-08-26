@@ -90,6 +90,7 @@ var occupation_map : Dictionary[int, GridPoint] = {}
 
 ## Takes in a global position and converts it to it's nearest position on the grid.
 static func convert_global_to_grid_position(pos : Vector3i) -> Vector3:
+	@warning_ignore("integer_division")
 	return pos / CELL_SIZE
 
 
@@ -139,7 +140,6 @@ func _disconnect_point_from_neighbors(point : GridPoint, two_way := true, ingoin
 
 ## Utility function which takes in a list of point-blocking scenes and marks their positions as un-navigable, so that units may block each other's paths.
 func _resolve_occupied_spaces() -> void:
-	var to_block = {}
 	# NOTE: When scenes other than Units are able to block spaces, this will change.
 	for occupier : Unit in Level.current_level.all_units:
 		var occupier_id := occupier.get_instance_id()
@@ -153,6 +153,7 @@ func _resolve_occupied_spaces() -> void:
 			new_point.occupier = occupier
 			if occupier != Level.current_level.active_unit:
 				disable_point(occupier.board_position)
+
 
 ## Disable a point arbitrarily in the nav map by its coordinates.
 func disable_point(point_position : Vector3i) -> void:
@@ -299,6 +300,7 @@ func probe_for_viable_move(grid_position : Vector3i, max_moves : int, callback :
 	var moves_left := max_moves
 	var last_point_ring : Array[Vector3i] = [grid_position]
 	var start_time = Time.get_ticks_msec()
+	var end_time : int
 	_resolve_occupied_spaces()
 	while moves_left > 0:
 		var next_point_ring : Dictionary[Vector3i, bool] = {}
@@ -307,7 +309,7 @@ func probe_for_viable_move(grid_position : Vector3i, max_moves : int, callback :
 			for connection : Vector3i in grid_point.real_connections:
 				if connection != grid_position and !visited_points.has(connection) and !point_map_by_grid_coords[connection].occupier:
 					if !banned_moves.has(connection) and callback.call(connection):
-						var end_time = Time.get_ticks_msec()
+						end_time = Time.get_ticks_msec()
 						DebugConsole.log("Execution time to probe for a valid move WITH result: " + str(end_time - start_time) + " milliseconds")
 						DebugConsole.log(visited_points.size())
 						return connection
@@ -318,7 +320,7 @@ func probe_for_viable_move(grid_position : Vector3i, max_moves : int, callback :
 		last_point_ring = next_point_ring.keys()
 		next_point_ring.clear()
 
-	var end_time = Time.get_ticks_msec()
+	end_time = Time.get_ticks_msec()
 	DebugConsole.log("Execution time to probe for a valid move WITHOUT result: " + str(end_time - start_time) + " milliseconds")
 	DebugConsole.log(visited_points.size())
 	return null

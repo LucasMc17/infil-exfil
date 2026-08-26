@@ -25,20 +25,7 @@ func begin(unit : EnemyUnit) -> void:
 			acting_unit.movement_machine.current_state.transition('Run', { "end_point": valid_move })
 
 		else:
-			# NOTE: Should this be a built in function of the nav map?
-			# TODO: Used to have to target a neighbor of the target. not anymore. update this.
-			var neighbors : Array[Vector3i] = [
-				target.board_position + Vector3i(1, 0, 0),
-				target.board_position + Vector3i(-1, 0, 0),
-				target.board_position + Vector3i(0, 0, 1),
-				target.board_position + Vector3i(0, 0, -1)
-			]
-			var target_point = Level.current_level.nav_map.get_closest_point(acting_unit.board_position, neighbors)
-			if target_point:
-				acting_unit.movement_machine.current_state.transition('Run', { "end_point": target_point })
-			else:
-				end()
-				acting_unit.forfeit_turn.call_deferred()
+			acting_unit.movement_machine.current_state.transition('Run', { "end_point": target.board_position })
 
 
 func _on_finished_acting(_unit : Unit):

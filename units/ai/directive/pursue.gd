@@ -1,10 +1,6 @@
 class_name Pursue
 extends Directive
 
-# TODO: A lot more to do here. They need to be constantly checking for reacquired targets and switching back to combat directives if found. Also: We need to start thinking about a better solution for units blocking spaces. It's good that a unit can block another's path and that no two units can stand in the same spot. However, if a unit's destination is blocked, we cannot currently generate a path to get even close to it, so the unit gives up on moving entirely. This is no good. We need two things which may be connected to one another:
-	# 1. A way to tell a unit to move towards a point and perhaps give up only when getting as close to it as possible.
-	# 2. The map of blocked positions shouldn't stop astar from pathing through them. We need a way to generate a path, and if the only path is through other units, flag it as not fully transversible and tell the unit to move to the last unblocked point. I think weights will be important here. However I also see this raising issues with friendly unit movement projections, as even with high weights, if there are no alternative paths to a point the system will let units move through them. Ugh.
-
 ## The target of this attack.
 var target : FriendlyUnit
 ## Whether or not the unit performing this directive has yet visited the last known position of the target friendly.

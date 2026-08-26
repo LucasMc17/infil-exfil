@@ -12,7 +12,7 @@ func begin(unit : EnemyUnit) -> void:
 
 func _on_finished_moving(unit : Unit):
 	super(unit)
-	# NOTE: position? or board position? Not sure but this might break when end point is on a different floor than 0.
-	if acting_unit.position == _end_point:
+	# NOTE: Can we start cleaning up these vector3/vector3is? i think some of the mismatch is necessary but it can't be all of it.
+	if Vector3(acting_unit.board_position) == _end_point:
 		end()
 	unit.forfeit_turn()

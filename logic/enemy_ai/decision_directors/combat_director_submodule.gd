@@ -14,7 +14,6 @@ func _init(u : EnemyUnit, a : EnemyUnitAwarenessModule) -> void:
 
 ## Main function for deciding on a new combat directive
 func choose_combat_directive() -> Directive:
-	# TODO: Juicy bug here meaning no one does anything if there's an alarm or someone running for one.
 	if !Level.current_level.enemy_awareness.alarm_active and !Level.current_level.enemy_awareness.alarm_runner and Utilities.dice_roll(unit.alarm_run_chance):
 		Level.current_level.enemy_awareness.alarm_runner = unit
 		return RunForAlarm.new()

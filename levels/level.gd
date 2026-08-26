@@ -169,7 +169,7 @@ func get_likely_path(pursuer_position : Vector3i, last_known_position : Vector3i
 	var current_position = last_known_position
 
 	# Update this with zones passed but not taken
-	var bypassed_zones : Array[Array] = []
+	# var bypassed_zones : Array[Array] = []
 
 	for i in range(pursuit_depth):
 		# Create a separate function which returns a full list of exit

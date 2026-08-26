@@ -155,7 +155,7 @@ func deactivate():
 	_cell_highlight.visible = false
 	flag.collapse()
 	skill_machine.visible = false
-	# TODO: Make this a signal	
+	# TODO: Make this a signal
 	Level.current_level.movement_system.deactivate()
 	Events.unit_deactivated.emit(self)
 	if Level.current_level.armed_skill:
@@ -259,7 +259,7 @@ func check_for_detection() -> void:
 	pass
 
 
-# TODO: Enemy unit's should extend this to accidentally bump into unseen friendly units rather than blindly pathing around them.
+# TODO: Enemy units should extend this to accidentally bump into unseen friendly units rather than blindly pathing around them. I think this will actually require a change to the resolve blocked spaces fun, wherein when an enemy is active, spaces of unseen friendlies are given a normal weight. This won't actually allow them to path through them, but will allow them to try. they should also turn to face a point in the path even if blocked by something in it.
 # TODO: There should also be a more elegant turning solution that only updates rotation.y when required, not every frame.
 ## Move along a navigable path towards a destination point.
 func follow_path(delta : float, path : Array, mps := 1.0) -> void:

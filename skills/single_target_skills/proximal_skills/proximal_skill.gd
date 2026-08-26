@@ -13,5 +13,5 @@ func get_all_targets() -> void:
 
 
 func judge_position(test_position : Vector3i, test_target : Unit) -> bool:
-	var adjacent_points = Level.current_level.nav_map.get_valid_adjacent_cells(test_target.board_position)
+	var adjacent_points = Level.current_level.nav_map.get_valid_adjacent_cells(test_position)
 	return adjacent_points.has(test_target.board_position)
