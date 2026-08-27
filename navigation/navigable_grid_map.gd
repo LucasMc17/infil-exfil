@@ -147,12 +147,32 @@ func _resolve_occupied_spaces() -> void:
 			var old_point = occupation_map[occupier_id]
 			old_point.occupier = null
 			enable_point(old_point.position)
-		if !occupier.is_incapacitated() and point_map_by_grid_coords.has(occupier.board_position):
+		if point_map_by_grid_coords.has(occupier.board_position):
 			var new_point = point_map_by_grid_coords[occupier.board_position]
 			occupation_map[occupier_id] = new_point
-			new_point.occupier = occupier
-			if occupier != Level.current_level.active_unit:
+			# TODO: Clean this up, too much repetition of ifs.
+			if !occupier.is_incapacitated():
+				new_point.occupier = occupier
+			if _should_block_unit_space(occupier):
 				disable_point(occupier.board_position)
+
+
+## Helper function to determine if the currently active unit should consider another unit as actively blocking the space they are occupying. Logic is spelled out for easy refactoring in future iterations.
+func _should_block_unit_space(unit : Unit) -> bool:
+	var active_unit = Level.current_level.active_unit
+	if active_unit == unit:
+		return false
+	if !point_map_by_grid_coords.has(unit.board_position):
+		return false
+	if unit.is_incapacitated():
+		return false
+	if active_unit is not EnemyUnit:
+		return true
+	if unit is EnemyUnit:
+		return true
+	if !active_unit.awareness.targeted_friendlies.has(unit.get_instance_id()):
+		return false
+	return true
 
 
 ## Disable a point arbitrarily in the nav map by its coordinates.

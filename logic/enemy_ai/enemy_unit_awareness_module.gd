@@ -41,7 +41,7 @@ var awareness_level := AwarenessLevel.UNAWARE:
 var unit : EnemyUnit
 ## Whether or not the unit will first attempt to detain friendly units when encountering them.
 var will_attempt_to_detain := true
-## The [FriendlyUnit]s which the Enemy is aware of specifically. This should always be an empty array unless the Unit is in the [ALARMED] [AwarenessLevel].
+## The [FriendlyUnit]s which the Enemy is aware of specifically. This should always be an empty dictionary unless the Unit is in the [ALARMED] [AwarenessLevel].
 var targeted_friendlies : Dictionary[int, FriendlySighting] = {}
 ## How many friendlies the unit is actively aware of/in combat with at this moment.
 var targeted_friendly_count : int:
