@@ -11,11 +11,6 @@ var enemy_awareness := EnemyTeamAwarenessModule.new()
 ## Boolean tracking whether or not it is currently the player's turn.
 var is_player_turn := true
 
-## The currently active unit, whether a [FriendlyUnit] or an [EnemyUnit].
-var active_unit : Unit:
-	set(val):
-		active_unit = val
-		level_camera.fix_to_actor(val)
 ## The currently armed skill.
 var armed_skill : Skill
 
@@ -86,7 +81,7 @@ var live_units : Array[Unit]:
 ## Whether or not to completely block the player's game play inputs, such as when a unit is moving.
 var allow_inputs : bool:
 	get():
-		return is_player_turn and active_unit and !active_unit.is_using_skill and !active_unit.is_moving
+		return is_player_turn and Unit.active_unit and !Unit.active_unit.is_using_skill and !Unit.active_unit.is_moving
 
 @onready var _friendlies_node := %Friendlies
 @onready var _enemies_node := %Enemies
@@ -144,11 +139,12 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Update the active unit to a given actor.
 func set_active_unit(unit : Unit):
 	if unit.unit_status != Unit.Status.DEAD:
-		if active_unit:
-			active_unit.deactivate()
-		active_unit = unit
-		if active_unit: 
-			active_unit.activate()
+		if Unit.active_unit:
+			Unit.active_unit.deactivate()
+		Unit.active_unit = unit
+		if Unit.active_unit: 
+			Unit.active_unit.activate()
+			level_camera.fix_to_actor(unit)
 
 
 ## Returns the NavZoneHolder a given position is in.
@@ -194,8 +190,8 @@ func cycle_active_unit():
 		faction = live_friendlies
 	else:
 		faction = live_enemies
-	if active_unit:
-		var index = faction.find(active_unit) + 1
+	if Unit.active_unit:
+		var index = faction.find(Unit.active_unit) + 1
 		if index < faction.size():
 			set_active_unit(faction[index])
 		else:

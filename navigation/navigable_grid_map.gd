@@ -159,7 +159,7 @@ func _resolve_occupied_spaces() -> void:
 
 ## Helper function to determine if the currently active unit should consider another unit as actively blocking the space they are occupying. Logic is spelled out for easy refactoring in future iterations.
 func _should_block_unit_space(unit : Unit) -> bool:
-	var active_unit = Level.current_level.active_unit
+	var active_unit = Unit.active_unit
 	if active_unit == unit:
 		return false
 	if !point_map_by_grid_coords.has(unit.board_position):

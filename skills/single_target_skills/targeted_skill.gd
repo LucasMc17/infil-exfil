@@ -76,7 +76,7 @@ func retarget(new_target : Unit) -> void:
 ## Reset the target to null.
 func clear_target() -> void:
 	target = null
-	Level.current_level.level_camera.fix_to_actor(Level.current_level.active_unit)
+	Level.current_level.level_camera.fix_to_actor(Unit.active_unit)
 	Level.current_level.target_retical.visible = false
 
 

@@ -46,6 +46,9 @@ signal forfeited_turn(unit : Unit)
 ## The maximum action points for this unit, to which they are restored at the beginning of each new turn.
 @export var max_action_points := 1
 
+## The currently active unit within a level.
+static var active_unit : Unit
+
 ## The number of health points this unit has.
 var health_points := max_health_points:
 	set(val):
@@ -71,7 +74,7 @@ var action_points := max_action_points:
 var is_active : bool:
 	get():
 		if Level.current_level:
-			return Level.current_level.active_unit == self
+			return Unit.active_unit == self
 		else:
 			return false
 ## Whether or not this unit is in the middle of using a skill.
