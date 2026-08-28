@@ -50,3 +50,14 @@ func get_nearest_exit(pos : Vector3i, banned_zones : Array[NavZone]) -> NavZoneE
 			distance_to_result = distance
 			result = exit
 	return result
+
+
+func get_semirandom_exit(pos : Vector3i, banned_zones : Array[NavZone]) -> NavZoneExit:
+	var potential_exits : Array[NavZoneExit] = []
+	var weights : Array[float] = []
+	for exit in exits:
+		var zone = load(exit.to_zone_uid)
+		if !banned_zones.has(zone):
+			potential_exits.append(exit)
+			weights.append(exit.board_position.distance_to(pos))
+	return Utilities.weighted_pick_random(potential_exits, weights, true)

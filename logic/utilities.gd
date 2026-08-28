@@ -1,3 +1,4 @@
+@tool
 ## Reusable functions throughout the project.
 class_name Utilities
 extends Object
@@ -23,11 +24,53 @@ static func convert_range_to_odds(distance : float, max_distance : float, min_di
 	return min_chance + ((max_distance - distance) * percent_per_meter)
 
 
+## Returns a random, non black/white color, for debug purposes.
 static func random_color() -> Color:
 	var random_hue = randf()
 	var brightness = randf_range(0.4, 0.9)
 
 	return Color.from_hsv(random_hue, 0.9, brightness)
+
+
+## Takes in a list of objects, and a list of weights of equivalent lengths. Picks and returns a random entry from the first array, considering the weights listed in the second array. If [invert_weights] is true, objects with greater weights will be less likely to be chosen, instead of more likely.
+static func weighted_pick_random(objects : Array[Variant], weights : Array[float], invert_weights := false) -> Variant:
+	if objects.size() != weights.size():
+		DebugConsole.error("objects and weights array are not of the same size in weighted_pick_random function call.")
+		return
+	
+	if objects.is_empty():
+		return null
+
+	var total_weight = weights.reduce(func(a,b): return a + b, 0)
+
+	var normalized_weights = weights.map(func(w): return w / total_weight)
+
+	if invert_weights:
+		var reciprocals : Array[float] = []
+		for weight in normalized_weights:
+			reciprocals.append(1.0 / weight)
+		var recip_sum = reciprocals.reduce(func(a,b): return a + b, 0.0)
+		var inverted_weights : Array[float] = []
+		for recip in reciprocals:
+			inverted_weights.append(recip / recip_sum)
+		
+		return objects[_pick_from_normalized_weights(inverted_weights)]
+	else:
+		return objects[_pick_from_normalized_weights(normalized_weights)]
+
+
+## Utility function for the above [weighted_pick_random] function. Takes in a list of weights (normalize to sum to one), and rolls a random number to pick one, favoring those with greater weights. Returns the position index of the option chosen, so that it can be used elsewhere.
+static func _pick_from_normalized_weights(weights : Array) -> int:
+	var roll = randf()
+	var pos = 0.0
+
+	for i in range(weights.size()):
+		if roll <= weights[i] + pos:
+			return i
+		else:
+			pos += weights[i]
+
+	return -1
 
 
 # FEATURE WISHLIST

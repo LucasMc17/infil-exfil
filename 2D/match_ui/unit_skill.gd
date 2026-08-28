@@ -36,6 +36,6 @@ func refresh_affordability() -> void:
 
 
 func _on_pressed() -> void:
-	if World.level.allow_inputs:
-		World.level.movement_system.deactivate()
+	if Level.current_level.allow_inputs:
+		Level.current_level.movement_system.deactivate()
 		Events.skill_armed.emit(skill_res)

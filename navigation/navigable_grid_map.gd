@@ -56,7 +56,7 @@ class GridPoint:
 
 @export_group("Context")
 ## The level this NavGrid lives inside of.
-@export var level : BaseLevel
+@export var level : Level
 
 @export_group("In Editor Debug")
 ## The start path [GridMap] position for in editor debugging.[br][br]
@@ -90,6 +90,7 @@ var occupation_map : Dictionary[int, GridPoint] = {}
 
 ## Takes in a global position and converts it to it's nearest position on the grid.
 static func convert_global_to_grid_position(pos : Vector3i) -> Vector3:
+	@warning_ignore("integer_division")
 	return pos / CELL_SIZE
 
 
@@ -139,31 +140,53 @@ func _disconnect_point_from_neighbors(point : GridPoint, two_way := true, ingoin
 
 ## Utility function which takes in a list of point-blocking scenes and marks their positions as un-navigable, so that units may block each other's paths.
 func _resolve_occupied_spaces() -> void:
-	var to_block = {}
 	# NOTE: When scenes other than Units are able to block spaces, this will change.
-	for occupier : Unit in World.level.all_units:
+	for occupier : Unit in Level.current_level.all_units:
 		var occupier_id := occupier.get_instance_id()
 		if occupation_map.has(occupier_id):
 			var old_point = occupation_map[occupier_id]
 			old_point.occupier = null
 			enable_point(old_point.position)
-		if !occupier.is_incapacitated() and point_map_by_grid_coords.has(occupier.board_position):
+		if point_map_by_grid_coords.has(occupier.board_position):
 			var new_point = point_map_by_grid_coords[occupier.board_position]
 			occupation_map[occupier_id] = new_point
-			new_point.occupier = occupier
-			if occupier != World.level.active_unit:
+			# TODO: Clean this up, too much repetition of ifs.
+			if !occupier.is_incapacitated():
+				new_point.occupier = occupier
+			if _should_block_unit_space(occupier):
 				disable_point(occupier.board_position)
+
+
+## Helper function to determine if the currently active unit should consider another unit as actively blocking the space they are occupying. Logic is spelled out for easy refactoring in future iterations.
+func _should_block_unit_space(unit : Unit) -> bool:
+	var active_unit = Unit.active_unit
+	if active_unit == unit:
+		return false
+	if !point_map_by_grid_coords.has(unit.board_position):
+		return false
+	if unit.is_incapacitated():
+		return false
+	if active_unit is not EnemyUnit:
+		return true
+	if unit is EnemyUnit:
+		return true
+	if !active_unit.awareness.targeted_friendlies.has(unit.get_instance_id()):
+		return false
+	return true
+
 
 ## Disable a point arbitrarily in the nav map by its coordinates.
 func disable_point(point_position : Vector3i) -> void:
 	var point = point_map_by_grid_coords[point_position].a_star_point
-	astar.set_point_disabled(point)
+	astar.set_point_weight_scale(point, 10.0)
+	# astar.set_point_disabled(point)
 
 
 ## Enable a point arbitrarily in the nav map by its coordinates.
 func enable_point(point_position : Vector3i) -> void:
 	var point = point_map_by_grid_coords[point_position].a_star_point
-	astar.set_point_disabled(point, false)
+	astar.set_point_weight_scale(point, 1.0)
+	# astar.set_point_disabled(point, false)
 
 
 # TODO: Update this to block ladders (and some other connections) when holding a hostage. May take an update to the GridPoint data type.
@@ -252,6 +275,8 @@ func find_path(start: Vector3i, end: Vector3i) -> PackedVector3Array:
 	
 	# Get the path as an array of Vector3 points
 	var path = astar.get_point_path(start_id, end_id)
+	if !path.is_empty():
+		return path.slice(1)
 	return path
 	
 
@@ -284,6 +309,41 @@ func get_all_valid_moves(grid_position: Vector3i, max_moves: int) -> Array[Vecto
 	var end_time = Time.get_ticks_msec()
 	DebugConsole.log("Execution time to find all valid moves with RECURSION: " + str(end_time - start_time) + " milliseconds", 4)
 	return valid_moves.keys()
+
+
+# NOTE: Long term, might want to pass in de-prioritized moves in addition to hard banned ones.
+## Iterates throughout the unit's available moves, similarly to [get_all_valid_moves], but runs a passed callable on each position, returning the first one to return true. Starts from the unit's position and moves outward, so that the nearest viable position will always be chosen. Can optionally take a list of banned positions which will not be accepted as valid. Returns null if no valid move exists.[br]
+## For use by AI-controlled units.
+func probe_for_viable_move(grid_position : Vector3i, max_moves : int, callback : Callable, banned_moves : PackedVector3Array = []) -> Variant:
+	# NOTE: This code could be cleaned up a bit. a lot of it is also reused from the get all valid moves func, but I am not sure if that can be avoided.
+	var visited_points : Dictionary[Vector3i, bool]
+	var moves_left := max_moves
+	var last_point_ring : Array[Vector3i] = [grid_position]
+	var start_time = Time.get_ticks_msec()
+	var end_time : int
+	_resolve_occupied_spaces()
+	while moves_left > 0:
+		var next_point_ring : Dictionary[Vector3i, bool] = {}
+		for point : Vector3i in last_point_ring:
+			var grid_point = point_map_by_grid_coords[point]
+			for connection : Vector3i in grid_point.real_connections:
+				if connection != grid_position and !visited_points.has(connection) and !point_map_by_grid_coords[connection].occupier:
+					if !banned_moves.has(connection) and callback.call(connection):
+						end_time = Time.get_ticks_msec()
+						DebugConsole.log("Execution time to probe for a valid move WITH result: " + str(end_time - start_time) + " milliseconds")
+						DebugConsole.log(visited_points.size())
+						return connection
+					else:
+						next_point_ring[connection] = true
+						visited_points[connection] = true
+		moves_left -= 1
+		last_point_ring = next_point_ring.keys()
+		next_point_ring.clear()
+
+	end_time = Time.get_ticks_msec()
+	DebugConsole.log("Execution time to probe for a valid move WITHOUT result: " + str(end_time - start_time) + " milliseconds")
+	DebugConsole.log(visited_points.size())
+	return null
 
 
 # TODO: If these two funcs are never used for anything besides getting proximal target skills they should eventually be rolled into one to avoid calling the point map dicts multiple times.

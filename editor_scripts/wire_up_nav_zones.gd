@@ -8,7 +8,7 @@ func _run() -> void:
 	print("ATTEMPTING TO WIRE UP NAV ZONES")
 
 	var level = EditorInterface.get_edited_scene_root()
-	if level is not BaseLevel:
+	if level is not Level:
 		print("ERROR: CURRENT SCENE IS NOT A LEVEL. EXITING SCRIPT")
 		return
 	

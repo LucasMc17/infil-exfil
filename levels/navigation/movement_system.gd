@@ -3,7 +3,7 @@ class_name MovementSystem
 extends Node3D
 
 ## Level context for path finding.
-@export var level : BaseLevel
+@export var level : Level
 
 @onready var _planned_paths_holder := %PlannedPathsHolder
 @onready var _hovered_path_holder := %HoveredPathHolder
@@ -49,8 +49,8 @@ func mark_hovered_path(end_point : Vector3) -> void:
 		var last_subpath = planned_path[planned_path.size() - 1]
 		starting_point = last_subpath[last_subpath.size() - 1]
 	else:
-		starting_point = level.active_unit.board_position
-	hovered_path = level.nav_map.find_path(starting_point, end_point).slice(1)
+		starting_point = Unit.active_unit.board_position
+	hovered_path = level.nav_map.find_path(starting_point, end_point)
 	for cell in hovered_path:
 		var path_marker_scene = PATH_MARKER_SMALL.instantiate()
 		path_marker_scene.position = NavigableGridMap.convert_grid_to_global_position(cell)
@@ -97,10 +97,10 @@ func place_waymarker(point : Vector3) -> void:
 		var last_subpath = planned_path[planned_path.size() - 1]
 		starting_point = last_subpath[last_subpath.size() - 1]
 	else:
-		starting_point = level.active_unit.board_position
-	var subpath = level.nav_map.find_path(starting_point, point).slice(1)
+		starting_point = Unit.active_unit.board_position
+	var subpath = level.nav_map.find_path(starting_point, point)
 	mp_cost += subpath.size()
-	# set_viable_moves(point, level.active_unit.movement_points - mp_cost)
+	# set_viable_moves(point, Unit.active_unit.movement_points - mp_cost)
 	viable_moves = level.nav_map.get_all_valid_moves(point, active_unit.movement_points - mp_cost)
 	planned_path.append(subpath)
 	_draw_available_moves()

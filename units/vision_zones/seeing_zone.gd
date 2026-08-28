@@ -2,6 +2,8 @@
 class_name SeeingZone
 extends VisionZone
 
+# TODO: AH AH AH I THINK THIS SHOULD BE A SHAPECAST AH A AHA HA AH
+
 ## Signal emitted when the [SeeingZone] successfully detects one or more [FriendlyUnit]s.
 signal friendly_seen(friendlies : Array[FriendlyUnit])
 

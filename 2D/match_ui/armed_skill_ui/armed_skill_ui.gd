@@ -34,12 +34,12 @@ func teardown() -> void:
 
 
 func _on_cancel_button_pressed() -> void:
-	if World.level.allow_inputs:
+	if Level.current_level.allow_inputs:
 		Events.skill_disarmed.emit()
 
 
 func _on_confirm_button_pressed() -> void:
-	if World.level.allow_inputs:
+	if Level.current_level.allow_inputs:
 		skill_res.use()
 		Events.skill_disarmed.emit()
 

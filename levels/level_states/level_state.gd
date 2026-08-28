@@ -3,7 +3,7 @@ class_name LevelState
 extends State
 
 ## The level this state corresponds to.
-@export var level : BaseLevel
+@export var level : Level
 
 ## Whether or not the camera is manually movable in this state.
 var allow_cam_movement := true

@@ -46,6 +46,9 @@ signal forfeited_turn(unit : Unit)
 ## The maximum action points for this unit, to which they are restored at the beginning of each new turn.
 @export var max_action_points := 1
 
+## The currently active unit within a level.
+static var active_unit : Unit
+
 ## The number of health points this unit has.
 var health_points := max_health_points:
 	set(val):
@@ -70,8 +73,8 @@ var action_points := max_action_points:
 ## Whether or not this unit is currently the active unit within the level.
 var is_active : bool:
 	get():
-		if World.level:
-			return World.level.active_unit == self
+		if Level.current_level:
+			return Unit.active_unit == self
 		else:
 			return false
 ## Whether or not this unit is in the middle of using a skill.
@@ -134,8 +137,8 @@ func _ready():
 
 ## Update the list of valid moves for this unit based on their maximum move distance and what positions within that range are navigable to.
 func refresh_valid_moves() -> void:
-	if World.level and can_move() and is_active:
-		World.level.movement_system.activate(self)
+	if Level.current_level and can_move() and is_active:
+		Level.current_level.movement_system.activate(self)
 
 
 ## Executed when the unit becomes the active unit within the level.
@@ -155,10 +158,10 @@ func deactivate():
 	_cell_highlight.visible = false
 	flag.collapse()
 	skill_machine.visible = false
-	# TODO: Make this a signal	
-	World.level.movement_system.deactivate()
+	# TODO: Make this a signal
+	Level.current_level.movement_system.deactivate()
 	Events.unit_deactivated.emit(self)
-	if World.level.armed_skill:
+	if Level.current_level.armed_skill:
 		Events.skill_disarmed.emit()
 
 
@@ -259,25 +262,47 @@ func check_for_detection() -> void:
 	pass
 
 
-# TODO: Enemy unit's should extend this to accidentally bump into unseen friendly units rather than blindly pathing around them.
-# TODO: There should also be a more elegant turning solution that only updates rotation.y when required, not every frame.
 ## Move along a navigable path towards a destination point.
-func follow_path(delta : float, path : Array, mps := 1.0) -> void:
-	if path.is_empty():
+func follow_path(path_walk_object : MovementState.PathWalk, delta : float, mps := 1.0) -> void:
+	# Check if we are done moving, or if the unit is about to turn toward a space blocked by an unforeseen unit.
+	if path_walk_object.path.is_empty():
+		if path_walk_object.ghost_point:
+			var direction = (path_walk_object.ghost_point - position).normalized()
+			var angle = atan2(-direction.x, -direction.z)
+			path_walk_object.ghost_point = null
+
+			if rotation.y != angle:
+				rotation.y = angle
+				# TODO: Long term, I think this should just force a detection of the blocking unit at this point. Right? I don't like having to await a physics frame.
+				# TODO: Other todo. One thing that might also fix this is actually lerp the rotation for a few frames, checking for detection on each. Would also fix unit turning blindspots.
+				await get_tree().physics_frame
+				check_for_detection()
 		movement_machine.current_state.transition('NoMovement')
 		return
-	var next_board_pos = path[0]
+	
+	# Otherwise, get the next position we want to move to.
+	var next_board_pos = path_walk_object.path[0]
 	var next_global_pos = NavigableGridMap.convert_grid_to_global_position(next_board_pos)
-	var direction = (next_global_pos - position).normalized()
-	var angle = atan2(-direction.x, -direction.z)
-	if rotation.y != angle:
-		rotation.y = angle
+
+	# Check if we have arrived at one of the points between the start and end of the path. If so, turn if required.	
+	if !path_walk_object.is_between_points:
+		path_walk_object.is_between_points = true
+		var direction = (next_global_pos - position).normalized()
+		var angle = atan2(-direction.x, -direction.z)
+
+		if rotation.y != angle:
+			rotation.y = angle
+	
+	# Whether we had to turn or not, immmediately move towards the next point on the list, and check for detection once reaching it.
 	position = position.move_toward(next_global_pos, mps * delta)
 	if position == next_global_pos:
+		path_walk_object.is_between_points = false
 		board_position = next_board_pos
-		path.pop_front()
+		path_walk_object.path.pop_front()
 		check_for_detection()
+	
+	# Regardless of the above, update the captive's position to that of the captor.
 	if captive:
 		captive.position = _hostage_marker.global_position
 		captive.board_position = board_position
-		captive.rotation.y = angle
+		captive.rotation.y = rotation.y

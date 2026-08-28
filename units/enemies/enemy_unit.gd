@@ -24,6 +24,12 @@ var decision_director : DecisionDirectorModule
 ## Dictionary of skills usable by this enemy unit by name.
 var available_skills : Dictionary[String, Skill] = {}
 
+# Temporary vars to be reset at the end of next turn
+## The unit which this unit was last blocked by when attempting to path to a specific point with no favorable alternate path.
+var temp_blocker : Unit
+## The path of another unit which this unit has just blocked. Used to help find a new position to move to where desirable actions can be performed but the path is unblocked.
+var temp_blocking_path : PackedVector3Array = []
+
 @onready var seeing_zone : SeeingZone = %SeeingZone
 @onready var _status_indicator : Sprite3D = %StatusIndicator
 
@@ -78,6 +84,11 @@ func die() -> void:
 func regain_consciousness() -> void:
 	super()
 	update_indicator()
+
+func forfeit_turn() -> void:
+	temp_blocker = null
+	temp_blocking_path = []
+	super()
 
 
 ## Update the enemy's icon status indicator.
