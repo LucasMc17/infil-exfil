@@ -259,25 +259,46 @@ func check_for_detection() -> void:
 	pass
 
 
-# TODO: Enemy units should extend this to accidentally bump into unseen friendly units rather than blindly pathing around them. I think this will actually require a change to the resolve blocked spaces fun, wherein when an enemy is active, spaces of unseen friendlies are given a normal weight. This won't actually allow them to path through them, but will allow them to try. they should also turn to face a point in the path even if blocked by something in it.
-# TODO: There should also be a more elegant turning solution that only updates rotation.y when required, not every frame.
 ## Move along a navigable path towards a destination point.
-func follow_path(delta : float, path : Array, mps := 1.0) -> void:
-	if path.is_empty():
+func follow_path(path_walk_object : MovementState.PathWalk, delta : float, mps := 1.0) -> void:
+	# Check if we are done moving, or if the unit is about to turn toward a space blocked by an unforeseen unit.
+	if path_walk_object.path.is_empty():
+		if path_walk_object.ghost_point:
+			var direction = (path_walk_object.ghost_point - position).normalized()
+			var angle = atan2(-direction.x, -direction.z)
+			path_walk_object.ghost_point = null
+
+			if rotation.y != angle:
+				rotation.y = angle
+				# TODO: Long term, I think this should just force a detection of the blocking unit at this point. Right? I don't like having to await a physics frame.
+				await get_tree().physics_frame
+				check_for_detection()
 		movement_machine.current_state.transition('NoMovement')
 		return
-	var next_board_pos = path[0]
+	
+	# Otherwise, get the next position we want to move to.
+	var next_board_pos = path_walk_object.path[0]
 	var next_global_pos = NavigableGridMap.convert_grid_to_global_position(next_board_pos)
-	var direction = (next_global_pos - position).normalized()
-	var angle = atan2(-direction.x, -direction.z)
-	if rotation.y != angle:
-		rotation.y = angle
+
+	# Check if we have arrived at one of the points between the start and end of the path. If so, turn if required.	
+	if !path_walk_object.is_between_points:
+		path_walk_object.is_between_points = true
+		var direction = (next_global_pos - position).normalized()
+		var angle = atan2(-direction.x, -direction.z)
+
+		if rotation.y != angle:
+			rotation.y = angle
+	
+	# Whether we had to turn or not, immmediately move towards the next point on the list, and check for detection once reaching it.
 	position = position.move_toward(next_global_pos, mps * delta)
 	if position == next_global_pos:
+		path_walk_object.is_between_points = false
 		board_position = next_board_pos
-		path.pop_front()
+		path_walk_object.path.pop_front()
 		check_for_detection()
+	
+	# Regardless of the above, update the captive's position to that of the captor.
 	if captive:
 		captive.position = _hostage_marker.global_position
 		captive.board_position = board_position
-		captive.rotation.y = angle
+		captive.rotation.y = rotation.y

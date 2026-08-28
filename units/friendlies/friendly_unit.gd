@@ -3,7 +3,7 @@
 class_name FriendlyUnit 
 extends Unit
 
-func check_for_detection():
+func check_for_detection() -> void:
 	DebugConsole.log("Checking for detection", 2)
 	var unit_id = get_instance_id()
 	for enemy : EnemyUnit in Level.current_level.all_enemies:

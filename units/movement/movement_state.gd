@@ -2,6 +2,23 @@
 class_name MovementState
 extends State
 
+## Class representing information about a path which the unit is currently walking.
+class PathWalk:
+	## An array of points along which the unit will move to reach the [end_point]
+	var full_path : Array = []
+	## A copy of the above array for mutating as the unit removes points it has reached.
+	var path : Array = []
+	## Boolean representing whether the unit is currently between two points.
+	var is_between_points := false
+	## The point this unit would move to next if it was not blocked by another unit (for AI-controlled units only).
+	var ghost_point : Variant
+
+	func _init(p : Array, gp = null) -> void:
+		full_path = p
+		path = p.duplicate()
+		ghost_point = gp
+
+
 ## The unit this state corresponds to.
 @export var unit : Unit
 ## The speed at which this movment state moves the unit, in meters per second.
@@ -12,8 +29,11 @@ var end_point : Vector3
 ## An array of points along which the unit will move to reach the [end_point]
 var path := []
 
+var path_walk : PathWalk
+
 func enter(previous_state : State, ext : Dictionary):
 	super(previous_state, ext)
+	var gp = null
 	if unit is FriendlyUnit:
 		unit.is_moving = true
 		Events.skill_disarmed.emit()
@@ -26,6 +46,7 @@ func enter(previous_state : State, ext : Dictionary):
 		for point in temp_path:
 			var blocker = Level.current_level.nav_map.get_point_occupier(point)
 			if blocker:
+				gp = point
 				unit.temp_blocker = blocker
 				if blocker is EnemyUnit:
 					blocker.temp_blocking_path = temp_path
@@ -37,14 +58,17 @@ func enter(previous_state : State, ext : Dictionary):
 		unit.movement_points -= path.size()
 	else:
 		DebugConsole.error('Must pass MovementState an end_point or a path array of points.')
+	path_walk = PathWalk.new(path, gp)
 	Level.current_level.movement_system.deactivate()
 
 
 func physics_update(delta: float):
-	unit.follow_path(delta, path, mps)
+	unit.follow_path(path_walk, delta, mps)
 
 
 func exit():
+	path = []
+	path_walk = null
 	unit.refresh_valid_moves.call_deferred()
 	unit.finished_moving.emit(unit)
 	unit.is_moving = false
