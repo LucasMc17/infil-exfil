@@ -264,45 +264,64 @@ func check_for_detection() -> void:
 
 ## Move along a navigable path towards a destination point.
 func follow_path(path_walk_object : MovementState.PathWalk, delta : float, mps := 1.0) -> void:
-	# Check if we are done moving, or if the unit is about to turn toward a space blocked by an unforeseen unit.
-	if path_walk_object.path.is_empty():
-		if path_walk_object.ghost_point:
-			var direction = (path_walk_object.ghost_point - position).normalized()
-			var angle = atan2(-direction.x, -direction.z)
-			path_walk_object.ghost_point = null
-
-			if rotation.y != angle:
-				rotation.y = angle
-				# TODO: Long term, I think this should just force a detection of the blocking unit at this point. Right? I don't like having to await a physics frame.
-				# TODO: Other todo. One thing that might also fix this is actually lerp the rotation for a few frames, checking for detection on each. Would also fix unit turning blindspots.
-				check_for_detection()
-		movement_machine.current_state.transition('NoMovement')
-		return
+	# move towards the next point
+	# if we reach it:
+		# check for detection
+		# If there is a next point:
+			# turn toward the next point if one exists.
+		# else:
+			# if we have a ghost point:
+				# turn towards it 
+				# check for detection
+			# then end the walk either way
 	
-	# Otherwise, get the next position we want to move to.
-	var next_board_pos = path_walk_object.path[0]
-	var next_global_pos = NavigableGridMap.convert_grid_to_global_position(next_board_pos)
-
-	# Check if we have arrived at one of the points between the start and end of the path. If so, turn if required.	
-	if !path_walk_object.is_between_points:
-		path_walk_object.is_between_points = true
-		var direction = (next_global_pos - position).normalized()
+	var update_captive_position = func() -> void:
+		if captive:
+			captive.position = _hostage_marker.global_position
+			captive.board_position = board_position
+			captive.rotation.y = rotation.y
+	
+	var handle_ghost_point = func() -> void:
+		var direction = (path_walk_object.ghost_point - position).normalized()
 		var angle = atan2(-direction.x, -direction.z)
+		path_walk_object.ghost_point = null
 
 		if rotation.y != angle:
 			rotation.y = angle
-	
-	# Whether we had to turn or not, immmediately move towards the next point on the list, and check for detection once reaching it.
-	position = position.move_toward(next_global_pos, mps * delta)
-	if position == next_global_pos:
-		path_walk_object.is_between_points = false
-		board_position = next_board_pos
-		path_walk_object.path.pop_front()
-		# TODO: Decide on whether enemies should take a step forward when rounding a corner and then seeing friendlies. Right now they won't do this if they have already moved at least one square, but will if it's their first step in the path. That's not necessarily a bad thing, just something we have to decide on.
+		# TODO: Long term, I think this should just force a detection of the blocking unit at this point. Right? I don't like having to await a physics frame.
+		# TODO: Other todo. One thing that might also fix this is actually lerp the rotation for a few frames, checking for detection on each. Would also fix unit turning blindspots.
 		check_for_detection()
 	
-	# Regardless of the above, update the captive's position to that of the captor.
-	if captive:
-		captive.position = _hostage_marker.global_position
-		captive.board_position = board_position
-		captive.rotation.y = rotation.y
+
+	var walk_to_next_point = func(next_pos : Vector3) -> void:
+		position = position.move_toward(next_pos, mps * delta)
+		update_captive_position.call()
+	
+
+	var handle_arrival_at_point = func() -> void:
+		board_position = path_walk_object.path.pop_front()
+		check_for_detection()
+		if !path_walk_object.path.is_empty():
+			var next_point = NavigableGridMap.convert_grid_to_global_position(path_walk_object.path[0])
+			var direction = (next_point - position).normalized()
+			var angle = atan2(-direction.x, -direction.z)
+			if rotation.y != angle:
+				rotation.y = angle
+			update_captive_position.call()
+		else:
+			if path_walk_object.ghost_point:
+				handle_ghost_point.call()
+			movement_machine.current_state.transition('NoMovement')
+	
+	if path_walk_object.path.is_empty():
+		if path_walk_object.ghost_point:
+			handle_ghost_point.call()
+		movement_machine.current_state.transition("NoMovement")
+		return
+
+	var next_global_pos = NavigableGridMap.convert_grid_to_global_position(path_walk_object.path[0])
+
+	walk_to_next_point.call(next_global_pos)
+
+	if position == next_global_pos:
+		handle_arrival_at_point.call()
