@@ -16,7 +16,7 @@ albedo_color = Color(0.95711046, 0, 0.2486856, 1)
 stencil_flags = 2
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_j686a"]
-viewport_path = NodePath("DebugLabel/@SubViewport@32382")
+viewport_path = NodePath("DebugLabel/@SubViewport@27203")
 
 [node name="EnemyUnit" unique_id=1676765037 instance=ExtResource("1_nlthm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)

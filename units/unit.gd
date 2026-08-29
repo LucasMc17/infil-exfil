@@ -275,7 +275,6 @@ func follow_path(path_walk_object : MovementState.PathWalk, delta : float, mps :
 				rotation.y = angle
 				# TODO: Long term, I think this should just force a detection of the blocking unit at this point. Right? I don't like having to await a physics frame.
 				# TODO: Other todo. One thing that might also fix this is actually lerp the rotation for a few frames, checking for detection on each. Would also fix unit turning blindspots.
-				await get_tree().physics_frame
 				check_for_detection()
 		movement_machine.current_state.transition('NoMovement')
 		return
@@ -299,6 +298,7 @@ func follow_path(path_walk_object : MovementState.PathWalk, delta : float, mps :
 		path_walk_object.is_between_points = false
 		board_position = next_board_pos
 		path_walk_object.path.pop_front()
+		# TODO: Decide on whether enemies should take a step forward when rounding a corner and then seeing friendlies. Right now they won't do this if they have already moved at least one square, but will if it's their first step in the path. That's not necessarily a bad thing, just something we have to decide on.
 		check_for_detection()
 	
 	# Regardless of the above, update the captive's position to that of the captor.
