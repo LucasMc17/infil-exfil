@@ -79,5 +79,3 @@ func _redraw_meshes() -> void:
 				mesh_instance.mesh = cylinder_mesh
 
 				add_child(mesh_instance)
-
-			
