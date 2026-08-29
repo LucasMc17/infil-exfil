@@ -304,6 +304,10 @@ func follow_path(path_walk_object : MovementState.PathWalk, delta : float, mps :
 
 	var walk_to_next_point = func(next_pos : Vector3) -> void:
 		position = position.move_toward(next_pos, mps * delta)
+		var direction = (next_pos - position).normalized()
+		var angle = atan2(-direction.x, -direction.z)
+		if rotation.y != angle:
+			rotation.y = angle
 		update_captive_position.call()
 	
 
