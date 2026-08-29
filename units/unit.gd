@@ -280,6 +280,7 @@ func follow_path(path_walk_object : MovementState.PathWalk, delta : float, mps :
 			captive.position = _hostage_marker.global_position
 			captive.board_position = board_position
 			captive.rotation.y = rotation.y
+
 	
 	var handle_ghost_point = func() -> void:
 		var direction = (path_walk_object.ghost_point - position).normalized()
