@@ -83,7 +83,7 @@ func alarm(spotted_friendlies : Variant = [], skip_grace_period := false):
 		if !skip_grace_period:
 			is_in_grace_period = true
 		awareness_level = AwarenessLevel.ALARMED
-		unit.movement_machine.current_state.transition('NoMovement')
+		unit.stop_moving()
 		if unit.is_active:
 			unit.forfeit_turn()
 	for friendly : FriendlyUnit in spotted_friendlies:

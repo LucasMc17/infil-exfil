@@ -24,17 +24,16 @@ func begin(unit : EnemyUnit) -> void:
 			attack_skill.disarm_as_enemy()
 			var valid_move = Level.current_level.nav_map.probe_for_viable_move(acting_unit.position, acting_unit.movement_points, _filter_move)
 			if valid_move:
-				# TODO: need a cleaner api for initiating movement.
-				acting_unit.movement_machine.current_state.transition('Run', { "end_point": valid_move })
+				acting_unit.move('Run', { "end_point": valid_move })
 
 			else:
-				acting_unit.movement_machine.current_state.transition('Run', { "end_point": target.board_position })
+				acting_unit.move('Run', { "end_point": target.board_position })
 
 
 func respect_nudge() -> void:
 	var valid_move = Level.current_level.nav_map.probe_for_viable_move(acting_unit.position, acting_unit.movement_points, _filter_move, acting_unit.temp_blocking_path)
 	if valid_move:
-		acting_unit.movement_machine.current_state.transition('Walk', { "end_point": valid_move })
+		acting_unit.move('Run', { "end_point": valid_move })
 	else:
 		acting_unit.forfeit_turn.call_deferred()
 		end()

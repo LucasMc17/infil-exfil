@@ -14,7 +14,7 @@ func begin(unit : EnemyUnit) -> void:
 		acting_unit.forfeit_turn.call_deferred()
 		end()
 	else:
-		acting_unit.movement_machine.current_state.transition("Run", { "end_point": _alarm_point})
+		acting_unit.move("Run", { "end_point": _alarm_point})
 
 
 func _on_finished_moving(_unit : Unit):

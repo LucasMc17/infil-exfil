@@ -171,6 +171,14 @@ func reset():
 	action_points = 100 if DebugOptions.unlimited_ap else max_action_points
 
 
+func move(movement_name : String, config : Dictionary) -> void:
+	movement_machine.current_state.transition(movement_name, config)
+
+
+func stop_moving() -> void:
+	movement_machine.current_state.transition("NoMovement")
+
+
 ## Take appropriate amount of damage and kill the unit if health drops to zero.
 func damage(amount : int) -> void:
 	health_points -= amount
@@ -312,12 +320,12 @@ func follow_path(path_walk_object : MovementState.PathWalk, delta : float, mps :
 		else:
 			if path_walk_object.ghost_point:
 				handle_ghost_point.call()
-			movement_machine.current_state.transition('NoMovement')
+			stop_moving()
 	
 	if path_walk_object.path.is_empty():
 		if path_walk_object.ghost_point:
 			handle_ghost_point.call()
-		movement_machine.current_state.transition("NoMovement")
+		stop_moving()
 		return
 
 	var next_global_pos = NavigableGridMap.convert_grid_to_global_position(path_walk_object.path[0])
