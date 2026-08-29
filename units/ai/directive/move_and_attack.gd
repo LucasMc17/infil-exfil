@@ -14,18 +14,30 @@ func _init(t : FriendlyUnit) -> void:
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
 	attack_skill = acting_unit.skill_machine.skills["EnemyAttack"]
-	attack_skill.arm_as_enemy()
-	if attack_skill.potential_targets.has(target):
-		attack_skill.use({ "target": target })
+	if !unit.temp_blocking_path.is_empty():
+		respect_nudge()
 	else:
-		attack_skill.disarm_as_enemy()
-		var valid_move = Level.current_level.nav_map.probe_for_viable_move(acting_unit.position, acting_unit.movement_points, _filter_move)
-		if valid_move:
-			# TODO: need a cleaner api for initiating movement.
-			acting_unit.movement_machine.current_state.transition('Run', { "end_point": valid_move })
-
+		attack_skill.arm_as_enemy()
+		if attack_skill.potential_targets.has(target):
+			attack_skill.use({ "target": target })
 		else:
-			acting_unit.movement_machine.current_state.transition('Run', { "end_point": target.board_position })
+			attack_skill.disarm_as_enemy()
+			var valid_move = Level.current_level.nav_map.probe_for_viable_move(acting_unit.position, acting_unit.movement_points, _filter_move)
+			if valid_move:
+				# TODO: need a cleaner api for initiating movement.
+				acting_unit.movement_machine.current_state.transition('Run', { "end_point": valid_move })
+
+			else:
+				acting_unit.movement_machine.current_state.transition('Run', { "end_point": target.board_position })
+
+
+func respect_nudge() -> void:
+	var valid_move = Level.current_level.nav_map.probe_for_viable_move(acting_unit.position, acting_unit.movement_points, _filter_move, acting_unit.temp_blocking_path)
+	if valid_move:
+		acting_unit.movement_machine.current_state.transition('Walk', { "end_point": valid_move })
+	else:
+		acting_unit.forfeit_turn.call_deferred()
+		end()
 
 
 func _on_finished_acting(_unit : Unit):
