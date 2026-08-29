@@ -2,9 +2,12 @@ class_name Headshot
 extends AimedSkill
 
 @export_group('Chance to Hit')
-@export var min_chance := 0.1
-@export var max_chance := 0.85
+## The minimum chance this skill can have to hit (at the edge of its effective range).
+@export_range(0.0, 1.0, 0.01, "suffix:%") var min_chance := 0.1
+## The maximum chance this skill cant have to hit (when directly next to the target).
+@export_range(0.0, 1.0, 0.01, "suffix:%") var max_chance := 0.85
 
+## The chance to hit, to be recalculated when a target is selected.
 var chance := 0.1
 
 func arm() -> void:

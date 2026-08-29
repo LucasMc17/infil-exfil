@@ -4,7 +4,7 @@ extends TargetedSkill
 
 @export_group("Targeting")
 ## The range which the target must be within to be targetable for the skill.
-@export var effective_range := 5.0
+@export_range(0.0, 50.0, 0.5, "suffix:m") var effective_range := 5.0
 
 @onready var _collision_shape : CollisionShape3D = %CollisionShape3D
 @onready var _mesh_instance : MeshInstance3D = %MeshInstance3D

@@ -12,6 +12,10 @@ extends Resource
 ## The weapon's mesh.
 @export var model : Mesh
 
+@export_group("Noise")
+## The noise it makes to use this weapon.
+@export_custom(PROPERTY_HINT_NONE, "suffix:m") var sound_radius := 5.0
+
 @export_group("Weapon Skills")
 ## The skills which this weapon allows to be performed when equipped.
 # @export var skills : Array[Skill]

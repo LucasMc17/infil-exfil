@@ -1,6 +1,7 @@
 class_name Reload
 extends Skill
 
+## Whether or not this is a tactical reload (less expensive to perform but sacrifices remaining ammunition in magazine).
 @export var is_tactical := false
 
 func get_affordability() -> bool:

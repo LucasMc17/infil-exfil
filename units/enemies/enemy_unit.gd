@@ -15,7 +15,7 @@ const FULL_ALERT_IMAGE := preload('res://assets/images/full_alert.png')
 @export var alerted_base_directives : Array[Directive] = []
 
 ## How likely the unit is to run for the alarm each turn when alarmed by the player's units.
-@export var alarm_run_chance := 0.5
+@export_range(0.0, 1.0, 0.01, "suffix:%") var alarm_run_chance := 0.5
 
 ## The enemy unit's awareness module.
 var awareness := EnemyUnitAwarenessModule.new(self)
