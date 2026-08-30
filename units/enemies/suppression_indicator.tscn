@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dac0ltrc0lcf8"]
+
+[ext_resource type="Script" uid="uid://ikrjtcygu7v4" path="res://units/enemies/suppression_indicator.gd" id="1_glbpq"]
+[ext_resource type="Material" uid="uid://bc34jgntfn42b" path="res://assets/materials/suppression_material.tres" id="1_n1bk4"]
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_n1bk4"]
+
+[node name="SuppressionIndicator" type="MeshInstance3D" unique_id=265475610]
+transform = Transform3D(0.37139064, 0, -0.9284767, 0, 1, 0, 0.9284767, 0, 0.37139064, 0, 0, 0)
+material_override = ExtResource("1_n1bk4")
+mesh = SubResource("ImmediateMesh_n1bk4")
+script = ExtResource("1_glbpq")
