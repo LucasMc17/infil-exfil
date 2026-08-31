@@ -32,6 +32,7 @@ var temp_blocking_path : PackedVector3Array = []
 
 @onready var seeing_zone : SeeingZone = %SeeingZone
 @onready var _status_indicator : Sprite3D = %StatusIndicator
+@onready var suppression_indicator : SuppressionIndicator = %SuppressionIndicator
 
 func _ready():
 	super()
@@ -73,17 +74,21 @@ func activate():
 
 func lose_consciousness() -> void:
 	super()
+	awareness.lose_suppression()
 	update_indicator()
 
 
 func die() -> void:
 	super()
+	awareness.lose_suppression()
 	update_indicator()
 
 
 func regain_consciousness() -> void:
 	super()
+	awareness.alert()
 	update_indicator()
+
 
 func forfeit_turn() -> void:
 	temp_blocker = null

@@ -226,6 +226,7 @@ func take_captive(captured : Unit) -> void:
 	captive.rotation.y = rotation.y
 	if captive is EnemyUnit:
 		captive.awareness.alarm(self, true)
+		captive.awareness.lose_suppression()
 
 
 ## Runs when the unit releases their captive. Takes in a boolean representing whether or not the captive was killed before being released.

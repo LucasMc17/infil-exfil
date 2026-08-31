@@ -1666,6 +1666,9 @@ transform = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, -7
 [node name="FriendlyUnit" parent="Friendlies" parent_id_path=PackedInt32Array(926091492) index="0" unique_id=1676765037 instance=ExtResource("6_peql8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 7)
 
+[node name="FriendlyUnit2" parent="Friendlies" parent_id_path=PackedInt32Array(926091492) index="1" unique_id=906080342 instance=ExtResource("6_peql8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -5)
+
 [node name="EnemyUnit" parent="Enemies" parent_id_path=PackedInt32Array(182952236) index="0" unique_id=1682874516 instance=ExtResource("7_p8x4w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -5)
 unaware_base_directives = Array[ExtResource("8_m0sp5")]([SubResource("Resource_gfecl"), SubResource("Resource_53l1m")])

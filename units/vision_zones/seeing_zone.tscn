@@ -13,9 +13,9 @@ debug_color = Color(0.9966604, 0, 0.19131464, 0.41960785)
 
 [node name="ShapeCast3D" type="ShapeCast3D" parent="." unique_id=1770023273]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -9)
 enabled = false
 shape = ExtResource("2_vwds1")
-target_position = Vector3(0, -10, 0)
 collide_with_areas = true
 collide_with_bodies = false
+debug_shape_custom_color = Color(0.5616451, 0.0035406905, 0.91412425, 1)

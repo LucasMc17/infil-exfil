@@ -73,7 +73,9 @@ metadata/_custom_type_script = "uid://dsirg6rpatadl"
 user = NodePath("../..")
 
 [node name="SuppressionIndicator" type="MeshInstance3D" parent="." index="11" unique_id=2050769896]
-transform = Transform3D(0.70279753, 0, 0.71138984, 0, 1, 0, -0.71138984, 0, 0.70279753, 0, 0, 0)
+unique_name_in_owner = true
+transform = Transform3D(0.70279753, 0, 0.71138984, 0, 1, 0, -0.71138984, 0, 0.70279753, 0, 1, 0)
+visible = false
 material_override = ExtResource("8_ybke6")
 mesh = SubResource("ImmediateMesh_mer0c")
 script = ExtResource("8_l7fnf")

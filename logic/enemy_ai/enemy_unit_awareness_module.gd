@@ -51,6 +51,8 @@ var targeted_friendly_count : int:
 var friendlies_in_sight : Array[FriendlyUnit]:
 	get():
 		return targeted_friendlies.values().filter(func(sighting : FriendlySighting): return sighting.still_in_sight)
+## The unit this target is currently suppressing, if any.
+var suppression_target : FriendlyUnit
 ## Whether the unit is in the detection grace period. This occurs when the unit sees a friendly unit during the player turn. While in the grace period, stealth skills are still usable on this unit. The grace period ends as soon as the enemy unit begins its next turn.
 var is_in_grace_period := false
 
@@ -67,8 +69,19 @@ func _confirm_sighting(sighting : FriendlySighting) -> void:
 		sighting.still_in_sight = false
 
 
+func suppress_target(target : FriendlyUnit) -> void:
+	suppression_target = target
+	unit.suppression_indicator.activate(target)
+
+
+func lose_suppression() -> void:
+	suppression_target = null
+	unit.suppression_indicator.deactivate()
+
+
 ## Update the unit's awareness level to [ALERTED].
 func alert():
+	lose_suppression()
 	is_in_grace_period = false
 	awareness_level = AwarenessLevel.ALERTED
 	targeted_friendlies.clear()
@@ -95,6 +108,7 @@ func alarm(spotted_friendlies : Variant = [], skip_grace_period := false):
 
 ## Update the unit's awareness level to [UNAWARE], clearing their list of targets.
 func drop_guard():
+	lose_suppression()
 	is_in_grace_period = false
 	awareness_level = AwarenessLevel.UNAWARE
 	targeted_friendlies.clear()
