@@ -19,14 +19,12 @@ func _ready() -> void:
 
 
 func get_all_targets() -> void:
-	var is_friendly = user is FriendlyUnit
 	var overlaps = _area.get_overlapping_bodies()
 	var result : Array[Unit] = []
-	for overlapper in overlaps:
-		if overlapper is Unit and overlapper != user and \
-		(overlapper is EnemyUnit if is_friendly else overlapper is FriendlyUnit):
-			if user.seen_zone.get_line_of_sight(overlapper.seen_zone.global_position, overlapper):
-				result.append(overlapper)
+	for overlap in overlaps:
+		if overlap is Unit:
+			result.append(overlap)
+
 	potential_targets = _filter_targets(result)
 
 

@@ -58,6 +58,7 @@ var is_in_grace_period := false
 
 func _init(u : EnemyUnit) -> void:
 	unit = u
+	Events.player_turn_ended.connect(resolve_suppression)
 
 
 func _confirm_sighting(sighting : FriendlySighting) -> void:
@@ -69,11 +70,18 @@ func _confirm_sighting(sighting : FriendlySighting) -> void:
 		sighting.still_in_sight = false
 
 
+## Returns true if the unit is alerted to the passed friendly.
+func is_aware_of(friendly : FriendlyUnit) -> bool:
+	return targeted_friendlies.has(friendly.get_instance_id())
+
+
+## Apply suppression to a target.
 func suppress_target(target : FriendlyUnit) -> void:
 	suppression_target = target
 	unit.suppression_indicator.activate(target)
 
 
+## Clear this unit's currently suppressed target.
 func lose_suppression() -> void:
 	suppression_target = null
 	unit.suppression_indicator.deactivate()
@@ -118,6 +126,13 @@ func drop_guard():
 ## Reset the grace period bool to false.
 func resolve_grace_period():
 	is_in_grace_period = false
+
+
+## Remove suppression at the end of the player turn if the suppression target is no longer in sight.
+func resolve_suppression() -> void:
+	confirm_all_sightings()
+	if !friendlies_in_sight.has(suppression_target):
+		lose_suppression()
 
 
 ## For each friendly the unit has seen within this alert phase, confirm they are still in sight. Useful when this unit moves and needs to recheck who they can see.[br]

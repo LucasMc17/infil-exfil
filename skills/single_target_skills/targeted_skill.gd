@@ -4,6 +4,11 @@ extends Skill
 
 ## The type of this skill, determining what targets it can be used on.
 @export var skill_type := SkillType.GENERAL
+## A list of filters (as defined in the [TargetFilters] class) to apply to all potential targets for this skill. For a small performance optimization, list the filters in order from simplest most complex.
+@export var target_filters : Array[TargetFilters.FilterName] = [
+	TargetFilters.FilterName.OTHER_TEAM_ONLY,
+	TargetFilters.FilterName.IN_SIGHT_ONLY
+]
 
 ## An array of potential targets which are currently valid for this skill.
 var potential_targets : Array[Unit] = []
@@ -80,24 +85,6 @@ func clear_target() -> void:
 	Level.current_level.target_retical.visible = false
 
 
-## Filter targets based on this skill being intended only for enemies unaware of the active player unit.
-func _filter_stealth(target_unit : Unit) -> bool:
-	if target_unit is EnemyUnit:
-		return !target_unit.awareness.targeted_friendlies.has(user.get_instance_id()) or target_unit.awareness.is_in_grace_period
-	return true
-
-
-## Filter targets based on this skill being intended only for enemies aware of the active player unit.
-func _filter_combat(target_unit : Unit) -> bool:
-	if target_unit is EnemyUnit:
-		return target_unit.awareness.targeted_friendlies.has(user.get_instance_id())
-	return true
-
-
 ## Filter the available targets based on the type of the skill. Should be used at the end of the [get_all_targets] method.
 func _filter_targets(targets : Array[Unit]) -> Array[Unit]:
-	if skill_type == SkillType.COMBAT:
-		return targets.filter(_filter_combat)
-	if skill_type == SkillType.STEALTH:
-		return targets.filter(_filter_stealth)
-	return targets
+	return TargetFilters.apply_filters(target_filters, targets, user)

@@ -16,6 +16,7 @@ cap_bottom = false
 script = ExtResource("2_c2pc5")
 effective_range = 8.0
 skill_type = 1
+target_filters = Array[int]([2, 7, 5])
 skill_name = "Mozambique Drill"
 ammo_cost = 3
 

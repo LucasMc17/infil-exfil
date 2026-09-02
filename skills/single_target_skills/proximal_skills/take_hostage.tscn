@@ -5,5 +5,6 @@
 [node name="TakeHostage" type="Node" unique_id=334460177]
 script = ExtResource("1_wv7ac")
 skill_type = 1
+target_filters = Array[int]([2, 7, 5])
 skill_name = "Take Hostage"
 description = "Grab and take hostage an adjacent enemy unit."

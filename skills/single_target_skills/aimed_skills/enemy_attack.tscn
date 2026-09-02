@@ -6,3 +6,4 @@
 [node name="EnemyAttack" unique_id=1362204123 instance=ExtResource("1_g5n3w")]
 script = ExtResource("2_l1fuk")
 effective_range = 10.0
+target_filters = Array[int]([2, 7, 8])
