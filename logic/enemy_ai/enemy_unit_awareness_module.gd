@@ -58,6 +58,7 @@ var is_in_grace_period := false
 
 func _init(u : EnemyUnit) -> void:
 	unit = u
+	Events.unit_moved.connect(_confirm_all_sightings)
 	Events.player_turn_ended.connect(resolve_suppression)
 
 
@@ -135,7 +136,6 @@ func resolve_grace_period():
 
 ## Remove suppression at the end of the player turn if the suppression target is no longer in sight.
 func resolve_suppression() -> void:
-	# confirm_all_sightings()
 	if !friendlies_in_sight.has(suppression_target):
 		lose_suppression()
 
@@ -143,7 +143,7 @@ func resolve_suppression() -> void:
 ## For each friendly the unit has seen within this alert phase, confirm they are still in sight. Useful when this unit moves and needs to recheck who they can see.[br]
 ## Note that, in order to be in sight, the unit does not have to be directly looking at the friendly. There only needs to be a clear theoretical line of sight between them, and the unit must be within 15 meters of the target.[br]
 ## If the unit is still in sight, the sighting will update its last known position. If not, it will mark the unit as out of sight and cease updating its last known position.
-func confirm_all_sightings() -> void:
+func _confirm_all_sightings() -> void:
 	if unit.is_incapacitated() or !is_alarmed():
 		return
 	for sighting : FriendlySighting in targeted_friendlies.values():
@@ -152,10 +152,10 @@ func confirm_all_sightings() -> void:
 
 # NOTE: I think I will remove this func and simply call the confirm all sightings func anytime the unit_moved signal fires. It's slightly more expensive but will cover edge cases like a third unit moving to block the sight lines between two other units.
 ## Confirm a specific sighting. Like the [confirm_all_sightings] function, but for checking only a specific sighting. Most useful for checking for sighting continuity after the friendly moves, as opposed to the enemy.
-func confirm_specific_sighting(friendly_id : int) -> void:
-	if unit.is_incapacitated() or !is_alarmed() or !targeted_friendlies.has(friendly_id):
-		return
-	_confirm_sighting(targeted_friendlies[friendly_id])
+# func confirm_specific_sighting(friendly_id : int) -> void:
+# 	if unit.is_incapacitated() or !is_alarmed() or !targeted_friendlies.has(friendly_id):
+# 		return
+# 	_confirm_sighting(targeted_friendlies[friendly_id])
 
 
 ## Checks whether the unit is alarmed.

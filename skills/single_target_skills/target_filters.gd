@@ -10,6 +10,8 @@ enum FilterName {
 	STEALTH_SUITE,
 	## Combines the OFFENSE_SUITE with a restriction to ALARMED_ENEMIES_ONLY, effectively making for offensive skills which can only be used from combat.
 	COMBAT_SUITE,
+	## Combines the OFFENSE_SUITE with a restriction to SPOTTED_FRIENDLIES_ONLY, effecitvely making for offensive skills to be used by EnemyUnits.
+	ENEMY_OFFENSE_SUITE,
 	## Only [FriendlyUnit]s will be considered valid targets.
 	FRIENDLIES_ONLY,
 	## Only [EnemyUnit]s will be considered valid targets.
@@ -39,6 +41,7 @@ static var _FILTER_DICT : Dictionary[FilterName, Callable] = {
 	FilterName.OFFENSE_SUITE: _filter_offense_suite,
 	FilterName.STEALTH_SUITE: _filter_stealth_suite,
 	FilterName.COMBAT_SUITE: _filter_combat_suite,
+	FilterName.ENEMY_OFFENSE_SUITE: _filter_enemy_offense_suite,
 
 	FilterName.FRIENDLIES_ONLY: _filter_friendlies_only,
 	FilterName.ENEMIES_ONLY: _filter_enemies_only,
@@ -69,10 +72,10 @@ static func _apply_filters_to_single_target(filters : Array[FilterName], targete
 
 static func _filter_offense_suite(targeted : Unit, targeter : Unit) -> bool:
 	return _filter_other_team_only(targeted, targeter) \
-	and _filter_no_suppressors(targeted, targeter) \
-	and _filter_in_sight_only(targeted, targeter) \
+	and _filter_no_incapacitated(targeted, targeter) \
 	and _filter_no_captives(targeted, targeter) \
-	and _filter_no_incapacitated(targeted, targeter) 
+	and _filter_no_suppressors(targeted, targeter) \
+	and _filter_in_sight_only(targeted, targeter)
 
 
 static func _filter_stealth_suite(targeted : Unit, targeter : Unit) -> bool:
@@ -83,6 +86,11 @@ static func _filter_stealth_suite(targeted : Unit, targeter : Unit) -> bool:
 static func _filter_combat_suite(targeted : Unit, targeter : Unit) -> bool:
 	return _filter_offense_suite(targeted, targeter) \
 	and _filter_alarmed_enemies_only(targeted, targeter)
+
+
+static func _filter_enemy_offense_suite(targeted : Unit, targeter : Unit) -> bool:
+	return _filter_offense_suite(targeted, targeter) \
+	and _filter_spotted_friendlies_only(targeted, targeter)
 
 
 static func _filter_friendlies_only(targeted : Unit, _targeter : Unit) -> bool:

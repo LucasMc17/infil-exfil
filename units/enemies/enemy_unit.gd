@@ -48,7 +48,7 @@ func _ready():
 
 func check_for_detection() -> void:
 	DebugConsole.log("Checking for detection", 2)
-	awareness.confirm_all_sightings()
+	# awareness.confirm_all_sightings()
 	return seeing_zone.check_detection()
 
 

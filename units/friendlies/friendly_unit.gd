@@ -5,9 +5,9 @@ extends Unit
 
 func check_for_detection() -> void:
 	DebugConsole.log("Checking for detection", 2)
-	var unit_id = get_instance_id()
-	for enemy : EnemyUnit in Level.current_level.all_enemies:
-		enemy.awareness.confirm_specific_sighting(unit_id)
+	# var unit_id = get_instance_id()
+	# for enemy : EnemyUnit in Level.current_level.all_enemies:
+		# enemy.awareness.confirm_specific_sighting(unit_id)
 	seen_zone.check_detection()
 	get_instance_id()
 
