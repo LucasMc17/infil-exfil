@@ -117,7 +117,6 @@ var captor : Unit
 @onready var seen_zone : SeenZone = %SeenZone
 @onready var _mesh_instance : MeshInstance3D = %MeshInstance3D
 @onready var _hostage_marker : Marker3D = %HostageMarker
-@onready var _collision : CollisionShape3D = %CollisionShape3D
 @onready var audio_machine : StaticAudioMachine = %StaticAudioMachine
 
 func _ready():
@@ -191,7 +190,6 @@ func die() -> void:
 	DebugConsole.log("Unit " + name + " dies.", 2)
 	Events.unit_disabled.emit(self)
 	Events.unit_died.emit(self)
-	_collision.disabled = true
 	_mesh_instance.position.y = 0.0
 	unit_status = Status.DEAD
 
@@ -201,7 +199,6 @@ func lose_consciousness() -> void:
 	DebugConsole.log("Unit " + name + " loses consciousness.", 2)
 	Events.unit_disabled.emit(self)
 	Events.unit_lost_consciousness.emit(self)
-	_collision.disabled = true
 	_mesh_instance.position.y = 0.0
 	unit_status = Status.UNCONSCIOUS
 
@@ -209,7 +206,6 @@ func lose_consciousness() -> void:
 ## Bring the unit back from unconsciousness.
 func regain_consciousness() -> void:
 	DebugConsole.log("Unit " + name + " regains consciousness.", 2)
-	_collision.disabled = false
 	_mesh_instance.position.y = 1.0
 	unit_status = Status.ALIVE
 

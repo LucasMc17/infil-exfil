@@ -6,8 +6,7 @@ extends Skill
 @export var skill_type := SkillType.GENERAL
 ## A list of filters (as defined in the [TargetFilters] class) to apply to all potential targets for this skill. For a small performance optimization, list the filters in order from simplest most complex.
 @export var target_filters : Array[TargetFilters.FilterName] = [
-	TargetFilters.FilterName.OTHER_TEAM_ONLY,
-	TargetFilters.FilterName.IN_SIGHT_ONLY
+	TargetFilters.FilterName.OFFENSE_SUITE
 ]
 
 ## An array of potential targets which are currently valid for this skill.

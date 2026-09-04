@@ -62,16 +62,17 @@ func _init(u : EnemyUnit) -> void:
 
 
 func _confirm_sighting(sighting : FriendlySighting) -> void:
+	var can_see : bool
 	if sighting.friendly.position.distance_to(unit.position) <= 15.0 and \
 	unit.seeing_zone.get_line_of_sight(sighting.friendly.seen_zone.global_position, sighting.friendly):
+		can_see = true
 		sighting.still_in_sight = true
 		sighting.last_known_position = sighting.friendly.board_position
-		if suppression_target == sighting.friendly:
-			unit.suppression_indicator.check_los(true)
 	else:
+		can_see = false
 		sighting.still_in_sight = false
-		if suppression_target == sighting.friendly:
-			unit.suppression_indicator.check_los(false)
+	if suppression_target == sighting.friendly:
+		unit.suppression_indicator.check_los(can_see)
 
 
 ## Returns true if the unit is alerted to the passed friendly.

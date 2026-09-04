@@ -4,6 +4,12 @@ extends Object
 
 ## A list of filter names descriptive of what kind of potential targets they filter out. Note that some filters assume that either the targeted or the targeter is a particular subclass of [Unit] ([FriendlyUnit] or [EnemyUnit]) and will simply return true if these assumptions are not met.
 enum FilterName {
+	## Combines the OTHER_TEAM_ONLY, NO_SUPPRESSORS, IN_SIGHT_ONLY, NO_CAPTIVES, and NO_INCAPACITATED filters to form a baseline applicable to most offensive skills.
+	OFFENSE_SUITE,
+	## Combines the OFFENSE_SUITE with a restriction to UNALARMED_ENEMIES_ONLY, effectively making for offensive skills which can only be used from stealth.
+	STEALTH_SUITE,
+	## Combines the OFFENSE_SUITE with a restriction to ALARMED_ENEMIES_ONLY, effectively making for offensive skills which can only be used from combat.
+	COMBAT_SUITE,
 	## Only [FriendlyUnit]s will be considered valid targets.
 	FRIENDLIES_ONLY,
 	## Only [EnemyUnit]s will be considered valid targets.
@@ -21,11 +27,19 @@ enum FilterName {
 	## Target will only be considered valid if there is a clear line of sight from the targeter to the targeted.
 	IN_SIGHT_ONLY,
 	## Assumes targeter is an [EnemyUnit] and targeted is a [FriendlyUnit]. 
-	SPOTTED_FRIENDLIES_ONLY
+	SPOTTED_FRIENDLIES_ONLY,
+	## Target will be considered valid only if they are not currently a captive of another unit.
+	NO_CAPTIVES,
+	## Target will be considered valid only if they are not incapacitated (dead or unconscious).
+	NO_INCAPACITATED
 }
 
 ## Dictionary mapping the above [FilterName]s to their respective callable.
 static var _FILTER_DICT : Dictionary[FilterName, Callable] = {
+	FilterName.OFFENSE_SUITE: _filter_offense_suite,
+	FilterName.STEALTH_SUITE: _filter_stealth_suite,
+	FilterName.COMBAT_SUITE: _filter_combat_suite,
+
 	FilterName.FRIENDLIES_ONLY: _filter_friendlies_only,
 	FilterName.ENEMIES_ONLY: _filter_enemies_only,
 	FilterName.OTHER_TEAM_ONLY: _filter_other_team_only,
@@ -34,7 +48,9 @@ static var _FILTER_DICT : Dictionary[FilterName, Callable] = {
 	FilterName.UNALARMED_ENEMIES_ONLY: _filter_unalarmed_enemies_only,
 	FilterName.ALARMED_ENEMIES_ONLY: _filter_alarmed_enemies_only,
 	FilterName.IN_SIGHT_ONLY: _filter_in_sight_only,
-	FilterName.SPOTTED_FRIENDLIES_ONLY: _filter_spotted_friendlies_only
+	FilterName.SPOTTED_FRIENDLIES_ONLY: _filter_spotted_friendlies_only,
+	FilterName.NO_CAPTIVES: _filter_no_captives,
+	FilterName.NO_INCAPACITATED: _filter_no_incapacitated
 }
 
 ## Applies a list of [FilterName]s to a list of potential targets and filters out all that fail any of the filters. Note that this is the one and only public method of this class.
@@ -50,6 +66,24 @@ static func _apply_filters_to_single_target(filters : Array[FilterName], targete
 	return true
 
 # Filter funcs - the below are semantically named utility methods for applying the filters described by the [FilterName] they correspond to. Each should take in a [targeted] unit and a [targeter] unit, and each should return a boolean indicating whether the filter allowed the target through or not.
+
+static func _filter_offense_suite(targeted : Unit, targeter : Unit) -> bool:
+	return _filter_other_team_only(targeted, targeter) \
+	and _filter_no_suppressors(targeted, targeter) \
+	and _filter_in_sight_only(targeted, targeter) \
+	and _filter_no_captives(targeted, targeter) \
+	and _filter_no_incapacitated(targeted, targeter) 
+
+
+static func _filter_stealth_suite(targeted : Unit, targeter : Unit) -> bool:
+	return _filter_offense_suite(targeted, targeter) \
+	and _filter_unalarmed_enemies_only(targeted, targeter)
+
+
+static func _filter_combat_suite(targeted : Unit, targeter : Unit) -> bool:
+	return _filter_offense_suite(targeted, targeter) \
+	and _filter_alarmed_enemies_only(targeted, targeter)
+
 
 static func _filter_friendlies_only(targeted : Unit, _targeter : Unit) -> bool:
 	return targeted is FriendlyUnit
@@ -97,3 +131,11 @@ static func _filter_spotted_friendlies_only(targeted : Unit, targeter : Unit) ->
 	if targeter is not EnemyUnit or targeted is not FriendlyUnit:
 		return true
 	return targeter.awareness.is_aware_of(targeted)
+
+
+static func _filter_no_captives(targeted : Unit, _targeter : Unit) -> bool:
+	return !targeted.captor
+
+
+static func _filter_no_incapacitated(targeted : Unit, _targeter : Unit) -> bool:
+	return !targeted.is_incapacitated()
