@@ -95,6 +95,7 @@ func physics_update(delta: float):
 	
 
 	var handle_arrival_at_point = func() -> void:
+		Events.unit_moved.emit()
 		unit.board_position = path.pop_front()
 		unit.check_for_detection()
 		if !path.is_empty():

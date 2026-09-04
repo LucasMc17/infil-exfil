@@ -50,7 +50,7 @@ var targeted_friendly_count : int:
 ## The targeted friendlies which are still in this unit's sights.
 var friendlies_in_sight : Array[FriendlyUnit]:
 	get():
-		return targeted_friendlies.values().filter(func(sighting : FriendlySighting): return sighting.still_in_sight)
+		return targeted_friendlies.values().filter(func(sighting : FriendlySighting): return sighting.still_in_sight).map(func (sighting : FriendlySighting): return sighting.friendly)
 ## The unit this target is currently suppressing, if any.
 var suppression_target : FriendlyUnit
 ## Whether the unit is in the detection grace period. This occurs when the unit sees a friendly unit during the player turn. While in the grace period, stealth skills are still usable on this unit. The grace period ends as soon as the enemy unit begins its next turn.
@@ -66,8 +66,12 @@ func _confirm_sighting(sighting : FriendlySighting) -> void:
 	unit.seeing_zone.get_line_of_sight(sighting.friendly.seen_zone.global_position, sighting.friendly):
 		sighting.still_in_sight = true
 		sighting.last_known_position = sighting.friendly.board_position
+		if suppression_target == sighting.friendly:
+			unit.suppression_indicator.check_los(true)
 	else:
 		sighting.still_in_sight = false
+		if suppression_target == sighting.friendly:
+			unit.suppression_indicator.check_los(false)
 
 
 ## Returns true if the unit is alerted to the passed friendly.
@@ -130,7 +134,7 @@ func resolve_grace_period():
 
 ## Remove suppression at the end of the player turn if the suppression target is no longer in sight.
 func resolve_suppression() -> void:
-	confirm_all_sightings()
+	# confirm_all_sightings()
 	if !friendlies_in_sight.has(suppression_target):
 		lose_suppression()
 
@@ -145,6 +149,7 @@ func confirm_all_sightings() -> void:
 		_confirm_sighting(sighting)
 
 
+# NOTE: I think I will remove this func and simply call the confirm all sightings func anytime the unit_moved signal fires. It's slightly more expensive but will cover edge cases like a third unit moving to block the sight lines between two other units.
 ## Confirm a specific sighting. Like the [confirm_all_sightings] function, but for checking only a specific sighting. Most useful for checking for sighting continuity after the friendly moves, as opposed to the enemy.
 func confirm_specific_sighting(friendly_id : int) -> void:
 	if unit.is_incapacitated() or !is_alarmed() or !targeted_friendlies.has(friendly_id):
