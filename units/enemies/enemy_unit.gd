@@ -44,12 +44,18 @@ func _ready():
 		debug_label.change_param('awareness_level', awareness.AwarenessLevel.find_key(awareness.awareness_level))
 		debug_label.change_param('targets', '[]')
 		Events.alarm_raised.connect(_on_alarm_raised)
+		Events.unit_disabled.connect(_on_unit_disabled)
 
 
 func check_for_detection() -> void:
 	DebugConsole.log("Checking for detection", 2)
 	# awareness.confirm_all_sightings()
 	return seeing_zone.check_detection()
+
+
+func _on_unit_disabled(unit : Unit) -> void:
+	if unit == self or unit == awareness.suppression_target:
+		awareness.lose_suppression()
 
 
 func _on_seeing_zone_friendly_seen(friendlies: Array[FriendlyUnit]) -> void:
@@ -74,7 +80,6 @@ func activate():
 
 func lose_consciousness() -> void:
 	super()
-	awareness.lose_suppression()
 	update_indicator()
 
 
@@ -85,7 +90,6 @@ func damage(amount : int) -> void:
 
 func die() -> void:
 	super()
-	awareness.lose_suppression()
 	update_indicator()
 
 

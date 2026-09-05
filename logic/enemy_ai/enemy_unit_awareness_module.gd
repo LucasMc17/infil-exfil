@@ -117,7 +117,7 @@ func alarm(spotted_friendlies : Variant = [], skip_grace_period := false):
 		var friendly_id = friendly.get_instance_id()
 		if !targeted_friendlies.has(friendly_id):
 			targeted_friendlies[friendly_id] = FriendlySighting.new(friendly)
-	# unit.debug_label.change_param('targets', '[' + ', '.join(targeted_friendlies.map(func (friendly): return friendly.name)) + ']')
+	unit.debug_label.change_param('targets', '[' + ', '.join(targeted_friendlies.values().map(func (sighting): return sighting.friendly.name)) + ']')
 
 
 ## Update the unit's awareness level to [UNAWARE], clearing their list of targets.
