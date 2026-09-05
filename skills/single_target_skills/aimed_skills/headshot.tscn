@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bk3sio8wshyga"]
 
-[ext_resource type="PackedScene" uid="uid://dulcusx643qk8" path="res://skills/aimed_skill.tscn" id="1_yj7rw"]
+[ext_resource type="PackedScene" uid="uid://dulcusx643qk8" path="res://skills/single_target_skills/aimed_skills/aimed_skill.tscn" id="1_yj7rw"]
 [ext_resource type="Script" uid="uid://gkl7jbp5tbe6" path="res://skills/single_target_skills/aimed_skills/headshot.gd" id="2_tp3ka"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_tp3ka"]

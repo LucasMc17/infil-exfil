@@ -11,7 +11,7 @@ height = 0.001
 cap_top = false
 cap_bottom = false
 
-[node name="SkillTargetingArea" type="Node3D" unique_id=1362204123]
+[node name="AimedSkill" type="Node3D" unique_id=1362204123]
 script = ExtResource("1_ng3vh")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=1854330789]

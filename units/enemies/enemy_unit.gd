@@ -78,6 +78,11 @@ func lose_consciousness() -> void:
 	update_indicator()
 
 
+func damage(amount : int) -> void:
+	super(amount)
+	awareness.lose_suppression()
+
+
 func die() -> void:
 	super()
 	awareness.lose_suppression()
