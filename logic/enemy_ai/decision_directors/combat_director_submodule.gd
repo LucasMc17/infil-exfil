@@ -14,13 +14,15 @@ func _init(u : EnemyUnit, a : EnemyUnitAwarenessModule) -> void:
 
 ## Main function for deciding on a new combat directive
 func choose_combat_directive() -> Directive:
+	# Run for the alarm if needed.
 	if !Level.current_level.enemy_awareness.alarm_active and !Level.current_level.enemy_awareness.alarm_runner and Utilities.dice_roll(unit.alarm_run_chance):
 		Level.current_level.enemy_awareness.alarm_runner = unit
 		return RunForAlarm.new()
 	else:
 		var friendlies_in_sight = awareness.friendlies_in_sight
 		if !friendlies_in_sight.is_empty():
-			return MoveAndAttack.new(friendlies_in_sight[0])
+			var target : FriendlyUnit = unit.awareness.suppression_target if unit.awareness.suppression_target else friendlies_in_sight[0]
+			return MoveAndAttack.new(target)
 		else:
 			var pursued = awareness.targeted_friendlies.values()[0]
 			return Pursue.new(pursued.friendly, pursued.last_known_position)

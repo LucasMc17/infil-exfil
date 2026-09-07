@@ -1,0 +1,13 @@
+[gd_resource type="Theme" format=3 uid="uid://d2nf3xrv7a22o"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m0tvc"]
+bg_color = Color(0.8789276, 0.024409896, 0.24178791, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_705hf"]
+bg_color = Color(0.09457257, 0.65498644, 0.8558039, 1)
+
+[resource]
+EnemyHealthbar/base_type = &"ProgressBar"
+EnemyHealthbar/styles/fill = SubResource("StyleBoxFlat_m0tvc")
+PlayerHealthbar/base_type = &"ProgressBar"
+PlayerHealthbar/styles/fill = SubResource("StyleBoxFlat_705hf")
