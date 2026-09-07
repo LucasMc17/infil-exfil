@@ -27,41 +27,34 @@ func _run() -> void:
 		encountered += 1
 		var point : NavigableGridMap.GridPoint = nav_map.point_map_by_grid_coords[coord]
 		var global_coord = NavigableGridMap.convert_grid_to_global_position(coord)
-		if point.tile.wall_floor:
+		if point.tile.walled_sides & 16:
 			var floor_scene = DEBUG_FLOOR.instantiate()
 			floor_scene.position = global_coord
 			geometry.add_child(floor_scene)
 			floor_scene.owner = level
 		
-		if point.tile.wall_front:
+		if point.tile.walled_sides & 1:
 			var wall_scene = DEBUG_WALL.instantiate()
 			wall_scene.position = global_coord + Vector3(0.5, 0, 0.5)
 			wall_scene.rotation.y = -point.basis.get_euler().y
 			geometry.add_child(wall_scene)
 			wall_scene.owner = level
 		
-		if point.tile.wall_right:
+		if point.tile.walled_sides & 4:
 			var wall_scene = DEBUG_WALL.instantiate()
 			wall_scene.position = global_coord + Vector3(0.5, 0, 0.5)
 			wall_scene.rotation.y = -point.basis.get_euler().y - 1.5708
 			geometry.add_child(wall_scene)
 			wall_scene.owner = level
 		
-		if point.tile.wall_left:
+		if point.tile.walled_sides & 8:
 			var wall_scene = DEBUG_WALL.instantiate()
 			wall_scene.position = global_coord + Vector3(0.5, 0, 0.5)
 			wall_scene.rotation.y = -point.basis.get_euler().y + 1.5708
 			geometry.add_child(wall_scene)
 			wall_scene.owner = level
 		
-		if point.tile.wall_right:
-			var wall_scene = DEBUG_WALL.instantiate()
-			wall_scene.position = global_coord + Vector3(0.5, 0, 0.5)
-			wall_scene.rotation.y = -point.basis.get_euler().y - 1.5708
-			geometry.add_child(wall_scene)
-			wall_scene.owner = level
-		
-		if point.tile.wall_back:
+		if point.tile.walled_sides & 2:
 			var wall_scene = DEBUG_WALL.instantiate()
 			wall_scene.position = global_coord + Vector3(0.5, 0, 0.5)
 			wall_scene.rotation.y = -point.basis.get_euler().y + PI

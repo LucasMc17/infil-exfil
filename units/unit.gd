@@ -117,7 +117,6 @@ var captor : Unit
 @onready var seen_zone : SeenZone = %SeenZone
 @onready var _mesh_instance : MeshInstance3D = %MeshInstance3D
 @onready var _hostage_marker : Marker3D = %HostageMarker
-@onready var _collision : CollisionShape3D = %CollisionShape3D
 @onready var audio_machine : StaticAudioMachine = %StaticAudioMachine
 
 func _ready():
@@ -171,6 +170,14 @@ func reset():
 	action_points = 100 if DebugOptions.unlimited_ap else max_action_points
 
 
+func move(movement_name : String, config : Dictionary) -> void:
+	movement_machine.current_state.transition(movement_name, config)
+
+
+func stop_moving() -> void:
+	movement_machine.current_state.transition("NoMovement")
+
+
 ## Take appropriate amount of damage and kill the unit if health drops to zero.
 func damage(amount : int) -> void:
 	health_points -= amount
@@ -183,7 +190,6 @@ func die() -> void:
 	DebugConsole.log("Unit " + name + " dies.", 2)
 	Events.unit_disabled.emit(self)
 	Events.unit_died.emit(self)
-	_collision.disabled = true
 	_mesh_instance.position.y = 0.0
 	unit_status = Status.DEAD
 
@@ -193,7 +199,6 @@ func lose_consciousness() -> void:
 	DebugConsole.log("Unit " + name + " loses consciousness.", 2)
 	Events.unit_disabled.emit(self)
 	Events.unit_lost_consciousness.emit(self)
-	_collision.disabled = true
 	_mesh_instance.position.y = 0.0
 	unit_status = Status.UNCONSCIOUS
 
@@ -201,7 +206,6 @@ func lose_consciousness() -> void:
 ## Bring the unit back from unconsciousness.
 func regain_consciousness() -> void:
 	DebugConsole.log("Unit " + name + " regains consciousness.", 2)
-	_collision.disabled = false
 	_mesh_instance.position.y = 1.0
 	unit_status = Status.ALIVE
 
@@ -218,6 +222,8 @@ func take_captive(captured : Unit) -> void:
 	captive.rotation.y = rotation.y
 	if captive is EnemyUnit:
 		captive.awareness.alarm(self, true)
+		captive.awareness.lose_suppression()
+	Events.unit_moved.emit()
 
 
 ## Runs when the unit releases their captive. Takes in a boolean representing whether or not the captive was killed before being released.
@@ -260,69 +266,3 @@ func forfeit_turn() -> void:
 ## Function for updating detected units, either by checking if this unit is being detected or if it is detecting any other units.
 func check_for_detection() -> void:
 	pass
-
-
-## Move along a navigable path towards a destination point.
-func follow_path(path_walk_object : MovementState.PathWalk, delta : float, mps := 1.0) -> void:
-	# move towards the next point
-	# if we reach it:
-		# check for detection
-		# If there is a next point:
-			# turn toward the next point if one exists.
-		# else:
-			# if we have a ghost point:
-				# turn towards it 
-				# check for detection
-			# then end the walk either way
-	
-	var update_captive_position = func() -> void:
-		if captive:
-			captive.position = _hostage_marker.global_position
-			captive.board_position = board_position
-			captive.rotation.y = rotation.y
-
-	
-	var handle_ghost_point = func() -> void:
-		var direction = (path_walk_object.ghost_point - position).normalized()
-		var angle = atan2(-direction.x, -direction.z)
-		path_walk_object.ghost_point = null
-
-		if rotation.y != angle:
-			rotation.y = angle
-		# TODO: Long term, I think this should just force a detection of the blocking unit at this point. Right? I don't like having to await a physics frame.
-		# TODO: Other todo. One thing that might also fix this is actually lerp the rotation for a few frames, checking for detection on each. Would also fix unit turning blindspots.
-		check_for_detection()
-	
-
-	var walk_to_next_point = func(next_pos : Vector3) -> void:
-		position = position.move_toward(next_pos, mps * delta)
-		update_captive_position.call()
-	
-
-	var handle_arrival_at_point = func() -> void:
-		board_position = path_walk_object.path.pop_front()
-		check_for_detection()
-		if !path_walk_object.path.is_empty():
-			var next_point = NavigableGridMap.convert_grid_to_global_position(path_walk_object.path[0])
-			var direction = (next_point - position).normalized()
-			var angle = atan2(-direction.x, -direction.z)
-			if rotation.y != angle:
-				rotation.y = angle
-			update_captive_position.call()
-		else:
-			if path_walk_object.ghost_point:
-				handle_ghost_point.call()
-			movement_machine.current_state.transition('NoMovement')
-	
-	if path_walk_object.path.is_empty():
-		if path_walk_object.ghost_point:
-			handle_ghost_point.call()
-		movement_machine.current_state.transition("NoMovement")
-		return
-
-	var next_global_pos = NavigableGridMap.convert_grid_to_global_position(path_walk_object.path[0])
-
-	walk_to_next_point.call(next_global_pos)
-
-	if position == next_global_pos:
-		handle_arrival_at_point.call()

@@ -7,7 +7,7 @@ extends Directive
 
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
-	unit.movement_machine.current_state.transition('Walk', { "end_point": _end_point})
+	unit.move('Walk', { "end_point": _end_point})
 
 
 func _on_finished_moving(unit : Unit):

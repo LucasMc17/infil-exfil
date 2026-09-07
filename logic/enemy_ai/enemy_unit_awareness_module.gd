@@ -13,6 +13,8 @@ class FriendlySighting:
 	var still_in_sight := true
 	## The last known position of the sighted friendly. If they are still in sight, this should be the friendly's current board position.
 	var last_known_position : Vector3i
+	## Whether the enemy has confirmed the sighted unit to be incapacitated.
+	var confirmed_incapacitated := false
 	
 	func _init(seen_friendly : FriendlyUnit) -> void:
 		friendly = seen_friendly
@@ -47,28 +49,58 @@ var targeted_friendlies : Dictionary[int, FriendlySighting] = {}
 var targeted_friendly_count : int:
 	get():
 		return targeted_friendlies.size()
-## The targeted friendlies which are still in this unit's sights.
+## The targeted friendlies which are still in this unit's sights and not known to be incapacitated.
 var friendlies_in_sight : Array[FriendlyUnit]:
 	get():
-		return targeted_friendlies.values().filter(func(sighting : FriendlySighting): return sighting.still_in_sight)
+		return targeted_friendlies.values().filter(func(sighting : FriendlySighting): return sighting.still_in_sight and !sighting.confirmed_incapacitated).map(func (sighting : FriendlySighting): return sighting.friendly)
+## The unit this target is currently suppressing, if any.
+var suppression_target : FriendlyUnit
 ## Whether the unit is in the detection grace period. This occurs when the unit sees a friendly unit during the player turn. While in the grace period, stealth skills are still usable on this unit. The grace period ends as soon as the enemy unit begins its next turn.
 var is_in_grace_period := false
 
 func _init(u : EnemyUnit) -> void:
 	unit = u
+	Events.unit_moved.connect(_confirm_all_sightings)
+	Events.player_turn_ended.connect(resolve_suppression)
 
 
 func _confirm_sighting(sighting : FriendlySighting) -> void:
+	var can_see : bool
+	var target_incapacitated = sighting.friendly.is_incapacitated()
 	if sighting.friendly.position.distance_to(unit.position) <= 15.0 and \
 	unit.seeing_zone.get_line_of_sight(sighting.friendly.seen_zone.global_position, sighting.friendly):
+		can_see = true
 		sighting.still_in_sight = true
 		sighting.last_known_position = sighting.friendly.board_position
+		if target_incapacitated:
+			sighting.confirmed_incapacitated = true
 	else:
+		can_see = false
 		sighting.still_in_sight = false
+	if suppression_target == sighting.friendly and !target_incapacitated:
+		unit.suppression_indicator.check_los(can_see)
+
+
+## Returns true if the unit is alerted to the passed friendly.
+func is_aware_of(friendly : FriendlyUnit) -> bool:
+	return targeted_friendlies.has(friendly.get_instance_id())
+
+
+## Apply suppression to a target.
+func suppress_target(target : FriendlyUnit) -> void:
+	suppression_target = target
+	unit.suppression_indicator.activate(target)
+
+
+## Clear this unit's currently suppressed target.
+func lose_suppression() -> void:
+	suppression_target = null
+	unit.suppression_indicator.deactivate()
 
 
 ## Update the unit's awareness level to [ALERTED].
 func alert():
+	lose_suppression()
 	is_in_grace_period = false
 	awareness_level = AwarenessLevel.ALERTED
 	targeted_friendlies.clear()
@@ -83,18 +115,19 @@ func alarm(spotted_friendlies : Variant = [], skip_grace_period := false):
 		if !skip_grace_period:
 			is_in_grace_period = true
 		awareness_level = AwarenessLevel.ALARMED
-		unit.movement_machine.current_state.transition('NoMovement')
+		unit.stop_moving()
 		if unit.is_active:
 			unit.forfeit_turn()
 	for friendly : FriendlyUnit in spotted_friendlies:
 		var friendly_id = friendly.get_instance_id()
 		if !targeted_friendlies.has(friendly_id):
 			targeted_friendlies[friendly_id] = FriendlySighting.new(friendly)
-	# unit.debug_label.change_param('targets', '[' + ', '.join(targeted_friendlies.map(func (friendly): return friendly.name)) + ']')
+	unit.debug_label.change_param('targets', '[' + ', '.join(targeted_friendlies.values().map(func (sighting): return sighting.friendly.name)) + ']')
 
 
 ## Update the unit's awareness level to [UNAWARE], clearing their list of targets.
 func drop_guard():
+	lose_suppression()
 	is_in_grace_period = false
 	awareness_level = AwarenessLevel.UNAWARE
 	targeted_friendlies.clear()
@@ -106,21 +139,20 @@ func resolve_grace_period():
 	is_in_grace_period = false
 
 
+## Remove suppression at the end of the player turn if the suppression target is no longer in sight.
+func resolve_suppression() -> void:
+	if !friendlies_in_sight.has(suppression_target):
+		lose_suppression()
+
+
 ## For each friendly the unit has seen within this alert phase, confirm they are still in sight. Useful when this unit moves and needs to recheck who they can see.[br]
 ## Note that, in order to be in sight, the unit does not have to be directly looking at the friendly. There only needs to be a clear theoretical line of sight between them, and the unit must be within 15 meters of the target.[br]
 ## If the unit is still in sight, the sighting will update its last known position. If not, it will mark the unit as out of sight and cease updating its last known position.
-func confirm_all_sightings() -> void:
+func _confirm_all_sightings() -> void:
 	if unit.is_incapacitated() or !is_alarmed():
 		return
 	for sighting : FriendlySighting in targeted_friendlies.values():
 		_confirm_sighting(sighting)
-
-
-## Confirm a specific sighting. Like the [confirm_all_sightings] function, but for checking only a specific sighting. Most useful for checking for sighting continuity after the friendly moves, as opposed to the enemy.
-func confirm_specific_sighting(friendly_id : int) -> void:
-	if unit.is_incapacitated() or !is_alarmed() or !targeted_friendlies.has(friendly_id):
-		return
-	_confirm_sighting(targeted_friendlies[friendly_id])
 
 
 ## Checks whether the unit is alarmed.

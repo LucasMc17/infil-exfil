@@ -8,20 +8,11 @@ const MATERIAL = preload("uid://b0rlusiqnnw7i")
 @onready var collision : CollisionShape3D = %CollisionShape3D
 @onready var mesh : MeshInstance3D = %MeshInstance3D
 
-@export var width := 1.0:
+## The width of the wall instance in meters.
+@export_custom(PROPERTY_HINT_NONE, "suffix:m") var width := 1.0:
 	set(val):
 		width = val
 		_set_size()
-
-
-func _set_size():
-	if collision:
-		collision.shape.size.z = width
-		collision.position.z = width / 2
-	
-	if mesh:
-		mesh.mesh.size.z = width
-		mesh.position.z = width / 2
 
 
 func _ready() -> void:
@@ -35,3 +26,14 @@ func _ready() -> void:
 	mesh.mesh.size.y = 4
 	
 	_set_size()
+
+
+## Resize the wall to match the passed width.
+func _set_size():
+	if collision:
+		collision.shape.size.z = width
+		collision.position.z = width / 2
+	
+	if mesh:
+		mesh.mesh.size.z = width
+		mesh.position.z = width / 2

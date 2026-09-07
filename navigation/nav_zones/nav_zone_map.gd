@@ -3,7 +3,7 @@
 class_name NavZoneMap
 extends Node3D
 
-@export_tool_button("Wire Up Zones") var wire_up_button = func() -> void:
+@export_tool_button("Wire Up Zones", "Callable") var wire_up_button = func() -> void:
 	var instance = WireUpNavZones.new()
 	instance._run()
 

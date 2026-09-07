@@ -15,7 +15,7 @@ const FULL_ALERT_IMAGE := preload('res://assets/images/full_alert.png')
 @export var alerted_base_directives : Array[Directive] = []
 
 ## How likely the unit is to run for the alarm each turn when alarmed by the player's units.
-@export var alarm_run_chance := 0.5
+@export_range(0.0, 1.0, 0.01, "suffix:%") var alarm_run_chance := 0.5
 
 ## The enemy unit's awareness module.
 var awareness := EnemyUnitAwarenessModule.new(self)
@@ -32,6 +32,7 @@ var temp_blocking_path : PackedVector3Array = []
 
 @onready var seeing_zone : SeeingZone = %SeeingZone
 @onready var _status_indicator : Sprite3D = %StatusIndicator
+@onready var suppression_indicator : SuppressionIndicator = %SuppressionIndicator
 
 func _ready():
 	super()
@@ -43,12 +44,18 @@ func _ready():
 		debug_label.change_param('awareness_level', awareness.AwarenessLevel.find_key(awareness.awareness_level))
 		debug_label.change_param('targets', '[]')
 		Events.alarm_raised.connect(_on_alarm_raised)
+		Events.unit_disabled.connect(_on_unit_disabled)
 
 
 func check_for_detection() -> void:
 	DebugConsole.log("Checking for detection", 2)
-	awareness.confirm_all_sightings()
+	# awareness.confirm_all_sightings()
 	return seeing_zone.check_detection()
+
+
+func _on_unit_disabled(unit : Unit) -> void:
+	if unit == self or unit == awareness.suppression_target:
+		awareness.lose_suppression()
 
 
 func _on_seeing_zone_friendly_seen(friendlies: Array[FriendlyUnit]) -> void:
@@ -76,6 +83,11 @@ func lose_consciousness() -> void:
 	update_indicator()
 
 
+func damage(amount : int) -> void:
+	super(amount)
+	awareness.lose_suppression()
+
+
 func die() -> void:
 	super()
 	update_indicator()
@@ -83,7 +95,9 @@ func die() -> void:
 
 func regain_consciousness() -> void:
 	super()
+	awareness.alert()
 	update_indicator()
+
 
 func forfeit_turn() -> void:
 	temp_blocker = null

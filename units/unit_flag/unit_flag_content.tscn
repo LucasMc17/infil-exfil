@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://boqyarifpalc5"]
 
 [ext_resource type="Script" uid="uid://c6oi8x633xwsd" path="res://units/unit_flag/unit_flag_content.gd" id="1_jccsi"]
+[ext_resource type="Theme" uid="uid://d2nf3xrv7a22o" path="res://assets/themes/healthbar.tres" id="2_1xyxd"]
 
 [node name="UnitFlagContent" type="Control" unique_id=1237564197]
 layout_mode = 3
@@ -33,26 +34,51 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Unit Name"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PointMonitor" unique_id=308365325]
+[node name="ProgressBar" type="ProgressBar" parent="HBoxContainer/PointMonitor" unique_id=18176109]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme = ExtResource("2_1xyxd")
+theme_type_variation = &"PlayerHealthbar"
+max_value = 5.0
+step = 1.0
+value = 5.0
+show_percentage = false
+
+[node name="HP" type="Label" parent="HBoxContainer/PointMonitor/ProgressBar" unique_id=1969134663]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "5/5"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PointMonitor" unique_id=1982512625]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/PointMonitor/HBoxContainer" unique_id=2076932849]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PointMonitor/HBoxContainer" unique_id=308365325]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HBoxContainer/PointMonitor/HBoxContainer/HBoxContainer" unique_id=2076932849]
 layout_mode = 2
 text = "MP:"
 
-[node name="MP" type="Label" parent="HBoxContainer/PointMonitor/HBoxContainer" unique_id=37754931]
+[node name="MP" type="Label" parent="HBoxContainer/PointMonitor/HBoxContainer/HBoxContainer" unique_id=37754931]
 unique_name_in_owner = true
 layout_mode = 2
 text = "1"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/PointMonitor" unique_id=686999391]
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/PointMonitor/HBoxContainer" unique_id=686999391]
 layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="HBoxContainer/PointMonitor/HBoxContainer2" unique_id=1729814757]
+[node name="Label" type="Label" parent="HBoxContainer/PointMonitor/HBoxContainer/HBoxContainer2" unique_id=1729814757]
 layout_mode = 2
 text = "AP:"
 
-[node name="AP" type="Label" parent="HBoxContainer/PointMonitor/HBoxContainer2" unique_id=1112081558]
+[node name="AP" type="Label" parent="HBoxContainer/PointMonitor/HBoxContainer/HBoxContainer2" unique_id=1112081558]
 unique_name_in_owner = true
 layout_mode = 2
 text = "1"

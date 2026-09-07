@@ -17,7 +17,6 @@ func check_detection() -> void:
 		shape_cast.force_shapecast_update()
 		var collision_instances = shape_cast.collision_result
 		var seen_zones = collision_instances.map(func(instance): return instance.collider).filter(func(collider): return collider is SeenZone and collider.unit is FriendlyUnit)
-		print(seen_zones)
 		for zone : SeenZone in seen_zones:
 			var vis_score = 0
 			for point : VisibilityPoint in zone.vision_targets:

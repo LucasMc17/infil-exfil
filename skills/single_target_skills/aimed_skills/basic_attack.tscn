@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dy3h1ylomy0hh"]
+
+[ext_resource type="PackedScene" uid="uid://dulcusx643qk8" path="res://skills/single_target_skills/aimed_skills/aimed_skill.tscn" id="1_t848e"]
+[ext_resource type="Script" uid="uid://0emhjhaqgjn1" path="res://skills/single_target_skills/aimed_skills/basic_attack.gd" id="2_ludg4"]
+
+[node name="BasicAttack" unique_id=1362204123 instance=ExtResource("1_t848e")]
+script = ExtResource("2_ludg4")
+effective_range = 8.0
+skill_name = "Attack"
+description = "Take a shot at an enemy within 8 meters. Guaranteed to hit and do 1 point of damage."
+ammo_cost = 1

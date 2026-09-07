@@ -15,7 +15,7 @@ func begin(unit : EnemyUnit) -> void:
 func respect_nudge() -> void:
 	var valid_move = Level.current_level.nav_map.probe_for_viable_move(acting_unit.position, acting_unit.movement_points, func(_pos): return true, acting_unit.temp_blocking_path)
 	if valid_move:
-		acting_unit.movement_machine.current_state.transition('Walk', { "end_point": valid_move })
+		acting_unit.move('Walk', { "end_point": valid_move })
 	else:
 		DebugConsole.log("Enemy can't move out of the way, takes no action")
 		acting_unit.forfeit_turn.call_deferred()

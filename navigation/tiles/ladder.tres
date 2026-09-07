@@ -11,5 +11,5 @@
 script = ExtResource("1_0a8mj")
 name = "Ladder"
 viable_neighbors = Array[ExtResource("2_023x8")]([ExtResource("3_r6a32"), ExtResource("4_mledv"), ExtResource("5_iewtt"), ExtResource("6_n4eyt")])
-wall_front = true
+walled_sides = 17
 metadata/_custom_type_script = "uid://dh08xpx10ru7"

@@ -23,22 +23,22 @@ func _run() -> void:
 				print("NAV ZONE " + zone_holder.name + "HAS NO CONFIGURED CONFIG FILE")
 				errors += 1
 			else:
-				configs.floor_number = zone_holder.floor_number
-				configs.base_position = zone_holder.position
+				configs.ro_floor_number = zone_holder.floor_number
+				configs.ro_base_position = zone_holder.position
 				
 				var board_points : Array[Vector3i] = []
 				for point : Vector2i in configs.points:
 					board_points.append(configs.to_board_space(point))
-				configs.board_points = board_points
+				configs.ro_board_points = board_points
 			
 				for exit : NavZoneExit in configs.exits:
-					exit.board_position = configs.to_board_space(exit.local_position)
+					exit.ro_board_position = configs.to_board_space(exit.local_position)
 					var to_zone = find_nav_zone_by_name(exit.to_zone_name, nav_zone_system)
 					if !to_zone:
 						print("FOR EXIT OF ZONE " + zone_holder.name + ", NO CONNECTING ZONE WITH NAME " + exit.to_zone_name + 'FOUND')
 						errors += 1
 					else:
-						exit.to_zone_uid = get_uid_from_resource(to_zone)
+						exit.ro_to_zone_uid = get_uid_from_resource(to_zone)
 	
 	print("ATTEMPTED TO WIRE UP " + str(encountered) + " NAV ZONES, WITH " + str(errors) + " ERRORS. EXITING SCRIPT")
 	

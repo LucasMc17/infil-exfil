@@ -13,8 +13,6 @@ extends Weapon
 @export_group("Noise")
 ## Whether or not the weapon is silenced, which informs how enemies react to the sound.
 @export var is_silenced := true
-## From how far away this weapon can be heard when operated.
-@export var sound_radius := 5.0
 
 ## How much ammunition is currently stored in the weapon itself. Should not exceed the [capacity] variable.
 var current_ammunition : int:

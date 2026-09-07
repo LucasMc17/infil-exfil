@@ -4,7 +4,7 @@ extends TargetedSkill
 
 @export_group("Targeting")
 ## The range which the target must be within to be targetable for the skill.
-@export var effective_range := 5.0
+@export_range(0.0, 50.0, 0.5, "suffix:m") var effective_range := 5.0
 
 @onready var _collision_shape : CollisionShape3D = %CollisionShape3D
 @onready var _mesh_instance : MeshInstance3D = %MeshInstance3D
@@ -19,14 +19,12 @@ func _ready() -> void:
 
 
 func get_all_targets() -> void:
-	var is_friendly = user is FriendlyUnit
 	var overlaps = _area.get_overlapping_bodies()
 	var result : Array[Unit] = []
-	for overlapper in overlaps:
-		if overlapper is Unit and overlapper != user and \
-		(overlapper is EnemyUnit if is_friendly else overlapper is FriendlyUnit):
-			if user.seen_zone.get_line_of_sight(overlapper.seen_zone.global_position, overlapper):
-				result.append(overlapper)
+	for overlap in overlaps:
+		if overlap is Unit:
+			result.append(overlap)
+
 	potential_targets = _filter_targets(result)
 
 

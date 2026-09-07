@@ -32,19 +32,11 @@ enum SkillType {
 ## Whether or not this skill will be shown to the player while holding a hostage.
 @export var visible_with_hostage := false
 ## The cost of performing this skill, in terms of action points.
-@export var action_cost := 1
+@export_custom(PROPERTY_HINT_NONE, "suffix:AP") var action_cost := 1
 ## The cost of performing this skill, in terms of movement points.
-@export var movement_cost := 0
+@export_custom(PROPERTY_HINT_NONE, "suffix:MP") var movement_cost := 0
 ## The cost of performing this skill, in terms of ammunition for the primary weapon.
 @export var ammo_cost := 0
-
-var is_armed : bool:
-	get():
-		if Level.current_level:
-			return Level.current_level.armed_skill == self
-		else:
-			return false
-
 
 # USABILITY FUNNEL
 # This is a funnel to determine whether the skill is able to be used. The steps in the funnel are:

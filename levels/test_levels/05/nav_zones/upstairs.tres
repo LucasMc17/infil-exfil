@@ -7,8 +7,8 @@
 script = ExtResource("1_iqq7t")
 local_position = Vector2i(0, 1)
 to_zone_name = "LadderRoom"
-board_position = Vector3i(-9, 1, 1)
-to_zone_uid = "uid://3atogghfi1ss"
+ro_board_position = Vector3i(-9, 1, 1)
+ro_to_zone_uid = "uid://3atogghfi1ss"
 metadata/_custom_type_script = "uid://c7xqovr73fsq5"
 
 [resource]
@@ -16,7 +16,7 @@ script = ExtResource("2_gps7c")
 areas = Array[Rect2i]([Rect2i(0, 0, 4, 3)])
 points = Array[Vector2i]([Vector2i(0, 1)])
 exits = Array[ExtResource("1_iqq7t")]([SubResource("Resource_iqq7t")])
-base_position = Vector3i(-9, 0, 0)
-board_points = Array[Vector3i]([Vector3i(-9, 1, 1)])
-floor_number = 1
+ro_base_position = Vector3i(-9, 0, 0)
+ro_board_points = Array[Vector3i]([Vector3i(-9, 1, 1)])
+ro_floor_number = 1
 metadata/_custom_type_script = "uid://wjvqhhryw4h4"
