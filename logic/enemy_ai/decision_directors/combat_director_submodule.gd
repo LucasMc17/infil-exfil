@@ -18,13 +18,17 @@ func choose_combat_directive() -> Array[Directive]:
 	if _decide_on_alarm_run():
 		return [RunForAlarm.new()]
 	else:
-		var friendlies_in_sight = awareness.friendlies_in_sight
-		if !friendlies_in_sight.is_empty():
-			var target : FriendlyUnit = unit.awareness.suppression_target if unit.awareness.suppression_target else friendlies_in_sight[0]
+		if !awareness.friendlies_in_sight.is_empty():
+			var target : FriendlyUnit = unit.awareness.suppression_target if unit.awareness.suppression_target else awareness.friendlies_in_sight[0]
 			return [MoveAndAttack.new(target)]
+		elif !awareness.friendlies_out_of_sight.is_empty():
+			var pursued = awareness.friendlies_out_of_sight[0]
+			var result : Array[Directive] = [Pursue.new(pursued.friendly, pursued.last_known_position)]
+			if !Level.current_level.enemy_awareness.alarm_active and !Level.current_level.enemy_awareness.alarm_runner:
+				result.append(RunForAlarm.new())
+			return result
 		else:
-			var pursued = awareness.targeted_friendlies.values()[0]
-			return [Pursue.new(pursued.friendly, pursued.last_known_position), RunForAlarm.new()]
+			return [NoDirective.new()]
 
 
 func _decide_on_alarm_run() -> bool:

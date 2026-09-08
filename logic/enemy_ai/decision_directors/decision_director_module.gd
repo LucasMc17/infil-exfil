@@ -72,7 +72,6 @@ func take_directive_from_queue() -> void:
 		next_directive = alarmed_directive_queue[0]
 	current_directive = next_directive
 	current_directive.begin(unit)
-	print(current_directive.get_script().get_global_name())
 
 
 ## Ends the current directive by marking it finished, and then removes it from the directive queue.

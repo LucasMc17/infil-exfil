@@ -83,7 +83,6 @@ func _confirm_sighting(sighting : FriendlySighting) -> void:
 		sighting.still_in_sight = false
 	if suppression_target == sighting.friendly and !target_incapacitated:
 		unit.suppression_indicator.check_los(can_see)
-	print(targeted_friendlies[targeted_friendlies.keys()[0]].confirmed_incapacitated)
 
 
 ## Returns true if the unit is alerted to the passed friendly.
