@@ -39,13 +39,13 @@ func respect_nudge() -> void:
 		end()
 
 
-func _on_finished_acting(_unit : Unit):
+func _on_finished_acting(_unit : EnemyUnit):
 	super(acting_unit)
 	end()
 	acting_unit.forfeit_turn()
 
 
-func _on_finished_moving(_unit : Unit):
+func _on_finished_moving(_unit : EnemyUnit):
 	super(acting_unit)
 	attack_skill.arm_as_enemy()
 	if attack_skill.potential_targets.has(target):

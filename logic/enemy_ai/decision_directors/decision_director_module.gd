@@ -51,7 +51,7 @@ func _init(u : EnemyUnit, a : EnemyUnitAwarenessModule) -> void:
 
 
 ## Take the next directive from the appropriate queue and assign it as the current directive. If the current directive queue is empty, it will restart the unaware or alerted queue, where as if the unit is alarmed, it will consult the combat director for a new directive.
-func take_directive_from_queue():
+func take_directive_from_queue() -> void:
 	var next_directive : Directive
 	if unit.unit_status == Unit.Status.CAPTIVE:
 		next_directive = no_directive.new()
@@ -66,24 +66,39 @@ func take_directive_from_queue():
 		next_directive = alerted_directive_queue[0]
 	elif awareness.is_alarmed():
 		if alarmed_directive_queue.is_empty():
-			add_directive(combat_director.choose_combat_directive())
+			var combat_directives = combat_director.choose_combat_directive()
+			for dir : Directive in combat_directives:
+				add_directive(dir)
 		next_directive = alarmed_directive_queue[0]
 	current_directive = next_directive
 	current_directive.begin(unit)
+	print(current_directive.get_script().get_global_name())
 
 
 ## Ends the current directive by marking it finished, and then removes it from the directive queue.
-func finish_directive():
+func finish_directive() -> void:
 	if current_directive == current_directive_queue[0]:
 		current_directive_queue.pop_front()
 		clear_directive()
 
 
 ## Cancels the current directive, if one exists, without marking it complete.
-func clear_directive():
+func clear_directive() -> void:
 	if current_directive:
 		current_directive.cancel()
 	current_directive = null
+
+
+## Replaces the current directive with another, to be begun immediately. This is primarily meant to be called when a unit's active turn rolls around, but circumstances have changed, making the intended action irrelevant or unwise. Replaces the current directive with a newly chosen one, which the unit will begin on this turn.
+func reconsider_directive() -> void:
+	DebugConsole.log("The unit is reconsidering its current directive...")
+	clear_directive()
+	take_directive_from_queue()
+
+
+## Clears the directive list completely at the current alertness level.
+func clear_queue() -> void:
+	current_directive_queue.clear()
 
 
 ## Adds a Directive to the unit's queue (at the current awareness level). If priority is 0, the unit will add it to the front of the queue and drop whatever they were doing. If a higher integer is passed, it will be added at that position. if it is omitted entirely, the Directive will be added to the back of the queue.

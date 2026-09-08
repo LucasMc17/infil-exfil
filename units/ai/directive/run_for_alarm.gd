@@ -7,6 +7,9 @@ var _alarm_point : Variant = null
 
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
+	if Level.current_level.enemy_awareness.alarm_active or (Level.current_level.enemy_awareness.alarm_runner and Level.current_level.enemy_awareness.alarm_runner != unit):
+		unit.decision_director.reconsider_directive()
+	Level.current_level.enemy_awareness.alarm_runner = unit
 	_alarm_point = null
 	DebugConsole.log('Enemy Runs for Alarm', 2)
 	_alarm_point = Level.current_level.nav_map.get_closest_point(acting_unit.board_position, Level.current_level.nav_map.alarms.keys())
@@ -17,7 +20,7 @@ func begin(unit : EnemyUnit) -> void:
 		acting_unit.move("Run", { "end_point": _alarm_point})
 
 
-func _on_finished_moving(_unit : Unit):
+func _on_finished_moving(_unit : EnemyUnit):
 	super(acting_unit)
 	if acting_unit.board_position == _alarm_point:
 		var pull_alarm : PullAlarm = acting_unit.skill_machine.skills["PullAlarm"]
@@ -26,7 +29,7 @@ func _on_finished_moving(_unit : Unit):
 		acting_unit.forfeit_turn()
 
 
-func _on_finished_acting(_unit : Unit):
+func _on_finished_acting(_unit : EnemyUnit):
 	super(acting_unit)
 	end()
 	acting_unit.forfeit_turn()

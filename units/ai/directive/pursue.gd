@@ -36,7 +36,7 @@ func begin(unit : EnemyUnit) -> void:
 		acting_unit.move("Run", { "end_point": pursuit_path[pursuit_index] })
 
 
-func _on_finished_moving(unit : Unit):
+func _on_finished_moving(unit : EnemyUnit):
 	super(unit)
 	attack_skill.arm_as_enemy()
 	if !attack_skill.potential_targets.is_empty():
@@ -46,7 +46,7 @@ func _on_finished_moving(unit : Unit):
 			visisted_last_seen = true
 			if !pursuit_path:
 				end()
-				acting_unit.awareness.alert()
+				# acting_unit.awareness.alert()
 		acting_unit.forfeit_turn()
 	else:
 		var target_position = pursuit_path[pursuit_index]
@@ -54,11 +54,13 @@ func _on_finished_moving(unit : Unit):
 			pursuit_index += 1
 			if pursuit_index >= pursuit_path.size():
 				end()
-				acting_unit.awareness.alert()
+				# acting_unit.awareness.alert()
 		acting_unit.forfeit_turn()
 
 
-func _on_finished_acting(unit : Unit):
+func _on_finished_acting(unit : EnemyUnit):
+	# Unit found their target, clear the planned alarm run.
 	super(unit)
 	end()
+	unit.decision_director.clear_queue()
 	acting_unit.forfeit_turn()

@@ -74,6 +74,7 @@ func _on_alarm_raised(_alarm, _raiser) -> void:
 
 func activate():
 	super()
+	awareness.confirm_all_sightings()
 	awareness.resolve_grace_period()
 	update_indicator()
 

@@ -53,6 +53,10 @@ var targeted_friendly_count : int:
 var friendlies_in_sight : Array[FriendlyUnit]:
 	get():
 		return targeted_friendlies.values().filter(func(sighting : FriendlySighting): return sighting.still_in_sight and !sighting.confirmed_incapacitated).map(func (sighting : FriendlySighting): return sighting.friendly)
+## The targeted friendlies which are not currently in this unit's sights and are not known to be incapacitated.
+var friendlies_out_of_sight : Array[FriendlyUnit]:
+	get():
+		return targeted_friendlies.values().filter(func(sighting : FriendlySighting): return !sighting.still_in_sight and !sighting.confirmed_incapacitated).map(func (sighting : FriendlySighting): return sighting.friendly)
 ## The unit this target is currently suppressing, if any.
 var suppression_target : FriendlyUnit
 ## Whether the unit is in the detection grace period. This occurs when the unit sees a friendly unit during the player turn. While in the grace period, stealth skills are still usable on this unit. The grace period ends as soon as the enemy unit begins its next turn.
@@ -60,7 +64,7 @@ var is_in_grace_period := false
 
 func _init(u : EnemyUnit) -> void:
 	unit = u
-	Events.unit_moved.connect(_confirm_all_sightings)
+	Events.unit_moved.connect(confirm_all_sightings)
 	Events.player_turn_ended.connect(resolve_suppression)
 
 
@@ -79,6 +83,7 @@ func _confirm_sighting(sighting : FriendlySighting) -> void:
 		sighting.still_in_sight = false
 	if suppression_target == sighting.friendly and !target_incapacitated:
 		unit.suppression_indicator.check_los(can_see)
+	print(targeted_friendlies[targeted_friendlies.keys()[0]].confirmed_incapacitated)
 
 
 ## Returns true if the unit is alerted to the passed friendly.
@@ -148,7 +153,7 @@ func resolve_suppression() -> void:
 ## For each friendly the unit has seen within this alert phase, confirm they are still in sight. Useful when this unit moves and needs to recheck who they can see.[br]
 ## Note that, in order to be in sight, the unit does not have to be directly looking at the friendly. There only needs to be a clear theoretical line of sight between them, and the unit must be within 15 meters of the target.[br]
 ## If the unit is still in sight, the sighting will update its last known position. If not, it will mark the unit as out of sight and cease updating its last known position.
-func _confirm_all_sightings() -> void:
+func confirm_all_sightings() -> void:
 	if unit.is_incapacitated() or !is_alarmed():
 		return
 	for sighting : FriendlySighting in targeted_friendlies.values():

@@ -12,20 +12,34 @@ func _init(u : EnemyUnit, a : EnemyUnitAwarenessModule) -> void:
 	awareness = a
 
 
-## Main function for deciding on a new combat directive
-func choose_combat_directive() -> Directive:
+## Main function for deciding on a new combat directive. Returns a non-empty array of directives, which can be only one entry long.
+func choose_combat_directive() -> Array[Directive]:
 	# Run for the alarm if needed.
-	if !Level.current_level.enemy_awareness.alarm_active and !Level.current_level.enemy_awareness.alarm_runner and Utilities.dice_roll(unit.alarm_run_chance):
-		Level.current_level.enemy_awareness.alarm_runner = unit
-		return RunForAlarm.new()
+	if _decide_on_alarm_run():
+		return [RunForAlarm.new()]
 	else:
 		var friendlies_in_sight = awareness.friendlies_in_sight
 		if !friendlies_in_sight.is_empty():
 			var target : FriendlyUnit = unit.awareness.suppression_target if unit.awareness.suppression_target else friendlies_in_sight[0]
-			return MoveAndAttack.new(target)
+			return [MoveAndAttack.new(target)]
 		else:
 			var pursued = awareness.targeted_friendlies.values()[0]
-			return Pursue.new(pursued.friendly, pursued.last_known_position)
+			return [Pursue.new(pursued.friendly, pursued.last_known_position), RunForAlarm.new()]
+
+
+func _decide_on_alarm_run() -> bool:
+	if Level.current_level.enemy_awareness.alarm_active or Level.current_level.enemy_awareness.alarm_runner:
+		return false
+	if awareness.friendlies_in_sight.is_empty() and awareness.friendlies_out_of_sight.is_empty():
+		return true
+	if !awareness.friendlies_in_sight.is_empty():
+		return Utilities.dice_roll(unit.alarm_run_chance)
+	return false
+
+
+# Lets get to basics here.
+# No alert phase is finished in the eyes of an alerted unit until an alarm has sounded and ended. During combat or pursuit, they will continuously run checks to see if they should run for the alarm, unless one is already sounding, or if another unit is already running for the alarm. 
+# If the unit has no more friendlies in sight, either because they incapacitated them all, or lost sight of them all, they will 100% run for the alarm next action as long as it is not sounding, and no one else is currently running for it.
 
 
 # combat flow

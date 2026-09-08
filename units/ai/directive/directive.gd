@@ -46,9 +46,9 @@ func respect_nudge() -> void:
 	pass
 
 
-func _on_finished_moving(_unit : Unit):
+func _on_finished_moving(_unit : EnemyUnit):
 	pass
 
 
-func _on_finished_acting(_unit : Unit):
+func _on_finished_acting(_unit : EnemyUnit):
 	pass
