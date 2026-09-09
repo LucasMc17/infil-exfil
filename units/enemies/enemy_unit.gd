@@ -49,8 +49,8 @@ func _ready():
 
 func check_for_detection() -> void:
 	DebugConsole.log("Checking for detection", 2)
-	# awareness.confirm_all_sightings()
-	return seeing_zone.check_detection()
+	seeing_zone.check_detection()
+	awareness.confirm_all_sightings()
 
 
 func _on_unit_disabled(unit : Unit) -> void:

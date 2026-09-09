@@ -19,7 +19,7 @@ func choose_combat_directive() -> Array[Directive]:
 		return [RunForAlarm.new()]
 	else:
 		if !awareness.friendlies_in_sight.is_empty():
-			var target : FriendlyUnit = unit.awareness.suppression_target if unit.awareness.suppression_target else awareness.friendlies_in_sight[0]
+			var target : FriendlyUnit = unit.awareness.suppression_target if unit.awareness.suppression_target else awareness.friendlies_in_sight[0].friendly
 			return [MoveAndAttack.new(target)]
 		elif !awareness.friendlies_out_of_sight.is_empty():
 			var pursued = awareness.friendlies_out_of_sight[0]

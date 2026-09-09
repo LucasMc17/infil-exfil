@@ -22,6 +22,18 @@ class FriendlySighting:
 		last_known_position = friendly.board_position
 
 
+## Class representing where the unit was last standing when actively encountering friendlies. Updated by the confirm_all_sightings function if it detects that a unit is still in sight.
+class ContactPoint:
+	## The position (in board terms) where the unit was standing when last encountering enemies.
+	var position : Vector3i
+	## The NavZone which the above position is in.
+	var nav_zone : NavZone
+
+	func _init(p : Vector3i) -> void:
+		position = p
+		nav_zone = Level.current_level.get_zone_from_position(p)
+
+
 ## The possible awareness states which an enemy unit can operate under.
 enum AwarenessLevel {
 	## No knowledge whatsoever of friendlies-- no alert.
@@ -50,15 +62,17 @@ var targeted_friendly_count : int:
 	get():
 		return targeted_friendlies.size()
 ## The targeted friendlies which are still in this unit's sights and not known to be incapacitated.
-var friendlies_in_sight : Array[FriendlyUnit]:
+var friendlies_in_sight : Array[FriendlySighting]:
 	get():
-		return targeted_friendlies.values().filter(func(sighting : FriendlySighting): return sighting.still_in_sight and !sighting.confirmed_incapacitated).map(func (sighting : FriendlySighting): return sighting.friendly)
+		return targeted_friendlies.values().filter(func(sighting : FriendlySighting): return sighting.still_in_sight and !sighting.confirmed_incapacitated)
 ## The targeted friendlies which are not currently in this unit's sights and are not known to be incapacitated.
-var friendlies_out_of_sight : Array[FriendlyUnit]:
+var friendlies_out_of_sight : Array[FriendlySighting]:
 	get():
-		return targeted_friendlies.values().filter(func(sighting : FriendlySighting): return !sighting.still_in_sight and !sighting.confirmed_incapacitated).map(func (sighting : FriendlySighting): return sighting.friendly)
+		return targeted_friendlies.values().filter(func(sighting : FriendlySighting): return !sighting.still_in_sight and !sighting.confirmed_incapacitated)
 ## The unit this target is currently suppressing, if any.
 var suppression_target : FriendlyUnit
+## The last known point of contact with the friendly team, if any.
+var last_poc : ContactPoint
 ## Whether the unit is in the detection grace period. This occurs when the unit sees a friendly unit during the player turn. While in the grace period, stealth skills are still usable on this unit. The grace period ends as soon as the enemy unit begins its next turn.
 var is_in_grace_period := false
 
@@ -83,6 +97,9 @@ func _confirm_sighting(sighting : FriendlySighting) -> void:
 		sighting.still_in_sight = false
 	if suppression_target == sighting.friendly and !target_incapacitated:
 		unit.suppression_indicator.check_los(can_see)
+	
+	if can_see and !target_incapacitated and (!last_poc or last_poc.position != unit.board_position):
+		last_poc = ContactPoint.new(unit.board_position)
 
 
 ## Returns true if the unit is alerted to the passed friendly.
@@ -108,6 +125,7 @@ func alert():
 	is_in_grace_period = false
 	awareness_level = AwarenessLevel.ALERTED
 	targeted_friendlies.clear()
+	last_poc = null
 	unit.debug_label.change_param('targets', '[]')
 
 
@@ -135,6 +153,7 @@ func drop_guard():
 	is_in_grace_period = false
 	awareness_level = AwarenessLevel.UNAWARE
 	targeted_friendlies.clear()
+	last_poc = null
 	unit.debug_label.change_param('targets', '[]')
 
 
@@ -145,7 +164,7 @@ func resolve_grace_period():
 
 ## Remove suppression at the end of the player turn if the suppression target is no longer in sight.
 func resolve_suppression() -> void:
-	if !friendlies_in_sight.has(suppression_target):
+	if !unit.suppression_indicator.los_clear:
 		lose_suppression()
 
 
