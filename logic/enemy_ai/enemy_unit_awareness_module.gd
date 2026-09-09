@@ -75,6 +75,8 @@ var suppression_target : FriendlyUnit
 var last_poc : ContactPoint
 ## Whether the unit is in the detection grace period. This occurs when the unit sees a friendly unit during the player turn. While in the grace period, stealth skills are still usable on this unit. The grace period ends as soon as the enemy unit begins its next turn.
 var is_in_grace_period := false
+## Whether the unit has already given chase to a friendly unit in this alarm phase. Resets to false when seeing an enemy unit.
+var has_pursued := false
 
 func _init(u : EnemyUnit) -> void:
 	unit = u
@@ -88,6 +90,7 @@ func _confirm_sighting(sighting : FriendlySighting) -> void:
 	if sighting.friendly.position.distance_to(unit.position) <= 15.0 and \
 	unit.seeing_zone.get_line_of_sight(sighting.friendly.seen_zone.global_position, sighting.friendly):
 		can_see = true
+		has_pursued = false
 		sighting.still_in_sight = true
 		sighting.last_known_position = sighting.friendly.board_position
 		if target_incapacitated:
@@ -125,6 +128,7 @@ func alert():
 	is_in_grace_period = false
 	awareness_level = AwarenessLevel.ALERTED
 	targeted_friendlies.clear()
+	has_pursued = false
 	last_poc = null
 	unit.debug_label.change_param('targets', '[]')
 
@@ -153,6 +157,7 @@ func drop_guard():
 	is_in_grace_period = false
 	awareness_level = AwarenessLevel.UNAWARE
 	targeted_friendlies.clear()
+	has_pursued = false
 	last_poc = null
 	unit.debug_label.change_param('targets', '[]')
 
