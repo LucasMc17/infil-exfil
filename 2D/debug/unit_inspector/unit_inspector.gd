@@ -6,6 +6,8 @@ extends HBoxContainer
 
 func _ready() -> void:
 	Events.level_loaded.connect(_make_all_option_buttons)
+	Events.unit_acted.connect(_unit_info.refresh)
+	Events.unit_moved.connect(_unit_info.refresh)
 
 
 func make_option_button(unit : EnemyUnit) -> void:

@@ -13,6 +13,9 @@ signal unit_deactivated(unit : Unit)
 ## Signal emitted when a unit on either team moves for any reason.
 signal unit_moved()
 
+## Signal emitted when a unit on either team takes any action.
+signal unit_acted()
+
 # Player turn events
 
 ## Signal emitted when the player's turn ends.

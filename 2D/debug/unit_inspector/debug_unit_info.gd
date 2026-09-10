@@ -15,24 +15,29 @@ extends PanelContainer
 var unit : EnemyUnit
 
 func display_unit_info(u : EnemyUnit) -> void:
-	unit = u
-	visible = true
+	if u:
+		unit = u
+		visible = true
 
-	_name_label.text = unit.name
+		_name_label.text = unit.name
 
-	_acting_state.value = Unit.Status.find_key(unit.unit_status)
-	_position.value = str(unit.board_position)
+		_acting_state.value = Unit.Status.find_key(unit.unit_status)
+		_position.value = str(unit.board_position)
 
-	_level.value = EnemyUnitAwarenessModule.AwarenessLevel.find_key(unit.awareness.awareness_level)
-	if unit.awareness.last_poc:
-		_contact_point.value = str(unit.awareness.last_poc.position)
-		_contact_point_button.disabled = false
-	else:
-		_contact_point.value = "NONE"
-		_contact_point_button.disabled = true
-	
-	_handle_button_list(unit.awareness.friendlies_in_sight, _in_sight, _in_sight_buttons)
-	_handle_button_list(unit.awareness.friendlies_out_of_sight, _out_of_sight, _out_of_sight_buttons)
+		_level.value = EnemyUnitAwarenessModule.AwarenessLevel.find_key(unit.awareness.awareness_level)
+		if unit.awareness.last_poc:
+			_contact_point.value = str(unit.awareness.last_poc.position)
+			_contact_point_button.disabled = false
+		else:
+			_contact_point.value = "NONE"
+			_contact_point_button.disabled = true
+		
+		_handle_button_list(unit.awareness.friendlies_in_sight, _in_sight, _in_sight_buttons)
+		_handle_button_list(unit.awareness.friendlies_out_of_sight, _out_of_sight, _out_of_sight_buttons)
+
+
+func refresh() -> void:
+	display_unit_info(unit)
 
 
 func _handle_button_list(friendly_sightings : Array[EnemyUnitAwarenessModule.FriendlySighting], label : DebugKVPair, list : VBoxContainer) -> void:

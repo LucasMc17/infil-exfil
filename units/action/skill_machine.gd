@@ -46,3 +46,4 @@ func end_skill() -> void:
 	unit.debug_label.change_param('current_skill', "No Skill")
 	unit.finished_acting.emit(unit)
 	current_skill = null
+	Events.unit_acted.emit()
