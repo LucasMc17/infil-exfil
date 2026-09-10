@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://d1khjyxmvihb1"]
+
+[ext_resource type="Script" uid="uid://iqwtdjvj5ij5" path="res://2D/debug/unit_inspector/debug_unit_info.gd" id="1_p4qvh"]
+[ext_resource type="PackedScene" uid="uid://dv23xg01min15" path="res://2D/debug/debug_kv_pair.tscn" id="2_6t10j"]
+
+[node name="PanelContainer" type="PanelContainer" unique_id=1321483145]
+custom_minimum_size = Vector2(250, 0)
+script = ExtResource("1_p4qvh")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=3353314]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=429197882]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1088312952]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Unit Name"
+horizontal_alignment = 1
+
+[node name="Status" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=217179748]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Status" unique_id=1642772276]
+layout_mode = 2
+text = "Status"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Status" unique_id=1770633565]
+layout_mode = 2
+
+[node name="ActingState" parent="MarginContainer/VBoxContainer/Status/VBoxContainer" unique_id=848224705 instance=ExtResource("2_6t10j")]
+unique_name_in_owner = true
+layout_mode = 2
+key = "Acting State"
+value = "ALIVE"
+
+[node name="Position" parent="MarginContainer/VBoxContainer/Status/VBoxContainer" unique_id=842321431 instance=ExtResource("2_6t10j")]
+unique_name_in_owner = true
+layout_mode = 2
+key = "Position"
+value = "(0,0,0)"
+
+[node name="Awareness" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=66943137]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Awareness" unique_id=2126165552]
+layout_mode = 2
+text = "Awareness"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Awareness" unique_id=1643665804]
+layout_mode = 2
+
+[node name="Level" parent="MarginContainer/VBoxContainer/Awareness/VBoxContainer" unique_id=539041093 instance=ExtResource("2_6t10j")]
+unique_name_in_owner = true
+layout_mode = 2
+key = "Level"
+value = "UNAWARE"
+
+[node name="ContactPoint" parent="MarginContainer/VBoxContainer/Awareness/VBoxContainer" unique_id=244000678 instance=ExtResource("2_6t10j")]
+unique_name_in_owner = true
+layout_mode = 2
+key = "Last Contact Point"
+value = "(0,0,0)"
+
+[node name="ContactPointButton" type="Button" parent="MarginContainer/VBoxContainer/Awareness/VBoxContainer" unique_id=938721691]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Jump to point"
+
+[node name="FriendliesInSight" parent="MarginContainer/VBoxContainer/Awareness/VBoxContainer" unique_id=246550254 instance=ExtResource("2_6t10j")]
+unique_name_in_owner = true
+layout_mode = 2
+key = "Known Friendlies in Sight"
+value = "0"
+
+[node name="InSightButtons" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Awareness/VBoxContainer" unique_id=2062620253]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="FriendliesOutOfSight" parent="MarginContainer/VBoxContainer/Awareness/VBoxContainer" unique_id=1657749906 instance=ExtResource("2_6t10j")]
+unique_name_in_owner = true
+layout_mode = 2
+key = "Known Friendlies out of Sight"
+value = "0"
+
+[node name="OutOfSightButtons" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Awareness/VBoxContainer" unique_id=2106275154]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Awareness/VBoxContainer/ContactPointButton" to="." method="_on_contact_point_button_pressed"]

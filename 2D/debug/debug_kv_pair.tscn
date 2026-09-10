@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dv23xg01min15"]
+
+[ext_resource type="Script" uid="uid://dlxxngm78axaa" path="res://2D/debug/debug_kv_pair.gd" id="1_4mvrl"]
+
+[node name="DebugKVPair" type="HBoxContainer" unique_id=848224705]
+script = ExtResource("1_4mvrl")
+
+[node name="Key" type="Label" parent="." unique_id=1282939198]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Key:"
+
+[node name="Value" type="Label" parent="." unique_id=279425815]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Value"

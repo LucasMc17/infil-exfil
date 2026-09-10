@@ -1,19 +1,24 @@
 [gd_scene format=3 uid="uid://x6eenq2lmhv1"]
 
 [ext_resource type="Script" uid="uid://chogn66hrkkru" path="res://2D/debug/unit_inspector/unit_inspector.gd" id="1_q3w6e"]
+[ext_resource type="PackedScene" uid="uid://d1khjyxmvihb1" path="res://2D/debug/unit_inspector/debug_unit_info.tscn" id="2_2w5vc"]
 
 [node name="FoldableContainer" type="FoldableContainer" unique_id=1838707642]
 offset_left = 4.0
 offset_right = 128.0
 offset_bottom = 39.0
 size_flags_horizontal = 3
+folded = true
 title = "Units"
 
 [node name="UnitInspector" type="HBoxContainer" parent="." unique_id=1987811345]
+visible = false
 layout_mode = 2
 script = ExtResource("1_q3w6e")
 
-[node name="PanelContainer" type="PanelContainer" parent="UnitInspector" unique_id=1645842287]
+[node name="DebugUnitInfo" parent="UnitInspector" unique_id=1321483145 instance=ExtResource("2_2w5vc")]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [node name="OptionList" type="VBoxContainer" parent="UnitInspector" unique_id=1413284240]

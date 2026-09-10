@@ -2,7 +2,7 @@ class_name UnitInspector
 extends HBoxContainer
 
 @onready var _option_list : VBoxContainer = %OptionList
-
+@onready var _unit_info : DebugUnitInfo = %DebugUnitInfo
 
 func _ready() -> void:
 	Events.level_loaded.connect(_make_all_option_buttons)
@@ -22,3 +22,7 @@ func _make_all_option_buttons() -> void:
 func _on_option_chosen(option : DebugUnitOption) -> void:
 	for child : DebugUnitOption in _option_list.get_children():
 		child.button_pressed = child == option
+	
+	Level.current_level.level_camera.jump_to_point(option.unit.global_position)
+	
+	_unit_info.display_unit_info(option.unit)
