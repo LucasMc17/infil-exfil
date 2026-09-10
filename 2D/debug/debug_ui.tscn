@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://blgexr8p0bx7u" path="res://addons/debug_console/help_command.tres" id="5_r01na"]
 [ext_resource type="Resource" uid="uid://jtcbpe1i1m4g" path="res://addons/debug_console/clear_command.tres" id="6_8umau"]
 [ext_resource type="Resource" uid="uid://cw0fgeywlrgcf" path="res://2D/debug/commands/exit_command.tres" id="7_lf6aa"]
+[ext_resource type="PackedScene" uid="uid://x6eenq2lmhv1" path="res://2D/debug/unit_inspector/unit_inspector.tscn" id="8_c2eu2"]
 
 [node name="DebugUi" type="Control" unique_id=1639751749]
 layout_mode = 3
@@ -33,3 +34,12 @@ grow_vertical = 0
 script = ExtResource("2_1hpl2")
 commands = Array[ExtResource("3_i5hs5")]([ExtResource("4_c2eu2"), ExtResource("5_r01na"), ExtResource("6_8umau"), ExtResource("7_lf6aa")])
 metadata/_custom_type_script = "uid://1nqsah5bsarx"
+
+[node name="UnitInspector" parent="." unique_id=48038392 instance=ExtResource("8_c2eu2")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -24.0
+offset_bottom = 32.0
+grow_horizontal = 0

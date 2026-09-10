@@ -1,6 +1,9 @@
 ## Global events system.
 extends Node
 
+## Signal emitted when a level finishes loading in.
+signal level_loaded()
+
 ## Signal emitted when a unit on either team is activated.
 signal unit_activated(unit : Unit)
 

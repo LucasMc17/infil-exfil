@@ -101,11 +101,12 @@ func _ready() -> void:
 		Events.skill_armed.connect(_on_skill_armed)
 		Events.skill_disarmed.connect(_on_skill_disarmed)
 		nav_map.setup_astar_grid()
-		current_level = self
 		ConsoleEvents.command_submitted.connect(func (command_name, _parameters):
 			if command_name == "exit":
 				get_tree().quit()
 		)
+		current_level = self
+		Events.level_loaded.emit()
 
 
 func _unhandled_input(event: InputEvent) -> void:
