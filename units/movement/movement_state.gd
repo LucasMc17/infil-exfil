@@ -17,11 +17,12 @@ var path : Array = []
 var is_between_points := false
 ## The point this unit would move to next if it was not blocked by another unit (for AI-controlled units only).
 var ghost_point : Variant
-## 
+## True if the unit is just beginning to move.
 var first_step := true
 
 func enter(previous_state : State, ext : Dictionary):
 	super(previous_state, ext)
+	Level.current_level.level_camera.fix_to_actor(unit)
 	ghost_point = null
 	first_step = true
 	if unit is FriendlyUnit:
@@ -95,7 +96,6 @@ func physics_update(delta: float):
 	
 
 	var handle_arrival_at_point = func() -> void:
-		Events.unit_moved.emit()
 		unit.board_position = path.pop_front()
 		unit.check_for_detection()
 		if !path.is_empty():
@@ -109,6 +109,7 @@ func physics_update(delta: float):
 			if ghost_point:
 				handle_ghost_point.call()
 			unit.stop_moving()
+		Events.unit_moved.emit()
 	
 	if path.is_empty():
 		if ghost_point:
