@@ -1,18 +1,16 @@
 [gd_scene format=3 uid="uid://d1khjyxmvihb1"]
 
+[ext_resource type="Theme" uid="uid://bisleysoror3b" path="res://assets/themes/debug_theme.tres" id="1_6j2pg"]
 [ext_resource type="Script" uid="uid://iqwtdjvj5ij5" path="res://2D/debug/unit_inspector/debug_unit_info.gd" id="1_p4qvh"]
 [ext_resource type="PackedScene" uid="uid://dv23xg01min15" path="res://2D/debug/debug_kv_pair.tscn" id="2_6t10j"]
 
 [node name="PanelContainer" type="PanelContainer" unique_id=1321483145]
 custom_minimum_size = Vector2(250, 0)
+theme = ExtResource("1_6j2pg")
 script = ExtResource("1_p4qvh")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=3353314]
 layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=429197882]
 layout_mode = 2
@@ -20,6 +18,7 @@ layout_mode = 2
 [node name="Name" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1088312952]
 unique_name_in_owner = true
 layout_mode = 2
+theme_type_variation = &"Headline"
 text = "Unit Name"
 horizontal_alignment = 1
 
@@ -28,13 +27,14 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Status" unique_id=1642772276]
 layout_mode = 2
+theme_type_variation = &"SubHeadline"
 text = "Status"
 horizontal_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Status" unique_id=1770633565]
 layout_mode = 2
 
-[node name="ActingState" parent="MarginContainer/VBoxContainer/Status/VBoxContainer" unique_id=848224705 instance=ExtResource("2_6t10j")]
+[node name="ActingState" parent="MarginContainer/VBoxContainer/Status/VBoxContainer" unique_id=1622377863 instance=ExtResource("2_6t10j")]
 unique_name_in_owner = true
 layout_mode = 2
 key = "Acting State"
@@ -46,11 +46,24 @@ layout_mode = 2
 key = "Position"
 value = "(0,0,0)"
 
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=137974393]
+layout_mode = 2
+theme_type_variation = &"SubHeadline"
+text = "Directives"
+horizontal_alignment = 1
+
+[node name="CurrentDirective" parent="MarginContainer/VBoxContainer" unique_id=848224705 instance=ExtResource("2_6t10j")]
+unique_name_in_owner = true
+layout_mode = 2
+key = "Current"
+value = "None"
+
 [node name="Awareness" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=66943137]
 layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Awareness" unique_id=2126165552]
 layout_mode = 2
+theme_type_variation = &"SubHeadline"
 text = "Awareness"
 horizontal_alignment = 1
 

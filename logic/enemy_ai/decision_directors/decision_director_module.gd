@@ -26,6 +26,10 @@ var alerted_directive_queue : Array[Directive] = []
 ## The current queue of directives to carry out when alarmed.
 var alarmed_directive_queue : Array[Directive] = []
 
+# NOTE: I don't love this. I'd rather have a manual input name field for all directive resources, but right now they're all separate classes with no saved instances, so that get's messy too. More to think about here.
+## The name of the directive this unit is performing or most recently performed.
+var last_directive_name : String = "None"
+
 ## The current directive queue the unit is working through, depending on their awareness level.
 var current_directive_queue : Array[Directive]:
 	get():
@@ -71,6 +75,7 @@ func take_directive_from_queue() -> void:
 				add_directive(dir)
 		next_directive = alarmed_directive_queue[0]
 	current_directive = next_directive
+	last_directive_name = current_directive.get_script().get_global_name()
 	current_directive.begin(unit)
 
 

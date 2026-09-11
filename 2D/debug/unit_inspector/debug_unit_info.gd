@@ -11,6 +11,7 @@ extends PanelContainer
 @onready var _in_sight_buttons : VBoxContainer = %InSightButtons
 @onready var _out_of_sight : DebugKVPair = %FriendliesOutOfSight
 @onready var _out_of_sight_buttons : VBoxContainer = %OutOfSightButtons
+@onready var _current_directive : DebugKVPair = %CurrentDirective
 
 var unit : EnemyUnit
 
@@ -25,7 +26,7 @@ func display_unit_info(u : EnemyUnit) -> void:
 		_position.value = str(unit.board_position)
 
 		_level.value = EnemyUnitAwarenessModule.AwarenessLevel.find_key(unit.awareness.awareness_level)
-		if unit.awareness.last_poc:
+		if unit.awareness.last_poc: 
 			_contact_point.value = str(unit.awareness.last_poc.position)
 			_contact_point_button.disabled = false
 		else:
@@ -34,6 +35,10 @@ func display_unit_info(u : EnemyUnit) -> void:
 		
 		_handle_button_list(unit.awareness.friendlies_in_sight, _in_sight, _in_sight_buttons)
 		_handle_button_list(unit.awareness.friendlies_out_of_sight, _out_of_sight, _out_of_sight_buttons)
+
+
+		_current_directive.value = unit.decision_director.last_directive_name
+		
 
 
 func refresh() -> void:

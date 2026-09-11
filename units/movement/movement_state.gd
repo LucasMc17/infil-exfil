@@ -88,10 +88,6 @@ func physics_update(delta: float):
 
 	var walk_to_next_point = func(next_pos : Vector3) -> void:
 		unit.position = unit.position.move_toward(next_pos, mps * delta)
-		# var direction = (next_pos - unit.position).normalized()
-		# var angle = atan2(-direction.x, -direction.z)
-		# if unit.rotation.y != angle:
-		# 	unit.rotation.y = angle
 		update_captive_position.call()
 	
 

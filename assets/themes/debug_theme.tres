@@ -1,0 +1,16 @@
+[gd_resource type="Theme" format=3 uid="uid://bisleysoror3b"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7e1iv"]
+bg_color = Color(0, 0.29411766, 0.39607844, 0.27058825)
+
+[resource]
+default_font_size = 16
+Headline/base_type = &"Label"
+Headline/font_sizes/font_size = 28
+MarginContainer/constants/margin_bottom = 5
+MarginContainer/constants/margin_left = 5
+MarginContainer/constants/margin_right = 5
+MarginContainer/constants/margin_top = 5
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_7e1iv")
+SubHeadline/base_type = &"Label"
+SubHeadline/font_sizes/font_size = 20
