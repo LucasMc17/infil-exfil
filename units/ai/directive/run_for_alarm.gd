@@ -7,7 +7,7 @@ var _alarm_point : Variant = null
 
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
-	if Level.current_level.enemy_awareness.alarm_active or (Level.current_level.enemy_awareness.alarm_runner and Level.current_level.enemy_awareness.alarm_runner != unit):
+	if Level.current_level.alarm.active or (Level.current_level.enemy_awareness.alarm_runner and Level.current_level.enemy_awareness.alarm_runner != unit):
 		unit.decision_director.reconsider_directive()
 	Level.current_level.enemy_awareness.alarm_runner = unit
 	_alarm_point = null

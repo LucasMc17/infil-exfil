@@ -7,6 +7,8 @@ static var current_level : Level
 
 ## Logic module for handling the enemy's awareness of the player's units.
 var enemy_awareness := EnemyTeamAwarenessModule.new()
+## The alarm system for this level.
+var alarm := Alarm.new()
 
 ## Boolean tracking whether or not it is currently the player's turn.
 var is_player_turn := true

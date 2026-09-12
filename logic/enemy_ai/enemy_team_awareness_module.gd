@@ -18,14 +18,8 @@ extends Resource
 		# In short, while alarmed (and therefore in combat or running for the alarm), enemies are smart enough to distinguish friendlies and count them. Between alarms (even if still on guard), the enemy will remember how many enemies they saw but lose the ability to distinguish them next time they see them, and start countng from 0 again, even if seeing friendlies theyve never seen before.
 		# One more small note: Will enemies within earshot of enemies who spot friendlies have their known friendly count increase to match? Possibly. Could have a voice line like "Two hostiles spotted" or some such.
 
-## Whether an alarm is acively raised.
-var alarm_active := false
 ## The unit actively running for the alarm.
 var alarm_runner : EnemyUnit
-## The alarm which the was tripped. Responding enemies will head to its location, but will change course if they hear combat.
-var alarm
-## Whether the enemy has encountered friendlies, regardless of how it turned out. Once set to true, does not return to false.
-var encountered_friendlies := false
 ## The number of friendly units which the enemies are aware of.
 var known_friendly_count := 0:
 	set(val):
@@ -39,27 +33,7 @@ var known_friendly_count := 0:
 
 func _init() -> void:
 	if !Engine.is_editor_hint():
-		Events.alarm_raised.connect(_on_alarm_raised)
-		Events.alarm_ended.connect(_on_alarm_ended)
 		Events.unit_disabled.connect(_on_unit_disabled)
-
-
-func _on_alarm_raised(raised_alarm, raiser : Unit):
-	alarm_active = true
-	encountered_friendlies = true
-	if raiser is EnemyUnit:
-		known_friendly_count = raiser.awareness.targeted_friendly_count
-	alarm = raised_alarm
-
-
-func _on_alarm_ended():
-	alarm_active = false
-	if known_friendly_count == 0:
-		# pseudocode - for enemy in enemy units, enemy awareness = unalerted
-		pass
-	else:
-		# pseudocode - for enemy in enemy units, enemy awareness = alerted
-		pass
 
 
 func _on_unit_disabled(unit : Unit) -> void:

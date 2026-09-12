@@ -30,4 +30,5 @@ func cycle_enemy() -> void:
 		await enemy.forfeited_turn
 		cycle_enemy()
 	else:
+		Events.enemy_turn_ended.emit()
 		transition.call_deferred('PlayerTurn')

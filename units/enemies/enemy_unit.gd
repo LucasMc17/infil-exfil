@@ -68,7 +68,7 @@ func _on_awareness_changed(_old_awareness, _new_awareness):
 	update_indicator()
 
 
-func _on_alarm_raised(_alarm, raiser) -> void:
+func _on_alarm_raised(raiser) -> void:
 	awareness.last_poc = raiser.awareness.last_poc
 	awareness.alarm([], false)
 

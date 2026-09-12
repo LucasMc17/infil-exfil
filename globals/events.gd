@@ -50,8 +50,11 @@ signal planned_path_cleared()
 
 # Enemy turn events
 
+## Signal emitted when the enemy's turn ends. Since the player acts first, this also acts as the end point of a "set" of turns, and is the point at which turn based timers should increment.
+signal enemy_turn_ended()
+
 ## Signal emitted when the enemy raises an alarm.
-signal alarm_raised(alarm, raiser : Unit)
+signal alarm_raised(raiser : Unit)
 
 ## Signal emitted when the enemy's alarm is canceled.
 signal alarm_ended()
@@ -69,3 +72,8 @@ signal unit_taken_captive(unit : Unit)
 
 ## Signal emitted when a unit loses consciousness.
 signal unit_lost_consciousness(unit : Unit)
+
+# Debug
+
+## Emitted when the debug alarm monitor needs to be refreshed.
+signal update_alarm_monitor()
