@@ -6,10 +6,12 @@
 
 [node name="AlarmInspector" type="FoldableContainer" unique_id=1063794726]
 theme = ExtResource("1_vwsdr")
-title = "Alarm Status"
+folded = true
+title = "Alarm"
 script = ExtResource("2_veyfq")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1797200373]
+visible = false
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=948090485]

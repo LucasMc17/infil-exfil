@@ -27,6 +27,8 @@ func choose_combat_directive() -> Array[Directive]:
 			if !Level.current_level.alarm.active and !Level.current_level.enemy_awareness.alarm_runner:
 				result.append(RunForAlarm.new())
 			return result
+		elif Level.current_level.alarm.active and !Level.current_level.alarm.point_investigated:
+			return [InvestigateAlarmPoint.new()]
 		else:
 			return [NoDirective.new()]
 
