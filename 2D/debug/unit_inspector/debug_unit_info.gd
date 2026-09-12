@@ -15,6 +15,9 @@ extends PanelContainer
 
 var unit : EnemyUnit
 
+func _ready() -> void:
+	Events.request_update_unit_monitor.connect(_on_refresh_requested)
+
 func display_unit_info(u : EnemyUnit) -> void:
 	if u:
 		unit = u
@@ -55,8 +58,11 @@ func _handle_button_list(friendly_sightings : Array[EnemyUnitAwarenessModule.Fri
 		button.pressed.connect(func (): Level.current_level.level_camera.jump_to_point(sighting.friendly.global_position))
 		list.add_child(button)
 
-	
-
 
 func _on_contact_point_button_pressed() -> void:
 	Level.current_level.level_camera.jump_to_point(NavigableGridMap.convert_grid_to_global_position(unit.awareness.last_poc.position))
+
+
+func _on_refresh_requested(u : EnemyUnit) -> void:
+	if u == unit:
+		refresh()

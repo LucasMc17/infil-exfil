@@ -28,7 +28,10 @@ var alarmed_directive_queue : Array[Directive] = []
 
 # NOTE: I don't love this. I'd rather have a manual input name field for all directive resources, but right now they're all separate classes with no saved instances, so that get's messy too. More to think about here.
 ## The name of the directive this unit is performing or most recently performed.
-var last_directive_name : String = "None"
+var last_directive_name : String = "None":
+	set(val):
+		last_directive_name = val
+		Events.request_update_unit_monitor.emit(unit)
 
 ## The current directive queue the unit is working through, depending on their awareness level.
 var current_directive_queue : Array[Directive]:

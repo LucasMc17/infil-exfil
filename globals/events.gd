@@ -77,3 +77,6 @@ signal unit_lost_consciousness(unit : Unit)
 
 ## Emitted when the debug alarm monitor needs to be refreshed.
 signal update_alarm_monitor()
+
+## Emitted when a unit's information changes and a request should be fired to refresh the debug unit inspector, if its current unit is the one that fired this signal.
+signal request_update_unit_monitor(unit : EnemyUnit)

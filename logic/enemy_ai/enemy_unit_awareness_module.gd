@@ -51,6 +51,7 @@ var awareness_level := AwarenessLevel.UNAWARE:
 		awareness_level = val
 		unit.debug_label.change_param('awareness_level', AwarenessLevel.find_key(val))
 		awareness_changed.emit(old_val, val)
+		Events.request_update_unit_monitor.emit(unit)
 ## The unit to whom this awareness module belongs.
 var unit : EnemyUnit
 ## Whether or not the unit will first attempt to detain friendly units when encountering them.
@@ -72,7 +73,10 @@ var friendlies_out_of_sight : Array[FriendlySighting]:
 ## The unit this target is currently suppressing, if any.
 var suppression_target : FriendlyUnit
 ## The last known point of contact with the friendly team, if any.
-var last_poc : ContactPoint
+var last_poc : ContactPoint:
+	set(val):
+		last_poc = val
+		Events.request_update_unit_monitor.emit(unit)
 ## Whether the unit is in the detection grace period. This occurs when the unit sees a friendly unit during the player turn. While in the grace period, stealth skills are still usable on this unit. The grace period ends as soon as the enemy unit begins its next turn.
 var is_in_grace_period := false
 ## Whether the unit has already given chase to a friendly unit in this alarm phase. Resets to false when seeing an enemy unit.
@@ -131,6 +135,7 @@ func alert():
 	has_pursued = false
 	last_poc = null
 	unit.debug_label.change_param('targets', '[]')
+	Events.request_update_unit_monitor.emit(unit)
 
 
 ## Update the unit's awareness level to [ALARMED], instantly stopping the unit if they are moving, and adding all sighted friendlies to their list of targets.
@@ -149,6 +154,7 @@ func alarm(spotted_friendlies : Variant = [], skip_grace_period := false):
 		if !targeted_friendlies.has(friendly_id):
 			targeted_friendlies[friendly_id] = FriendlySighting.new(friendly)
 	unit.debug_label.change_param('targets', '[' + ', '.join(targeted_friendlies.values().map(func (sighting): return sighting.friendly.name)) + ']')
+	Events.request_update_unit_monitor.emit(unit)
 
 
 ## Update the unit's awareness level to [UNAWARE], clearing their list of targets.
@@ -160,6 +166,7 @@ func drop_guard():
 	has_pursued = false
 	last_poc = null
 	unit.debug_label.change_param('targets', '[]')
+	Events.request_update_unit_monitor.emit(unit)
 
 
 ## Reset the grace period bool to false.
@@ -181,6 +188,7 @@ func confirm_all_sightings() -> void:
 		return
 	for sighting : FriendlySighting in targeted_friendlies.values():
 		_confirm_sighting(sighting)
+	Events.request_update_unit_monitor.emit(unit)
 
 
 ## Checks whether the unit is alarmed.
