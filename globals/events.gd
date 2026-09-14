@@ -16,6 +16,11 @@ signal unit_moved()
 ## Signal emitted when a unit on either team takes any action.
 signal unit_acted()
 
+# Stealth
+
+## Signal emitted when a player is spotted by an enemy, whether they have been previously spotted or not.
+signal friendly_spotted()
+
 # Player turn events
 
 ## Signal emitted when the player's turn ends.

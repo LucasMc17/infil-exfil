@@ -94,6 +94,7 @@ func _confirm_sighting(sighting : FriendlySighting) -> void:
 	if sighting.friendly.position.distance_to(unit.position) <= 15.0 and \
 	unit.seeing_zone.get_line_of_sight(sighting.friendly.seen_zone.global_position, sighting.friendly):
 		can_see = true
+		Events.friendly_spotted.emit()
 		has_pursued = false
 		sighting.still_in_sight = true
 		sighting.last_known_position = sighting.friendly.board_position
@@ -178,7 +179,7 @@ func resolve_grace_period():
 func resolve_suppression() -> void:
 	if !unit.suppression_indicator.los_clear:
 		lose_suppression()
-
+	
 
 ## For each friendly the unit has seen within this alert phase, confirm they are still in sight. Useful when this unit moves and needs to recheck who they can see.[br]
 ## Note that, in order to be in sight, the unit does not have to be directly looking at the friendly. There only needs to be a clear theoretical line of sight between them, and the unit must be within 15 meters of the target.[br]
