@@ -54,7 +54,7 @@ signal forfeited_turn(unit : Unit)
 static var active_unit : Unit
 
 ## The number of health points this unit has.
-var health_points := max_health_points:
+@onready var health_points := max_health_points:
 	set(val):
 		if val < 0:
 			health_points = 0
@@ -63,13 +63,13 @@ var health_points := max_health_points:
 		if flag:
 			flag.refresh(self)
 ## The number of movement points this unit has. Restored to the maximum at the start of a turn.
-var movement_points := max_movement_points:
+@onready var movement_points := max_movement_points:
 	set(val):
 		movement_points = val
 		if flag:
 			flag.refresh(self)
 ## The number of action points this unit has. Restored to the maximum at the start of a turn.
-var action_points := max_action_points:
+@onready var action_points := max_action_points:
 	set(val):
 		action_points = val
 		if flag:

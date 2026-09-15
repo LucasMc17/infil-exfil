@@ -5,6 +5,9 @@ extends Resource
 ## Signal emitted when the enemy's awareness is changed, either escalating or de-escalating.
 signal awareness_changed(old_awareness : AwarenessLevel, new_awareness : AwarenessLevel)
 
+## Signal emitted when the unit confirms a sighting of a [FriendltUnit]. Mirrors the global signal but allows for local context.
+signal friendly_spotted(friendly : FriendlyUnit)
+
 ## Class representing a friendly which was seen in this alarm phase. Includes info about whether or not the unit is still in sight, and its last known position if not. Has utility methods for updating its own information.
 class FriendlySighting:
 	## The sighted friendly unit.
@@ -94,12 +97,15 @@ func _confirm_sighting(sighting : FriendlySighting) -> void:
 	if sighting.friendly.position.distance_to(unit.position) <= 15.0 and \
 	unit.seeing_zone.get_line_of_sight(sighting.friendly.seen_zone.global_position, sighting.friendly):
 		can_see = true
-		Events.friendly_spotted.emit()
+		
 		has_pursued = false
 		sighting.still_in_sight = true
 		sighting.last_known_position = sighting.friendly.board_position
 		if target_incapacitated:
 			sighting.confirmed_incapacitated = true
+		else:
+			friendly_spotted.emit(sighting.friendly)
+			Events.friendly_spotted.emit()
 	else:
 		can_see = false
 		sighting.still_in_sight = false

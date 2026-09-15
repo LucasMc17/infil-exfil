@@ -12,6 +12,8 @@ func begin(unit : EnemyUnit) -> void:
 		acting_unit.finished_moving.connect(_on_finished_moving)
 	if !acting_unit.finished_acting.is_connected(_on_finished_acting):
 		acting_unit.finished_acting.connect(_on_finished_acting)
+	if !acting_unit.awareness.friendly_spotted.is_connected(_on_encountering_friendly):
+		acting_unit.awareness.friendly_spotted.connect(_on_encountering_friendly)
 
 
 ## Executed when this directive is canceled, and exited before it can be completed, usually because a higher priority directive has jumped to the front of the queue.
@@ -20,6 +22,8 @@ func cancel() -> void:
 		acting_unit.finished_moving.disconnect(_on_finished_moving)
 	if acting_unit.finished_acting.is_connected(_on_finished_acting):
 		acting_unit.finished_acting.disconnect(_on_finished_acting)
+	if acting_unit.awareness.friendly_spotted.is_connected(_on_encountering_friendly):
+		acting_unit.awareness.friendly_spotted.disconnect(_on_encountering_friendly)
 
 
 ## Executed when the directive is successfully completed and removed from the queue.
@@ -28,6 +32,8 @@ func end() -> void:
 		acting_unit.finished_moving.disconnect(_on_finished_moving)
 	if acting_unit.finished_acting.is_connected(_on_finished_acting):
 		acting_unit.finished_acting.disconnect(_on_finished_acting)
+	if acting_unit.awareness.friendly_spotted.is_connected(_on_encountering_friendly):
+		acting_unit.awareness.friendly_spotted.disconnect(_on_encountering_friendly)
 	acting_unit.decision_director.finish_directive()
 
 
@@ -43,6 +49,11 @@ func end() -> void:
 	## 		// other code...
 	## ```
 func respect_nudge() -> void:
+	pass
+
+
+## Called when the unit spots a friendly while executing this directive. Overwrite with any necessary custom logic. Useful for directives like [InvestigateAlarmPoint] which require a unit to be already alarm but responsive to new sightings.
+func _on_encountering_friendly(_friendly : FriendlyUnit) -> void:
 	pass
 
 

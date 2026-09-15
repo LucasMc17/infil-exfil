@@ -8,7 +8,7 @@ var active := false
 ## The number of turns until this alarm shuts off.
 var countdown := MAX_COOLDOWN
 ## The position this unit cites as having been where they encountered enemies.
-var alarm_point : Vector3i
+var alarm_point : EnemyUnitAwarenessModule.ContactPoint
 ## Whether an enemy unit has investigated the alarm point this alarm was raised with.
 var point_investigated := false
 ## Whether the friendly force has been acquired during this alarm phase.
@@ -48,9 +48,9 @@ func raise(raiser : Unit) -> void:
 	active = true
 	reset()
 	if raiser is EnemyUnit:
-		alarm_point = raiser.awareness.last_poc.position
+		alarm_point = raiser.awareness.last_poc
 	else:
-		alarm_point = raiser.board_position
+		alarm_point = EnemyUnitAwarenessModule.ContactPoint.new(raiser.board_position)
 	friendlies_acquired = Level.current_level.enemy_awareness.friendlies_in_sight()
 	Events.alarm_raised.emit(raiser)
 	Events.update_alarm_monitor.emit()
