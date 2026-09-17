@@ -22,7 +22,7 @@ func respect_nudge() -> void:
 		end()
 
 
-func _on_finished_moving(_unit : Unit):
+func _on_finished_moving(_unit : EnemyUnit):
 	super(acting_unit)
 	end()
 	acting_unit.forfeit_turn()

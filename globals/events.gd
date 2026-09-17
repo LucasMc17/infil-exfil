@@ -1,6 +1,9 @@
 ## Global events system.
 extends Node
 
+## Signal emitted when a level finishes loading in.
+signal level_loaded()
+
 ## Signal emitted when a unit on either team is activated.
 signal unit_activated(unit : Unit)
 
@@ -9,6 +12,14 @@ signal unit_deactivated(unit : Unit)
 
 ## Signal emitted when a unit on either team moves for any reason.
 signal unit_moved()
+
+## Signal emitted when a unit on either team takes any action.
+signal unit_acted()
+
+# Stealth
+
+## Signal emitted when a player is spotted by an enemy, whether they have been previously spotted or not.
+signal friendly_spotted()
 
 # Player turn events
 
@@ -44,8 +55,11 @@ signal planned_path_cleared()
 
 # Enemy turn events
 
+## Signal emitted when the enemy's turn ends. Since the player acts first, this also acts as the end point of a "set" of turns, and is the point at which turn based timers should increment.
+signal enemy_turn_ended()
+
 ## Signal emitted when the enemy raises an alarm.
-signal alarm_raised(alarm, raiser : Unit)
+signal alarm_raised(raiser : Unit)
 
 ## Signal emitted when the enemy's alarm is canceled.
 signal alarm_ended()
@@ -63,3 +77,11 @@ signal unit_taken_captive(unit : Unit)
 
 ## Signal emitted when a unit loses consciousness.
 signal unit_lost_consciousness(unit : Unit)
+
+# Debug
+
+## Emitted when the debug alarm monitor needs to be refreshed.
+signal update_alarm_monitor()
+
+## Emitted when a unit's information changes and a request should be fired to refresh the debug unit inspector, if its current unit is the one that fired this signal.
+signal request_update_unit_monitor(unit : EnemyUnit)

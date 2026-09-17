@@ -342,7 +342,6 @@ func probe_for_viable_move(grid_position : Vector3i, max_moves : int, callback :
 
 	end_time = Time.get_ticks_msec()
 	DebugConsole.log("Execution time to probe for a valid move WITHOUT result: " + str(end_time - start_time) + " milliseconds")
-	DebugConsole.log(visited_points.size())
 	return null
 
 

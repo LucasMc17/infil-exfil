@@ -32,7 +32,11 @@ signal forfeited_turn(unit : Unit)
 ## The unit's maximum health value.
 @export var max_health_points := 5
 ## The unit's status, either alive, unconscious, stunned or dead.
-@export var unit_status := Status.ALIVE
+@export var unit_status := Status.ALIVE:
+	set(val):
+		unit_status = val
+		if self is EnemyUnit:
+			Events.request_update_unit_monitor.emit(self)
 
 @export_group('Capabilities')
 ## The unit's main weapon.
@@ -50,7 +54,7 @@ signal forfeited_turn(unit : Unit)
 static var active_unit : Unit
 
 ## The number of health points this unit has.
-var health_points := max_health_points:
+@onready var health_points := max_health_points:
 	set(val):
 		if val < 0:
 			health_points = 0
@@ -59,13 +63,13 @@ var health_points := max_health_points:
 		if flag:
 			flag.refresh(self)
 ## The number of movement points this unit has. Restored to the maximum at the start of a turn.
-var movement_points := max_movement_points:
+@onready var movement_points := max_movement_points:
 	set(val):
 		movement_points = val
 		if flag:
 			flag.refresh(self)
 ## The number of action points this unit has. Restored to the maximum at the start of a turn.
-var action_points := max_action_points:
+@onready var action_points := max_action_points:
 	set(val):
 		action_points = val
 		if flag:
@@ -85,7 +89,11 @@ var is_using_skill : bool:
 var is_moving := false
 
 ## The unit's position in terms of the NavigableGridMap's coordinate system.
-var board_position : Vector3i
+var board_position : Vector3i:
+	set(val):
+		board_position = val
+		if self is EnemyUnit:
+			Events.request_update_unit_monitor.emit(self)
 ## The full array of skills available to this unit, including their own, and those associated with their primary weapon.
 var all_skills : Array[Skill]:
 	get():

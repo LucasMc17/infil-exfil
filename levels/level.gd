@@ -7,6 +7,8 @@ static var current_level : Level
 
 ## Logic module for handling the enemy's awareness of the player's units.
 var enemy_awareness := EnemyTeamAwarenessModule.new()
+## The alarm system for this level.
+var alarm := Alarm.new()
 
 ## Boolean tracking whether or not it is currently the player's turn.
 var is_player_turn := true
@@ -101,11 +103,12 @@ func _ready() -> void:
 		Events.skill_armed.connect(_on_skill_armed)
 		Events.skill_disarmed.connect(_on_skill_disarmed)
 		nav_map.setup_astar_grid()
-		current_level = self
 		ConsoleEvents.command_submitted.connect(func (command_name, _parameters):
 			if command_name == "exit":
 				get_tree().quit()
 		)
+		current_level = self
+		Events.level_loaded.emit()
 
 
 func _unhandled_input(event: InputEvent) -> void:

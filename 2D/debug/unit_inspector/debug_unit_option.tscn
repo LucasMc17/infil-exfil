@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dsvrhg8gk4lk"]
+
+[ext_resource type="Script" uid="uid://l7u03om41r5m" path="res://2D/debug/unit_inspector/debug_unit_option.gd" id="1_fn48e"]
+
+[node name="UnitOption" type="Button" unique_id=1474209272]
+text = "Unit Name"
+script = ExtResource("1_fn48e")

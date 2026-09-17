@@ -44,13 +44,14 @@ func _ready():
 		debug_label.change_param('awareness_level', awareness.AwarenessLevel.find_key(awareness.awareness_level))
 		debug_label.change_param('targets', '[]')
 		Events.alarm_raised.connect(_on_alarm_raised)
+		Events.alarm_ended.connect(_on_alarm_ended)
 		Events.unit_disabled.connect(_on_unit_disabled)
 
 
 func check_for_detection() -> void:
 	DebugConsole.log("Checking for detection", 2)
-	# awareness.confirm_all_sightings()
-	return seeing_zone.check_detection()
+	seeing_zone.check_detection()
+	awareness.confirm_all_sightings()
 
 
 func _on_unit_disabled(unit : Unit) -> void:
@@ -68,12 +69,18 @@ func _on_awareness_changed(_old_awareness, _new_awareness):
 	update_indicator()
 
 
-func _on_alarm_raised(_alarm, _raiser) -> void:
+func _on_alarm_raised(raiser) -> void:
+	awareness.last_poc = raiser.awareness.last_poc
 	awareness.alarm([], false)
+
+
+func _on_alarm_ended() -> void:
+	awareness.alert()
 
 
 func activate():
 	super()
+	awareness.confirm_all_sightings()
 	awareness.resolve_grace_period()
 	update_indicator()
 
