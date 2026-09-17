@@ -28,7 +28,7 @@ func choose_combat_directive() -> Array[Directive]:
 				result.append(RunForAlarm.new())
 			return result
 		elif Level.current_level.alarm.active and !Level.current_level.alarm.point_investigated:
-			return [InvestigateAlarmPoint.new()]
+			return [InvestigateAlarmPoint.new()] #RandomPatrolAroundPoint.new(Level.current_level.alarm.alarm_point.position)
 		else:
 			return [NoDirective.new()]
 

@@ -18,6 +18,8 @@ func check_detection() -> void:
 		var collision_instances = shape_cast.collision_result
 		var seen_zones = collision_instances.map(func(instance): return instance.collider).filter(func(collider): return collider is SeenZone and collider.unit is FriendlyUnit)
 		for zone : SeenZone in seen_zones:
+			# NOTE: This doesn't distinguish between incapacitated and live friendlies yet, but it may have to eventually.
+			# if !zone.unit.is_incapacitated():
 			var vis_score = 0
 			for point : VisibilityPoint in zone.vision_targets:
 				if get_line_of_sight(point.global_position, zone.unit):

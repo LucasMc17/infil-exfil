@@ -66,6 +66,8 @@ func call_off() -> void:
 func _on_enemy_turn_ended() -> void:
 	if active and alarm_satisfied:
 		countdown -= 1
+	else:
+		countdown = MAX_COOLDOWN
 	if countdown < 1:
 		call_off()
 	Events.update_alarm_monitor.emit()
