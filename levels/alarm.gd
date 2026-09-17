@@ -12,22 +12,23 @@ var alarm_point : EnemyUnitAwarenessModule.ContactPoint
 ## Whether an enemy unit has investigated the alarm point this alarm was raised with.
 var point_investigated := false
 ## Whether the friendly force has been acquired during this alarm phase.
-var friendlies_acquired := false
+# var friendlies_acquired := false
+# NOTE: There's a case to be made that this should require that the point has been investigated or there are no more investigators AND all the other coniditions.
 ## Virtual property reflecting whether this alarm has been "satisfied" and can be called off when the countdown hits zero.
 var alarm_satisfied : bool:
 	get():
-		return !_enemies_in_active_pursuit() and (point_investigated or friendlies_acquired or _no_more_investigators())
+		return !_enemies_in_active_pursuit() and (point_investigated or _no_more_investigators())
 
 func _init() -> void:
 	Events.enemy_turn_ended.connect(_on_enemy_turn_ended)
-	Events.friendly_spotted.connect(_on_friendly_spotted)
+	# Events.friendly_spotted.connect(_on_friendly_spotted)
 	Events.update_alarm_monitor.emit()
 
 
 func reset() -> void:
 	countdown = MAX_COOLDOWN
 	point_investigated = false
-	friendlies_acquired = false
+	# friendlies_acquired = false
 
 
 func _enemies_in_active_pursuit() -> bool:
@@ -51,7 +52,7 @@ func raise(raiser : Unit) -> void:
 		alarm_point = raiser.awareness.last_poc
 	else:
 		alarm_point = EnemyUnitAwarenessModule.ContactPoint.new(raiser.board_position)
-	friendlies_acquired = Level.current_level.enemy_awareness.friendlies_in_sight()
+	# friendlies_acquired = Level.current_level.enemy_awareness.friendlies_in_sight()
 	Events.alarm_raised.emit(raiser)
 	Events.update_alarm_monitor.emit()
 
@@ -73,6 +74,6 @@ func _on_enemy_turn_ended() -> void:
 	Events.update_alarm_monitor.emit()
 
 
-func _on_friendly_spotted() -> void:
-	if active:
-		friendlies_acquired = true
+# func _on_friendly_spotted() -> void:
+# 	if active:
+# 		friendlies_acquired = true

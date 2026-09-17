@@ -44,6 +44,7 @@ func _ready():
 		debug_label.change_param('awareness_level', awareness.AwarenessLevel.find_key(awareness.awareness_level))
 		debug_label.change_param('targets', '[]')
 		Events.alarm_raised.connect(_on_alarm_raised)
+		Events.alarm_ended.connect(_on_alarm_ended)
 		Events.unit_disabled.connect(_on_unit_disabled)
 
 
@@ -71,6 +72,10 @@ func _on_awareness_changed(_old_awareness, _new_awareness):
 func _on_alarm_raised(raiser) -> void:
 	awareness.last_poc = raiser.awareness.last_poc
 	awareness.alarm([], false)
+
+
+func _on_alarm_ended() -> void:
+	awareness.alert()
 
 
 func activate():

@@ -52,7 +52,7 @@ func _init(u : EnemyUnit, a : EnemyUnitAwarenessModule) -> void:
 	else:
 		unaware_base_directives = unit.unaware_base_directives
 	if unit.alerted_base_directives.is_empty():
-		alerted_base_directives = [NoDirective.new()]
+		alerted_base_directives = unaware_base_directives
 	else:
 		alerted_base_directives = unit.alerted_base_directives
 

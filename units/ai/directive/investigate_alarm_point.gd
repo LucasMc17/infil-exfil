@@ -11,14 +11,17 @@ func begin(unit : EnemyUnit) -> void:
 
 func _on_finished_moving(unit : EnemyUnit):
 	super(unit)
-	if acting_unit.board_position == Level.current_level.alarm.alarm_point.position or encountered_friendlies:
+	if acting_unit.board_position == Level.current_level.alarm.alarm_point.position:
 		end()
+	elif encountered_friendlies:
+		cancel()
 	unit.forfeit_turn()
 
 
 func cancel() -> void:
-	Level.current_level.alarm.point_investigated = true
 	super()
+	acting_unit.decision_director.current_directive = null
+	acting_unit.decision_director.current_directive_queue.clear()
 
 
 func end() -> void:
