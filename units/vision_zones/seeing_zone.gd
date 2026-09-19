@@ -31,3 +31,4 @@ func check_detection() -> void:
 					spotted.append(zone.unit)
 		if !spotted.is_empty():
 			friendly_seen.emit(spotted)
+			enemy.speak("Hey!")

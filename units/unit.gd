@@ -158,6 +158,7 @@ func activate():
 	# _refresh_skills()
 	Events.unit_activated.emit(self)
 	Events.refresh_unit_skills.emit()
+	# speak("This is a longer piece of test dialog to make sure it aligns correctly. Thank you!")
 
 
 ## Executed when the unit stops being the active unit within the level.
@@ -269,6 +270,11 @@ func forfeit_turn() -> void:
 	movement_points = 0
 	action_points = 0
 	forfeited_turn.emit(self)
+
+
+## Speak a line of dialog to the level dialog layer.
+func speak(message : String) -> void:
+	Events.unit_spoke.emit(self, message)
 
 	
 ## Function for updating detected units, either by checking if this unit is being detected or if it is detecting any other units.

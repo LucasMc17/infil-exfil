@@ -20,7 +20,7 @@ var zoom_offset := 0:
 var target : Node3D
 
 @onready var _lerp_target := global_position
-@onready var _camera : Camera3D = %Camera3D
+@onready var camera : Camera3D = %Camera3D
 @onready var _y_pivot := %YPivot
 @onready var _x_pivot := %XPivot
 
@@ -78,4 +78,4 @@ func zoom_camera(inward : bool):
 		zoom_offset -= 1
 	else:
 		zoom_offset += 1
-	_camera.position.z =  zoom_offset + 12
+	camera.position.z =  zoom_offset + 12

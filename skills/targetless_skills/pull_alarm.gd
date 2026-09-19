@@ -15,5 +15,7 @@ func get_affordability() -> bool:
 
 func begin_use() -> void:
 	super()
+	if user is EnemyUnit:
+		user.speak("Alert! Intruders!")
 	Level.current_level.alarm.raise(user)
 	

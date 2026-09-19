@@ -96,12 +96,14 @@ var allow_inputs : bool:
 @onready var target_retical : Sprite3D = %TargetRetical
 @onready var nav_zone_map : NavZoneMap = %NavZoneMap
 @onready var geometry : Node3D = %Geometry
+@onready var _dialog_layer : Control = %DialogLayer
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
 		nav_zone_map.visible = false
 		Events.skill_armed.connect(_on_skill_armed)
 		Events.skill_disarmed.connect(_on_skill_disarmed)
+		Events.unit_spoke.connect(_on_unit_spoke)
 		nav_map.setup_astar_grid()
 		ConsoleEvents.command_submitted.connect(func (command_name, _parameters):
 			if command_name == "exit":
@@ -227,3 +229,8 @@ func _on_skill_disarmed() -> void:
 		armed_skill.disarm()
 		match_ui.disarm_skill_ui()
 	armed_skill = null
+
+
+func _on_unit_spoke(unit : Unit, message : String) -> void:
+	var line : DialogLine = DialogLine.new_line(unit, message)
+	_dialog_layer.add_child(line)
