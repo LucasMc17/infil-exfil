@@ -264,19 +264,32 @@ func setup_astar_grid() -> void:
 	DebugConsole.log("Execution time to build A* map: " + str(end_time - start_time) + " milliseconds", 4)
 
 
-## Returns an array of Vector3s, beginning with the [start] position and ending with the [end] position, which describes a navigable path between those two points. If no valid path exists, returns an empty array.
-func find_path(start: Vector3i, end: Vector3i) -> PackedVector3Array:
-	# Ensure start and end are within the grid and walkable
+## Returns an array of Vector3s, beginning with the [start] position and ending with the [end] position, which describes a navigable path between those two points. If no valid path exists, returns an empty array. The optional exact_point parameter determines whether or not the unit can path to point close to the intended point, if it is inaccessible due to being occupied. The point_radius parameter determines how wide of a radius around the point that unit must have to be withing to satisfy the move conditions without reaching the exact point.
+func find_path(start: Vector3i, end: Vector3i, exact_point := true, point_radius := 3) -> PackedVector3Array:
+	# Ensure start and end are within the grid
 	if not point_map_by_grid_coords.has(start) or not point_map_by_grid_coords.has(end):
 		return [] # No valid path
 	
 	var start_id: int = point_map_by_grid_coords[start].a_star_point
 	var end_id: int = point_map_by_grid_coords[end].a_star_point
 	
-	# Get the path as an array of Vector3 points
+	# Get the path as an array of Vector3 points and slice off the first point (the staring position)
 	var path = astar.get_point_path(start_id, end_id)
 	if !path.is_empty():
-		return path.slice(1)
+		path = path.slice(1)
+
+	if !exact_point:
+		var trimmed_path = path
+		for i in range(point_radius):
+			var last_point = Vector3i(trimmed_path[-1])
+			var grid_point = point_map_by_grid_coords[last_point]
+			if trimmed_path.is_empty():
+				return path
+			if !grid_point.occupier:
+				return trimmed_path
+			else:
+				trimmed_path = trimmed_path.slice(0, -1)
+
 	return path
 	
 

@@ -9,6 +9,10 @@ extends State
 
 ## The end point of the current movement, established when entering the state and used to create a path for navigation.
 var end_point : Vector3
+## Whether or not this unit should move to an exact point, or just into the vicinity of one.
+var exact_point := true
+## The radius to get within if the movement is not to an exact point.
+var point_radius := 3
 ## An array of points along which the unit will move to reach the [end_point]
 var full_path : Array = []
 ## A copy of the above array for mutating as the unit removes points it has reached.
@@ -33,7 +37,7 @@ func enter(previous_state : State, ext : Dictionary):
 	if ext.has('end_point'):
 		# If this is called via the end_point method, the state was entered by an AI controller working towards moving the unit to an ultimate point, as opposed to by a player planning a specific route. Hence, everything in this if statement is only relative to AI controlled units.
 		# NOTE: For the above reason, should we consider a unique enemy movement state, separate from player movement?
-		var temp_path = Level.current_level.nav_map.find_path(unit.board_position, end_point).slice(0, unit.movement_points)
+		var temp_path = Level.current_level.nav_map.find_path(unit.board_position, end_point, exact_point, point_radius).slice(0, unit.movement_points)
 		for point in temp_path:
 			var blocker = Level.current_level.nav_map.get_point_occupier(point)
 			if blocker:
