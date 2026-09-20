@@ -54,6 +54,10 @@ func check_for_detection() -> void:
 	awareness.confirm_all_sightings()
 
 
+func move(movement_name : String, end_point : Vector3i, exact_point := true, point_radius := 3) -> void:
+	movement_machine.current_state.transition(movement_name, {"end_point": end_point, "exact_point": exact_point, "point_radius": point_radius})
+
+
 func _on_unit_disabled(unit : Unit) -> void:
 	if unit == self or unit == awareness.suppression_target:
 		awareness.lose_suppression()

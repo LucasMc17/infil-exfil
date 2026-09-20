@@ -277,14 +277,16 @@ func find_path(start: Vector3i, end: Vector3i, exact_point := true, point_radius
 	var path = astar.get_point_path(start_id, end_id)
 	if !path.is_empty():
 		path = path.slice(1)
+	else:
+		return []
 
 	if !exact_point:
 		var trimmed_path = path
 		for i in range(point_radius):
-			var last_point = Vector3i(trimmed_path[-1])
-			var grid_point = point_map_by_grid_coords[last_point]
 			if trimmed_path.is_empty():
 				return path
+			var last_point = Vector3i(trimmed_path[-1])
+			var grid_point = point_map_by_grid_coords[last_point]
 			if !grid_point.occupier:
 				return trimmed_path
 			else:

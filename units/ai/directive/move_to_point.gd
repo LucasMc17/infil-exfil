@@ -7,7 +7,7 @@ extends Directive
 
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
-	unit.move('Walk', { "end_point": _end_point})
+	unit.move('Walk', _end_point)
 
 
 func _on_finished_moving(unit : EnemyUnit):

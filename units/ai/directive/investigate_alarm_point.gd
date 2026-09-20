@@ -6,7 +6,7 @@ var encountered_friendlies := false
 
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
-	unit.move("Run", {"end_point": Level.current_level.alarm.alarm_point.position})
+	unit.move("Run", Level.current_level.alarm.alarm_point.position, false)
 
 
 func _on_finished_moving(unit : EnemyUnit):

@@ -17,6 +17,10 @@ func is_suppressed_by(enemy : EnemyUnit) -> bool:
 	return enemy.awareness.suppression_target == self
 
 
+func move(movement_name : String, path : Array[Vector3i]) -> void:
+	movement_machine.current_state.transition(movement_name, {"path": path})
+
+
 func _on_seen_zone_seen_by_enemies(enemies: Array[EnemyUnit]) -> void:
 	DebugConsole.log("Friendly is Seen by Enemy/Enemies", 2)
 	for enemy : EnemyUnit in enemies:

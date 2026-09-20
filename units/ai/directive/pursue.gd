@@ -32,9 +32,9 @@ func begin(unit : EnemyUnit) -> void:
 	if !attack_skill.potential_targets.is_empty():
 		attack_skill.use({ "target": attack_skill.potential_targets[0] })
 	elif !visisted_last_seen:
-		acting_unit.move("Run", { "end_point": last_known_pos })
+		acting_unit.move("Run", last_known_pos)
 	else:
-		acting_unit.move("Run", { "end_point": pursuit_path[pursuit_index] })
+		acting_unit.move("Run", pursuit_path[pursuit_index])
 
 
 func _on_finished_moving(unit : EnemyUnit):

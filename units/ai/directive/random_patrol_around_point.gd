@@ -16,7 +16,7 @@ func begin(unit : EnemyUnit) -> void:
 	var unit_valid_moves = Level.current_level.nav_map.get_all_valid_moves(unit.board_position, unit.max_movement_points)
 	var move = unit_valid_moves.filter(func (pos): return all_valid_moves.has(pos)).pick_random()
 
-	unit.move("Run", { "end_point": move })
+	unit.move("Run", move)
 
 
 func _on_finished_moving(unit : EnemyUnit):

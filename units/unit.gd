@@ -179,10 +179,6 @@ func reset():
 	action_points = 100 if DebugOptions.unlimited_ap else max_action_points
 
 
-func move(movement_name : String, config : Dictionary) -> void:
-	movement_machine.current_state.transition(movement_name, config)
-
-
 func stop_moving() -> void:
 	movement_machine.current_state.transition("NoMovement")
 

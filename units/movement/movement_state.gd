@@ -1,5 +1,5 @@
-## An extended [State] representing a unit's possible modes of movement, for use with a [MovementMachine].
-class_name MovementState
+## An abstract, extended [State] representing a unit's possible modes of movement, for use with a [MovementMachine].
+@abstract class_name MovementState
 extends State
 
 ## The unit this state corresponds to.
@@ -7,12 +7,6 @@ extends State
 ## The speed at which this movment state moves the unit, in meters per second.
 @export var mps := 1.0
 
-## The end point of the current movement, established when entering the state and used to create a path for navigation.
-var end_point : Vector3
-## Whether or not this unit should move to an exact point, or just into the vicinity of one.
-var exact_point := true
-## The radius to get within if the movement is not to an exact point.
-var point_radius := 3
 ## An array of points along which the unit will move to reach the [end_point]
 var full_path : Array = []
 ## A copy of the above array for mutating as the unit removes points it has reached.
@@ -29,33 +23,7 @@ func enter(previous_state : State, ext : Dictionary):
 	Level.current_level.level_camera.fix_to_actor(unit)
 	ghost_point = null
 	first_step = true
-	if unit is FriendlyUnit:
-		unit.is_moving = true
-		Events.skill_disarmed.emit()
-	unit.debug_label.change_param('movement_state', name)
 	unit.started_moving.emit(unit)
-	if ext.has('end_point'):
-		# If this is called via the end_point method, the state was entered by an AI controller working towards moving the unit to an ultimate point, as opposed to by a player planning a specific route. Hence, everything in this if statement is only relative to AI controlled units.
-		# NOTE: For the above reason, should we consider a unique enemy movement state, separate from player movement?
-		var temp_path = Level.current_level.nav_map.find_path(unit.board_position, end_point, exact_point, point_radius).slice(0, unit.movement_points)
-		for point in temp_path:
-			var blocker = Level.current_level.nav_map.get_point_occupier(point)
-			if blocker:
-				ghost_point = point
-				unit.temp_blocker = blocker
-				if blocker is EnemyUnit:
-					blocker.temp_blocking_path = temp_path
-				break
-			else:
-				full_path.append(point)
-		path = full_path.duplicate()
-		unit.movement_points = 0
-	elif ext.has('path'):
-		full_path = path.duplicate()
-		unit.movement_points -= path.size()
-	else:
-		DebugConsole.error('Must pass MovementState an end_point or a path array of points.')
-	Level.current_level.movement_system.deactivate()
 
 
 func physics_update(delta: float):
