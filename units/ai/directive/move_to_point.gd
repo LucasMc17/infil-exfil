@@ -10,9 +10,9 @@ func begin(unit : EnemyUnit) -> void:
 	unit.move('Walk', _end_point)
 
 
-func _on_finished_moving(unit : EnemyUnit):
-	super(unit)
+func _on_finished_moving(unit : EnemyUnit, arrived : bool):
+	super(unit, arrived)
 	# NOTE: Can we start cleaning up these vector3/vector3is? i think some of the mismatch is necessary but it can't be all of it.
-	if Vector3(acting_unit.board_position) == _end_point:
+	if arrived:
 		end()
 	unit.forfeit_turn()

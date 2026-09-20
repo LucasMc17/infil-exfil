@@ -45,8 +45,8 @@ func _on_finished_acting(_unit : EnemyUnit):
 	acting_unit.forfeit_turn()
 
 
-func _on_finished_moving(_unit : EnemyUnit):
-	super(acting_unit)
+func _on_finished_moving(unit : EnemyUnit, arrived : bool):
+	super(unit, arrived)
 	attack_skill.arm_as_enemy()
 	if attack_skill.potential_targets.has(target):
 		attack_skill.use({ "target": target })

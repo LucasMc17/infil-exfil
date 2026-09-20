@@ -19,7 +19,7 @@ func begin(unit : EnemyUnit) -> void:
 	unit.move("Run", move)
 
 
-func _on_finished_moving(unit : EnemyUnit):
-	super(unit)
+func _on_finished_moving(unit : EnemyUnit, arrived : bool):
+	super(unit, arrived)
 	end()
 	acting_unit.forfeit_turn()

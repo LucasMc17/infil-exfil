@@ -107,5 +107,4 @@ func exit():
 	is_between_points = false
 	first_step = true
 	unit.refresh_valid_moves.call_deferred()
-	unit.finished_moving.emit(unit)
 	unit.is_moving = false

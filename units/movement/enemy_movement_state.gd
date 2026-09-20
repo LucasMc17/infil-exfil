@@ -2,6 +2,8 @@
 class_name EnemyMovementStates
 extends MovementState
 
+## The full path this unit intends to walk to get to their destination, regardless of whether they can cover that much ground in a single move.
+var full_intended_path : Array = []
 ## The end point of the current movement, established when entering the state and used to create a path for navigation.
 var end_point : Vector3
 ## Whether or not this unit should move to an exact point, or just into the vicinity of one.
@@ -12,7 +14,8 @@ var point_radius := 3
 func enter(previous_state, ext) -> void:
 	super(previous_state, ext)
 	if ext.has('end_point'):
-		var temp_path = Level.current_level.nav_map.find_path(unit.board_position, end_point, exact_point, point_radius).slice(0, unit.movement_points)
+		full_intended_path = Level.current_level.nav_map.find_path(unit.board_position, end_point, exact_point, point_radius)
+		var temp_path = full_intended_path.slice(0, unit.movement_points)
 		for point in temp_path:
 			var blocker = Level.current_level.nav_map.get_point_occupier(point)
 			if blocker:
@@ -27,3 +30,8 @@ func enter(previous_state, ext) -> void:
 		unit.movement_points = 0
 	else:
 		DebugConsole.error('Must pass EnemyMovementState an end_point.')
+
+
+func exit():
+	super()
+	unit.finished_moving.emit(unit, Vector3(unit.board_position) == full_intended_path[-1])

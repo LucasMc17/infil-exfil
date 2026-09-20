@@ -12,3 +12,8 @@ func enter(previous_state, ext) -> void:
 	else:
 		DebugConsole.error('Must pass PlayerMovementState a path array of points.')
 	Level.current_level.movement_system.deactivate()
+
+
+func exit():
+	super()
+	unit.finished_moving.emit(unit, true)

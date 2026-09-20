@@ -19,8 +19,8 @@ enum Status {
 
 ## Signal emitted when the unit begins moving along a navigation path.
 signal started_moving(unit : Unit)
-## Signal emitted when the unit stops moving along a navigation path for any reason.
-signal finished_moving(unit : Unit)
+## Signal emitted when the unit stops moving along a navigation path for any reason. The arrived_at_destination should be true if the unit reached their ultimate destination. This should almost always be true for player-controlled units which typically reach the desintation described by the player, but may be false for enemy units which often have to move part way to a long term objective.
+signal finished_moving(unit : Unit, arrived_at_destination : bool)
 ## Signal emitted when the unit begins acting (performing a skill).
 signal started_acting(unit : Unit)
 ## Signal emitted when the unit finishes acting (performing a skill).
