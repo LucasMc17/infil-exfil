@@ -25,6 +25,8 @@ var known_friendly_count := 0:
 	set(val):
 		if val > known_friendly_count:
 			known_friendly_count = val
+## A dictionary of bodies which this unit is aware of.
+var known_bodies := Utilities.BodiesDict.new()
 
 # var targeted_friendlies : Array[FriendlyUnit] = []
 # var targeted_friendly_count : int:

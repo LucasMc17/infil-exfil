@@ -84,6 +84,8 @@ var last_poc : ContactPoint:
 var is_in_grace_period := false
 ## Whether the unit has already given chase to a friendly unit in this alarm phase. Resets to false when seeing an enemy unit.
 var has_pursued := false
+## A dictionary of bodies which this unit is aware of.
+var known_bodies := Utilities.BodiesDict.new()
 
 func _init(u : EnemyUnit) -> void:
 	unit = u

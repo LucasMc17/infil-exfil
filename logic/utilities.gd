@@ -1,7 +1,10 @@
 @tool
-## Reusable functions throughout the project.
+## Reusable functions and classes throughout the project.
 class_name Utilities
 extends Object
+
+# Functions
+#region
 
 ## Takes in a float between 0 and 1, representing the odds of winning the dice roll where 1 is a sure thing, and 0 is impossible. Generates a second float between 0 and 1 randomly and returns true if that second number is greater than or equal to 1 minus the odds passed in at the beginning.
 static func dice_roll(odds := 0.5) -> bool:
@@ -72,6 +75,53 @@ static func _pick_from_normalized_weights(weights : Array) -> int:
 
 	return -1
 
+#endregion
+
+# Classes
+#region
+
+## Class representing the unit bodies which an enemy unit (aor the entire enemy team) is aware of currently.
+class BodiesDict:
+	## The known friendly bodies.
+	var friendlies : Dictionary[int, FriendlyUnit] = {}
+	## The known enemy bodies.
+	var enemies : Dictionary[int,EnemyUnit] = {}
+
+	## Add a unit to the list of known bodies.
+	func add(unit : Unit) -> void:
+		var id = unit.get_instance_id()
+		if unit is FriendlyUnit:
+			friendlies[id] = unit
+		else:
+			enemies[id] = unit
+	
+
+	## Remove a unit from the list of known bodies.
+	func remove(unit : Unit) -> void:
+		var id = unit.get_instance_id()
+		if unit is FriendlyUnit:
+			friendlies.erase(id)
+		else:
+			enemies.erase(id)
+	
+
+	## Returns true if the unit is in the list of known bodies
+	func has(unit : Unit) -> bool:
+		var id = unit.get_instance_id()
+		if unit is FriendlyUnit:
+			return friendlies.has(id)
+		else:
+			return enemies.has(id)
+	
+
+	## Sync this list of bodies to another list of bodies by adding all known bodies from the other list to this one.
+	func sync(dict : BodiesDict) -> void:
+		for friendly in dict.friendlies.values():
+			add(friendly)
+		for enemy in dict.enemies.values():
+			add(enemy)
+
+#endregion
 
 # FEATURE WISHLIST
 # - Hostile units should attempt to take captives under certain conditions. each unit should start with a will_take_captives boolean set to true. This is set to false when the unit is shot at by a friendly unit, sees one move after they have given warning to freeze, when hearing a gunshot, when encountering another enemy unit with this already set to false, or when a unit with this already set to false reaches the alarm. When encountering units, captive takers should immediately say freeze, then on their next turn, the first one should run for the alarm, no dice roll needed. The rest should begin moving in to take captives, and when all known friendlies are detained, begin moving them to holding cells. The regular combat flow should happen only when the captives boolean is set to false.
