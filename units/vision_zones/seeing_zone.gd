@@ -29,8 +29,13 @@ func check_detection() -> void:
 				DebugConsole.log("Enemy sees " + str(vis_score) + "/8 of friendly's vision points", 3)
 				if vis_score > 2:
 					spotted.append(zone.unit)
+					enemy.awareness.known_bodies.remove(zone.unit)
+					if Level.current_level.alarm.active:
+						Level.current_level.enemy_awareness.known_bodies.remove(zone.unit)
 			else:
 				enemy.awareness.known_bodies.add(zone.unit)
+				if Level.current_level.alarm.active:
+					Level.current_level.enemy_awareness.known_bodies.add(zone.unit)
 		if !spotted.is_empty():
 			friendly_seen.emit(spotted)
 			enemy.speak("Hey!")

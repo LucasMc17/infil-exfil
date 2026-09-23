@@ -89,3 +89,13 @@ func _on_contact_point_button_pressed() -> void:
 func _on_refresh_requested(u : EnemyUnit) -> void:
 	if u == unit:
 		refresh()
+
+
+func _on_kill_button_pressed() -> void:
+	if unit:
+		unit.die()
+
+
+func _on_lose_alarm_button_pressed() -> void:
+	if unit:
+		unit.awareness.drop_guard()

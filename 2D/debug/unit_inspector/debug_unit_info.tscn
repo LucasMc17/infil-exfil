@@ -46,6 +46,10 @@ layout_mode = 2
 key = "Position"
 value = "(0,0,0)"
 
+[node name="KillButton" type="Button" parent="MarginContainer/VBoxContainer/Status/VBoxContainer" unique_id=1126801375]
+layout_mode = 2
+text = "Kill"
+
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=137974393]
 layout_mode = 2
 theme_type_variation = &"SubHeadline"
@@ -107,6 +111,10 @@ value = "0"
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="LoseAlarmButton" type="Button" parent="MarginContainer/VBoxContainer/Awareness/VBoxContainer" unique_id=1502127764]
+layout_mode = 2
+text = "Lose Alarm State"
+
 [node name="BodyAwareness" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1100790698]
 layout_mode = 2
 
@@ -136,4 +144,6 @@ value = "0"
 unique_name_in_owner = true
 layout_mode = 2
 
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Status/VBoxContainer/KillButton" to="." method="_on_kill_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Awareness/VBoxContainer/ContactPointButton" to="." method="_on_contact_point_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Awareness/VBoxContainer/LoseAlarmButton" to="." method="_on_lose_alarm_button_pressed"]
