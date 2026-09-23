@@ -2,8 +2,8 @@
 
 [ext_resource type="Theme" uid="uid://bisleysoror3b" path="res://assets/themes/debug_theme.tres" id="1_6j2pg"]
 [ext_resource type="Script" uid="uid://iqwtdjvj5ij5" path="res://2D/debug/inspectors/unit_inspector/unit_info/unit_info.gd" id="1_p4qvh"]
-[ext_resource type="PackedScene" uid="uid://dv23xg01min15" path="res://2D/debug/inspectors/debug_kv_pair.tscn" id="2_6t10j"]
 [ext_resource type="PackedScene" uid="uid://ctdriu8ynjogf" path="res://2D/debug/inspectors/unit_inspector/unit_info/status_inspector.tscn" id="3_63wua"]
+[ext_resource type="PackedScene" uid="uid://cdueo25e0qjlh" path="res://2D/debug/inspectors/unit_inspector/unit_info/directive_inspector.tscn" id="4_4t8e3"]
 [ext_resource type="PackedScene" uid="uid://ctjjvmw63d75d" path="res://2D/debug/inspectors/bodies_dict_inspector.tscn" id="4_ee4jk"]
 [ext_resource type="PackedScene" uid="uid://b4mu5i20ltj7t" path="res://2D/debug/inspectors/unit_inspector/unit_info/awareness_inspector.tscn" id="5_4t8e3"]
 
@@ -29,17 +29,9 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=137974393]
-layout_mode = 2
-theme_type_variation = &"SubHeadline"
-text = "Directives"
-horizontal_alignment = 1
-
-[node name="CurrentDirective" parent="MarginContainer/VBoxContainer" unique_id=848224705 instance=ExtResource("2_6t10j")]
+[node name="DirectiveInspector" parent="MarginContainer/VBoxContainer" unique_id=2003886517 instance=ExtResource("4_4t8e3")]
 unique_name_in_owner = true
 layout_mode = 2
-key = "Current"
-value = "None"
 
 [node name="AwarenessInspector" parent="MarginContainer/VBoxContainer" unique_id=1806344828 instance=ExtResource("5_4t8e3")]
 unique_name_in_owner = true

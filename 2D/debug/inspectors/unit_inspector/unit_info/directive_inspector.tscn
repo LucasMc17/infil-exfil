@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://cdueo25e0qjlh"]
+
+[ext_resource type="Theme" uid="uid://bisleysoror3b" path="res://assets/themes/debug_theme.tres" id="1_w24py"]
+[ext_resource type="PackedScene" uid="uid://dv23xg01min15" path="res://2D/debug/inspectors/debug_kv_pair.tscn" id="2_fnjwr"]
+[ext_resource type="Script" uid="uid://cjqdiwhalwcs1" path="res://2D/debug/inspectors/unit_inspector/unit_info/directive_inspector.gd" id="2_vuc38"]
+
+[node name="DirectiveInspector" type="PanelContainer" unique_id=2003886517]
+theme = ExtResource("1_w24py")
+script = ExtResource("2_vuc38")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1890652428]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=652935535]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=2052251924]
+layout_mode = 2
+theme_type_variation = &"SubHeadline"
+text = "Directives"
+horizontal_alignment = 1
+
+[node name="CurrentDirective" parent="MarginContainer/VBoxContainer" unique_id=848224705 instance=ExtResource("2_fnjwr")]
+unique_name_in_owner = true
+layout_mode = 2
+key = "Current"
+value = "None"

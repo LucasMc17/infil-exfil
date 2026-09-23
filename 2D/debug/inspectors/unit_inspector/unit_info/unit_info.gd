@@ -2,11 +2,11 @@ class_name DebugUnitInfo
 extends PanelContainer
 
 @onready var _name_label : Label = %Name
-@onready var _current_directive : DebugKVPair = %CurrentDirective
 
 @onready var _status_inspector : StatusInspector = %StatusInspector
 @onready var _awareness_inspector : AwarenessInspector = %AwarenessInspector
 @onready var _bodies_dict_inspector : BodiesDictInspector = %BodiesDictInspector
+@onready var _directive_inspector : DirectiveInspector = %DirectiveInspector
 
 var unit : EnemyUnit
 
@@ -17,16 +17,12 @@ func display_unit_info(u : EnemyUnit) -> void:
 	if u:
 		unit = u
 		visible = true
-
 		_name_label.text = unit.name
 
-		_current_directive.value = unit.decision_director.last_directive_name
-
-
-
-		_bodies_dict_inspector.refresh(unit.awareness.known_bodies)
 		_awareness_inspector.refresh(unit.awareness)
+		_directive_inspector.refresh(unit.decision_director)
 		_status_inspector.refresh(unit)
+		_bodies_dict_inspector.refresh(unit.awareness.known_bodies)
 
 
 func refresh() -> void:
