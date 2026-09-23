@@ -6,6 +6,11 @@ extends Object
 # Functions
 #region
 
+## Clears all the children of a node.
+static func clear_children(node : Node) -> void:
+	for c in node.get_children():
+		c.queue_free()
+
 ## Takes in a float between 0 and 1, representing the odds of winning the dice roll where 1 is a sure thing, and 0 is impossible. Generates a second float between 0 and 1 randomly and returns true if that second number is greater than or equal to 1 minus the odds passed in at the beginning.
 static func dice_roll(odds := 0.5) -> bool:
 	var roll := randf()

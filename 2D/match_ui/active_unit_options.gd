@@ -17,8 +17,7 @@ func refresh_affordability() -> void:
 
 func _on_skill_refresh() -> void:
 	if Level.current_level && Unit.active_unit:
-		for child in get_children():
-			child.queue_free()
+		Utilities.clear_children(self)
 		var index := 1
 		for skill in Unit.active_unit.all_skills:
 			if skill.get_visibility():

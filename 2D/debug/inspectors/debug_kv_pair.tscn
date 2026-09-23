@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dv23xg01min15"]
 
-[ext_resource type="Script" uid="uid://dlxxngm78axaa" path="res://2D/debug/debug_kv_pair.gd" id="1_4mvrl"]
+[ext_resource type="Script" uid="uid://dlxxngm78axaa" path="res://2D/debug/inspectors/debug_kv_pair.gd" id="1_4mvrl"]
 
 [node name="DebugKVPair" type="HBoxContainer" unique_id=848224705]
 script = ExtResource("1_4mvrl")

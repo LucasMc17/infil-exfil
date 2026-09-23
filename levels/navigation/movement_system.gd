@@ -60,16 +60,14 @@ func mark_hovered_path(end_point : Vector3) -> void:
 ## Clears the path_markers for the hovered path from the level scene.
 func clear_hovered_path() -> void:
 	hovered_path = []
-	for child in _hovered_path_holder.get_children():
-		child.queue_free()
+	Utilities.clear_children(_hovered_path_holder)
 
 # PATH PLANNING
 
 ## Marks the full planned path, based on placed waypoints. A private function because it is only ever called when placing a waymarker which is done from within this script.
 func _mark_planned_path() -> void:
 	Events.waymarker_placed.emit()
-	for child in _planned_paths_holder.get_children():
-		child.queue_free()
+	Utilities.clear_children(_planned_paths_holder)
 	for subpath in planned_path:
 		for step in subpath:
 			var path_marker_scene = PATH_MARKER.instantiate()
@@ -82,8 +80,7 @@ func wipe_planned_path() -> void:
 	Events.planned_path_cleared.emit()
 	clear_hovered_path()
 	planned_path = []
-	for child in _planned_paths_holder.get_children():
-		child.queue_free()
+	Utilities.clear_children(_planned_paths_holder)
 
 
 ## Places a routing waypoint for the path, enforcing that, if movement is confirmed, the player will first travel to this point along the indicated path.
@@ -110,14 +107,12 @@ func place_waymarker(point : Vector3) -> void:
 
 ## Remove all viable moves from the board. This is purely visuals, does not actually clear what the game considers as viable moves, although it may be used in conjunction with that function, as in the [deactivate] method.
 func _clear_viable_moves() -> void:
-	for child in _viable_move_holder.get_children():
-		child.queue_free()
+	Utilities.clear_children(_viable_move_holder)
 
 
 ## Remove all potential player moves from the board. This is purely visuals, does not actually clear what the game considers as potential player moves, although it may be used in conjunction with that function, as in the [deactivate] method.
 func _clear_all_moves() -> void:
-	for child in _all_move_holder.get_children():
-		child.queue_free()
+	Utilities.clear_children(_all_move_holder)
 
 
 ## Fully redraw the game's move highlights, including both viable moves which the player can route to and potential moves which the player can reach but not while following their current planned path.

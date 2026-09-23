@@ -1,0 +1,39 @@
+class_name DebugUnitInfo
+extends PanelContainer
+
+@onready var _name_label : Label = %Name
+@onready var _current_directive : DebugKVPair = %CurrentDirective
+
+@onready var _status_inspector : StatusInspector = %StatusInspector
+@onready var _awareness_inspector : AwarenessInspector = %AwarenessInspector
+@onready var _bodies_dict_inspector : BodiesDictInspector = %BodiesDictInspector
+
+var unit : EnemyUnit
+
+func _ready() -> void:
+	Events.request_update_unit_monitor.connect(_on_refresh_requested)
+
+func display_unit_info(u : EnemyUnit) -> void:
+	if u:
+		unit = u
+		visible = true
+
+		_name_label.text = unit.name
+
+		_current_directive.value = unit.decision_director.last_directive_name
+
+
+
+		_bodies_dict_inspector.refresh(unit.awareness.known_bodies)
+		_awareness_inspector.refresh(unit.awareness)
+		_status_inspector.refresh(unit)
+
+
+func refresh() -> void:
+	display_unit_info(unit) 
+
+
+func _on_refresh_requested(u : EnemyUnit) -> void:
+	if u == unit:
+		refresh()
+		

@@ -27,8 +27,7 @@ func build(skill : TargetedSkill) -> void:
 func teardown() -> void:
 	Events.target_cleared.emit()
 	selected_target_icon = null
-	for child in _targets.get_children():
-		child.queue_free()
+	Utilities.clear_children(_targets)
 
 
 func _on_target_icon_clicked(target_icon : TargetIcon):

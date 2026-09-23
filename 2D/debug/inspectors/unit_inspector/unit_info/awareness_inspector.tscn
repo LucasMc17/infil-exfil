@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://b4mu5i20ltj7t"]
+
+[ext_resource type="Theme" uid="uid://bisleysoror3b" path="res://assets/themes/debug_theme.tres" id="1_4hv5q"]
+[ext_resource type="Script" uid="uid://cp7vyahvumdfx" path="res://2D/debug/inspectors/unit_inspector/unit_info/awareness_inspector.gd" id="2_8bttc"]
+[ext_resource type="PackedScene" uid="uid://dv23xg01min15" path="res://2D/debug/inspectors/debug_kv_pair.tscn" id="3_yijp4"]
+
+[node name="AwarenessInspector" type="PanelContainer" unique_id=1806344828]
+theme = ExtResource("1_4hv5q")
+script = ExtResource("2_8bttc")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=904835172]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=949591445]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1092348528]
+layout_mode = 2
+theme_type_variation = &"SubHeadline"
+text = "Awareness"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=508466570]
+layout_mode = 2
+
+[node name="Level" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=848224705 instance=ExtResource("3_yijp4")]
+unique_name_in_owner = true
+layout_mode = 2
+key = "Level"
+value = "UNAWARE"
+
+[node name="ContactPoint" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=1121748894 instance=ExtResource("3_yijp4")]
+unique_name_in_owner = true
+layout_mode = 2
+key = "Last Contact Point"
+value = "(0,0,0)"
+
+[node name="ContactPointButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=324489443]
+layout_mode = 2
+text = "Jump to Point"
+
+[node name="LoseAlarmButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=451048115]
+layout_mode = 2
+text = "Lose Alarm State"
+
+[node name="FriendliesInSight" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=862843849 instance=ExtResource("3_yijp4")]
+unique_name_in_owner = true
+layout_mode = 2
+key = "Known Friendlies in Sight"
+value = "0"
+
+[node name="InSightButtons" type="VBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=131927720]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="FriendliesOutOfSight" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=1568949044 instance=ExtResource("3_yijp4")]
+unique_name_in_owner = true
+layout_mode = 2
+key = "Known Friendlies out of Sight"
+value = "0"
+
+[node name="OutOfSightButtons" type="VBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=1145916327]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/ContactPointButton" to="." method="_on_contact_point_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/LoseAlarmButton" to="." method="_on_lose_alarm_button_pressed"]

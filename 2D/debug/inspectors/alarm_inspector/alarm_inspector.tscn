@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://cw0j7wmdm80rc"]
 
 [ext_resource type="Theme" uid="uid://bisleysoror3b" path="res://assets/themes/debug_theme.tres" id="1_vwsdr"]
-[ext_resource type="PackedScene" uid="uid://dv23xg01min15" path="res://2D/debug/debug_kv_pair.tscn" id="2_6fg7h"]
-[ext_resource type="Script" uid="uid://d1bf38fkaija4" path="res://2D/debug/alarm_inspector/alarm_inspector.gd" id="2_veyfq"]
+[ext_resource type="PackedScene" uid="uid://dv23xg01min15" path="res://2D/debug/inspectors/debug_kv_pair.tscn" id="2_6fg7h"]
+[ext_resource type="Script" uid="uid://d1bf38fkaija4" path="res://2D/debug/inspectors/alarm_inspector/alarm_inspector.gd" id="2_veyfq"]
 
 [node name="AlarmInspector" type="FoldableContainer" unique_id=1063794726]
 theme = ExtResource("1_vwsdr")
