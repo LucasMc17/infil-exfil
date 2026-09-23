@@ -3,10 +3,10 @@ extends PanelContainer
 
 @onready var _name_label : Label = %Name
 
-@onready var _status_inspector : StatusInspector = %StatusInspector
-@onready var _awareness_inspector : AwarenessInspector = %AwarenessInspector
+@onready var _status_inspector : UnitStatusInspector = %UnitStatusInspector
+@onready var _awareness_inspector : UnitAwarenessInspector = %UnitAwarenessInspector
 @onready var _bodies_dict_inspector : BodiesDictInspector = %BodiesDictInspector
-@onready var _directive_inspector : DirectiveInspector = %DirectiveInspector
+@onready var _directive_inspector : UnitDirectiveInspector = %UnitDirectiveInspector
 
 var unit : EnemyUnit
 

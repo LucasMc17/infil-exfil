@@ -1,4 +1,4 @@
-class_name AwarenessInspector
+class_name UnitAwarenessInspector
 extends PanelContainer
 
 @onready var _level : DebugKVPair = %Level

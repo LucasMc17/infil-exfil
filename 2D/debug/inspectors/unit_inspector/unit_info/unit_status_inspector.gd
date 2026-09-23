@@ -1,4 +1,4 @@
-class_name StatusInspector
+class_name UnitStatusInspector
 extends PanelContainer
 
 @onready var _acting_state : DebugKVPair = %ActingState

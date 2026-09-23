@@ -1,4 +1,4 @@
-class_name DirectiveInspector
+class_name UnitDirectiveInspector
 extends PanelContainer
 
 @onready var _current_directive : DebugKVPair = %CurrentDirective

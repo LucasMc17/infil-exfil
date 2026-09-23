@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://cw0j7wmdm80rc"]
 
 [ext_resource type="Theme" uid="uid://bisleysoror3b" path="res://assets/themes/debug_theme.tres" id="1_vwsdr"]
-[ext_resource type="PackedScene" uid="uid://dv23xg01min15" path="res://2D/debug/inspectors/debug_kv_pair.tscn" id="2_6fg7h"]
 [ext_resource type="Script" uid="uid://d1bf38fkaija4" path="res://2D/debug/inspectors/alarm_inspector/alarm_inspector.gd" id="2_veyfq"]
+[ext_resource type="PackedScene" uid="uid://ccm7k50slj681" path="res://2D/debug/inspectors/alarm_inspector/alarm_info/alarm_status_inspector.tscn" id="3_d62dh"]
+[ext_resource type="PackedScene" uid="uid://ctjjvmw63d75d" path="res://2D/debug/inspectors/bodies_dict_inspector.tscn" id="4_wwewi"]
 
 [node name="AlarmInspector" type="FoldableContainer" unique_id=1063794726]
 theme = ExtResource("1_vwsdr")
@@ -18,14 +19,10 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1400826410]
 layout_mode = 2
 
-[node name="Active" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=848224705 instance=ExtResource("2_6fg7h")]
+[node name="AlarmStatusInspector" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=615401211 instance=ExtResource("3_d62dh")]
 unique_name_in_owner = true
 layout_mode = 2
-key = "Active"
-value = "FALSE"
 
-[node name="TurnsLeft" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1505952407 instance=ExtResource("2_6fg7h")]
+[node name="BodiesDictInspector" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1733461379 instance=ExtResource("4_wwewi")]
 unique_name_in_owner = true
 layout_mode = 2
-key = "Turns Left"
-value = "3"

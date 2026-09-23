@@ -1,12 +1,12 @@
 extends FoldableContainer
 
-@onready var _active : DebugKVPair = %Active
-@onready var _countdown : DebugKVPair = %TurnsLeft
+@onready var _status_inspector : AlarmStatusInspector = %AlarmStatusInspector
+@onready var _bodies_inspector : BodiesDictInspector = %BodiesDictInspector
 
 func _ready() -> void:
 	Events.update_alarm_monitor.connect(refresh)
 
 
 func refresh() -> void:
-	_active.value = "TRUE" if Level.current_level.alarm.active else "FALSE"
-	_countdown.value = str(Level.current_level.alarm.countdown)
+	_status_inspector.refresh()
+	_bodies_inspector.refresh(Level.current_level.enemy_awareness.known_bodies)
