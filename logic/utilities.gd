@@ -82,10 +82,16 @@ static func _pick_from_normalized_weights(weights : Array) -> int:
 
 ## Class representing the unit bodies which an enemy unit (aor the entire enemy team) is aware of currently.
 class BodiesDict:
+	## Nullable owning unit of this bodies dict.
+	var owning_unit : Unit
 	## The known friendly bodies.
 	var friendlies : Dictionary[int, FriendlyUnit] = {}
 	## The known enemy bodies.
 	var enemies : Dictionary[int,EnemyUnit] = {}
+
+	func _init(o : Unit = null) -> void:
+		owning_unit = o
+
 
 	## Add a unit to the list of known bodies.
 	func add(unit : Unit) -> void:
@@ -94,6 +100,8 @@ class BodiesDict:
 			friendlies[id] = unit
 		else:
 			enemies[id] = unit
+		if owning_unit:
+			Events.request_update_unit_monitor.emit(owning_unit)
 	
 
 	## Remove a unit from the list of known bodies.
@@ -103,6 +111,8 @@ class BodiesDict:
 			friendlies.erase(id)
 		else:
 			enemies.erase(id)
+		if owning_unit:
+			Events.request_update_unit_monitor.emit(owning_unit)
 	
 
 	## Returns true if the unit is in the list of known bodies

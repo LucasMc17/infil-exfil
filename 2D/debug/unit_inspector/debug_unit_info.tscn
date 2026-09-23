@@ -107,4 +107,33 @@ value = "0"
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="BodyAwareness" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1100790698]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/BodyAwareness" unique_id=253523885]
+layout_mode = 2
+theme_type_variation = &"SubHeadline"
+text = "Body Awareness"
+horizontal_alignment = 1
+
+[node name="FriendlyBodies" parent="MarginContainer/VBoxContainer/BodyAwareness" unique_id=786495652 instance=ExtResource("2_6t10j")]
+unique_name_in_owner = true
+layout_mode = 2
+key = "Known Friendly Bodies"
+value = "0"
+
+[node name="FriendlyBodyButtons" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BodyAwareness" unique_id=10793740]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="EnemyBodies" parent="MarginContainer/VBoxContainer/BodyAwareness" unique_id=1203245839 instance=ExtResource("2_6t10j")]
+unique_name_in_owner = true
+layout_mode = 2
+key = "Known Enemy Bodies"
+value = "0"
+
+[node name="EnemyBodyButtons" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BodyAwareness" unique_id=56498078]
+unique_name_in_owner = true
+layout_mode = 2
+
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Awareness/VBoxContainer/ContactPointButton" to="." method="_on_contact_point_button_pressed"]
