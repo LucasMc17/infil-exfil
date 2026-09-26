@@ -1,5 +1,6 @@
 @tool
 ## A unit under direct control by the player.
+@icon("uid://bxjd3qs3f231j")
 class_name FriendlyUnit 
 extends Unit
 

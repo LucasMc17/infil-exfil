@@ -1,4 +1,5 @@
 ## 3D node responsible for marking all viable moves to the player, as well as charting paths for the player as they plan moves.
+@icon("uid://c3n1p4ogs4efj")
 class_name MovementSystem
 extends Node3D
 

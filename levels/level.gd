@@ -1,5 +1,6 @@
 @tool
 ## A level for one match between player and enemy to take place in.
+@icon("uid://c8e3v8bomdmq6")
 class_name Level
 extends Node3D
 

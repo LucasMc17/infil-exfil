@@ -1,5 +1,6 @@
 @tool
 ## The base class of all units in the game, both friendly and enemy.
+@icon("uid://dbylwskafl7dt")
 class_name Unit
 extends AnimatableBody3D
 

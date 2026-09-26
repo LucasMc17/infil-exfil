@@ -1,4 +1,5 @@
 ## A camera specifically designed for use in a level. It can pivot on two axes around a focal point, track an actor, jump to a specific point, zoom in, zoom out, pan and ascend or descene in even increments.
+@icon("uid://d0urilraswxfv")
 class_name LevelCamera
 extends Node3D
 

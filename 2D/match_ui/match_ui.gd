@@ -1,4 +1,5 @@
 ## The root of all match UI, curently split between turn UI and skill usage UI.
+@icon("uid://bta26uu8iwr8c")
 class_name MatchUI
 extends Control
 

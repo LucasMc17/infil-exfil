@@ -1,5 +1,6 @@
 @tool
 ## An extended [GridMap] designed to create a navigable map for A* to work with at first load.
+@icon("uid://bqon7kxufra4h")
 class_name NavigableGridMap
 extends GridMap
 

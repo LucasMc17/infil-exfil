@@ -1,4 +1,5 @@
 ## Node3D extended to handle clicks in 3D space, and return the clicked object and it's position.
+@icon("uid://b2rripx5a1ymq")
 class_name ClickHandler3D
 extends Node3D
 

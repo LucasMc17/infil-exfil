@@ -1,5 +1,6 @@
 @tool
 ## The basic class of enemy in the game. Initializes own logic around decision making and player awareness tracking and acts autonomously during gameplay.
+@icon("uid://cxgy364650i6i")
 class_name EnemyUnit
 extends Unit
 
