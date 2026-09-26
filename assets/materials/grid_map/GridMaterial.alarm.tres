@@ -3,5 +3,5 @@
 [resource]
 resource_name = "GridMaterial.alarm"
 cull_mode = 2
-albedo_color = Color(0.90633965, 0.8588808, 0, 1)
+albedo_color = Color(0.90588236, 0.85882354, 0, 1)
 roughness = 0.5

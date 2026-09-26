@@ -8,21 +8,37 @@ extends Control
 ## Constant representing what should remain as the only path to saved chunks in the project. Likewise, all files within this directory should be Chunk resources, with no subdirectories.
 const SAVED_CHUNKS_PATH : String = "res://addons/grid_map_chunks/saved_chunks/"
 
+var grid_map_plugin : GridMapEditorPlugin
+var grid_map : GridMap
+var chunk_loader : ChunkLoader
+var chunk_saver : ChunkSaver
+var chunk_previewer : ChunkPreviewer
 ## The currently inputted file name to be used when saving new chunks through the UI.
 var file_name : String:
 	get():
 		return name_edit.text
-var chunk_loader : ChunkLoader = ChunkLoader.new()
 
 func _ready() -> void:
+	visibility_changed.connect(_on_visibility_changed)
+
+
+func _on_visibility_changed() -> void:
+	_resync_to_grid_map()
 	_refresh_chunks()
 
+
+func _resync_to_grid_map() -> void:
+	grid_map_plugin = _get_grid_map_plugin()
+	grid_map = grid_map_plugin.get_current_grid_map()
+	chunk_loader = ChunkLoader.new(grid_map_plugin)
+	chunk_saver = ChunkSaver.new(SAVED_CHUNKS_PATH)
+	chunk_previewer = ChunkPreviewer.new(grid_map, grid_map_plugin, chunk_loader)
 
 ## Forces a refresh of the list of available saved chunks. Happens automatically at key points, but is also triggered by the reset button, in the event of a desync between the UI and the project file structure.
 func _refresh_chunks() -> void:
 	for child : ChunkOption in _option_holder.get_children():
-		child.previewed.disconnect(_preview_chunk)
-		child.loaded.disconnect(_on_chunk_loaded)
+		child.previewed.disconnect(_on_preview_button_pressed)
+		child.loaded.disconnect(_on_load_button_pressed)
 		child.queue_free()
 	var dir = DirAccess.open(SAVED_CHUNKS_PATH)
 	if dir:
@@ -32,8 +48,8 @@ func _refresh_chunks() -> void:
 			if !dir.current_is_dir():
 				var chunk : Chunk = load(SAVED_CHUNKS_PATH + file_name) as Chunk
 				var option_scene = ChunkOption.new_option(chunk, file_name)
-				option_scene.previewed.connect(_preview_chunk)
-				option_scene.loaded.connect(_on_chunk_loaded)
+				option_scene.previewed.connect(_on_preview_button_pressed)
+				option_scene.loaded.connect(_on_load_button_pressed)
 				_option_holder.add_child(option_scene)
 			file_name = dir.get_next()
 	else:
@@ -42,6 +58,8 @@ func _refresh_chunks() -> void:
 
 ## Save a selected chunk to the file system, provided a selection is currently present and a valid file name is inputted in the line edit.
 func _on_save_button_pressed() -> void:
+	if !grid_map or grid_map != grid_map_plugin.get_current_grid_map():
+		_resync_to_grid_map()
 	if !file_name:
 		print("INPUT A FILE NAME TO SAVE")
 		return
@@ -56,7 +74,11 @@ func _on_save_button_pressed() -> void:
 	var selection_range = grid_map_plugin.get_selection()
 	var selection = grid_map_plugin.get_selected_cells()
 
-	_save_chunk(file_name, selection, selection_range, grid_map)
+	if chunk_saver.save(file_name, selection, selection_range, grid_map):
+		print("CHUNK SAVED")
+		_refresh_chunks()
+	else:
+		print("FAILED TO SAVE")
 
 
 ## Utility function for fetching the active GridMap in the editor.
@@ -71,58 +93,18 @@ func _get_grid_map_plugin() -> GridMapEditorPlugin:
 	return grid_map_plugins[0]
 
 
-## Stringifies the selected GridMap data into a JSON object with it's own schema (see [Chunk.content] for more details).
-func _serialize_points(points : Array, local_root : Vector3i, grid_map : GridMap) -> String:
-	var result = {}
-	for point : Vector3i in points:
-		var local_point = point - local_root
-		var key = _stringify_vector3(local_point)
-		var cell = grid_map.get_cell_item(point)
-		var cell_rotation = grid_map.get_cell_item_orientation(point)
-		var value = str(cell) + "-" + str(cell_rotation)
-		result[key] = value
-	
-	return JSON.stringify(result)
-
-
-## Utility function for reducing a Vector3/Vector3i to a string (Vector3i(0, 1, 2) -> "0/1/2").
-func _stringify_vector3(vector : Variant) -> String:
-	if vector is Vector3 or vector is Vector3i:
-		return str(vector.x) + "/" + str(vector.y) + "/" + str(vector.z)
-	else:
-		return ""
-
-
-## Serialize a chunk of map data as a reusable Chunk, and save that chunk to a tres in the file system.
-func _save_chunk(name : String, points : Array, selection : AABB, grid_map : GridMap) -> void:
-	var chunk = Chunk.new()
-
-	chunk.dimensions = selection.size
-	chunk.name = name
-	chunk.content = _serialize_points(points, Vector3i(selection.position), grid_map)
-
-	var error := ResourceSaver.save(chunk, SAVED_CHUNKS_PATH + name + '.tres')
-    
-	if error == OK:
-		print("CHUNK SAVED")
-		_refresh_chunks()
-	else:
-		print("FAILED TO SAVE. ERROR CODE: ", error)
-
-
-## Set the selection of the current GridMap to the dimensions of the chunk, showing exactly how large it will be, and how many tiles it may potentially replace.
-func _preview_chunk(chunk : Chunk) -> void:
-	var grid_map_plugin : GridMapEditorPlugin = _get_grid_map_plugin()
-	var position = grid_map_plugin.get_selection().position
-
-	grid_map_plugin.set_selection(position, Vector3i(position) + chunk.dimensions)
-
-
 ## Load a Chunk resource via the ChunkLoader and reconstruct it in the GridMap, at the current selection's root position.
-func _on_chunk_loaded(chunk : Chunk) -> void:
+func _on_load_button_pressed(chunk : Chunk) -> void:
+	if !grid_map or grid_map != grid_map_plugin.get_current_grid_map():
+		_resync_to_grid_map()
 	var grid_map_plugin = _get_grid_map_plugin()
-	chunk_loader.load_chunk(grid_map_plugin, chunk)
+	chunk_loader.load(grid_map, chunk)
 
+
+func _on_preview_button_pressed(chunk : Chunk) -> void:
+	if !grid_map or grid_map != grid_map_plugin.get_current_grid_map():
+		_resync_to_grid_map()
+	chunk_previewer.preview(chunk)
 # TODO:
 	# Better chunk visualization
 	# Rotation solution
