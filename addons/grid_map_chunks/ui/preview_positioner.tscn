@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://xqoixp7f20ox"]
+
+[node name="PreviewPositioner" type="VBoxContainer" unique_id=1296612227]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1547487951]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer" unique_id=1768629828]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/CenterContainer" unique_id=753898964]
+layout_mode = 2
+
+[node name="RotateLeft" type="Button" parent="HBoxContainer/CenterContainer/HBoxContainer" unique_id=581602064]
+layout_mode = 2
+text = "L"
+
+[node name="RotateRight" type="Button" parent="HBoxContainer/CenterContainer/HBoxContainer" unique_id=1293254506]
+layout_mode = 2
+text = "R"
+
+[node name="CenterContainer2" type="CenterContainer" parent="HBoxContainer" unique_id=1930595958]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GridContainer" type="GridContainer" parent="HBoxContainer/CenterContainer2" unique_id=214029436]
+layout_mode = 2
+columns = 3
+
+[node name="Control" type="Control" parent="HBoxContainer/CenterContainer2/GridContainer" unique_id=1238571319]
+layout_mode = 2
+
+[node name="UpButton" type="Button" parent="HBoxContainer/CenterContainer2/GridContainer" unique_id=1584452500]
+layout_mode = 2
+text = "^"
+
+[node name="Control2" type="Control" parent="HBoxContainer/CenterContainer2/GridContainer" unique_id=362611142]
+layout_mode = 2
+
+[node name="LeftButton" type="Button" parent="HBoxContainer/CenterContainer2/GridContainer" unique_id=1488950207]
+layout_mode = 2
+text = "<"
+
+[node name="Control3" type="Control" parent="HBoxContainer/CenterContainer2/GridContainer" unique_id=718548589]
+layout_mode = 2
+
+[node name="RightButton" type="Button" parent="HBoxContainer/CenterContainer2/GridContainer" unique_id=169600676]
+layout_mode = 2
+text = ">"
+
+[node name="Control4" type="Control" parent="HBoxContainer/CenterContainer2/GridContainer" unique_id=1245444645]
+layout_mode = 2
+
+[node name="DownButton" type="Button" parent="HBoxContainer/CenterContainer2/GridContainer" unique_id=1291562733]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_rotation = 3.1415927
+text = "^"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="." unique_id=625421280]
+layout_mode = 2
+
+[node name="CancelButton" type="Button" parent="HBoxContainer2" unique_id=425503621]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cancel	"
+
+[node name="ConfirmButton" type="Button" parent="HBoxContainer2" unique_id=109761368]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Confirm"

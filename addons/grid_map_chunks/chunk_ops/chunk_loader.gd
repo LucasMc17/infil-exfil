@@ -3,10 +3,45 @@
 class_name ChunkLoader
 extends Object
 
-var grid_map_plugin : GridMapEditorPlugin
 
-func _init(gmp: GridMapEditorPlugin) -> void:
-	grid_map_plugin = gmp
+# TODO: Find a way to do this efficiently
+func _create_preview_mesh_lib() -> void:
+	MapChunkDock.current.preview_mesh_lib = MapChunkDock.current.grid_map.mesh_library.duplicate(true)
+	for mesh_id in MapChunkDock.current.preview_mesh_lib.get_item_list():
+		var mesh = MapChunkDock.current.preview_mesh_lib.get_item_mesh(mesh_id)
+		var mat = mesh.surface_get_material(0).duplicate(true)
+		
+		if mat and mat is StandardMaterial3D:
+			mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+			mat.albedo_color.a = 0.5
+		
+		mesh.surface_set_material(0, mat)
+	
+	if MapChunkDock.current.preview_layer:
+		MapChunkDock.current.preview_layer.mesh_library = MapChunkDock.current.preview_mesh_lib
+
+func create_preview_layer() -> void:
+	clear_preview_layer()
+	MapChunkDock.current.preview_layer = MapChunkDock.current.grid_map.duplicate()
+	MapChunkDock.current.preview_layer.position = Vector3.ZERO
+	MapChunkDock.current.preview_layer.clear()
+	MapChunkDock.current.grid_map.add_child(MapChunkDock.current.preview_layer)
+	_create_preview_mesh_lib()
+
+
+func clear_preview_layer() -> void:
+	if MapChunkDock.current.preview_layer:
+		MapChunkDock.current.preview_layer.free()
+
+
+## Set the selection of the current GridMap to the dimensions of the chunk, showing exactly how large it will be, and how many tiles it may potentially replace.
+func preview(chunk : Chunk) -> void:
+
+	create_preview_layer()
+
+	load_chunk(MapChunkDock.current.preview_layer, chunk)
+
+	# grid_map_plugin.set_selection(position, Vector3i(position) + chunk.dimensions)
 
 ## Return a stringified vector to a full vector format ("0/1/2" -> Vector3(0.0, 1.0, 1.0)).
 func _unstringify_vector3(string : String) -> Vector3:
@@ -27,11 +62,11 @@ func set_grid_map_contents(grid_map : GridMap, cell_map : Dictionary[Vector3i, V
 
 # TODO: Undo redo breaks when using this to preview chunks. Might not even need undo redo for previews.
 ## Main function for loading map chunks into the grid map.
-func load(map : GridMap, chunk : Chunk) -> void:
+func load_chunk(map : GridMap, chunk : Chunk) -> void:
 	var undo_redo = EditorInterface.get_editor_undo_redo()
 	undo_redo.create_action("Load Chunk")
 
-	var local_root = Vector3i(grid_map_plugin.get_selection().position)
+	var local_root = Vector3i(MapChunkDock.current.grid_map_plugin.get_selection().position)
 
 	var old_cell_map : Dictionary[Vector3i, Vector2i] = {}
 	for cell in map.get_used_cells():

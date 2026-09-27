@@ -2,11 +2,6 @@
 class_name ChunkSaver
 extends Object
 
-var saved_chunks_path : String
-
-func _init(path : String) -> void:
-	saved_chunks_path = path
-
 ## Stringifies the selected GridMap data into a JSON object with it's own schema (see [Chunk.content] for more details).
 func _serialize_points(points : Array, local_root : Vector3i, grid_map : GridMap) -> String:
 	var result = {}
@@ -30,13 +25,16 @@ func _stringify_vector3(vector : Variant) -> String:
 
 
 ## Serialize a chunk of map data as a reusable Chunk, and save that chunk to a tres in the file system.
-func save(name : String, points : Array, selection : AABB, grid_map : GridMap) -> bool:
+func save_chunk(name : String) -> bool:
 	var chunk = Chunk.new()
+
+	var selection = ChunkOperator.grid_map_plugin.get_selection()
+	var points = ChunkOperator.grid_map_plugin.get_selected_cells()
 
 	chunk.dimensions = selection.size
 	chunk.name = name
-	chunk.content = _serialize_points(points, Vector3i(selection.position), grid_map)
+	chunk.content = _serialize_points(points, Vector3i(selection.position), ChunkOperator.grid_map)
 
-	var error := ResourceSaver.save(chunk, saved_chunks_path + name + '.tres')
+	var error := ResourceSaver.save(chunk, ChunkOperator.SAVED_CHUNKS_PATH + name + '.tres')
 
 	return error == OK
