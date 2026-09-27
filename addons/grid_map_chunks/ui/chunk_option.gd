@@ -31,9 +31,5 @@ func _ready() -> void:
 	label.text = file_name
 
 
-func _on_preview_button_pressed() -> void:
-	previewed.emit(chunk)
-
-
 func _on_load_button_pressed() -> void:
 	loaded.emit(chunk)

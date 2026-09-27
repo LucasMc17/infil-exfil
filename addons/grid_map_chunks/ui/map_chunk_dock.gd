@@ -25,7 +25,7 @@ func _on_visibility_changed() -> void:
 ## Forces a refresh of the list of available saved chunks. Happens automatically at key points, but is also triggered by the reset button, in the event of a desync between the UI and the project file structure.
 func _refresh_chunks() -> void:
 	for child : ChunkOption in _option_holder.get_children():
-		child.previewed.disconnect(_on_preview_button_pressed)
+		# child.previewed.disconnect(_on_preview_button_pressed)
 		child.loaded.disconnect(_on_load_button_pressed)
 		child.queue_free()
 	var dir = DirAccess.open(chunk_ops.SAVED_CHUNKS_PATH)
@@ -36,7 +36,7 @@ func _refresh_chunks() -> void:
 			if !dir.current_is_dir():
 				var chunk : Chunk = load(chunk_ops.SAVED_CHUNKS_PATH + file_name) as Chunk
 				var option_scene = ChunkOption.new_option(chunk, file_name)
-				option_scene.previewed.connect(_on_preview_button_pressed)
+				# option_scene.previewed.connect(_on_preview_button_pressed)
 				option_scene.loaded.connect(_on_load_button_pressed)
 				_option_holder.add_child(option_scene)
 			file_name = dir.get_next()
@@ -46,7 +46,6 @@ func _refresh_chunks() -> void:
 
 ## Save a selected chunk to the file system, provided a selection is currently present and a valid file name is inputted in the line edit.
 func _on_save_button_pressed() -> void:
-	print(file_name)
 	if chunk_ops.attempt_chunk_save(file_name):
 		print("CHUNK SAVED")
 		_refresh_chunks()
@@ -56,16 +55,7 @@ func _on_save_button_pressed() -> void:
 
 ## Load a Chunk resource via the ChunkLoader and reconstruct it in the GridMap, at the current selection's root position.
 func _on_load_button_pressed(chunk : Chunk) -> void:
-	pass
-	# _resync_to_grid_map()
-	# var grid_map_plugin = _get_grid_map_plugin()
-	# chunk_ops.load_chunk(grid_map, chunk)
-
-
-func _on_preview_button_pressed(chunk : Chunk) -> void:
-	pass
-	# _resync_to_grid_map()
-	# chunk_ops.preview(chunk)
-# TODO:
-	# Better chunk visualization
-	# Rotation solution
+	if chunk_ops.attempt_chunk_preview(chunk):
+		print("CHUNK PREVIEW LOADED")
+	else:
+		print("CHUNK PREVIEW FAILED")

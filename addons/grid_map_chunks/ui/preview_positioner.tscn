@@ -29,39 +29,54 @@ text = "R"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="GridContainer" type="GridContainer" parent="HBoxContainer/CenterContainer2" unique_id=214029436]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/CenterContainer2" unique_id=1295364276]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="HBoxContainer/CenterContainer2/HBoxContainer" unique_id=214029436]
 layout_mode = 2
 columns = 3
 
-[node name="Control" type="Control" parent="HBoxContainer/CenterContainer2/GridContainer" unique_id=1238571319]
+[node name="Control" type="Control" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=1238571319]
 layout_mode = 2
 
-[node name="UpButton" type="Button" parent="HBoxContainer/CenterContainer2/GridContainer" unique_id=1584452500]
+[node name="+ZButton" type="Button" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=1584452500]
 layout_mode = 2
-text = "^"
+text = "+Z"
 
-[node name="Control2" type="Control" parent="HBoxContainer/CenterContainer2/GridContainer" unique_id=362611142]
-layout_mode = 2
-
-[node name="LeftButton" type="Button" parent="HBoxContainer/CenterContainer2/GridContainer" unique_id=1488950207]
-layout_mode = 2
-text = "<"
-
-[node name="Control3" type="Control" parent="HBoxContainer/CenterContainer2/GridContainer" unique_id=718548589]
+[node name="Control2" type="Control" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=362611142]
 layout_mode = 2
 
-[node name="RightButton" type="Button" parent="HBoxContainer/CenterContainer2/GridContainer" unique_id=169600676]
+[node name="+XButton" type="Button" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=1488950207]
 layout_mode = 2
-text = ">"
+text = "+X"
 
-[node name="Control4" type="Control" parent="HBoxContainer/CenterContainer2/GridContainer" unique_id=1245444645]
+[node name="Control3" type="Control" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=718548589]
 layout_mode = 2
 
-[node name="DownButton" type="Button" parent="HBoxContainer/CenterContainer2/GridContainer" unique_id=1291562733]
+[node name="-XButton" type="Button" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=169600676]
 layout_mode = 2
-offset_transform_enabled = true
-offset_transform_rotation = 3.1415927
-text = "^"
+text = "-X"
+
+[node name="Control4" type="Control" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=1245444645]
+layout_mode = 2
+
+[node name="-ZButton" type="Button" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=1291562733]
+layout_mode = 2
+text = "-Z"
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/CenterContainer2/HBoxContainer" unique_id=1694763256]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/CenterContainer2/HBoxContainer/CenterContainer" unique_id=775235867]
+layout_mode = 2
+
+[node name="+YButton" type="Button" parent="HBoxContainer/CenterContainer2/HBoxContainer/CenterContainer/VBoxContainer" unique_id=715187924]
+layout_mode = 2
+text = "+Y"
+
+[node name="-YButton" type="Button" parent="HBoxContainer/CenterContainer2/HBoxContainer/CenterContainer/VBoxContainer" unique_id=1205260270]
+layout_mode = 2
+text = "-Y"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="." unique_id=625421280]
 layout_mode = 2
