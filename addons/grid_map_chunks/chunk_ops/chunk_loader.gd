@@ -5,8 +5,9 @@ extends Object
 
 ## Set the selection of the current GridMap to the dimensions of the chunk, showing exactly how large it will be, and how many tiles it may potentially replace.
 func preview_chunk(chunk : Chunk) -> void:
-	ChunkOperator.in_preview = true
 	var cell_map : Dictionary[Vector3i, Vector2i] = chunk.to_dict()
+
+	ChunkOperator.preview_map = cell_map
 
 	set_grid_map_contents(ChunkOperator.preview_layer, cell_map)
 
@@ -37,29 +38,31 @@ func set_grid_map_contents(grid_map : GridMap, cell_map : Dictionary[Vector3i, V
 		grid_map.set_cell_item(cell, item, rotation)
 
 
-# TODO: Undo redo breaks when using this to preview chunks. Might not even need undo redo for previews.
-## Main function for loading map chunks into the grid map.
-func load_chunk(map : GridMap, chunk : Chunk) -> void:
+func merge_preview() -> void:
 	var undo_redo = EditorInterface.get_editor_undo_redo()
 	undo_redo.create_action("Load Chunk")
-
-	var local_root = Vector3i(ChunkOperator.grid_map_plugin.get_selection().position)
+	var grid_map = ChunkOperator.grid_map
+	var preview_layer = ChunkOperator.preview_layer
 
 	var old_cell_map : Dictionary[Vector3i, Vector2i] = {}
-	for cell in map.get_used_cells():
-		old_cell_map[cell] = Vector2i(map.get_cell_item(cell), map.get_cell_item_orientation(cell))
-	
+	for cell in grid_map.get_used_cells():
+		old_cell_map[cell] = Vector2i(grid_map.get_cell_item(cell), grid_map.get_cell_item_orientation(cell))
+
 	var new_cell_map : Dictionary[Vector3i, Vector2i] = old_cell_map.duplicate()
-	var data = JSON.parse_string(chunk.content)
-	for key in data.keys():
-		var position = Vector3i(Chunk.unstringify_vector3(key))
-		var value = data[key].split('-')
-		var cell_item = int(value[0])
-		var cell_rotation = int(value[1])
-
-		new_cell_map[local_root + position] = Vector2i(cell_item, cell_rotation)
-
-	undo_redo.add_do_method(self, "set_grid_map_contents", map, new_cell_map)
-	undo_redo.add_undo_method(self, "set_grid_map_contents", map, old_cell_map)
+	for cell in preview_layer.get_used_cells():
+		new_cell_map[cell] = Vector2i(preview_layer.get_cell_item(cell), preview_layer.get_cell_item_orientation(cell))
+	
+	undo_redo.add_do_method(self, "set_grid_map_contents", grid_map, new_cell_map)
+	undo_redo.add_undo_method(self, "set_grid_map_contents", grid_map, old_cell_map)
 	undo_redo.commit_action(true)
+	preview_layer.clear()
 
+
+func translate_preview(direction : Vector3i) -> void:
+	var new_map : Dictionary[Vector3i, Vector2i] = {}
+	for position in ChunkOperator.preview_map.keys():
+		var value = ChunkOperator.preview_map[position]
+		var new_pos = position + direction
+		new_map[new_pos] = value
+	ChunkOperator.preview_map = new_map
+	set_grid_map_contents(ChunkOperator.preview_layer, ChunkOperator.preview_map)

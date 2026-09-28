@@ -7,24 +7,32 @@ static var SAVED_CHUNKS_PATH : String = "res://addons/grid_map_chunks/saved_chun
 static var grid_map_plugin : GridMapEditorPlugin
 static var grid_map : GridMap
 static var preview_layer : GridMap
+static var preview_map : Dictionary[Vector3i, Vector2i] = {}
 static var preview_mesh_lib : MeshLibrary
-static var in_preview := false:
-	set(val):
-		in_preview = val
-		if !val:
-			preview_layer.clear()
+
 var chunk_loader := ChunkLoader.new()
 var chunk_saver := ChunkSaver.new()
 
-func _resync_to_grid_map() -> void:
+
+func _resync_to_grid_map() -> bool:
 	if !grid_map_plugin or !grid_map\
 	or grid_map != grid_map_plugin.get_current_grid_map()\
 	or !preview_layer or !preview_mesh_lib:
 		print('resyncing to current grid map...')
 		grid_map_plugin = _get_grid_map_plugin()
+		if !grid_map_plugin:
+			print("Error: No GridMap Editor Plugin found")
+			return false
 		grid_map = grid_map_plugin.get_current_grid_map()
+		if !grid_map:
+			print("Error: No active GridMap in Editor")
+			return false
 		_create_preview_layer()
+		if !grid_map.mesh_library:
+			print("Error: Active GridMap has no MeshLibrary resource assigned")
+			return false
 		_create_preview_mesh_lib()
+	return true
 
 
 ## Utility function for fetching the active GridMap in the editor.
@@ -74,7 +82,8 @@ func attempt_chunk_save(save_name : String) -> bool:
 		print("INPUT A FILE NAME TO SAVE")
 		return false
 
-	_resync_to_grid_map()
+	if !_resync_to_grid_map():
+		return false
 
 	if !grid_map_plugin:
 		print("NO ACTIVE GRID MAP PLUGIN")
@@ -87,14 +96,21 @@ func attempt_chunk_save(save_name : String) -> bool:
 
 
 func attempt_chunk_preview(chunk : Chunk) -> bool:
-	_resync_to_grid_map()
-	if !grid_map_plugin:
-		print("NO ACTIVE GRID MAP PLUGIN")
+	if !_resync_to_grid_map():
 		return false
 	
 	chunk_loader.preview_chunk(chunk)
 	return true
 
 
-func attempt_chunk_load(chunk : Chunk) -> bool:
-	return false
+func attempt_chunk_load() -> bool:
+	if !_resync_to_grid_map():
+		return false
+	
+	chunk_loader.merge_preview()
+	preview_map = {}
+	return true
+
+func cancel_load() -> void:
+	preview_layer.clear()
+	preview_map = {}

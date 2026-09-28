@@ -1,11 +1,14 @@
 [gd_scene format=3 uid="uid://xqoixp7f20ox"]
 
+[ext_resource type="Script" uid="uid://c0egvkounxpob" path="res://addons/grid_map_chunks/ui/preview_positioner.gd" id="1_8kcms"]
+
 [node name="PreviewPositioner" type="VBoxContainer" unique_id=1296612227]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_8kcms")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1547487951]
 layout_mode = 2
@@ -18,10 +21,12 @@ size_flags_horizontal = 3
 layout_mode = 2
 
 [node name="RotateLeft" type="Button" parent="HBoxContainer/CenterContainer/HBoxContainer" unique_id=581602064]
+unique_name_in_owner = true
 layout_mode = 2
 text = "L"
 
 [node name="RotateRight" type="Button" parent="HBoxContainer/CenterContainer/HBoxContainer" unique_id=1293254506]
+unique_name_in_owner = true
 layout_mode = 2
 text = "R"
 
@@ -34,47 +39,53 @@ layout_mode = 2
 
 [node name="GridContainer" type="GridContainer" parent="HBoxContainer/CenterContainer2/HBoxContainer" unique_id=214029436]
 layout_mode = 2
-columns = 3
+columns = 4
 
-[node name="Control" type="Control" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=1238571319]
+[node name="Spacer" type="Control" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=1238571319]
 layout_mode = 2
 
-[node name="+ZButton" type="Button" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=1584452500]
+[node name="UpZButton" type="Button" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=1584452500]
+unique_name_in_owner = true
 layout_mode = 2
 text = "+Z"
 
-[node name="Control2" type="Control" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=362611142]
+[node name="Spacer2" type="Control" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=362611142]
 layout_mode = 2
 
-[node name="+XButton" type="Button" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=1488950207]
-layout_mode = 2
-text = "+X"
-
-[node name="Control3" type="Control" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=718548589]
-layout_mode = 2
-
-[node name="-XButton" type="Button" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=169600676]
-layout_mode = 2
-text = "-X"
-
-[node name="Control4" type="Control" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=1245444645]
-layout_mode = 2
-
-[node name="-ZButton" type="Button" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=1291562733]
-layout_mode = 2
-text = "-Z"
-
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/CenterContainer2/HBoxContainer" unique_id=1694763256]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/CenterContainer2/HBoxContainer/CenterContainer" unique_id=775235867]
-layout_mode = 2
-
-[node name="+YButton" type="Button" parent="HBoxContainer/CenterContainer2/HBoxContainer/CenterContainer/VBoxContainer" unique_id=715187924]
+[node name="UpYButton" type="Button" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=715187924]
+unique_name_in_owner = true
 layout_mode = 2
 text = "+Y"
 
-[node name="-YButton" type="Button" parent="HBoxContainer/CenterContainer2/HBoxContainer/CenterContainer/VBoxContainer" unique_id=1205260270]
+[node name="UpXButton" type="Button" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=1488950207]
+unique_name_in_owner = true
+layout_mode = 2
+text = "+X"
+
+[node name="Spacer3" type="Control" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=718548589]
+layout_mode = 2
+
+[node name="DownXButton" type="Button" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=169600676]
+unique_name_in_owner = true
+layout_mode = 2
+text = "-X"
+
+[node name="Spacer4" type="Control" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=1245444645]
+layout_mode = 2
+
+[node name="Spacer5" type="Control" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=174292810]
+layout_mode = 2
+
+[node name="DownZButton" type="Button" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=1291562733]
+unique_name_in_owner = true
+layout_mode = 2
+text = "-Z"
+
+[node name="Spacer6" type="Control" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=331801726]
+layout_mode = 2
+
+[node name="DownYButton" type="Button" parent="HBoxContainer/CenterContainer2/HBoxContainer/GridContainer" unique_id=1205260270]
+unique_name_in_owner = true
 layout_mode = 2
 text = "-Y"
 
@@ -82,11 +93,13 @@ text = "-Y"
 layout_mode = 2
 
 [node name="CancelButton" type="Button" parent="HBoxContainer2" unique_id=425503621]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Cancel	"
 
 [node name="ConfirmButton" type="Button" parent="HBoxContainer2" unique_id=109761368]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Confirm"

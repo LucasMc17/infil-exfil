@@ -6,8 +6,10 @@ extends Control
 @onready var name_edit : LineEdit = %FileNameEdit
 @onready var _option_holder : VBoxContainer = %OptionHolder
 @onready var _save_button : Button = %SaveButton
+@onready var _chunk_picker : VBoxContainer = %ChunkPicker
+@onready var _preview_positioner : PreviewPositioner = %PreviewPositioner
 
-var chunk_ops = ChunkOperator.new()
+var chunk_ops : ChunkOperator
 
 ## The currently inputted file name to be used when saving new chunks through the UI.
 var file_name : String:
@@ -15,12 +17,26 @@ var file_name : String:
 		return name_edit.text
 
 func _ready() -> void:
+	chunk_ops = ChunkOperator.new()
 	visibility_changed.connect(_on_visibility_changed)
 	_save_button.pressed.connect(_on_save_button_pressed)
+
+	_preview_positioner.cancel_button.pressed.connect(_cancel_chunk_load)
+	_preview_positioner.confirm_button.pressed.connect(_confirm_chunk_load)
+
+	_preview_positioner.z_up_button.pressed.connect(chunk_ops.chunk_loader.translate_preview.bind(Vector3i(0, 0, 1)))
+	_preview_positioner.z_down_button.pressed.connect(chunk_ops.chunk_loader.translate_preview.bind(Vector3i(0, 0, -1)))
+	_preview_positioner.x_up_button.pressed.connect(chunk_ops.chunk_loader.translate_preview.bind(Vector3i(1, 0, 0)))
+	_preview_positioner.x_down_button.pressed.connect(chunk_ops.chunk_loader.translate_preview.bind(Vector3i(-1, 0, 0)))
+	
+	_preview_positioner.y_up_button.pressed.connect(chunk_ops.chunk_loader.translate_preview.bind(Vector3i(0, 1, 0)))
+	_preview_positioner.y_down_button.pressed.connect(chunk_ops.chunk_loader.translate_preview.bind(Vector3i(0, -1, 0)))
 
 
 func _on_visibility_changed() -> void:
 	_refresh_chunks()
+	_cancel_chunk_load()
+
 
 ## Forces a refresh of the list of available saved chunks. Happens automatically at key points, but is also triggered by the reset button, in the event of a desync between the UI and the project file structure.
 func _refresh_chunks() -> void:
@@ -57,5 +73,21 @@ func _on_save_button_pressed() -> void:
 func _on_load_button_pressed(chunk : Chunk) -> void:
 	if chunk_ops.attempt_chunk_preview(chunk):
 		print("CHUNK PREVIEW LOADED")
+		_toggle_preview_mode(true)
 	else:
 		print("CHUNK PREVIEW FAILED")
+
+
+func _toggle_preview_mode(on : bool) -> void:
+	_chunk_picker.visible = !on
+	_preview_positioner.visible = on
+
+
+func _cancel_chunk_load() -> void:
+	chunk_ops.cancel_load()
+	_toggle_preview_mode(false)
+
+
+func _confirm_chunk_load() -> void:
+	chunk_ops.attempt_chunk_load()
+	_toggle_preview_mode(false)
