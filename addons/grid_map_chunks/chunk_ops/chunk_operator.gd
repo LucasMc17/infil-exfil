@@ -9,6 +9,7 @@ static var grid_map : GridMap
 static var preview_layer : GridMap
 static var preview_map : Dictionary[Vector3i, Vector2i] = {}
 static var preview_mesh_lib : MeshLibrary
+static var preview_origin := Vector3i.ZERO
 
 var chunk_loader := ChunkLoader.new()
 var chunk_saver := ChunkSaver.new()

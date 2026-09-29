@@ -32,6 +32,9 @@ func _ready() -> void:
 	_preview_positioner.y_up_button.pressed.connect(chunk_ops.chunk_loader.translate_preview.bind(Vector3i(0, 1, 0)))
 	_preview_positioner.y_down_button.pressed.connect(chunk_ops.chunk_loader.translate_preview.bind(Vector3i(0, -1, 0)))
 
+	_preview_positioner.rotate_r_button.pressed.connect(chunk_ops.chunk_loader.rotate_preview.bind(true))
+	_preview_positioner.rotate_l_button.pressed.connect(chunk_ops.chunk_loader.rotate_preview.bind(false))
+
 
 func _on_visibility_changed() -> void:
 	_refresh_chunks()
