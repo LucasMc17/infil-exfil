@@ -19,6 +19,7 @@ static func unstringify_vector3(string : String) -> Vector3:
 	return Vector3(axes[0], axes[1], axes[2])
 
 
+## Translates the Chunk's [content] into a Dictionary of signature [Vector3i, Vector2i].
 func to_dict() -> Dictionary[Vector3i, Vector2i]:
 	var result : Dictionary[Vector3i, Vector2i] = {}
 	var data = JSON.parse_string(content)

@@ -1,4 +1,5 @@
 @tool
+## Handles the actual act of saving a chunk into memory.
 class_name ChunkSaver
 extends Object
 

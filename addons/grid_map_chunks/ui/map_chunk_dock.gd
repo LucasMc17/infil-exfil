@@ -81,16 +81,19 @@ func _on_load_button_pressed(chunk : Chunk) -> void:
 		print("CHUNK PREVIEW FAILED")
 
 
+## Switches the UI to preview translation mode when a preview is loaded into the preview layer.
 func _toggle_preview_mode(on : bool) -> void:
 	_chunk_picker.visible = !on
 	_preview_positioner.visible = on
 
 
+## Cancels a loaded preview and returns to the chunk list menu.
 func _cancel_chunk_load() -> void:
 	chunk_ops.cancel_load()
 	_toggle_preview_mode(false)
 
 
+## Merges a previewed chunk into the grid map and returns to the chunk list menu.
 func _confirm_chunk_load() -> void:
 	chunk_ops.attempt_chunk_load()
 	_toggle_preview_mode(false)

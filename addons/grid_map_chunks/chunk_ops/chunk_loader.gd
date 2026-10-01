@@ -15,21 +15,8 @@ func preview_chunk(chunk : Chunk) -> void:
 		ChunkOperator.preview_origin = ChunkOperator.grid_map_plugin.get_selection().position
 	else:
 		ChunkOperator.preview_origin = Vector3i.ZERO
-
-	# grid_map_plugin.set_selection(position, Vector3i(position) + chunk.dimensions)
-
-
-func _convert_chunk_to_dict(chunk : Chunk) -> Dictionary[Vector3i, Vector2i]:
-	var result : Dictionary[Vector3i, Vector2i] = {}
-	var data = JSON.parse_string(chunk.content)
-	for key in data.keys():
-		var position = Vector3i(Chunk.unstringify_vector3(key))
-		var value = data[key].split('-')
-		var cell_item = int(value[0])
-		var cell_rotation = int(value[1])
-
-		result[Vector3i(ChunkOperator.grid_map_plugin.get_selection().position) + position] = Vector2i(cell_item, cell_rotation)
-	return result
+	
+	ChunkOperator.grid_map_plugin.set_selection(ChunkOperator.preview_origin, ChunkOperator.preview_origin)
 
 
 ## clears and then rebuilds the grid map's cells using a dictionary where each key is a Vector3i representing the cell's position, and each value is a Vector2i representing the cell item type and rotation. For use with the undo/redo manager.
@@ -43,6 +30,7 @@ func set_grid_map_contents(grid_map : GridMap, cell_map : Dictionary[Vector3i, V
 		grid_map.set_cell_item(cell, item, rotation)
 
 
+## Merges the chunk currently loaded into the preview layer into the active grid map, overwriting any occupied cells.
 func merge_preview() -> void:
 	var undo_redo = EditorInterface.get_editor_undo_redo()
 	undo_redo.create_action("Load Chunk")
@@ -63,8 +51,10 @@ func merge_preview() -> void:
 	preview_layer.clear()
 
 
+## Shifts the chunk currently displayed in the preview layer by any amount, represented as a Vector3i.
 func translate_preview(direction : Vector3i) -> void:
 	ChunkOperator.preview_origin += direction
+	ChunkOperator.grid_map_plugin.set_selection(ChunkOperator.preview_origin, ChunkOperator.preview_origin)
 	var new_map : Dictionary[Vector3i, Vector2i] = {}
 	for position in ChunkOperator.preview_map.keys():
 		var value = ChunkOperator.preview_map[position]
@@ -74,6 +64,7 @@ func translate_preview(direction : Vector3i) -> void:
 	set_grid_map_contents(ChunkOperator.preview_layer, ChunkOperator.preview_map)
 
 
+## Utility function to handle the mathematics of rotating a position in the grid map around the y-axis of another point.
 func _rotate_point_around_origin(position : Vector3i, origin : Vector3i, clockwise : bool) -> Vector3i:
 	var x_shifted = position.x - origin.x
 	var y_shifted = position.z - origin.z
@@ -89,6 +80,7 @@ func _rotate_point_around_origin(position : Vector3i, origin : Vector3i, clockwi
 	return result
 
 
+## Utility function to rotate the contents of a cell 90 degrees around the y axis.
 func _rotate_tile(orthagonal_index : int, clockwise : bool) -> int:
 	var basis = ChunkOperator.grid_map.get_basis_with_orthogonal_index(orthagonal_index)
 	var degree = PI / 2
@@ -99,7 +91,9 @@ func _rotate_tile(orthagonal_index : int, clockwise : bool) -> int:
 	return ChunkOperator.grid_map.get_orthogonal_index_from_basis(rotated)
 
 
+## Rotates the contents of the preview layer around the y-axis of its local origin. Accepts a boolean determining if the rotation should be clockwise.
 func rotate_preview(clockwise : bool) -> void:
+	ChunkOperator.grid_map_plugin.set_selection(ChunkOperator.preview_origin, ChunkOperator.preview_origin)
 	var new_map : Dictionary[Vector3i, Vector2i] = {}
 	for position in ChunkOperator.preview_map.keys():
 		var value = ChunkOperator.preview_map[position]

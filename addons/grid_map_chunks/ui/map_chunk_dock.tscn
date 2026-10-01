@@ -39,9 +39,14 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Save Chunk"
 
-[node name="OptionHolder" type="VBoxContainer" parent="ChunkPicker" unique_id=902841019]
+[node name="ScrollContainer" type="ScrollContainer" parent="ChunkPicker" unique_id=1950855976]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="OptionHolder" type="VBoxContainer" parent="ChunkPicker/ScrollContainer" unique_id=902841019]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="RefreshButton" type="Button" parent="ChunkPicker" unique_id=213891869]
 layout_mode = 2
