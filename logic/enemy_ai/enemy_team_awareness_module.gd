@@ -34,8 +34,9 @@ var known_bodies := Utilities.BodiesDict.new()
 # 		return targeted_friendlies.size()
 
 func _init() -> void:
-	Events.unit_disabled.connect(_on_unit_disabled)
-	Events.alarm_raised.connect(_on_alarm_raised)
+	if !Engine.is_editor_hint():
+		Events.unit_disabled.connect(_on_unit_disabled)
+		Events.alarm_raised.connect(_on_alarm_raised)
 
 
 ## Returns true if any enemy in the game is currently seeing a friendly unit.

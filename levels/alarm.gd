@@ -20,9 +20,10 @@ var alarm_satisfied : bool:
 		return !_enemies_in_active_pursuit() and (point_investigated or _no_more_investigators())
 
 func _init() -> void:
-	Events.enemy_turn_ended.connect(_on_enemy_turn_ended)
-	# Events.friendly_spotted.connect(_on_friendly_spotted)
-	Events.update_alarm_monitor.emit()
+	if !Engine.is_editor_hint():
+		Events.enemy_turn_ended.connect(_on_enemy_turn_ended)
+		# Events.friendly_spotted.connect(_on_friendly_spotted)
+		Events.update_alarm_monitor.emit()
 
 
 func reset() -> void:

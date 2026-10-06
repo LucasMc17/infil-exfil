@@ -12,6 +12,7 @@ extends TargetedSkill
 @onready var _area : Area3D = %Area3D
 
 func _ready() -> void:
+	super()
 	_collision_shape.shape.radius = effective_range
 	_skill_name.position.x = effective_range
 	_skill_name.text = skill_name

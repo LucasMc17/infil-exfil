@@ -13,6 +13,7 @@ extends Control
 
 func _ready() -> void:
 	Events.skill_used.connect(_on_skill_used)
+	Events.refresh_surfaced_skill_variables.connect(_on_surfaced_variables_refreshed)
 
 
 ## Build the skill UI with the armed skill.
@@ -36,3 +37,7 @@ func _on_skill_used(skill : Skill) -> void:
 		_armed_skill_ui.teardown()
 
 		_active_unit_options.refresh_affordability()
+
+
+func _on_surfaced_variables_refreshed() -> void:
+	_armed_skill_ui.build_surfaced_variables()

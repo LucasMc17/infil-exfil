@@ -38,6 +38,17 @@ enum SkillType {
 ## The cost of performing this skill, in terms of ammunition for the primary weapon.
 @export var ammo_cost := 0
 
+## A dictionary of variables which should be surfaced to the player when readying this skill, for example, chance to hit.
+var surfaced_variables : Dictionary[String, StringName] = {}
+
+func _ready() -> void:
+	surfaced_variables = _setup_surfaced_variables()
+
+
+## Define a dictionary where the values are the names of variables attached to this script, and the keys are strings to be displayed to the player alongside them.
+func _setup_surfaced_variables() -> Dictionary[String, StringName]:
+	return {}
+
 # USABILITY FUNNEL
 # This is a funnel to determine whether the skill is able to be used. The steps in the funnel are:
 	# 1. The skill is visible. Some skills are contextual and so won't be displayed if irrelevant.
