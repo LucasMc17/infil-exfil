@@ -5,6 +5,34 @@ extends Node
 ## Emitted to the skill machine when this skill is used.
 signal used(skill : Skill)
 
+## Custom class representing a variable designed to be surfaced to the armed skill UI.
+class SurfacedVariable:
+	## A reference to the skill from which this variable is surfaced.
+	var _skill : Skill
+	## The description to display above the variable in the UI
+	var description : String
+	## The name of the variable to be referenced to determine the value displayed in the UI.
+	var _variable_name : StringName
+	## Function to format the variable for the UI.
+	var _format_variable : Callable = func(val): return val
+	## The value of the variable, up to date and formatted.
+	var value : String:
+		get():
+			if _variable_name in _skill:
+				var result = _format_variable.call(_skill[_variable_name])
+				if result is not String:
+					result = str(result)
+				return result
+			else:
+				DebugConsole.error("Skill does not have variable named " + _variable_name)
+				return "ERROR"
+
+	func _init(s : Skill, d : String, vn : StringName, fv : Callable) -> void:
+		_skill = s
+		description = d
+		_variable_name = vn
+		_format_variable = fv
+
 ## The type of this skill, as defined as what states it can be used from.
 enum SkillType {
 	## Skill can be used from any state.
@@ -39,15 +67,15 @@ enum SkillType {
 @export var ammo_cost := 0
 
 ## A dictionary of variables which should be surfaced to the player when readying this skill, for example, chance to hit.
-var surfaced_variables : Dictionary[String, StringName] = {}
+var surfaced_variables : Array[SurfacedVariable] = []
 
 func _ready() -> void:
 	surfaced_variables = _setup_surfaced_variables()
 
 
 ## Define a dictionary where the values are the names of variables attached to this script, and the keys are strings to be displayed to the player alongside them.
-func _setup_surfaced_variables() -> Dictionary[String, StringName]:
-	return {}
+func _setup_surfaced_variables() -> Array[SurfacedVariable]:
+	return []
 
 # USABILITY FUNNEL
 # This is a funnel to determine whether the skill is able to be used. The steps in the funnel are:

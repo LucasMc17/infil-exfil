@@ -31,14 +31,9 @@ func build(skill : Skill) -> void:
 ## Create and populate the surfaced variables of the currently armed skill in the armed skill UI.
 func build_surfaced_variables() -> void:
 	Utilities.clear_children(_surfaced_variables_holder)
-	for key in skill_res.surfaced_variables.keys():
-		var variable_name = skill_res.surfaced_variables[key]
-		if variable_name in skill_res:
-			var value = skill_res[variable_name]
-			var scene = SurfacedSkillVariable.new_variable(key, value)
-			_surfaced_variables_holder.add_child(scene)
-		else:
-			DebugConsole.error('Skill does not have variable named ' + key)
+	for variable in skill_res.surfaced_variables:
+		var scene = SurfacedSkillVariable.new_variable(variable.description, variable.value)
+		_surfaced_variables_holder.add_child(scene)
 
 
 ## Remove the UI from the screen and unset the current skill.

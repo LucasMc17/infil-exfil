@@ -10,10 +10,8 @@ extends AimedSkill
 ## The chance to hit, to be recalculated when a target is selected.
 var chance := 0.1
 
-func _setup_surfaced_variables() -> Dictionary[String, StringName]:
-	return {
-		"Chance to hit": "chance"
-	}
+func _setup_surfaced_variables() -> Array[SurfacedVariable]:
+	return [SurfacedVariable.new(self, "Chance to hit", "chance", func (val : float) -> String: return str(snapped(val * 100, 0.01)) + "%" if target else "0%")]
 
 
 func arm() -> void:
