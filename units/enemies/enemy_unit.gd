@@ -1,5 +1,6 @@
 @tool
 ## The basic class of enemy in the game. Initializes own logic around decision making and player awareness tracking and acts autonomously during gameplay.
+@icon("uid://cxgy364650i6i")
 class_name EnemyUnit
 extends Unit
 
@@ -52,6 +53,10 @@ func check_for_detection() -> void:
 	DebugConsole.log("Checking for detection", 2)
 	seeing_zone.check_detection()
 	awareness.confirm_all_sightings()
+
+
+func move(movement_name : String, end_point : Vector3i, exact_point := true, point_radius := 3) -> void:
+	movement_machine.current_state.transition(movement_name, {"end_point": end_point, "exact_point": exact_point, "point_radius": point_radius})
 
 
 func _on_unit_disabled(unit : Unit) -> void:

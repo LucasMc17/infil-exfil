@@ -5,6 +5,25 @@ extends Node
 ## Emitted to the skill machine when this skill is used.
 signal used(skill : Skill)
 
+## Custom class representing a variable designed to be surfaced to the armed skill UI.
+class SurfacedVariable:
+	## The description to display above the variable in the UI
+	var description : String
+	## Function to format the variable for the UI.
+	var _get_value : Callable = func(): return ""
+	## The value of the variable, up to date and formatted.
+	var value : String:
+		get():
+			var result = _get_value.call()
+			if result is not String:
+				result = str(result)
+			return result
+
+
+	func _init(d : String, gv : Callable) -> void:
+		description = d
+		_get_value = gv
+
 ## The type of this skill, as defined as what states it can be used from.
 enum SkillType {
 	## Skill can be used from any state.
@@ -37,6 +56,17 @@ enum SkillType {
 @export_custom(PROPERTY_HINT_NONE, "suffix:MP") var movement_cost := 0
 ## The cost of performing this skill, in terms of ammunition for the primary weapon.
 @export var ammo_cost := 0
+
+## A dictionary of variables which should be surfaced to the player when readying this skill, for example, chance to hit.
+var surfaced_variables : Array[SurfacedVariable] = []
+
+func _ready() -> void:
+	surfaced_variables = _setup_surfaced_variables()
+
+
+## Define a dictionary where the values are the names of variables attached to this script, and the keys are strings to be displayed to the player alongside them.
+func _setup_surfaced_variables() -> Array[SurfacedVariable]:
+	return []
 
 # USABILITY FUNNEL
 # This is a funnel to determine whether the skill is able to be used. The steps in the funnel are:

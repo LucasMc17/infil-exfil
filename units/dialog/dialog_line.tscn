@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bnppa3rohh7g3"]
+
+[ext_resource type="Script" uid="uid://dxl35k75stgnn" path="res://units/dialog/dialog_line.gd" id="1_oppmv"]
+
+[node name="DialogLine" type="Label" unique_id=105343193]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -85.0
+offset_top = -22.5
+offset_right = 85.0
+offset_bottom = 22.5
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 32
+text = "Test Dialog"
+horizontal_alignment = 1
+script = ExtResource("1_oppmv")
+
+[node name="StillTimer" type="Timer" parent="." unique_id=949067602]
+unique_name_in_owner = true
+
+[node name="FadeTimer" type="Timer" parent="." unique_id=671502336]
+unique_name_in_owner = true
+
+[connection signal="timeout" from="StillTimer" to="." method="_on_still_timer_timeout"]
+[connection signal="timeout" from="FadeTimer" to="." method="_on_fade_timer_timeout"]

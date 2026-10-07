@@ -9,6 +9,7 @@ var skill_res : Skill
 @onready var _description_label : Label = %DescriptionLabel
 @onready var _confirm_button : Button = %ConfirmButton
 @onready var _targets_section : TargetsSection = %TargetsSection
+@onready var _surfaced_variables_holder : HBoxContainer = %SurfacedVariables
 
 func _ready() -> void:
 	Events.recheck_skill_usability.connect(_on_recheck_skill_usability)
@@ -24,6 +25,16 @@ func build(skill : Skill) -> void:
 		_targets_section.build(skill)
 	_targets_section.visible = skill is TargetedSkill
 
+	build_surfaced_variables()
+
+
+## Create and populate the surfaced variables of the currently armed skill in the armed skill UI.
+func build_surfaced_variables() -> void:
+	Utilities.clear_children(_surfaced_variables_holder)
+	for variable in skill_res.surfaced_variables:
+		var scene = SurfacedSkillVariable.new_variable(variable.description, variable.value)
+		_surfaced_variables_holder.add_child(scene)
+
 
 ## Remove the UI from the screen and unset the current skill.
 func teardown() -> void:
@@ -31,6 +42,7 @@ func teardown() -> void:
 	_name_label.text = ''
 	_description_label.text = ''
 	_targets_section.teardown()
+	Utilities.clear_children(_surfaced_variables_holder)
 
 
 func _on_cancel_button_pressed() -> void:

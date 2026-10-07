@@ -16,6 +16,9 @@ signal unit_moved()
 ## Signal emitted when a unit on either team takes any action.
 signal unit_acted()
 
+## Signal emitted when a unit speaks, adding a DialogLine scene to the level dialog layer.
+signal unit_spoke(unit : Unit, message : String)
+
 # Stealth
 
 ## Signal emitted when a player is spotted by an enemy, whether they have been previously spotted or not.
@@ -46,6 +49,10 @@ signal skill_used(skill : Skill)
 
 ## Signal emitted when the player disarms the active units armed skill.
 signal skill_disarmed()
+
+# NOTE: There's nothing wrong with this, but maybe we need a way to refresh specific surfaced vars.
+## Signal emitted when the skill UI should refresh the surfaced variables in the UI.
+signal refresh_surfaced_skill_variables()
 
 ## Emitted when a pathing waymarker is placed by the player.
 signal waymarker_placed()

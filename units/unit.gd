@@ -1,5 +1,6 @@
 @tool
 ## The base class of all units in the game, both friendly and enemy.
+@icon("uid://dbylwskafl7dt")
 class_name Unit
 extends AnimatableBody3D
 
@@ -19,8 +20,8 @@ enum Status {
 
 ## Signal emitted when the unit begins moving along a navigation path.
 signal started_moving(unit : Unit)
-## Signal emitted when the unit stops moving along a navigation path for any reason.
-signal finished_moving(unit : Unit)
+## Signal emitted when the unit stops moving along a navigation path for any reason. The arrived_at_destination should be true if the unit reached their ultimate destination. This should almost always be true for player-controlled units which typically reach the desintation described by the player, but may be false for enemy units which often have to move part way to a long term objective.
+signal finished_moving(unit : Unit, arrived_at_destination : bool)
 ## Signal emitted when the unit begins acting (performing a skill).
 signal started_acting(unit : Unit)
 ## Signal emitted when the unit finishes acting (performing a skill).
@@ -158,6 +159,7 @@ func activate():
 	# _refresh_skills()
 	Events.unit_activated.emit(self)
 	Events.refresh_unit_skills.emit()
+	# speak("This is a longer piece of test dialog to make sure it aligns correctly. Thank you!")
 
 
 ## Executed when the unit stops being the active unit within the level.
@@ -176,10 +178,6 @@ func deactivate():
 func reset():
 	movement_points = 100 if DebugOptions.unlimited_mp else max_movement_points
 	action_points = 100 if DebugOptions.unlimited_ap else max_action_points
-
-
-func move(movement_name : String, config : Dictionary) -> void:
-	movement_machine.current_state.transition(movement_name, config)
 
 
 func stop_moving() -> void:
@@ -269,6 +267,11 @@ func forfeit_turn() -> void:
 	movement_points = 0
 	action_points = 0
 	forfeited_turn.emit(self)
+
+
+## Speak a line of dialog to the level dialog layer.
+func speak(message : String) -> void:
+	Events.unit_spoke.emit(self, message)
 
 	
 ## Function for updating detected units, either by checking if this unit is being detected or if it is detecting any other units.

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dtdychgol3wgp"]
+
+[ext_resource type="Script" uid="uid://dod48x3u2q283" path="res://2D/match_ui/armed_skill_ui/surfaced_skill_variable.gd" id="1_jwrtp"]
+
+[node name="SurfacedSkillVariable" type="VBoxContainer" unique_id=1956228270]
+script = ExtResource("1_jwrtp")
+
+[node name="Label" type="Label" parent="." unique_id=2140039899]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Surfaced variable"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="." unique_id=1324266825]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "30"
+horizontal_alignment = 1

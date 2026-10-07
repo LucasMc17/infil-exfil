@@ -38,8 +38,7 @@ func _process(_delta: float) -> void:
 
 ## The function which continually redraws the mesh in editor to visualize this NavZoneHolder.
 func _redraw_meshes() -> void:
-	for child in get_children():
-		child.queue_free()
+	Utilities.clear_children(self)
 
 	if configs:
 		for rect : Rect2i in configs.areas:

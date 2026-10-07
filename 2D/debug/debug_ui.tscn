@@ -7,8 +7,8 @@
 [ext_resource type="Resource" uid="uid://blgexr8p0bx7u" path="res://addons/debug_console/help_command.tres" id="5_r01na"]
 [ext_resource type="Resource" uid="uid://jtcbpe1i1m4g" path="res://addons/debug_console/clear_command.tres" id="6_8umau"]
 [ext_resource type="Resource" uid="uid://cw0fgeywlrgcf" path="res://2D/debug/commands/exit_command.tres" id="7_lf6aa"]
-[ext_resource type="PackedScene" uid="uid://x6eenq2lmhv1" path="res://2D/debug/unit_inspector/unit_inspector.tscn" id="8_c2eu2"]
-[ext_resource type="PackedScene" uid="uid://cw0j7wmdm80rc" path="res://2D/debug/alarm_inspector/alarm_inspector.tscn" id="9_r01na"]
+[ext_resource type="PackedScene" uid="uid://x6eenq2lmhv1" path="res://2D/debug/inspectors/unit_inspector/unit_inspector.tscn" id="8_c2eu2"]
+[ext_resource type="PackedScene" uid="uid://cw0j7wmdm80rc" path="res://2D/debug/inspectors/alarm_inspector/alarm_inspector.tscn" id="9_r01na"]
 
 [node name="DebugUi" type="Control" unique_id=1639751749]
 layout_mode = 3

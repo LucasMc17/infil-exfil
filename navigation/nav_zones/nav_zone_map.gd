@@ -1,5 +1,6 @@
 @tool
 ## The holder for the entire system of [NavZone]s throughout a level. Organizes children into [NavZoneFloor]s.
+@icon("uid://bhw5hse8etfk0")
 class_name NavZoneMap
 extends Node3D
 

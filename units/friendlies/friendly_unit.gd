@@ -1,5 +1,6 @@
 @tool
 ## A unit under direct control by the player.
+@icon("uid://bxjd3qs3f231j")
 class_name FriendlyUnit 
 extends Unit
 
@@ -15,6 +16,10 @@ func check_for_detection() -> void:
 ## Checks if the unit is currently being suppressed by an enemy unit.
 func is_suppressed_by(enemy : EnemyUnit) -> bool:
 	return enemy.awareness.suppression_target == self
+
+
+func move(movement_name : String, path : Array[Vector3i]) -> void:
+	movement_machine.current_state.transition(movement_name, {"path": path})
 
 
 func _on_seen_zone_seen_by_enemies(enemies: Array[EnemyUnit]) -> void:

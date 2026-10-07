@@ -57,7 +57,7 @@ func _on_encountering_friendly(_friendly : FriendlyUnit) -> void:
 	pass
 
 
-func _on_finished_moving(_unit : EnemyUnit):
+func _on_finished_moving(_unit : EnemyUnit, _arrived : bool):
 	pass
 
 

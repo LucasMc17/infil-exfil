@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://ckwj7tuo85a75"]
+
+[ext_resource type="Script" uid="uid://cnu6xuy25vqgu" path="res://addons/grid_map_chunks/ui/map_chunk_dock.gd" id="1_hjme5"]
+[ext_resource type="PackedScene" uid="uid://xqoixp7f20ox" path="res://addons/grid_map_chunks/ui/preview_positioner.tscn" id="2_8cktf"]
+
+[node name="MapChunkDock" type="Control" unique_id=1254279580]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hjme5")
+
+[node name="ChunkPicker" type="VBoxContainer" parent="." unique_id=1106284037]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ChunkPicker" unique_id=1437126756]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ChunkPicker/HBoxContainer" unique_id=1876205127]
+layout_mode = 2
+text = "Chunk Name: "
+
+[node name="FileNameEdit" type="LineEdit" parent="ChunkPicker/HBoxContainer" unique_id=362377064]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "my_chunk"
+
+[node name="SaveButton" type="Button" parent="ChunkPicker/HBoxContainer" unique_id=1489025249]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Save Chunk"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ChunkPicker" unique_id=1950855976]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="OptionHolder" type="VBoxContainer" parent="ChunkPicker/ScrollContainer" unique_id=902841019]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RefreshButton" type="Button" parent="ChunkPicker" unique_id=213891869]
+layout_mode = 2
+text = "Refresh Chunk List"
+
+[node name="PreviewPositioner" parent="." unique_id=1296612227 instance=ExtResource("2_8cktf")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -68.0
+offset_bottom = 68.0
+
+[connection signal="pressed" from="ChunkPicker/RefreshButton" to="." method="_refresh_chunks"]

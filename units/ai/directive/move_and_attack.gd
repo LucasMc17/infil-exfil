@@ -24,16 +24,16 @@ func begin(unit : EnemyUnit) -> void:
 			attack_skill.disarm_as_enemy()
 			var valid_move = Level.current_level.nav_map.probe_for_viable_move(acting_unit.position, acting_unit.movement_points, _filter_move)
 			if valid_move:
-				acting_unit.move('Run', { "end_point": valid_move })
+				acting_unit.move('Run', valid_move)
 
 			else:
-				acting_unit.move('Run', { "end_point": target.board_position })
+				acting_unit.move('Run', target.board_position)
 
 
 func respect_nudge() -> void:
 	var valid_move = Level.current_level.nav_map.probe_for_viable_move(acting_unit.position, acting_unit.movement_points, _filter_move, acting_unit.temp_blocking_path)
 	if valid_move:
-		acting_unit.move('Run', { "end_point": valid_move })
+		acting_unit.move('Run', valid_move)
 	else:
 		acting_unit.forfeit_turn.call_deferred()
 		end()
@@ -45,8 +45,8 @@ func _on_finished_acting(_unit : EnemyUnit):
 	acting_unit.forfeit_turn()
 
 
-func _on_finished_moving(_unit : EnemyUnit):
-	super(acting_unit)
+func _on_finished_moving(unit : EnemyUnit, arrived : bool):
+	super(unit, arrived)
 	attack_skill.arm_as_enemy()
 	if attack_skill.potential_targets.has(target):
 		attack_skill.use({ "target": target })

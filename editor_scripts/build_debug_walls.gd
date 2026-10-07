@@ -20,8 +20,7 @@ func _run() -> void:
 	var geometry = level.geometry
 	var nav_map : NavigableGridMap = level.nav_map
 
-	for child in geometry.get_children():
-		child.queue_free()
+	Utilities.clear_children(geometry)
 
 	for coord : Vector3i in nav_map.point_map_by_grid_coords.keys():
 		encountered += 1

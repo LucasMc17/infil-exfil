@@ -10,6 +10,10 @@ extends AimedSkill
 ## The chance to hit, to be recalculated when a target is selected.
 var chance := 0.1
 
+func _setup_surfaced_variables() -> Array[SurfacedVariable]:
+	return [SurfacedVariable.new("Chance to hit", func () -> String: return str(snapped(chance * 100, 0.01)) + "%" if target else "0%")]
+
+
 func arm() -> void:
 	super()
 	chance = 0.1
@@ -37,3 +41,4 @@ func retarget(new_target : Unit) -> void:
 		chance = Utilities.convert_range_to_odds(distance, effective_range, 1, max_chance, min_chance)
 	else:
 		chance = 0.1
+	Events.refresh_surfaced_skill_variables.emit()
