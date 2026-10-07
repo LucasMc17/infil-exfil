@@ -11,7 +11,7 @@ extends AimedSkill
 var chance := 0.1
 
 func _setup_surfaced_variables() -> Array[SurfacedVariable]:
-	return [SurfacedVariable.new(self, "Chance to hit", "chance", func (val : float) -> String: return str(snapped(val * 100, 0.01)) + "%" if target else "0%")]
+	return [SurfacedVariable.new("Chance to hit", func () -> String: return str(snapped(chance * 100, 0.01)) + "%" if target else "0%")]
 
 
 func arm() -> void:
