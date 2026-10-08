@@ -3,6 +3,10 @@
 class_name NavZoneFloor
 extends Node3D
 
+func _ready() -> void:
+	add_to_group("nav_floors")
+
+
 ## Virtual property of all the zone holders directly held by this floor of the nav zone map.
 var zone_holders : Array[NavZoneHolder]:
 	get():

@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="NavZone" format=3 uid="uid://coy4b075jwadw"]
+
+[ext_resource type="Script" uid="uid://c7xqovr73fsq5" path="res://navigation/nav_zones/nav_zone_exit.gd" id="1_2rvvq"]
+[ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_zones/nav_zone.gd" id="2_cixve"]
+
+[sub_resource type="Resource" id="Resource_gs50f"]
+script = ExtResource("1_2rvvq")
+local_position = Vector2i(0, 2)
+to_zone_name = "Room2"
+ro_board_position = Vector3i(4, 0, -3)
+ro_to_zone_uid = "uid://fxjvuuvfxg8c"
+metadata/_custom_type_script = "uid://c7xqovr73fsq5"
+
+[sub_resource type="Resource" id="Resource_30k10"]
+script = ExtResource("1_2rvvq")
+local_position = Vector2i(0, 7)
+to_zone_name = "Room1"
+ro_board_position = Vector3i(4, 0, 2)
+ro_to_zone_uid = "uid://cal1ry6s24037"
+metadata/_custom_type_script = "uid://c7xqovr73fsq5"
+
+[resource]
+script = ExtResource("2_cixve")
+areas = Array[Rect2i]([Rect2i(0, 0, 4, 11)])
+points = Array[Vector2i]([Vector2i(1, 2), Vector2i(1, 7)])
+exits = Array[ExtResource("1_2rvvq")]([SubResource("Resource_gs50f"), SubResource("Resource_30k10")])
+ro_base_position = Vector3i(4, 0, -5)
+ro_board_points = Array[Vector3i]([Vector3i(5, 0, -3), Vector3i(5, 0, 2)])
+metadata/_custom_type_script = "uid://wjvqhhryw4h4"

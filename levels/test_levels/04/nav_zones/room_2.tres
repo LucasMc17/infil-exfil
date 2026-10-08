@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="NavZone" format=3 uid="uid://fxjvuuvfxg8c"]
+
+[ext_resource type="Script" uid="uid://c7xqovr73fsq5" path="res://navigation/nav_zones/nav_zone_exit.gd" id="1_xvdsg"]
+[ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_zones/nav_zone.gd" id="2_msw8n"]
+
+[sub_resource type="Resource" id="Resource_vk7da"]
+script = ExtResource("1_xvdsg")
+local_position = Vector2i(12, 2)
+to_zone_name = "Hallway"
+ro_board_position = Vector3i(3, 0, -3)
+ro_to_zone_uid = "uid://coy4b075jwadw"
+metadata/_custom_type_script = "uid://c7xqovr73fsq5"
+
+[resource]
+script = ExtResource("2_msw8n")
+areas = Array[Rect2i]([Rect2i(0, 0, 13, 6)])
+points = Array[Vector2i]([Vector2i(10, 2)])
+exits = Array[ExtResource("1_xvdsg")]([SubResource("Resource_vk7da")])
+ro_base_position = Vector3i(-9, 0, -5)
+ro_board_points = Array[Vector3i]([Vector3i(1, 0, -3)])
+metadata/_custom_type_script = "uid://wjvqhhryw4h4"
