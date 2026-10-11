@@ -13,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://pjntjfibxgpo" path="res://skills/single_target_skills/proximal_skills/take_hostage.tscn" id="10_5d6y8"]
 [ext_resource type="PackedScene" uid="uid://ccfg0ds2matqq" path="res://skills/targetless_skills/kill_hostage.tscn" id="11_f0n28"]
 [ext_resource type="PackedScene" uid="uid://pqidaqkdmijd" path="res://skills/targetless_skills/knock_out_hostage.tscn" id="12_h7wl1"]
+[ext_resource type="Script" uid="uid://cwyxyf1f6dmp3" path="res://skills/skill.gd" id="14_220ka"]
+[ext_resource type="Script" uid="uid://hwhxfr3na4w3" path="res://levels/soundscape/sound.gd" id="15_1tldt"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_xp7jh"]
 viewport_path = NodePath("SubViewport")
@@ -21,7 +23,11 @@ viewport_path = NodePath("SubViewport")
 albedo_color = Color(0.27409065, 0.7122239, 0.12106868, 1)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_o2poy"]
-viewport_path = NodePath("DebugLabel/@SubViewport@38807")
+viewport_path = NodePath("DebugLabel/@SubViewport@1248234")
+
+[sub_resource type="Resource" id="Resource_oh6eq"]
+script = ExtResource("15_1tldt")
+metadata/_custom_type_script = "uid://hwhxfr3na4w3"
 
 [node name="FriendlyUnit" unique_id=1676765037 groups=["friendlies"] instance=ExtResource("1_7ia1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
@@ -73,5 +79,14 @@ user = NodePath("../..")
 
 [node name="KnockOutHostage" parent="SkillMachine" parent_id_path=PackedInt32Array(397221885) index="8" unique_id=509140707 node_paths=PackedStringArray("user") instance=ExtResource("12_h7wl1")]
 user = NodePath("../..")
+
+[node name="MakeNoise" type="Node" parent="SkillMachine" parent_id_path=PackedInt32Array(397221885) index="9" unique_id=838234681 node_paths=PackedStringArray("user")]
+script = ExtResource("14_220ka")
+user = NodePath("../..")
+sound = SubResource("Resource_oh6eq")
+skill_name = "Make Noise"
+description = "Debug Skill for making noise to test enemy hearing"
+visible_with_hostage = true
+metadata/_custom_type_script = "uid://cwyxyf1f6dmp3"
 
 [connection signal="seen_by_enemies" from="SeenZone" to="." method="_on_seen_zone_seen_by_enemies"]

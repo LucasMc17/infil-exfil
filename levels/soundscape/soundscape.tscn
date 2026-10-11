@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://6wa3o4t7r4it"]
+
+[ext_resource type="Script" uid="uid://vjn1rdl233ao" path="res://levels/soundscape/soundscape.gd" id="1_qkum0"]
+
+[node name="Soundscape" type="Node3D" unique_id=2009377120]
+script = ExtResource("1_qkum0")
