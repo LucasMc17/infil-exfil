@@ -29,6 +29,7 @@ func end() -> void:
 	Level.current_level.alarm.point_investigated = true
 	super()
 
+
 func _on_encountering_friendly(_friendly : FriendlyUnit) -> void:
 	encountered_friendlies = true
 	acting_unit.stop_moving()

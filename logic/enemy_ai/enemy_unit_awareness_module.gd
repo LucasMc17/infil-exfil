@@ -178,6 +178,13 @@ func drop_guard():
 	Events.request_update_unit_monitor.emit(unit)
 
 
+# TODO: So much more to do here. Taking into account kind of sound, and what the unit is doing. Some alarmed states SHOULD be responsive to unexpected sounds.
+## Respond to an overheard sound, assuming the user is not in active combat.
+func hear_sound(sound_position : Vector3i) -> void:
+	if awareness_level != AwarenessLevel.ALARMED:
+		unit.decision_director.add_directive(InvestigateSound.new(sound_position))
+
+
 ## Reset the grace period bool to false.
 func resolve_grace_period():
 	is_in_grace_period = false

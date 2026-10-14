@@ -17,8 +17,9 @@ func make_sound(pos : Vector3i, sound_res : Sound) -> void:
 	sound_query.collide_with_areas = false
 
 	var results = space.intersect_shape(sound_query)
-	var enemies : Array[EnemyUnit] = []
+	# var enemies : Array[EnemyUnit] = []
 	for result in results:
 		if result["collider"] and result["collider"] is EnemyUnit:
-			enemies.append(result["collider"])
-	print(enemies)
+			# enemies.append(result["collider"])
+			result["collider"].awareness.hear_sound(pos)
+	# print(enemies)
