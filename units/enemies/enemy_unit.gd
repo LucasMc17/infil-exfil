@@ -31,6 +31,9 @@ var temp_blocker : Unit
 ## The path of another unit which this unit has just blocked. Used to help find a new position to move to where desirable actions can be performed but the path is unblocked.
 var temp_blocking_path : PackedVector3Array = []
 
+## Boolean representing whether or not this unit will actively respond to sounds heard within the level. Usually updated by entering/exiting certain directives.
+var listening := true
+
 @onready var seeing_zone : SeeingZone = %SeeingZone
 @onready var _status_indicator : Sprite3D = %StatusIndicator
 @onready var suppression_indicator : SuppressionIndicator = %SuppressionIndicator

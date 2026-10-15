@@ -34,4 +34,4 @@ func enter(previous_state, ext) -> void:
 
 func exit():
 	super()
-	unit.finished_moving.emit(unit, Vector3(unit.board_position) == full_intended_path[-1])
+	unit.finished_moving.emit(unit, full_intended_path.is_empty() or Vector3(unit.board_position) == full_intended_path[-1])

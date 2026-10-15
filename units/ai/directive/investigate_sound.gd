@@ -5,6 +5,7 @@ var sound_position : Vector3i
 
 func _init(p : Vector3i) -> void:
 	sound_position = p
+	_listening = false
 
 
 func begin(unit : EnemyUnit) -> void:
