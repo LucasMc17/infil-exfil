@@ -21,5 +21,5 @@ func make_sound(pos : Vector3i, sound_res : Sound) -> void:
 	for result in results:
 		if result["collider"] and result["collider"] is EnemyUnit:
 			# enemies.append(result["collider"])
-			result["collider"].awareness.hear_sound(pos)
+			result["collider"].awareness.hear_sound(sound_res, pos)
 	# print(enemies)

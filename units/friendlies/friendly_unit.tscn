@@ -16,17 +16,19 @@
 [ext_resource type="Script" uid="uid://cwyxyf1f6dmp3" path="res://skills/skill.gd" id="14_220ka"]
 [ext_resource type="Script" uid="uid://hwhxfr3na4w3" path="res://levels/soundscape/sound.gd" id="15_1tldt"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_xp7jh"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_220ka"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ipgw"]
 albedo_color = Color(0.27409065, 0.7122239, 0.12106868, 1)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_o2poy"]
-viewport_path = NodePath("DebugLabel/@SubViewport@1248234")
+[sub_resource type="ViewportTexture" id="ViewportTexture_1tldt"]
+viewport_path = NodePath("DebugLabel/@SubViewport@391817")
 
 [sub_resource type="Resource" id="Resource_oh6eq"]
 script = ExtResource("15_1tldt")
+radius = 15.0
+severity = 2
 metadata/_custom_type_script = "uid://hwhxfr3na4w3"
 
 [node name="FriendlyUnit" unique_id=1676765037 groups=["friendlies"] instance=ExtResource("1_7ia1n")]
@@ -36,7 +38,7 @@ max_health_points = 1
 primary_weapon = ExtResource("3_dnhmq")
 
 [node name="UnitFlag" parent="." index="0" unique_id=710425423]
-texture = SubResource("ViewportTexture_xp7jh")
+texture = SubResource("ViewportTexture_220ka")
 
 [node name="MeshInstance3D" parent="." index="1" unique_id=1987464459]
 surface_material_override/0 = SubResource("StandardMaterial3D_3ipgw")
@@ -45,7 +47,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_3ipgw")
 surface_material_override/0 = ExtResource("3_ikcby")
 
 [node name="DebugLabel" parent="." index="4" unique_id=607303816]
-texture = SubResource("ViewportTexture_o2poy")
+texture = SubResource("ViewportTexture_1tldt")
 _text = "FRIENDLY UNIT
 Position: (x: {x}, y: {y}, z: {z})
 Current Movement: {movement_state}

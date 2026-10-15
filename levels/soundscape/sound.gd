@@ -19,6 +19,6 @@ enum Severity {
 
 ## The severity of the sound when heard by enemy units.
 @export var severity := Severity.NORMAL
-## A one word description of the sound to be used by overhearing units when emitting bark dialog about the sound.
+## A one word description of the sound to be used by overhearing units when emitting bark dialog about the sound. Should be all lower case and singular. The dialog system will automatically handle capitalizing and pluralizing as needed.
 @export var description := 'sound'
 
