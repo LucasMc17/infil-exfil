@@ -45,7 +45,7 @@ static var first_contact_line : Array[String] = [
 	"Hey!",
 	"Hey! Hold it!",
 	"Identify yourself!",
-	"We've got intruders {prep} {nav_zone}!",
+	"We've got intruders {prep} {nav_room}!",
 	"Intruders spotted {prep} {nav_room}!",
 	"We've got intruders!",
 	"Intruders {prep} {nav_room}!",

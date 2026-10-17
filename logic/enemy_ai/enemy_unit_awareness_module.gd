@@ -98,18 +98,7 @@ func _init(u : EnemyUnit) -> void:
 	Events.player_turn_ended.connect(resolve_suppression)
 
 
-func add_sighting(friendly : FriendlyUnit) -> void:
-	var friendly_id = friendly.get_instance_id()
-	if !targeted_friendlies.has(friendly_id):
-		var sighting = FriendlySighting.new(friendly)
-		if friendlies_in_sight.is_empty():
-			if is_unaware():
-				unit.speak(Barks.get_first_contact_line(sighting.last_known_zone))
-			else:
-				unit.speak(Barks.get_resumed_contact_line(sighting.last_known_zone))
-		targeted_friendlies[friendly_id] = sighting
-
-
+# TODO: Gotta roll this in with the see_friendlies func somehow
 func _confirm_sighting(sighting : FriendlySighting) -> void:
 	var can_see : bool
 	var target_incapacitated = sighting.friendly.is_incapacitated()
@@ -165,27 +154,46 @@ func alert():
 	Events.request_update_unit_monitor.emit(unit)
 
 
-## Update the unit's awareness level to [ALARMED], instantly stopping the unit if they are moving, and adding all sighted friendlies to their list of targets.
-func alarm(spotted_friendlies : Variant = [], skip_grace_period := false):
-	if spotted_friendlies is FriendlyUnit:
-		spotted_friendlies = [spotted_friendlies]
+func see_friendlies(friendlies : Variant, should_skip_grace_period := false) -> void:
+	if friendlies is FriendlyUnit:
+		friendlies = [friendlies]
+	for friendly in friendlies:
+		var friendly_id = friendly.get_instance_id()
+		if !targeted_friendlies.has(friendly_id):
+			var sighting = FriendlySighting.new(friendly)
+			if friendlies_in_sight.is_empty():
+				if is_unaware():
+					unit.speak(Barks.get_first_contact_line(sighting.last_known_zone))
+				else:
+					unit.speak(Barks.get_resumed_contact_line(sighting.last_known_zone))
+			targeted_friendlies[friendly_id] = sighting
 	if !is_alarmed():
+		alarm(should_skip_grace_period)
+	Events.request_update_unit_monitor.emit(unit)
+
+
+## Update the unit's awareness level to [ALARMED], instantly stopping the unit if they are moving, and adding all sighted friendlies to their list of targets.
+func alarm(skip_grace_period := false):
+	# if spotted_friendlies is FriendlyUnit:
+	# 	spotted_friendlies = [spotted_friendlies]
+	if is_alarmed():
+		return
 		# if !spotted_friendlies.is_empty():
 		# 	var nav_zone = Level.current_level.get_zone_from_position(spotted_friendlies[0].board_position)
 		# 	if is_unaware():
 		# 		unit.speak(Barks.get_first_contact_line(nav_zone))
 		# 	else:
 		# 		unit.speak(Barks.get_resumed_contact_line(nav_zone))
-		if !skip_grace_period:
-			is_in_grace_period = true
-		awareness_level = AwarenessLevel.ALARMED
-		unit.stop_moving()
-		if unit.is_active:
-			unit.forfeit_turn()
-	for friendly : FriendlyUnit in spotted_friendlies:
-		add_sighting(friendly)
-	unit.debug_label.change_param('targets', '[' + ', '.join(targeted_friendlies.values().map(func (sighting): return sighting.friendly.name)) + ']')
-	Events.request_update_unit_monitor.emit(unit)
+	if !skip_grace_period:
+		is_in_grace_period = true
+	awareness_level = AwarenessLevel.ALARMED
+	unit.stop_moving()
+	if unit.is_active:
+		unit.forfeit_turn()
+	# for friendly : FriendlyUnit in spotted_friendlies:
+	# 	add_sighting(friendly)
+	# unit.debug_label.change_param('targets', '[' + ', '.join(targeted_friendlies.values().map(func (sighting): return sighting.friendly.name)) + ']')
+	# Events.request_update_unit_monitor.emit(unit)
 
 
 ## Update the unit's awareness level to [UNAWARE], clearing their list of targets.

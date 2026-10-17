@@ -69,7 +69,7 @@ func _on_unit_disabled(unit : Unit) -> void:
 
 func _on_seeing_zone_friendly_seen(friendlies: Array[FriendlyUnit]) -> void:
 	DebugConsole.log("Enemy Sees Friendly/Friendlies", 2)
-	awareness.alarm(friendlies, true)
+	awareness.see_friendlies(friendlies, true)
 
 
 func _on_awareness_changed(_old_awareness, _new_awareness):
@@ -79,7 +79,7 @@ func _on_awareness_changed(_old_awareness, _new_awareness):
 
 func _on_alarm_raised(raiser) -> void:
 	awareness.last_poc = raiser.awareness.last_poc
-	awareness.alarm([], false)
+	awareness.alarm(false)
 
 
 func _on_alarm_ended() -> void:

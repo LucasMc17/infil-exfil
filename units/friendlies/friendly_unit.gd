@@ -25,4 +25,4 @@ func move(movement_name : String, path : Array[Vector3i]) -> void:
 func _on_seen_zone_seen_by_enemies(enemies: Array[EnemyUnit]) -> void:
 	DebugConsole.log("Friendly is Seen by Enemy/Enemies", 2)
 	for enemy : EnemyUnit in enemies:
-		enemy.awareness.alarm(self, false)
+		enemy.awareness.see_friendlies(self, false)
