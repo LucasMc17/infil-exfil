@@ -4,11 +4,14 @@
 class_name EnemyUnit
 extends Unit
 
+# TODO: I know, I know, preloads are bad. Gotta figure out what to do instead.
 const STUN_IMAGE := preload('res://assets/images/stun.png')
 const SLEEP_IMAGE := preload('res://assets/images/sleep.png')
 const INVESTIGATING_IMAGE := preload('res://assets/images/investigating.png')
 const HALF_ALERT_IMAGE := preload('res://assets/images/half_alert.png')
 const FULL_ALERT_IMAGE := preload('res://assets/images/full_alert.png')
+
+const ENEMY_YELL = preload('uid://beenh2i58pt2e')
 
 ## Starting queue of directives to perform when unaware. Passed directly to the [DecisionDirectorModule].
 @export var unaware_base_directives : Array[Directive] = []
@@ -119,6 +122,14 @@ func forfeit_turn() -> void:
 	temp_blocking_path = []
 	super()
 
+
+func react_to_sighting(nav_zone : NavZone, is_first_sighting := true) -> void:
+	speak(Barks.get_first_contact_line(nav_zone) if is_first_sighting else Barks.get_resumed_contact_line(nav_zone))
+	make_sound(ENEMY_YELL)
+
+
+func make_sound(sound : Sound) -> void:
+	Level.current_level.make_sound(global_position, sound, [self])
 
 ## Update the enemy's icon status indicator.
 func update_indicator() -> void:

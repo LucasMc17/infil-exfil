@@ -143,8 +143,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_tree().quit()
 
 
-func make_sound(pos : Vector3i, sound_res : Sound) -> void:
-	_soundscape.make_sound(pos, sound_res)
+func make_sound(pos : Vector3i, sound_res : Sound, exclude : Array[EnemyUnit] = []) -> void:
+	_soundscape.make_sound(pos, sound_res, exclude)
 
 
 ## Update the active unit to a given actor.

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Sound" format=3 uid="uid://beenh2i58pt2e"]
+
+[ext_resource type="Script" uid="uid://hwhxfr3na4w3" path="res://levels/soundscape/sound.gd" id="1_w2lpt"]
+
+[resource]
+script = ExtResource("1_w2lpt")
+severity = 2
+description = "shout"
+metadata/_custom_type_script = "uid://hwhxfr3na4w3"

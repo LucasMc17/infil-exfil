@@ -1,7 +1,7 @@
 class_name Soundscape
 extends Node3D
 
-func make_sound(pos : Vector3i, sound_res : Sound) -> void:
+func make_sound(pos : Vector3i, sound_res : Sound, exclude : Array[EnemyUnit] = []) -> void:
 	var space = get_world_3d().get_direct_space_state()
 	var sound_shape = SphereShape3D.new()
 	sound_shape.radius = sound_res.radius
@@ -19,7 +19,7 @@ func make_sound(pos : Vector3i, sound_res : Sound) -> void:
 	var results = space.intersect_shape(sound_query)
 	# var enemies : Array[EnemyUnit] = []
 	for result in results:
-		if result["collider"] and result["collider"] is EnemyUnit:
+		if result["collider"] and result["collider"] is EnemyUnit and !exclude.has(result["collider"]):
 			# enemies.append(result["collider"])
 			result["collider"].awareness.hear_sound(sound_res, pos)
 	# print(enemies)
