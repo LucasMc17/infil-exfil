@@ -3,6 +3,12 @@
 class_name NavZone
 extends Resource
 
+@export_group("Zone Details")
+## The name that units will use when referencing this zone in bark dialog. Should almost always begin with "the", i.e. "the barracks", "the roof", etc.
+@export var name : String = ""
+## The preoposition which units will use to refer to this zone, usually either "in" or "on".
+@export var preposition : String = "in"
+
 @export_group("Configs")
 ## A series of rectangles defining the borders of the zone, relative to the zone's base position.
 @export var areas : Array[Rect2i]

@@ -13,6 +13,7 @@ metadata/_custom_type_script = "uid://c7xqovr73fsq5"
 
 [resource]
 script = ExtResource("2_msw8n")
+name = "the second room"
 areas = Array[Rect2i]([Rect2i(0, 0, 13, 6)])
 points = Array[Vector2i]([Vector2i(10, 2)])
 exits = Array[ExtResource("1_xvdsg")]([SubResource("Resource_vk7da")])

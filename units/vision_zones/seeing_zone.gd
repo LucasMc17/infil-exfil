@@ -37,5 +37,9 @@ func check_detection() -> void:
 				if Level.current_level.alarm.active:
 					Level.current_level.enemy_awareness.known_bodies.add(zone.unit)
 		if !spotted.is_empty():
+			# var nav_zone = Level.current_level.get_zone_from_position(spotted[0].board_position)
+			# if enemy.awareness.is_unaware():
+			# 	enemy.speak(Barks.get_first_contact_line(nav_zone))
+			# else:
+			# 	enemy.speak(Barks.get_resumed_contact_line(nav_zone))
 			friendly_seen.emit(spotted)
-			enemy.speak("Hey!")

@@ -8,6 +8,8 @@ signal awareness_changed(old_awareness : AwarenessLevel, new_awareness : Awarene
 ## Signal emitted when the unit confirms a sighting of a [FriendltUnit]. Mirrors the global signal but allows for local context.
 signal friendly_spotted(friendly : FriendlyUnit)
 
+# NOTE: This friendly sighting system is getting complicated enough to possibly warrant its own file
+
 ## Class representing a friendly which was seen in this alarm phase. Includes info about whether or not the unit is still in sight, and its last known position if not. Has utility methods for updating its own information.
 class FriendlySighting:
 	## The sighted friendly unit.
@@ -16,6 +18,8 @@ class FriendlySighting:
 	var still_in_sight := true
 	## The last known position of the sighted friendly. If they are still in sight, this should be the friendly's current board position.
 	var last_known_position : Vector3i
+	## The NavZone in which the above last_known_position is situated, for use in dialog barks and certain other functions.
+	var last_known_zone : NavZone
 	## Whether the enemy has confirmed the sighted unit to be incapacitated.
 	var confirmed_incapacitated := false
 	
@@ -23,6 +27,7 @@ class FriendlySighting:
 		friendly = seen_friendly
 		still_in_sight = true
 		last_known_position = friendly.board_position
+		last_known_zone = Level.current_level.get_zone_from_position(last_known_position)
 
 
 ## Class representing where the unit was last standing when actively encountering friendlies. Updated by the confirm_all_sightings function if it detects that a unit is still in sight.
@@ -93,6 +98,18 @@ func _init(u : EnemyUnit) -> void:
 	Events.player_turn_ended.connect(resolve_suppression)
 
 
+func add_sighting(friendly : FriendlyUnit) -> void:
+	var friendly_id = friendly.get_instance_id()
+	if !targeted_friendlies.has(friendly_id):
+		var sighting = FriendlySighting.new(friendly)
+		if friendlies_in_sight.is_empty():
+			if is_unaware():
+				unit.speak(Barks.get_first_contact_line(sighting.last_known_zone))
+			else:
+				unit.speak(Barks.get_resumed_contact_line(sighting.last_known_zone))
+		targeted_friendlies[friendly_id] = sighting
+
+
 func _confirm_sighting(sighting : FriendlySighting) -> void:
 	var can_see : bool
 	var target_incapacitated = sighting.friendly.is_incapacitated()
@@ -103,6 +120,7 @@ func _confirm_sighting(sighting : FriendlySighting) -> void:
 		has_pursued = false
 		sighting.still_in_sight = true
 		sighting.last_known_position = sighting.friendly.board_position
+		sighting.last_known_zone = Level.current_level.get_zone_from_position(sighting.last_known_position)
 		if target_incapacitated:
 			sighting.confirmed_incapacitated = true
 		else:
@@ -152,6 +170,12 @@ func alarm(spotted_friendlies : Variant = [], skip_grace_period := false):
 	if spotted_friendlies is FriendlyUnit:
 		spotted_friendlies = [spotted_friendlies]
 	if !is_alarmed():
+		# if !spotted_friendlies.is_empty():
+		# 	var nav_zone = Level.current_level.get_zone_from_position(spotted_friendlies[0].board_position)
+		# 	if is_unaware():
+		# 		unit.speak(Barks.get_first_contact_line(nav_zone))
+		# 	else:
+		# 		unit.speak(Barks.get_resumed_contact_line(nav_zone))
 		if !skip_grace_period:
 			is_in_grace_period = true
 		awareness_level = AwarenessLevel.ALARMED
@@ -159,9 +183,7 @@ func alarm(spotted_friendlies : Variant = [], skip_grace_period := false):
 		if unit.is_active:
 			unit.forfeit_turn()
 	for friendly : FriendlyUnit in spotted_friendlies:
-		var friendly_id = friendly.get_instance_id()
-		if !targeted_friendlies.has(friendly_id):
-			targeted_friendlies[friendly_id] = FriendlySighting.new(friendly)
+		add_sighting(friendly)
 	unit.debug_label.change_param('targets', '[' + ', '.join(targeted_friendlies.values().map(func (sighting): return sighting.friendly.name)) + ']')
 	Events.request_update_unit_monitor.emit(unit)
 
