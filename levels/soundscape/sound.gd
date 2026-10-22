@@ -21,4 +21,6 @@ enum Severity {
 @export var severity := Severity.NORMAL
 ## A one word description of the sound to be used by overhearing units when emitting bark dialog about the sound. Should be all lower case and singular. The dialog system will automatically handle capitalizing and pluralizing as needed.
 @export var description := 'sound'
+## A list of custom options for dialog to be said in response to this sound. If this array is not empty, then responding units will pick their dialog response from this list instead of the standard [Barks] file.
+@export var custom_reaction_lines : Array[String] = []
 

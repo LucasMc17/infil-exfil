@@ -28,6 +28,7 @@ func cycle_enemy() -> void:
 		else:
 			enemy.decision_director.take_directive_from_queue()
 		await enemy.forfeited_turn
+		await get_tree().create_timer(0.5).timeout
 		cycle_enemy()
 	else:
 		Events.enemy_turn_ended.emit()

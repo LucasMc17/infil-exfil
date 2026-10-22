@@ -23,20 +23,23 @@ static var alarming_sound_lines : Array[String] = [
 	"Contact!",
 	"I'm hearing {plural_sound} over here!",
 	"That sounds like {article} {sound}!",
-	"{plural_sound}!",
+	"{plural_cap_sound}!",
 	"Oh, shit!",
 	"{cap_sound}, move in, move in!",
 	"I just heard {article} {sound}!",
 	"We've got {plural_sound}, engage!",
-	"Enemy Contact!",
+	"Enemy contact!",
 	"That what I think it was?"
 ]
 
 static func get_alarming_sound_line(sound : String) -> String:
+	var plural_sound = sound + "es" if sound[-1] == 's' else sound + 's'
 	return alarming_sound_lines.pick_random().format(
 		{
 			"sound": sound,
-			"cap_sound": sound.capitalize(), "plural_sound" : sound + "es" if sound[-1] == 's' else sound + 's',
+			"cap_sound": sound.capitalize(),
+			"plural_sound": plural_sound,
+			"plural_cap_sound": plural_sound.capitalize(),
 			"article": 'an' if ['a', 'e', 'i', 'o', 'u'].has(sound[0]) else 'a'
 		}
 	)

@@ -81,6 +81,7 @@ func _on_awareness_changed(_old_awareness, _new_awareness):
 
 
 func _on_alarm_raised(raiser) -> void:
+	awareness.has_seen_enemies = true
 	awareness.last_poc = raiser.awareness.last_poc
 	awareness.alarm(false)
 
@@ -125,6 +126,7 @@ func forfeit_turn() -> void:
 
 func react_to_sighting(nav_zone : NavZone, is_first_sighting := true) -> void:
 	speak(Barks.get_first_contact_line(nav_zone) if is_first_sighting else Barks.get_resumed_contact_line(nav_zone))
+	await get_tree().create_timer(0.1).timeout
 	make_sound(ENEMY_YELL)
 
 

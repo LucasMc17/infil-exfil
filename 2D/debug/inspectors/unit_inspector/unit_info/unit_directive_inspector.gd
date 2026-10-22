@@ -9,4 +9,7 @@ func refresh (new_module : DecisionDirectorModule = null) -> void:
 	if new_module:
 		decision_director = new_module
 	if decision_director:
-		_current_directive.value = decision_director.last_directive_name
+		if decision_director.current_directive:
+			_current_directive.value = decision_director.current_directive.get_script().get_global_name()
+		else:
+			_current_directive.value = "None"

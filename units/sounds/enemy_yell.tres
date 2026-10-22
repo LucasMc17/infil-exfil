@@ -6,4 +6,5 @@
 script = ExtResource("1_w2lpt")
 severity = 2
 description = "shout"
+custom_reaction_lines = Array[String](["Did you hear that!?", "Sounds like trouble.", "Move in!", "We've got contact!", "Someone's shouting!", "Moving to engage!"])
 metadata/_custom_type_script = "uid://hwhxfr3na4w3"

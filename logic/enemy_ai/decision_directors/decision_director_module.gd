@@ -3,8 +3,6 @@
 class_name DecisionDirectorModule
 extends Resource
 
-static var no_directive = preload('res://units/ai/directive/no_directive.gd')
-
 ## The Unit for whom this director is making decisions.
 var unit : EnemyUnit
 ## The awareness module for this director (and the unit)
@@ -25,13 +23,6 @@ var unaware_directive_queue : Array[Directive] = []
 var alerted_directive_queue : Array[Directive] = []
 ## The current queue of directives to carry out when alarmed.
 var alarmed_directive_queue : Array[Directive] = []
-
-# NOTE: I don't love this. I'd rather have a manual input name field for all directive resources, but right now they're all separate classes with no saved instances, so that get's messy too. More to think about here.
-## The name of the directive this unit is performing or most recently performed.
-var last_directive_name : String = "None":
-	set(val):
-		last_directive_name = val
-		Events.request_update_unit_monitor.emit(unit)
 
 ## The current directive queue the unit is working through, depending on their awareness level.
 var current_directive_queue : Array[Directive]:
@@ -61,7 +52,7 @@ func _init(u : EnemyUnit, a : EnemyUnitAwarenessModule) -> void:
 func take_directive_from_queue() -> void:
 	var next_directive : Directive
 	if unit.unit_status == Unit.Status.CAPTIVE:
-		next_directive = no_directive.new()
+		next_directive = NoDirective.new()
 		add_directive(next_directive)
 	elif awareness.is_unaware():
 		if unaware_directive_queue.is_empty():
@@ -78,8 +69,8 @@ func take_directive_from_queue() -> void:
 				add_directive(dir)
 		next_directive = alarmed_directive_queue[0]
 	current_directive = next_directive
-	last_directive_name = current_directive.get_script().get_global_name()
 	current_directive.begin(unit)
+	Events.request_update_unit_monitor.emit(unit)
 
 
 ## Ends the current directive by marking it finished, and then removes it from the directive queue.
@@ -94,12 +85,13 @@ func clear_directive() -> void:
 	if current_directive:
 		current_directive.cancel()
 	current_directive = null
+	Events.request_update_unit_monitor.emit(unit)
 
 
 ## Replaces the current directive with another, to be begun immediately. This is primarily meant to be called when a unit's active turn rolls around, but circumstances have changed, making the intended action irrelevant or unwise. Replaces the current directive with a newly chosen one, which the unit will begin on this turn.
 func reconsider_directive() -> void:
 	DebugConsole.log("The unit is reconsidering its current directive...")
-	clear_directive()
+	finish_directive()
 	take_directive_from_queue()
 
 

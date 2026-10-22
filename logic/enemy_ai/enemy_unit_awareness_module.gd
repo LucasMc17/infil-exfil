@@ -59,6 +59,8 @@ var awareness_level := AwarenessLevel.UNAWARE:
 		awareness_level = val
 		awareness_changed.emit(last_awareness_level, val)
 		Events.request_update_unit_monitor.emit(unit)
+## Whether or not this enemy has laid eyes on enemy's. At the moment this is almost exclusively used for determining how they should vocally react to contact ('We have intruders' vs. 'Found them'). Despite this description, it also becomes 'true' when the unit hears an alarm go off.
+var has_seen_enemies := false
 # NOTE: Not in love with this.
 ## Tracker for the awareness level the unit was in before the current one. For use in certain aspects of resolving the alarm grace period.
 var last_awareness_level := AwarenessLevel.UNAWARE
@@ -160,6 +162,7 @@ func alert():
 
 
 func see_friendlies(friendlies : Variant, should_skip_grace_period := false) -> void:
+	var first_sighting = friendlies_in_sight.is_empty()
 	if friendlies is FriendlyUnit:
 		friendlies = [friendlies]
 	for friendly in friendlies:
@@ -169,10 +172,12 @@ func see_friendlies(friendlies : Variant, should_skip_grace_period := false) -> 
 			if !should_skip_grace_period and !grace_period_alarmer:
 				grace_period_alarmer = sighting
 			if friendlies_in_sight.is_empty() and should_skip_grace_period:
-				unit.react_to_sighting(sighting.last_known_zone, is_unaware())
+				unit.react_to_sighting(sighting.last_known_zone, !has_seen_enemies)
 			targeted_friendlies[friendly_id] = sighting
-	if !is_alarmed():
+	if !is_alarmed() or first_sighting:
+		unit.stop_moving()
 		alarm(should_skip_grace_period)
+	has_seen_enemies = true
 	Events.request_update_unit_monitor.emit(unit)
 
 
@@ -183,7 +188,6 @@ func alarm(skip_grace_period := false):
 	if !skip_grace_period:
 		is_in_grace_period = true
 	awareness_level = AwarenessLevel.ALARMED
-	unit.stop_moving()
 	if unit.is_active:
 		unit.forfeit_turn()
 
@@ -201,15 +205,20 @@ func drop_guard():
 	Events.request_update_unit_monitor.emit(unit)
 
 
-# TODO: So much more to do here. Taking into account kind of sound, and what the unit is doing. Some alarmed states SHOULD be responsive to unexpected sounds.
 ## Respond to an overheard sound, assuming the user is not in active combat.
 func hear_sound(sound : Sound, sound_position : Vector3i) -> void:
 	if unit.listening:
 		if sound.severity == Sound.Severity.ALARMING or (sound.severity == Sound.Severity.SUSPICIOUS and awareness_level != AwarenessLevel.UNAWARE):
 			alarm()
-			unit.speak(Barks.get_alarming_sound_line(sound.description))
+			if !sound.custom_reaction_lines.is_empty():
+				unit.speak(sound.custom_reaction_lines.pick_random())
+			else:
+				unit.speak(Barks.get_alarming_sound_line(sound.description))
 		else:
-			unit.speak(Barks.get_normal_sound_line())
+			if !sound.custom_reaction_lines.is_empty():
+				unit.speak(sound.custom_reaction_lines.pick_random())
+			else:
+				unit.speak(Barks.get_normal_sound_line())
 		unit.decision_director.add_directive(InvestigateSound.new(sound_position))
 
 

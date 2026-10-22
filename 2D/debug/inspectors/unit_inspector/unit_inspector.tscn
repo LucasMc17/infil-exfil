@@ -10,11 +10,9 @@ offset_right = 128.0
 offset_bottom = 39.0
 size_flags_horizontal = 3
 theme = ExtResource("1_81wtd")
-folded = true
 title = "Units"
 
 [node name="UnitInspector" type="HBoxContainer" parent="." unique_id=1987811345]
-visible = false
 layout_mode = 2
 script = ExtResource("1_q3w6e")
 
