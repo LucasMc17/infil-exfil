@@ -5,6 +5,10 @@ extends Directive
 ## The position of the alarm the unit is running for.
 var _alarm_point : Variant = null
 
+func _init() -> void:
+	_listening = false
+
+
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
 	if Level.current_level.alarm.active or (Level.current_level.enemy_awareness.alarm_runner and Level.current_level.enemy_awareness.alarm_runner != unit):

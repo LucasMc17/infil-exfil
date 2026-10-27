@@ -9,6 +9,7 @@ var attack_skill : EnemyAttack
 
 func _init(t : FriendlyUnit) -> void:
 	target = t
+	_listening = false
 
 
 func begin(unit : EnemyUnit) -> void:

@@ -6,6 +6,7 @@ var encountered_friendlies := false
 
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
+	# TODO: This actually crashes the game if the unit never saw a friendly and therefore never created an alarm point. Easy way to test, make a noise then run around a corner before anyone can investigate.
 	unit.move("Run", Level.current_level.alarm.alarm_point.position, false)
 
 
@@ -28,6 +29,7 @@ func cancel() -> void:
 func end() -> void:
 	Level.current_level.alarm.point_investigated = true
 	super()
+
 
 func _on_encountering_friendly(_friendly : FriendlyUnit) -> void:
 	encountered_friendlies = true

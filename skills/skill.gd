@@ -1,5 +1,5 @@
 ## Class representing a particular instance of a skill, as belonging to a specific unit. This is done so that we may store a mutable instance of a skill and treat the original resource as a read only data source. It also allows us to host the skill in physical space, which is useful for finding potential targets and locating an AOE on the grid.
-@abstract class_name Skill
+class_name Skill
 extends Node
 
 ## Emitted to the skill machine when this skill is used.
@@ -36,6 +36,7 @@ enum SkillType {
 
 ## The skill's user.
 @export var user : Unit
+@export var sound : Sound
 
 @export_group("Skill Info")
 ## The name of this skill.
@@ -132,6 +133,8 @@ func use(overrides := {}) -> void:
 
 ## Use this skill, and send all relevant signals in the global context.
 func begin_use() -> void:
+	if sound:
+		Level.current_level.make_sound(user.global_position, sound)
 	user.action_points -= action_cost
 	user.movement_points -= movement_cost
 	if ammo_cost and user.primary_weapon is RangedWeapon:

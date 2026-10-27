@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://cvky17ch66rjs" path="res://levels/level_states/player_turn.gd" id="9_werwd"]
 [ext_resource type="Script" uid="uid://cu06vvfrrxrxs" path="res://levels/level_states/enemy_turn.gd" id="10_of21v"]
 [ext_resource type="PackedScene" uid="uid://buxc3af3a42l4" path="res://levels/navigation/movement_system.tscn" id="14_d7v53"]
+[ext_resource type="PackedScene" uid="uid://6wa3o4t7r4it" path="res://levels/soundscape/soundscape.tscn" id="15_0qmeg"]
 [ext_resource type="Script" uid="uid://cwt2k11twrldn" path="res://levels/click_handler_3d.gd" id="15_rm7tw"]
 [ext_resource type="Texture2D" uid="uid://8wky484er1ls" path="res://assets/images/crosshair_PLACEHOLDER.png" id="16_dcgl2"]
 
@@ -98,3 +99,6 @@ texture = ExtResource("16_dcgl2")
 [node name="MovementSystem" parent="." unique_id=1696164633 node_paths=PackedStringArray("level") instance=ExtResource("14_d7v53")]
 unique_name_in_owner = true
 level = NodePath("..")
+
+[node name="Soundscape" parent="." unique_id=2009377120 instance=ExtResource("15_0qmeg")]
+unique_name_in_owner = true

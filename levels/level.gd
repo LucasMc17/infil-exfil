@@ -98,6 +98,7 @@ var allow_inputs : bool:
 @onready var nav_zone_map : NavZoneMap = %NavZoneMap
 @onready var geometry : Node3D = %Geometry
 @onready var _dialog_layer : Control = %DialogLayer
+@onready var _soundscape : Soundscape = %Soundscape
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
@@ -140,6 +141,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	elif Input.is_action_just_pressed('force_exit'):
 		get_tree().quit()
+
+
+func make_sound(pos : Vector3i, sound_res : Sound, exclude : Array[EnemyUnit] = []) -> void:
+	_soundscape.make_sound(pos, sound_res, exclude)
 
 
 ## Update the active unit to a given actor.

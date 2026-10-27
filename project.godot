@@ -44,6 +44,8 @@ enabled=PackedStringArray("res://addons/debug_console/plugin.cfg", "res://addons
 
 friendlies="The player's units under their direct control"
 enemies="The enemy units directly opposed to the player."
+nav_floors="Floors of NavZoneHolders"
+nav_zones=""
 
 [input]
 

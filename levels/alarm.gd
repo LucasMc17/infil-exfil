@@ -38,6 +38,7 @@ func _enemies_in_active_pursuit() -> bool:
 			return true
 	return false
 
+
 ## A failsafe, reflecting whether there are no more enemy units investigating the alarm point.
 func _no_more_investigators() -> bool:
 	for enemy in Level.current_level.live_enemies:

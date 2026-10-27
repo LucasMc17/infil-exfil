@@ -5,8 +5,12 @@ func enter(previous_state : State, ext : Dictionary):
 	level.is_player_turn = true
 	for friendly : FriendlyUnit in level.live_friendlies:
 		friendly.reset()
-	level.set_active_unit.call_deferred(level.live_friendlies[0])
 	Events.player_turn_ended.connect(_on_player_turn_ended)
+	if !level.live_friendlies.is_empty():
+		level.set_active_unit.call_deferred(level.live_friendlies[0])
+	else:
+		Events.player_turn_ended.emit()
+		transition.call_deferred('EnemyTurn')
 
 
 func input(_event : InputEvent):
@@ -50,3 +54,5 @@ func _on_player_turn_ended():
 func exit():
 	super()
 	Events.player_turn_ended.disconnect(_on_player_turn_ended)
+
+# TODO: This should better mirror the enenmy turn state

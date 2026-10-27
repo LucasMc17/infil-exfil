@@ -9,6 +9,7 @@
 [ext_resource type="Resource" uid="uid://cw0fgeywlrgcf" path="res://2D/debug/commands/exit_command.tres" id="7_lf6aa"]
 [ext_resource type="PackedScene" uid="uid://x6eenq2lmhv1" path="res://2D/debug/inspectors/unit_inspector/unit_inspector.tscn" id="8_c2eu2"]
 [ext_resource type="PackedScene" uid="uid://cw0j7wmdm80rc" path="res://2D/debug/inspectors/alarm_inspector/alarm_inspector.tscn" id="9_r01na"]
+[ext_resource type="PackedScene" uid="uid://duurl5udajg58" path="res://2D/debug/inspectors/dialog_inspector/dialog_inspector.tscn" id="10_8umau"]
 
 [node name="DebugUi" type="Control" unique_id=1639751749]
 layout_mode = 3
@@ -48,6 +49,12 @@ grow_horizontal = 0
 
 [node name="AlarmInspector" parent="HBoxContainer" unique_id=1063794726 instance=ExtResource("9_r01na")]
 layout_mode = 2
+folded = true
 
 [node name="UnitInspector" parent="HBoxContainer" unique_id=48038392 instance=ExtResource("8_c2eu2")]
 layout_mode = 2
+folded = true
+
+[node name="DialogInspector" parent="HBoxContainer" unique_id=458783271 instance=ExtResource("10_8umau")]
+layout_mode = 2
+folded = true

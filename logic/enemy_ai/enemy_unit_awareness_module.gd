@@ -8,6 +8,8 @@ signal awareness_changed(old_awareness : AwarenessLevel, new_awareness : Awarene
 ## Signal emitted when the unit confirms a sighting of a [FriendltUnit]. Mirrors the global signal but allows for local context.
 signal friendly_spotted(friendly : FriendlyUnit)
 
+# NOTE: This friendly sighting system is getting complicated enough to possibly warrant its own file
+
 ## Class representing a friendly which was seen in this alarm phase. Includes info about whether or not the unit is still in sight, and its last known position if not. Has utility methods for updating its own information.
 class FriendlySighting:
 	## The sighted friendly unit.
@@ -16,6 +18,8 @@ class FriendlySighting:
 	var still_in_sight := true
 	## The last known position of the sighted friendly. If they are still in sight, this should be the friendly's current board position.
 	var last_known_position : Vector3i
+	## The NavZone in which the above last_known_position is situated, for use in dialog barks and certain other functions.
+	var last_known_zone : NavZone
 	## Whether the enemy has confirmed the sighted unit to be incapacitated.
 	var confirmed_incapacitated := false
 	
@@ -23,6 +27,7 @@ class FriendlySighting:
 		friendly = seen_friendly
 		still_in_sight = true
 		last_known_position = friendly.board_position
+		last_known_zone = Level.current_level.get_zone_from_position(last_known_position)
 
 
 ## Class representing where the unit was last standing when actively encountering friendlies. Updated by the confirm_all_sightings function if it detects that a unit is still in sight.
@@ -50,11 +55,15 @@ enum AwarenessLevel {
 ## The enemy's current awareness level.
 var awareness_level := AwarenessLevel.UNAWARE:
 	set(val):
-		var old_val = awareness_level
+		last_awareness_level = awareness_level
 		awareness_level = val
-		unit.debug_label.change_param('awareness_level', AwarenessLevel.find_key(val))
-		awareness_changed.emit(old_val, val)
+		awareness_changed.emit(last_awareness_level, val)
 		Events.request_update_unit_monitor.emit(unit)
+## Whether or not this enemy has laid eyes on enemy's. At the moment this is almost exclusively used for determining how they should vocally react to contact ('We have intruders' vs. 'Found them'). Despite this description, it also becomes 'true' when the unit hears an alarm go off.
+var has_seen_enemies := false
+# NOTE: Not in love with this.
+## Tracker for the awareness level the unit was in before the current one. For use in certain aspects of resolving the alarm grace period.
+var last_awareness_level := AwarenessLevel.UNAWARE
 ## The unit to whom this awareness module belongs.
 var unit : EnemyUnit
 ## Whether or not the unit will first attempt to detain friendly units when encountering them.
@@ -82,6 +91,8 @@ var last_poc : ContactPoint:
 		Events.request_update_unit_monitor.emit(unit)
 ## Whether the unit is in the detection grace period. This occurs when the unit sees a friendly unit during the player turn. While in the grace period, stealth skills are still usable on this unit. The grace period ends as soon as the enemy unit begins its next turn.
 var is_in_grace_period := false
+## The unit sighting which was created to trigger this unit entering their alarm grace period.
+var grace_period_alarmer : FriendlySighting
 ## Whether the unit has already given chase to a friendly unit in this alarm phase. Resets to false when seeing an enemy unit.
 var has_pursued := false
 ## A dictionary of bodies which this unit is aware of.
@@ -93,6 +104,7 @@ func _init(u : EnemyUnit) -> void:
 	Events.player_turn_ended.connect(resolve_suppression)
 
 
+# TODO: Gotta roll this in with the see_friendlies func somehow
 func _confirm_sighting(sighting : FriendlySighting) -> void:
 	var can_see : bool
 	var target_incapacitated = sighting.friendly.is_incapacitated()
@@ -103,6 +115,7 @@ func _confirm_sighting(sighting : FriendlySighting) -> void:
 		has_pursued = false
 		sighting.still_in_sight = true
 		sighting.last_known_position = sighting.friendly.board_position
+		sighting.last_known_zone = Level.current_level.get_zone_from_position(sighting.last_known_position)
 		if target_incapacitated:
 			sighting.confirmed_incapacitated = true
 		else:
@@ -139,6 +152,7 @@ func lose_suppression() -> void:
 func alert():
 	lose_suppression()
 	is_in_grace_period = false
+	grace_period_alarmer = null
 	awareness_level = AwarenessLevel.ALERTED
 	targeted_friendlies.clear()
 	has_pursued = false
@@ -147,29 +161,42 @@ func alert():
 	Events.request_update_unit_monitor.emit(unit)
 
 
-## Update the unit's awareness level to [ALARMED], instantly stopping the unit if they are moving, and adding all sighted friendlies to their list of targets.
-func alarm(spotted_friendlies : Variant = [], skip_grace_period := false):
-	if spotted_friendlies is FriendlyUnit:
-		spotted_friendlies = [spotted_friendlies]
-	if !is_alarmed():
-		if !skip_grace_period:
-			is_in_grace_period = true
-		awareness_level = AwarenessLevel.ALARMED
-		unit.stop_moving()
-		if unit.is_active:
-			unit.forfeit_turn()
-	for friendly : FriendlyUnit in spotted_friendlies:
+func see_friendlies(friendlies : Variant, should_skip_grace_period := false) -> void:
+	var first_sighting = friendlies_in_sight.is_empty()
+	if friendlies is FriendlyUnit:
+		friendlies = [friendlies]
+	for friendly in friendlies:
 		var friendly_id = friendly.get_instance_id()
 		if !targeted_friendlies.has(friendly_id):
-			targeted_friendlies[friendly_id] = FriendlySighting.new(friendly)
-	unit.debug_label.change_param('targets', '[' + ', '.join(targeted_friendlies.values().map(func (sighting): return sighting.friendly.name)) + ']')
+			var sighting = FriendlySighting.new(friendly)
+			if !should_skip_grace_period and !grace_period_alarmer:
+				grace_period_alarmer = sighting
+			if friendlies_in_sight.is_empty() and should_skip_grace_period:
+				unit.react_to_sighting(sighting.last_known_zone, !has_seen_enemies)
+			targeted_friendlies[friendly_id] = sighting
+	if !is_alarmed() or first_sighting:
+		unit.stop_moving()
+		alarm(should_skip_grace_period)
+	has_seen_enemies = true
 	Events.request_update_unit_monitor.emit(unit)
+
+
+## Update the unit's awareness level to [ALARMED], instantly stopping the unit if they are moving, and adding all sighted friendlies to their list of targets.
+func alarm(skip_grace_period := false):
+	if is_alarmed():
+		return
+	if !skip_grace_period:
+		is_in_grace_period = true
+	awareness_level = AwarenessLevel.ALARMED
+	if unit.is_active:
+		unit.forfeit_turn()
 
 
 ## Update the unit's awareness level to [UNAWARE], clearing their list of targets.
 func drop_guard():
 	lose_suppression()
 	is_in_grace_period = false
+	grace_period_alarmer = null
 	awareness_level = AwarenessLevel.UNAWARE
 	targeted_friendlies.clear()
 	has_pursued = false
@@ -178,9 +205,29 @@ func drop_guard():
 	Events.request_update_unit_monitor.emit(unit)
 
 
+## Respond to an overheard sound, assuming the user is not in active combat.
+func hear_sound(sound : Sound, sound_position : Vector3i) -> void:
+	if unit.listening:
+		if sound.severity == Sound.Severity.ALARMING or (sound.severity == Sound.Severity.SUSPICIOUS and awareness_level != AwarenessLevel.UNAWARE):
+			alarm()
+			if !sound.custom_reaction_lines.is_empty():
+				unit.speak(sound.custom_reaction_lines.pick_random())
+			else:
+				unit.speak(Barks.get_alarming_sound_line(sound.description))
+		else:
+			if !sound.custom_reaction_lines.is_empty():
+				unit.speak(sound.custom_reaction_lines.pick_random())
+			else:
+				unit.speak(Barks.get_normal_sound_line())
+		unit.decision_director.add_directive(InvestigateSound.new(sound_position))
+
+
 ## Reset the grace period bool to false.
 func resolve_grace_period():
+	if grace_period_alarmer and is_in_grace_period:
+		unit.react_to_sighting(grace_period_alarmer.last_known_zone, last_awareness_level == AwarenessLevel.UNAWARE)
 	is_in_grace_period = false
+	grace_period_alarmer = null
 
 
 ## Remove suppression at the end of the player turn if the suppression target is no longer in sight.

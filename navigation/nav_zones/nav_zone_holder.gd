@@ -29,6 +29,7 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		plane_material = StandardMaterial3D.new()
 		plane_material.albedo_color = debug_color
+	add_to_group("nav_zones")
 
 
 func _process(_delta: float) -> void:

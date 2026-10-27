@@ -4,11 +4,14 @@
 class_name EnemyUnit
 extends Unit
 
+# TODO: I know, I know, preloads are bad. Gotta figure out what to do instead.
 const STUN_IMAGE := preload('res://assets/images/stun.png')
 const SLEEP_IMAGE := preload('res://assets/images/sleep.png')
 const INVESTIGATING_IMAGE := preload('res://assets/images/investigating.png')
 const HALF_ALERT_IMAGE := preload('res://assets/images/half_alert.png')
 const FULL_ALERT_IMAGE := preload('res://assets/images/full_alert.png')
+
+const ENEMY_YELL = preload('uid://beenh2i58pt2e')
 
 ## Starting queue of directives to perform when unaware. Passed directly to the [DecisionDirectorModule].
 @export var unaware_base_directives : Array[Directive] = []
@@ -30,6 +33,9 @@ var available_skills : Dictionary[String, Skill] = {}
 var temp_blocker : Unit
 ## The path of another unit which this unit has just blocked. Used to help find a new position to move to where desirable actions can be performed but the path is unblocked.
 var temp_blocking_path : PackedVector3Array = []
+
+## Boolean representing whether or not this unit will actively respond to sounds heard within the level. Usually updated by entering/exiting certain directives.
+var listening := true
 
 @onready var seeing_zone : SeeingZone = %SeeingZone
 @onready var _status_indicator : Sprite3D = %StatusIndicator
@@ -66,7 +72,7 @@ func _on_unit_disabled(unit : Unit) -> void:
 
 func _on_seeing_zone_friendly_seen(friendlies: Array[FriendlyUnit]) -> void:
 	DebugConsole.log("Enemy Sees Friendly/Friendlies", 2)
-	awareness.alarm(friendlies, true)
+	awareness.see_friendlies(friendlies, true)
 
 
 func _on_awareness_changed(_old_awareness, _new_awareness):
@@ -75,8 +81,9 @@ func _on_awareness_changed(_old_awareness, _new_awareness):
 
 
 func _on_alarm_raised(raiser) -> void:
+	awareness.has_seen_enemies = true
 	awareness.last_poc = raiser.awareness.last_poc
-	awareness.alarm([], false)
+	awareness.alarm(false)
 
 
 func _on_alarm_ended() -> void:
@@ -116,6 +123,15 @@ func forfeit_turn() -> void:
 	temp_blocking_path = []
 	super()
 
+
+func react_to_sighting(nav_zone : NavZone, is_first_sighting := true) -> void:
+	speak(Barks.get_first_contact_line(nav_zone) if is_first_sighting else Barks.get_resumed_contact_line(nav_zone))
+	await get_tree().create_timer(0.1).timeout
+	make_sound(ENEMY_YELL)
+
+
+func make_sound(sound : Sound) -> void:
+	Level.current_level.make_sound(global_position, sound, [self])
 
 ## Update the enemy's icon status indicator.
 func update_indicator() -> void:
