@@ -185,6 +185,7 @@ func see_friendlies(friendlies : Variant, should_skip_grace_period := false) -> 
 func alarm(skip_grace_period := false):
 	if is_alarmed():
 		return
+	unit.listening = false
 	if !skip_grace_period:
 		is_in_grace_period = true
 	awareness_level = AwarenessLevel.ALARMED

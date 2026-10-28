@@ -22,7 +22,6 @@ func begin(unit : EnemyUnit) -> void:
 
 ## Executed when this directive is canceled, and exited before it can be completed, usually because a higher priority directive has jumped to the front of the queue.
 func cancel() -> void:
-	acting_unit.listening = false
 	if acting_unit.finished_moving.is_connected(_on_finished_moving):
 		acting_unit.finished_moving.disconnect(_on_finished_moving)
 	if acting_unit.finished_acting.is_connected(_on_finished_acting):
@@ -33,7 +32,6 @@ func cancel() -> void:
 
 ## Executed when the directive is successfully completed and removed from the queue.
 func end() -> void:
-	acting_unit.listening = false
 	if acting_unit.finished_moving.is_connected(_on_finished_moving):
 		acting_unit.finished_moving.disconnect(_on_finished_moving)
 	if acting_unit.finished_acting.is_connected(_on_finished_acting):

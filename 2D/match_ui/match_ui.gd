@@ -31,6 +31,7 @@ func disarm_skill_ui() -> void:
 	_armed_skill_ui.teardown()
 
 
+# NOTE: Something funky going on here. Turn ui persists after skill begun.
 func _on_skill_use_began(skill : Skill) -> void:
 	if skill.user is FriendlyUnit:
 		_turn_ui.visible = true
