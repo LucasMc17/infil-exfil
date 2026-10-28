@@ -132,6 +132,8 @@ func _ready():
 	board_position = NavigableGridMap.convert_global_to_grid_position(Vector3i(position))
 	if !Engine.is_editor_hint():
 		Events.skill_disarmed.connect(refresh_valid_moves)
+		Events.player_turn_ended.connect(_on_player_turn_ended)
+		Events.enemy_turn_ended.connect(_on_enemy_turn_ended)
 		if primary_weapon:
 			primary_weapon = primary_weapon.make_unique()
 			primary_weapon.initialize(self)
@@ -276,4 +278,14 @@ func speak(message : String) -> void:
 	
 ## Function for updating detected units, either by checking if this unit is being detected or if it is detecting any other units.
 func check_for_detection() -> void:
+	pass
+
+
+## Lifecycle hook which runs when the player turn ends.
+func _on_player_turn_ended() -> void:
+	pass
+
+
+## Lifecycle hook which runs when the enemy turn ends.
+func _on_enemy_turn_ended() -> void:
 	pass

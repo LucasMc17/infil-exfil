@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Sound" format=3 uid="uid://bo3biafkud6gy"]
+
+[ext_resource type="Script" uid="uid://hwhxfr3na4w3" path="res://levels/soundscape/sound.gd" id="1_en2cw"]
+
+[resource]
+script = ExtResource("1_en2cw")
+radius = 25.0
+penetrating_radius = 15.0
+severity = 2
+description = "gunshot"
+metadata/_custom_type_script = "uid://hwhxfr3na4w3"

@@ -4,14 +4,19 @@
 [ext_resource type="Script" uid="uid://brb3kww8r5oiw" path="res://units/friendlies/friendly_classes/operative/operative.gd" id="2_77ftk"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_77ftk"]
-viewport_path = NodePath("DebugLabel/@SubViewport@22239")
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_mgg2u"]
+viewport_path = NodePath("DebugLabel/@SubViewport@110324")
 
 [node name="Operative" unique_id=1676765037 instance=ExtResource("1_458cx")]
 script = ExtResource("2_77ftk")
-tile_position = null
+
+[node name="UnitFlag" parent="." index="0" unique_id=710425423]
+texture = SubResource("ViewportTexture_77ftk")
 
 [node name="DebugLabel" parent="." index="4" unique_id=607303816]
-texture = SubResource("ViewportTexture_77ftk")
+texture = SubResource("ViewportTexture_mgg2u")
 _text = "FRIENDLY OPERATIVE
 Position: (x: {x}, y: {y}, z: {z})
 Current Movement: {movement_state}

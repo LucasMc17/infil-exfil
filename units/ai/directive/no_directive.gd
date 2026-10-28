@@ -9,7 +9,7 @@ func begin(unit : EnemyUnit) -> void:
 	else:
 		DebugConsole.log("Enemy takes no action")
 		acting_unit.forfeit_turn.call_deferred()
-		end()
+		# end()
 
 
 func respect_nudge() -> void:
@@ -19,10 +19,10 @@ func respect_nudge() -> void:
 	else:
 		DebugConsole.log("Enemy can't move out of the way, takes no action")
 		acting_unit.forfeit_turn.call_deferred()
-		end()
+		# end()
 
 
 func _on_finished_moving(unit : EnemyUnit, arrived : bool):
 	super(unit, arrived)
-	end()
+	# end()
 	acting_unit.forfeit_turn()

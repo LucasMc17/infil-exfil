@@ -207,7 +207,7 @@ func drop_guard():
 
 ## Respond to an overheard sound, assuming the user is not in active combat.
 func hear_sound(sound : Sound, sound_position : Vector3i) -> void:
-	if unit.listening:
+	if unit.listening and !unit.is_incapacitated():
 		if sound.severity == Sound.Severity.ALARMING or (sound.severity == Sound.Severity.SUSPICIOUS and awareness_level != AwarenessLevel.UNAWARE):
 			alarm()
 			if !sound.custom_reaction_lines.is_empty():

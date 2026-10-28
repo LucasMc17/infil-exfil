@@ -58,7 +58,7 @@ enum SkillType {
 ## The cost of performing this skill, in terms of ammunition for the primary weapon.
 @export var ammo_cost := 0
 
-## A dictionary of variables which should be surfaced to the player when readying this skill, for example, chance to hit.
+## An array of variables which should be surfaced to the player when readying this skill, for example, chance to hit.
 var surfaced_variables : Array[SurfacedVariable] = []
 
 func _ready() -> void:
@@ -139,9 +139,9 @@ func begin_use() -> void:
 	user.movement_points -= movement_cost
 	if ammo_cost and user.primary_weapon is RangedWeapon:
 		user.primary_weapon.current_ammunition -= ammo_cost
-	Events.skill_used.emit(self)
+	Events.skill_use_began.emit(self)
 	Events.refresh_unit_skills.emit()
 
 
 func end_use() -> void:
-	pass
+	Events.skill_use_ended.emit(self)

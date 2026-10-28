@@ -34,6 +34,7 @@ var temp_blocker : Unit
 ## The path of another unit which this unit has just blocked. Used to help find a new position to move to where desirable actions can be performed but the path is unblocked.
 var temp_blocking_path : PackedVector3Array = []
 
+# NOTE: Still really not satisfied with the way directives interact with this. The unit basically clogs their ears between ending one directive and starting the next which is actually a pretty good sized gap. They might end one directive at the end of their turn and not begin the next one til it's their turn again on the next enemy turn. In all that time they aren't listening for sounds. This is good when they've just been alarmed, but bad almost any other time. Need a better solution.
 ## Boolean representing whether or not this unit will actively respond to sounds heard within the level. Usually updated by entering/exiting certain directives.
 var listening := true
 

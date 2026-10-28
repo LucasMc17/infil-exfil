@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://dmpy1qr51y8fa"]
+
+[ext_resource type="PackedScene" uid="uid://b6h1160eunshj" path="res://units/friendlies/friendly_unit.tscn" id="1_qoo1n"]
+[ext_resource type="Script" uid="uid://b8rg0soq64q8x" path="res://units/friendlies/friendly_classes/sniper/sniper.gd" id="2_4brui"]
+[ext_resource type="PackedScene" uid="uid://bpiqk3itgsxyc" path="res://skills/single_target_skills/aimed_skills/take_aim.tscn" id="2_c56jj"]
+[ext_resource type="Resource" uid="uid://ceqp2hgv6xj1w" path="res://weapons/ranged_weapons/sniper_rifle/sniper_rifle.tres" id="3_lr82c"]
+[ext_resource type="PackedScene" uid="uid://gerr5frhn1t1" path="res://skills/targetless_skills/take_shot.tscn" id="4_3aggr"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_4brui"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_3aggr"]
+viewport_path = NodePath("DebugLabel/@SubViewport@53993")
+
+[node name="Sniper" unique_id=1676765037 instance=ExtResource("1_qoo1n")]
+script = ExtResource("2_4brui")
+primary_weapon = ExtResource("3_lr82c")
+
+[node name="UnitFlag" parent="." index="0" unique_id=710425423]
+texture = SubResource("ViewportTexture_4brui")
+
+[node name="DebugLabel" parent="." index="4" unique_id=607303816]
+texture = SubResource("ViewportTexture_3aggr")
+
+[node name="TakeAim" parent="SkillMachine" parent_id_path=PackedInt32Array(397221885) index="0" unique_id=1362204123 node_paths=PackedStringArray("user") instance=ExtResource("2_c56jj")]
+user = NodePath("../..")
+
+[node name="TakeShot" parent="SkillMachine" parent_id_path=PackedInt32Array(397221885) index="1" unique_id=2113857743 node_paths=PackedStringArray("user") instance=ExtResource("4_3aggr")]
+user = NodePath("../..")

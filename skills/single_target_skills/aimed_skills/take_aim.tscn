@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://bpiqk3itgsxyc"]
+
+[ext_resource type="PackedScene" uid="uid://dulcusx643qk8" path="res://skills/single_target_skills/aimed_skills/aimed_skill.tscn" id="1_cm016"]
+[ext_resource type="Script" uid="uid://c0kq1fopq63eu" path="res://skills/single_target_skills/aimed_skills/take_aim.gd" id="2_fg8rw"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_cm016"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fg8rw"]
+top_radius = -0.05
+bottom_radius = 0.0
+height = 0.001
+cap_top = false
+cap_bottom = false
+
+[node name="TakeAim" unique_id=1362204123 instance=ExtResource("1_cm016")]
+script = ExtResource("2_fg8rw")
+effective_range = 50.0
+skill_type = 1
+target_filters = Array[int]([1])
+skill_name = "Take Aim"
+description = "Take aim at a target, guaranteeing a 100% chance to hit them next turn, so long as this unit does not move or take damage, and the target does not break line of sight."
+
+[node name="CollisionShape3D" parent="Area3D" parent_id_path=PackedInt32Array(1854330789) index="0" unique_id=1223890083]
+shape = SubResource("SphereShape3D_cm016")
+
+[node name="MeshInstance3D" parent="Area3D" parent_id_path=PackedInt32Array(1854330789) index="1" unique_id=640202467]
+mesh = SubResource("CylinderMesh_fg8rw")

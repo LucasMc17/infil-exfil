@@ -21,5 +21,5 @@ func make_sound(pos : Vector3i, sound_res : Sound, exclude : Array[EnemyUnit] = 
 	for result in results:
 		if result["collider"] and result["collider"] is EnemyUnit and !exclude.has(result["collider"]):
 			# enemies.append(result["collider"])
-			result["collider"].awareness.hear_sound(sound_res, pos)
+			result["collider"].awareness.hear_sound(sound_res, NavigableGridMap.convert_global_to_grid_position(pos))
 	# print(enemies)
