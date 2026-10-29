@@ -186,14 +186,11 @@ func get_likely_path(pursuer_position : Vector3i, last_known_position : Vector3i
 		# NOTE: This still has problems. In the first room of pursuit the enemy considers the likeliest exit to be the one closest to themselves, not the last known enemy position. It should be based on LKP for the first round, then unit's position
 		var next_exit : NavZoneExit = current_zone.get_semirandom_exit(current_position, banned_zones)
 		if !next_exit:
-			print(result)
 			return result
 		current_zone = load(next_exit.to_zone_uid)
 		current_position = next_exit.board_position
 		result.append(current_zone.get_nearest_point(current_position))
 		banned_zones.append(current_zone)
-
-	print(result)
 
 	return result
 

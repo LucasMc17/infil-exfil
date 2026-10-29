@@ -19,6 +19,7 @@ func is_suppressed_by(enemy : EnemyUnit) -> bool:
 
 
 func move(movement_name : String, path : Array[Vector3i]) -> void:
+	_on_move()
 	movement_machine.current_state.transition(movement_name, {"path": path})
 
 

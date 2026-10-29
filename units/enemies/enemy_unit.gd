@@ -63,6 +63,7 @@ func check_for_detection() -> void:
 
 
 func move(movement_name : String, end_point : Vector3i, exact_point := true, point_radius := 3) -> void:
+	_on_move()
 	movement_machine.current_state.transition(movement_name, {"end_point": end_point, "exact_point": exact_point, "point_radius": point_radius})
 
 
@@ -103,13 +104,11 @@ func lose_consciousness() -> void:
 	update_indicator()
 
 
-func damage(amount : int) -> void:
-	super(amount)
+func _on_damage() -> void:
 	awareness.lose_suppression()
 
 
-func die() -> void:
-	super()
+func _on_die() -> void:
 	update_indicator()
 
 
