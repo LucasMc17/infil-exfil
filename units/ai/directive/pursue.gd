@@ -1,6 +1,8 @@
 class_name Pursue
 extends Directive
 
+# TODO : Noticed a bug here. Two units pursued the same friendly, ended up at the same dead end. One of them was at the end, unable to leave, because the other was behind blocking the only path out, and was still in pursuit. Enemies should safely exit pursuit when no nav path is possible. OR there should be a system for noticing when two units are blocking each other and nudge one of them, even if the directive they are in does not have a nudge func.
+
 ## The target of this attack.
 var target : FriendlyUnit
 ## Whether or not the unit performing this directive has yet visited the last known position of the target friendly.
@@ -37,6 +39,8 @@ func begin(unit : EnemyUnit) -> void:
 		acting_unit.move("Run", pursuit_path[pursuit_index])
 
 
+## NOTE: We have a very interesting bug here. Units only need to see a fraction of a friendly's vision points to consider them seen, but they need to see center mass to target them. This leads to situations where an enemy pursues a friendly, sees them, then stops short (because of the first_sighting consideration in the see_friendlies func in unit awareness) but doesn't attack, which is very confusing for the player. Two possible solutions: Add a new vision point at center mass which is required to be visible to see a unit and retarget all skill targeting against this point, OR change skills to tap into the vision check func and only conisder an enemy targetable if they pass the visibility check. I lean towards the second option, but it has ramifications on how the player's skills will work too.
+## See bug_evidence no. 2 for a picture of a unit who has just stopped short while seeing the unit in the foreground but without being able to attack
 func _on_finished_moving(unit : EnemyUnit, arrived : bool):
 	super(unit, arrived)
 	attack_skill.arm_as_enemy()

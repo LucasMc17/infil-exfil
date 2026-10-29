@@ -2,7 +2,7 @@
 class_name EnemyAttack
 extends AimedSkill
 
-const CHANCE := 0.4
+const CHANCE := 0.0
 
 func begin_use() -> void:
 	user.audio_machine.play_audio('gunshot')

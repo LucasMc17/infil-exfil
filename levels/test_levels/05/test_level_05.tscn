@@ -19,7 +19,6 @@
 [ext_resource type="Resource" uid="uid://ckgikmtpfx4ig" path="res://levels/test_levels/05/nav_zones/center_room.tres" id="12_h35ky"]
 [ext_resource type="Resource" uid="uid://c2v3i8fwwgfhn" path="res://levels/test_levels/05/nav_zones/upstairs.tres" id="13_giyhb"]
 [ext_resource type="PackedScene" uid="uid://d1i1gcecs1k5t" path="res://levels/geometry/debug_floor.tscn" id="14_xfu07"]
-[ext_resource type="PackedScene" uid="uid://dmpy1qr51y8fa" path="res://units/friendlies/friendly_classes/sniper/sniper.tscn" id="17_xfu07"]
 
 [sub_resource type="Resource" id="Resource_h35ky"]
 script = ExtResource("9_h35ky")
@@ -1666,9 +1665,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 6)
 
 [node name="FriendlyUnit3" parent="Friendlies" parent_id_path=PackedInt32Array(926091492) index="1" unique_id=686354508 instance=ExtResource("6_peql8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -5)
-
-[node name="Sniper" parent="Friendlies" parent_id_path=PackedInt32Array(926091492) index="2" unique_id=1561542377 instance=ExtResource("17_xfu07")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 6)
 
 [node name="EnemyUnit" parent="Enemies" parent_id_path=PackedInt32Array(182952236) index="0" unique_id=1682874516 instance=ExtResource("7_p8x4w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -3)

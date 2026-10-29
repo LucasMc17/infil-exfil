@@ -15,6 +15,7 @@ func enter(previous_state, ext) -> void:
 	super(previous_state, ext)
 	if ext.has('end_point'):
 		full_intended_path = Level.current_level.nav_map.find_path(unit.board_position, end_point, exact_point, point_radius)
+		print(full_intended_path)
 		var temp_path = full_intended_path.slice(0, unit.movement_points)
 		for point in temp_path:
 			var blocker = Level.current_level.nav_map.get_point_occupier(point)
