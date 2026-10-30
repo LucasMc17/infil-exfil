@@ -3,21 +3,37 @@ class_name InvestigateAlarmPoint
 extends Directive
 
 var encountered_friendlies := false
+## The attack skill the unit intends to use.
+var attack_skill : EnemyAttack
 
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
-	# FIXME: This actually crashes the game if the unit never saw a friendly and therefore never created an alarm point. Easy way to test, make a noise then run around a corner before anyone can investigate.
-	unit.move("Run", Level.current_level.alarm.alarm_point.position, false)
+	attack_skill = acting_unit.skill_machine.skills["EnemyAttack"]
+	attack_skill.arm_as_enemy()
+	if !attack_skill.potential_targets.is_empty():
+		attack_skill.use({ "target": attack_skill.potential_targets[0] })
+	else:
+		unit.move("Run", Level.current.alarm.alarm_point.position, false)
 
 
 func _on_finished_moving(unit : EnemyUnit, arrived : bool):
 	super(unit, arrived)
+	attack_skill.arm_as_enemy()
+	if !attack_skill.potential_targets.is_empty():
+		attack_skill.use({ "target": attack_skill.potential_targets[0] })
 	# TODO: This is a pretty good example of why we need a better system for determining when the unit has simply finished moving and when they have fully arrived at their destination. This is the only action so far which uses the inexact movement system, and it works, but the unit will simply wait until they can finish the movement before considering the action complete, since the directive only knows the movement is fully complete when the unit's exact position is the exact alarm point. We could check if they are within a certain distance, but that's ugly. We really need a separate handler, something like "unit arrived at desintation", in addition to "unit finished moving". Then the movement state itself can determing if this should be emitted by comparing the unit's final position to the last point on the planned path.
-	if arrived:
+	elif arrived:
 		end()
-	elif encountered_friendlies:
-		cancel()
-	unit.forfeit_turn()
+		unit.forfeit_turn()
+	else:
+		unit.forfeit_turn()
+
+func _on_finished_acting(unit : EnemyUnit):
+	# Unit found friendlies.
+	super(unit)
+	end()
+	acting_unit.listening = false
+	acting_unit.forfeit_turn()
 
 
 func cancel() -> void:
@@ -27,7 +43,7 @@ func cancel() -> void:
 
 
 func end() -> void:
-	Level.current_level.alarm.point_investigated = true
+	Level.current.alarm.point_investigated = true
 	super()
 
 

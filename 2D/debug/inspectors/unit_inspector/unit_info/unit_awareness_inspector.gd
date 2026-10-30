@@ -27,19 +27,19 @@ func refresh(new_module : EnemyUnitAwarenessModule = null) -> void:
 		for sighting in awareness.friendlies_in_sight:
 			var button = Button.new()
 			button.text = sighting.friendly.name
-			button.pressed.connect(func (): Level.current_level.level_camera.jump_to_point(sighting.friendly.global_position))
+			button.pressed.connect(func (): Level.current.level_camera.jump_to_point(sighting.friendly.global_position))
 			_in_sight_buttons.add_child(button)
 		for sighting in awareness.friendlies_out_of_sight:
 			var button = Button.new()
 			button.text = sighting.friendly.name
-			button.pressed.connect(func (): Level.current_level.level_camera.jump_to_point(sighting.friendly.global_position))
+			button.pressed.connect(func (): Level.current.level_camera.jump_to_point(sighting.friendly.global_position))
 			_out_of_sight_buttons.add_child(button)
 
 
 
 func _on_contact_point_button_pressed() -> void:
 	if awareness and awareness.last_poc:
-		Level.current_level.level_camera.jump_to_point(NavigableGridMap.convert_grid_to_global_position(awareness.last_poc.position))
+		Level.current.level_camera.jump_to_point(NavigableGridMap.convert_grid_to_global_position(awareness.last_poc.position))
 
 
 func _on_lose_alarm_button_pressed() -> void:

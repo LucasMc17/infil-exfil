@@ -9,7 +9,7 @@ signal target_selected(target_icon : TargetIcon)
 var target : Unit
 
 func _pressed() -> void:
-	if Level.current_level.allow_inputs:
+	if Level.current.allow_inputs:
 		target_selected.emit(self)
 
 

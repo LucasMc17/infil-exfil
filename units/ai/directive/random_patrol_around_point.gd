@@ -12,8 +12,8 @@ func _init(p : Vector3i) -> void:
 
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
-	all_valid_moves = Level.current_level.nav_map.get_all_valid_moves(point, unit.max_movement_points)
-	var unit_valid_moves = Level.current_level.nav_map.get_all_valid_moves(unit.board_position, unit.max_movement_points)
+	all_valid_moves = Level.current.nav_map.get_all_valid_moves(point, unit.max_movement_points)
+	var unit_valid_moves = Level.current.nav_map.get_all_valid_moves(unit.board_position, unit.max_movement_points)
 	var move = unit_valid_moves.filter(func (pos): return all_valid_moves.has(pos)).pick_random()
 
 	unit.move("Run", move)

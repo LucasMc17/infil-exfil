@@ -16,7 +16,7 @@ var point_investigated := false
 ## Virtual property reflecting whether this alarm has been "satisfied" and can be called off when the countdown hits zero.
 var alarm_satisfied : bool:
 	get():
-		return !_enemies_in_active_pursuit() and (point_investigated or _no_more_investigators())
+		return !_enemies_in_active_pursuit() and _no_more_investigators() and (point_investigated or _no_more_responders())
 
 func _init() -> void:
 	if !Engine.is_editor_hint():
@@ -32,16 +32,24 @@ func reset() -> void:
 
 
 func _enemies_in_active_pursuit() -> bool:
-	for enemy in Level.current_level.live_enemies:
+	for enemy in Level.current.live_enemies:
 		if enemy.awareness.friendlies_in_sight.size() > 0 or enemy.decision_director.current_directive is Pursue:
 			return true
 	return false
 
 
 ## A failsafe, reflecting whether there are no more enemy units investigating the alarm point.
-func _no_more_investigators() -> bool:
-	for enemy in Level.current_level.live_enemies:
+func _no_more_responders() -> bool:
+	for enemy in Level.current.live_enemies:
 		if enemy.decision_director.current_directive is InvestigateAlarmPoint:
+			return false
+	return true
+
+
+## A failsafe, reflecting whether there are no more enemy units investigating a sound.
+func _no_more_investigators() -> bool:
+	for enemy in Level.current.live_enemies:
+		if enemy.decision_director.current_directive is InvestigateSound:
 			return false
 	return true
 
@@ -49,11 +57,15 @@ func _no_more_investigators() -> bool:
 func raise(raiser : Unit) -> void:
 	active = true
 	reset()
-	if raiser is EnemyUnit:
-		alarm_point = raiser.awareness.last_poc
-	else:
+	if raiser is not EnemyUnit or !raiser.awareness.last_poc:
 		alarm_point = EnemyUnitAwarenessModule.ContactPoint.new(raiser.board_position)
-	# friendlies_acquired = Level.current_level.enemy_awareness.friendlies_in_sight()
+	else:
+		alarm_point = raiser.awareness.last_poc
+	# if raiser is EnemyUnit:
+	# 	alarm_point = raiser.awareness.last_poc or EnemyUnitAwarenessModule.ContactPoint.new(raiser.board_position)
+	# else:
+	# 	alarm_point = EnemyUnitAwarenessModule.ContactPoint.new(raiser.board_position)
+	# friendlies_acquired = Level.current.enemy_awareness.friendlies_in_sight()
 	Events.alarm_raised.emit(raiser)
 	Events.update_alarm_monitor.emit()
 

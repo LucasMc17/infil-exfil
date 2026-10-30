@@ -6,21 +6,21 @@
 [ext_resource type="Resource" uid="uid://ceqp2hgv6xj1w" path="res://weapons/ranged_weapons/sniper_rifle/sniper_rifle.tres" id="3_lr82c"]
 [ext_resource type="PackedScene" uid="uid://gerr5frhn1t1" path="res://skills/targetless_skills/take_shot.tscn" id="4_3aggr"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_rxkpm"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_lr82c"]
 viewport_path = NodePath("SubViewport")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_rlf21"]
-viewport_path = NodePath("DebugLabel/@SubViewport@22888")
+[sub_resource type="ViewportTexture" id="ViewportTexture_dkc40"]
+viewport_path = NodePath("DebugLabel/@SubViewport@19859")
 
 [node name="Sniper" unique_id=1676765037 instance=ExtResource("1_qoo1n")]
 script = ExtResource("2_4brui")
 primary_weapon = ExtResource("3_lr82c")
 
 [node name="UnitFlag" parent="." index="0" unique_id=710425423]
-texture = SubResource("ViewportTexture_rxkpm")
+texture = SubResource("ViewportTexture_lr82c")
 
 [node name="DebugLabel" parent="." index="4" unique_id=607303816]
-texture = SubResource("ViewportTexture_rlf21")
+texture = SubResource("ViewportTexture_dkc40")
 
 [node name="TakeAim" parent="SkillMachine" parent_id_path=PackedInt32Array(397221885) index="0" unique_id=1362204123 node_paths=PackedStringArray("user") instance=ExtResource("2_c56jj")]
 user = NodePath("../..")

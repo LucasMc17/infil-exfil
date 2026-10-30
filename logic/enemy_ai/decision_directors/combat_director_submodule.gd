@@ -24,17 +24,18 @@ func choose_combat_directive() -> Array[Directive]:
 		elif !awareness.friendlies_out_of_sight.is_empty() and !awareness.has_pursued:
 			var pursued = awareness.friendlies_out_of_sight[0]
 			var result : Array[Directive] = [Pursue.new(pursued.friendly, pursued.last_known_position)]
-			if !Level.current_level.alarm.active and !Level.current_level.enemy_awareness.alarm_runner:
+			if !Level.current.alarm.active and !Level.current.enemy_awareness.alarm_runner:
 				result.append(RunForAlarm.new())
 			return result
-		elif Level.current_level.alarm.active and !Level.current_level.alarm.point_investigated:
-			return [InvestigateAlarmPoint.new()] #RandomPatrolAroundPoint.new(Level.current_level.alarm.alarm_point.position)
+		# TODO: Another lif right here: what to do if there are no known enemies in sight or out of sight, but the alarm point has already been investigated? maybe just run to the alarm point anyway. Maybe prioritize last sighting/hearing. Open questions.
+		elif Level.current.alarm.active and !Level.current.alarm.point_investigated:
+			return [InvestigateAlarmPoint.new()] #RandomPatrolAroundPoint.new(Level.current.alarm.alarm_point.position)
 		else:
 			return [NoDirective.new()]
 
 
 func _decide_on_alarm_run() -> bool:
-	if Level.current_level.alarm.active or Level.current_level.enemy_awareness.alarm_runner:
+	if Level.current.alarm.active or Level.current.enemy_awareness.alarm_runner:
 		return false
 	if awareness.friendlies_in_sight.is_empty() and awareness.friendlies_out_of_sight.is_empty():
 		return true

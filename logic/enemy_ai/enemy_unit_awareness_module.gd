@@ -27,7 +27,7 @@ class FriendlySighting:
 		friendly = seen_friendly
 		still_in_sight = true
 		last_known_position = friendly.board_position
-		last_known_zone = Level.current_level.get_zone_from_position(last_known_position)
+		last_known_zone = Level.current.get_zone_from_position(last_known_position)
 
 
 ## Class representing where the unit was last standing when actively encountering friendlies. Updated by the confirm_all_sightings function if it detects that a unit is still in sight.
@@ -39,7 +39,7 @@ class ContactPoint:
 
 	func _init(p : Vector3i) -> void:
 		position = p
-		nav_zone = Level.current_level.get_zone_from_position(p)
+		nav_zone = Level.current.get_zone_from_position(p)
 
 
 ## The possible awareness states which an enemy unit can operate under.
@@ -115,7 +115,7 @@ func _confirm_sighting(sighting : FriendlySighting) -> void:
 		has_pursued = false
 		sighting.still_in_sight = true
 		sighting.last_known_position = sighting.friendly.board_position
-		sighting.last_known_zone = Level.current_level.get_zone_from_position(sighting.last_known_position)
+		sighting.last_known_zone = Level.current.get_zone_from_position(sighting.last_known_position)
 		if target_incapacitated:
 			sighting.confirmed_incapacitated = true
 		else:
@@ -220,6 +220,7 @@ func hear_sound(sound : Sound, sound_position : Vector3i) -> void:
 				unit.speak(sound.custom_reaction_lines.pick_random())
 			else:
 				unit.speak(Barks.get_normal_sound_line())
+		unit.decision_director.clear_queue()
 		unit.decision_director.add_directive(InvestigateSound.new(sound_position))
 
 

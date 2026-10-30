@@ -9,4 +9,4 @@ func _ready() -> void:
 
 func refresh() -> void:
 	_status_inspector.refresh()
-	_bodies_inspector.refresh(Level.current_level.enemy_awareness.known_bodies)
+	_bodies_inspector.refresh(Level.current.enemy_awareness.known_bodies)

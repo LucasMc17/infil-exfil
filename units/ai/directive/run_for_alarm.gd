@@ -11,12 +11,12 @@ func _init() -> void:
 
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
-	if Level.current_level.alarm.active or (Level.current_level.enemy_awareness.alarm_runner and Level.current_level.enemy_awareness.alarm_runner != unit):
+	if Level.current.alarm.active or (Level.current.enemy_awareness.alarm_runner and Level.current.enemy_awareness.alarm_runner != unit):
 		unit.decision_director.reconsider_directive()
-	Level.current_level.enemy_awareness.alarm_runner = unit
+	Level.current.enemy_awareness.alarm_runner = unit
 	_alarm_point = null
 	DebugConsole.log('Enemy Runs for Alarm', 2)
-	_alarm_point = Level.current_level.nav_map.get_closest_point(acting_unit.board_position, Level.current_level.nav_map.alarms.keys())
+	_alarm_point = Level.current.nav_map.get_closest_point(acting_unit.board_position, Level.current.nav_map.alarms.keys())
 	if !_alarm_point:
 		acting_unit.forfeit_turn.call_deferred()
 		end()

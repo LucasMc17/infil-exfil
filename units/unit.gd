@@ -78,7 +78,7 @@ static var active_unit : Unit
 ## Whether or not this unit is currently the active unit within the level.
 var is_active : bool:
 	get():
-		if Level.current_level:
+		if Level.current:
 			return Unit.active_unit == self
 		else:
 			return false
@@ -147,8 +147,8 @@ func _ready():
 
 ## Update the list of valid moves for this unit based on their maximum move distance and what positions within that range are navigable to.
 func refresh_valid_moves() -> void:
-	if Level.current_level and can_move() and is_active:
-		Level.current_level.movement_system.activate(self)
+	if Level.current and can_move() and is_active:
+		Level.current.movement_system.activate(self)
 
 
 ## Executed when the unit becomes the active unit within the level.
@@ -170,9 +170,9 @@ func deactivate():
 	flag.collapse()
 	skill_machine.visible = false
 	# TODO: Make this a signal
-	Level.current_level.movement_system.deactivate()
+	Level.current.movement_system.deactivate()
 	Events.unit_deactivated.emit(self)
-	if Level.current_level.armed_skill:
+	if Level.current.armed_skill:
 		Events.skill_disarmed.emit()
 
 

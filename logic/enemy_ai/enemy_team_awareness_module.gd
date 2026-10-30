@@ -41,7 +41,7 @@ func _init() -> void:
 
 ## Returns true if any enemy in the game is currently seeing a friendly unit.
 func friendlies_in_sight() -> bool:
-	for enemy : EnemyUnit in Level.current_level.live_enemies:
+	for enemy : EnemyUnit in Level.current.live_enemies:
 		if enemy.awareness.friendlies_in_sight.size() > 0:
 			return true
 	return false
@@ -52,7 +52,8 @@ func _on_unit_disabled(unit : Unit) -> void:
 		alarm_runner = null
 
 
-func _on_alarm_raised(raiser : EnemyUnit) -> void:
-	for sighting in raiser.awareness.targeted_friendlies.values():
-		known_bodies.remove(sighting.friendly)
-	known_bodies.sync(raiser.awareness.known_bodies)
+func _on_alarm_raised(raiser : Unit) -> void:
+	if raiser is EnemyUnit:
+		for sighting in raiser.awareness.targeted_friendlies.values():
+			known_bodies.remove(sighting.friendly)
+		known_bodies.sync(raiser.awareness.known_bodies)

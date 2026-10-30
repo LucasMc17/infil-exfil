@@ -30,14 +30,14 @@ func check_detection() -> void:
 				if vis_score > 2:
 					spotted.append(zone.unit)
 					enemy.awareness.known_bodies.remove(zone.unit)
-					if Level.current_level.alarm.active:
-						Level.current_level.enemy_awareness.known_bodies.remove(zone.unit)
+					if Level.current.alarm.active:
+						Level.current.enemy_awareness.known_bodies.remove(zone.unit)
 			else:
 				enemy.awareness.known_bodies.add(zone.unit)
-				if Level.current_level.alarm.active:
-					Level.current_level.enemy_awareness.known_bodies.add(zone.unit)
+				if Level.current.alarm.active:
+					Level.current.enemy_awareness.known_bodies.add(zone.unit)
 		if !spotted.is_empty():
-			# var nav_zone = Level.current_level.get_zone_from_position(spotted[0].board_position)
+			# var nav_zone = Level.current.get_zone_from_position(spotted[0].board_position)
 			# if enemy.awareness.is_unaware():
 			# 	enemy.speak(Barks.get_first_contact_line(nav_zone))
 			# else:

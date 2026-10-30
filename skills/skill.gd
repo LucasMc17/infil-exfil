@@ -134,7 +134,7 @@ func use(overrides := {}) -> void:
 ## Use this skill, and send all relevant signals in the global context.
 func begin_use() -> void:
 	if sound:
-		Level.current_level.make_sound(user.global_position, sound)
+		Level.current.make_sound(user.global_position, sound)
 	user.action_points -= action_cost
 	user.movement_points -= movement_cost
 	if ammo_cost and user.primary_weapon is RangedWeapon:

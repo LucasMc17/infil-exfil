@@ -83,7 +83,7 @@ func _on_awareness_changed(_old_awareness, _new_awareness):
 
 func _on_alarm_raised(raiser) -> void:
 	awareness.has_seen_enemies = true
-	awareness.last_poc = raiser.awareness.last_poc
+	awareness.last_poc = Level.current.alarm.alarm_point
 	awareness.alarm(false)
 
 
@@ -130,7 +130,7 @@ func react_to_sighting(nav_zone : NavZone, is_first_sighting := true) -> void:
 
 
 func make_sound(sound : Sound) -> void:
-	Level.current_level.make_sound(global_position, sound, [self])
+	Level.current.make_sound(global_position, sound, [self])
 
 ## Update the enemy's icon status indicator.
 func update_indicator() -> void:

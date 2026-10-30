@@ -27,7 +27,7 @@ func begin(unit : EnemyUnit) -> void:
 	super(unit)
 	unit.awareness.has_pursued = true
 	if !_is_pursuit_path_set:
-		pursuit_path = Level.current_level.get_likely_path(acting_unit.position, last_known_pos)
+		pursuit_path = Level.current.get_likely_path(acting_unit.position, last_known_pos)
 		_is_pursuit_path_set = true
 	attack_skill = acting_unit.skill_machine.skills["EnemyAttack"]
 	attack_skill.arm_as_enemy()

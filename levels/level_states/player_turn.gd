@@ -34,9 +34,9 @@ func unhandled_input(event: InputEvent) -> void:
 				var real_position = mouse_target.position
 				real_position.y += 0.1
 				var coords = target_object.local_to_map(target_object.to_local(real_position))
-				if Level.current_level.allow_inputs and level.movement_system.viable_moves.has(coords):
+				if Level.current.allow_inputs and level.movement_system.viable_moves.has(coords):
 					if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT and level.movement_system.path.size() >= 1:
-						Unit.active_unit.move('Sneak',Level.current_level.movement_system.path)
+						Unit.active_unit.move('Sneak',Level.current.movement_system.path)
 						level.movement_system.wipe_planned_path()
 					elif event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_RIGHT and level.movement_system.hovered_path.size() >= 1:
 						pass

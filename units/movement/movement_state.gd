@@ -20,7 +20,7 @@ var first_step := true
 
 func enter(previous_state : State, ext : Dictionary):
 	super(previous_state, ext)
-	Level.current_level.level_camera.fix_to_actor(unit)
+	Level.current.level_camera.fix_to_actor(unit)
 	ghost_point = null
 	first_step = true
 	unit.started_moving.emit(unit)

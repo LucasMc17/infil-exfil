@@ -15,7 +15,7 @@ func make_option_button(unit : EnemyUnit) -> void:
 
 
 func _make_all_option_buttons() -> void:
-	for unit : EnemyUnit in Level.current_level.all_enemies:
+	for unit : EnemyUnit in Level.current.all_enemies:
 		make_option_button(unit)
 
 
@@ -23,6 +23,6 @@ func _on_option_chosen(option : DebugUnitOption) -> void:
 	for child : DebugUnitOption in _option_list.get_children():
 		child.button_pressed = child == option
 	
-	Level.current_level.level_camera.jump_to_point(option.unit.global_position)
+	Level.current.level_camera.jump_to_point(option.unit.global_position)
 	
 	_unit_info.display_unit_info(option.unit)

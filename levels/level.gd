@@ -4,7 +4,7 @@
 class_name Level
 extends Node3D
 
-static var current_level : Level
+static var current : Level
 
 ## Logic module for handling the enemy's awareness of the player's units.
 var enemy_awareness := EnemyTeamAwarenessModule.new()
@@ -111,7 +111,7 @@ func _ready() -> void:
 			if command_name == "exit":
 				get_tree().quit()
 		)
-		current_level = self
+		current = self
 		Events.level_loaded.emit()
 
 

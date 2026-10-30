@@ -27,7 +27,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	var camera := Level.current_level.level_camera.camera
+	var camera := Level.current.level_camera.camera
 	if camera and target_unit:
 		var target_pos = target_unit.global_position
 		if camera.is_position_behind(target_pos):
