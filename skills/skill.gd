@@ -139,9 +139,9 @@ func begin_use() -> void:
 	user.movement_points -= movement_cost
 	if ammo_cost and user.primary_weapon is RangedWeapon:
 		user.primary_weapon.current_ammunition -= ammo_cost
-	Events.skill_use_began.emit(self)
+	Events.skill_usage_began.emit(self)
 	Events.refresh_unit_skills.emit()
 
 
 func end_use() -> void:
-	Events.skill_use_ended.emit(self)
+	Events.skill_usage_ended.emit(self)
