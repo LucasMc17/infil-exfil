@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://gerr5frhn1t1"]
+
+[ext_resource type="Script" uid="uid://btrie28ar2xvp" path="res://skills/targetless_skills/take_shot.gd" id="1_ac5pv"]
+[ext_resource type="Resource" uid="uid://bo3biafkud6gy" path="res://weapons/ranged_weapons/sniper_rifle/sniper_shot.tres" id="2_d84v7"]
+
+[node name="TakeShot" type="Node" unique_id=2113857743]
+script = ExtResource("1_ac5pv")
+sound = ExtResource("2_d84v7")
+skill_name = "Take The Shot"
+description = "Take a shot at the currently scoped target. The shot is guaranteed to hit and to kill as long as the enemy is not armored. The scoped target will be lost if line of sight is broken, or if this unit moves or takes damage"
+ammo_cost = 1
+metadata/_custom_type_script = "uid://btrie28ar2xvp"

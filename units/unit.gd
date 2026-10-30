@@ -132,6 +132,8 @@ func _ready():
 	board_position = NavigableGridMap.convert_global_to_grid_position(Vector3i(position))
 	if !Engine.is_editor_hint():
 		Events.skill_disarmed.connect(refresh_valid_moves)
+		Events.player_turn_ended.connect(_on_player_turn_ended)
+		Events.enemy_turn_ended.connect(_on_enemy_turn_ended)
 		if primary_weapon:
 			primary_weapon = primary_weapon.make_unique()
 			primary_weapon.initialize(self)
@@ -189,6 +191,8 @@ func damage(amount : int) -> void:
 	health_points -= amount
 	if health_points < 1:
 		die()
+	else:
+		_on_damage()
 
 
 ## Kill the unit and remove them from play.
@@ -198,6 +202,7 @@ func die() -> void:
 	Events.unit_died.emit(self)
 	_mesh_instance.position.y = 0.0
 	unit_status = Status.DEAD
+	_on_die()
 
 
 ## Knock out the unit and remove them from play.
@@ -276,4 +281,29 @@ func speak(message : String) -> void:
 	
 ## Function for updating detected units, either by checking if this unit is being detected or if it is detecting any other units.
 func check_for_detection() -> void:
+	pass
+
+
+## Lifecycle hook which runs when the player turn ends.
+func _on_player_turn_ended() -> void:
+	pass
+
+
+## Lifecycle hook which runs when the enemy turn ends.
+func _on_enemy_turn_ended() -> void:
+	pass
+
+# NOTE: I think lifecycle hooks are gonna be big important moving forward. I see a lot of uses for them in the UI too, especially around beginning and ending the usage of a skill.
+## Lifecycle hook which runs when the unit begins to move.
+func _on_move() -> void:
+	pass
+
+
+## Lifecycle hook which runs when the unit takes damage. Does not run when the unit dies, see: [_on_die]
+func _on_damage() -> void:
+	pass
+
+
+## Lifecycle hook which runs when the unit dies.
+func _on_die() -> void:
 	pass

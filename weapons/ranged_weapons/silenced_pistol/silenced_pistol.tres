@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="RangedWeapon" format=3 uid="uid://bjcl38102xf0k"]
 
-[ext_resource type="Script" uid="uid://hc8dmdnd0cip" path="res://weapons/ranged_weapon.gd" id="1_x6qsl"]
+[ext_resource type="Script" uid="uid://hc8dmdnd0cip" path="res://weapons/ranged_weapons/ranged_weapon.gd" id="1_x6qsl"]
 
 [resource]
 script = ExtResource("1_x6qsl")
