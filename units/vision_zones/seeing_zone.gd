@@ -11,7 +11,7 @@ signal friendly_seen(friendlies : Array[FriendlyUnit])
 ## The enemy unit which owns this [SeeingZone], since only enemies need a typical vision cone at this point in development.
 @export var enemy : EnemyUnit
 
-# NOTE: Getting some instances of a unit coming around a corner and seeing another unit directly next to them when im not sure they should. See bug evidence 01. EnemyUnit has just seen FriendlyUnit despite no overlap in shapecast and hurtbox. EnemyUnit was coming through doorway.
+# BUG: Getting some instances of a unit coming around a corner and seeing another unit directly next to them when im not sure they should. See bug evidence 01. EnemyUnit has just seen FriendlyUnit despite no overlap in shapecast and hurtbox. EnemyUnit was coming through doorway.
 
 func check_detection() -> void:
 	if !enemy.is_incapacitated():
@@ -20,7 +20,7 @@ func check_detection() -> void:
 		var collision_instances = shape_cast.collision_result
 		var seen_zones = collision_instances.map(func(instance): return instance.collider).filter(func(collider): return collider is SeenZone and collider.unit is FriendlyUnit)
 		for zone : SeenZone in seen_zones:
-			# NOTE: We need a whole separate system for tracking known/unknown incapacitated units. For now we just ignore them
+			# TODO: We need a whole separate system for tracking known/unknown incapacitated units. For now we just ignore them
 			if !zone.unit.is_incapacitated():
 				var vis_score = 0
 				for point : VisibilityPoint in zone.vision_targets:

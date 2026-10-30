@@ -13,7 +13,7 @@ enum Severity {
 
 ## The full distance this sound can travel from the point of origin.
 @export var radius := 5.0
-# NOTE: This is not implemeted yet and I don't even really like it yet as a design idea. More to come.
+# TODO: Decide how sound will work with walls in the way. The below is not implemeted yet and I don't even really like it yet as a design idea. More to come.
 ## The distance this sound can travel from it's point of origin if there is a piece of geometry in the way.
 @export var penetrating_radius := 2.5
 

@@ -13,7 +13,6 @@ var alarm_point : EnemyUnitAwarenessModule.ContactPoint
 var point_investigated := false
 ## Whether the friendly force has been acquired during this alarm phase.
 # var friendlies_acquired := false
-# NOTE: There's a case to be made that this should require that the point has been investigated or there are no more investigators AND all the other coniditions.
 ## Virtual property reflecting whether this alarm has been "satisfied" and can be called off when the countdown hits zero.
 var alarm_satisfied : bool:
 	get():

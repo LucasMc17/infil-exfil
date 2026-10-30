@@ -31,7 +31,7 @@ func disarm_skill_ui() -> void:
 	_armed_skill_ui.teardown()
 
 
-# NOTE: Something funky going on here. Turn ui persists after skill begun.
+# TODO: Something funky going on here. Turn ui persists after skill begun. Let's rewrite this utilizing life cycle hooks and global events to get this working nicer. Whole game UI (turn ui and skill ui) should be absent or grayed out during skill use.
 func _on_skill_use_began(skill : Skill) -> void:
 	if skill.user is FriendlyUnit:
 		_turn_ui.visible = true

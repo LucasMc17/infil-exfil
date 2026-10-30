@@ -8,7 +8,7 @@ signal awareness_changed(old_awareness : AwarenessLevel, new_awareness : Awarene
 ## Signal emitted when the unit confirms a sighting of a [FriendltUnit]. Mirrors the global signal but allows for local context.
 signal friendly_spotted(friendly : FriendlyUnit)
 
-# NOTE: This friendly sighting system is getting complicated enough to possibly warrant its own file
+# TODO: This friendly sighting system is getting complicated enough to possibly warrant its own file
 
 ## Class representing a friendly which was seen in this alarm phase. Includes info about whether or not the unit is still in sight, and its last known position if not. Has utility methods for updating its own information.
 class FriendlySighting:

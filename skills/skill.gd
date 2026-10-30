@@ -43,7 +43,7 @@ enum SkillType {
 @export var skill_name := "Skill Name"
 ## A description of this skill for the player's benefit.
 @export_multiline var description := "Skill description"
-# NOTE: Long term, the below variable will be replaced with the length of the animation associated with this particular skill. This is strictly for the time being.
+# TODO: Long term, the below variable will be replaced with the length of the animation associated with this particular skill. This is strictly for the time being.
 ## The time in seconds it takes to perform the skill.
 @export var time_to_perform := 1.0
 

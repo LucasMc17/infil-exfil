@@ -28,7 +28,7 @@ func refresh_affordability() -> void:
 	var affordable = skill_res.get_affordability()
 	if !affordable:	
 		disabled = true
-		# NOTE: This is temporary
+		# TODO: This is temporary. Long term there will be separate versions of the buttons when disabled in their theme.
 		modulate.a = 0.5
 	else:
 		disabled = false

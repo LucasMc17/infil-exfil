@@ -6,13 +6,13 @@ var encountered_friendlies := false
 
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
-	# TODO: This actually crashes the game if the unit never saw a friendly and therefore never created an alarm point. Easy way to test, make a noise then run around a corner before anyone can investigate.
+	# FIXME: This actually crashes the game if the unit never saw a friendly and therefore never created an alarm point. Easy way to test, make a noise then run around a corner before anyone can investigate.
 	unit.move("Run", Level.current_level.alarm.alarm_point.position, false)
 
 
 func _on_finished_moving(unit : EnemyUnit, arrived : bool):
 	super(unit, arrived)
-	# NOTE: This is a pretty good example of why we need a better system for determining when the unit has simply finished moving and when they have fully arrived at their destination. This is the only action so far which uses the inexact movement system, and it works, but the unit will simply wait until they can finish the movement before considering the action complete, since the directive only knows the movement is fully complete when the unit's exact position is the exact alarm point. We could check if they are within a certain distance, but that's ugly. We really need a separate handler, something like "unit arrived at desintation", in addition to "unit finished moving". Then the movement state itself can determing if this should be emitted by comparing the unit's final position to the last point on the planned path.
+	# TODO: This is a pretty good example of why we need a better system for determining when the unit has simply finished moving and when they have fully arrived at their destination. This is the only action so far which uses the inexact movement system, and it works, but the unit will simply wait until they can finish the movement before considering the action complete, since the directive only knows the movement is fully complete when the unit's exact position is the exact alarm point. We could check if they are within a certain distance, but that's ugly. We really need a separate handler, something like "unit arrived at desintation", in addition to "unit finished moving". Then the movement state itself can determing if this should be emitted by comparing the unit's final position to the last point on the planned path.
 	if arrived:
 		end()
 	elif encountered_friendlies:

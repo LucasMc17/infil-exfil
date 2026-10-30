@@ -141,7 +141,7 @@ func _disconnect_point_from_neighbors(point : GridPoint, two_way := true, ingoin
 
 ## Utility function which takes in a list of point-blocking scenes and marks their positions as un-navigable, so that units may block each other's paths.
 func _resolve_occupied_spaces() -> void:
-	# NOTE: When scenes other than Units are able to block spaces, this will change.
+	# TODO: When scenes other than Units are able to block spaces, this will change.
 	for occupier : Unit in Level.current_level.all_units:
 		var occupier_id := occupier.get_instance_id()
 		if occupation_map.has(occupier_id):

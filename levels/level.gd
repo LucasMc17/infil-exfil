@@ -183,7 +183,6 @@ func get_likely_path(pursuer_position : Vector3i, last_known_position : Vector3i
 		# Find the closest exit and get its zone, removing that exit from the full list
 		# Additionally, filter the remainder of the list for exits which do not lead to the same zone as the closest exit.
 		# Add the rest of the list to the bypassed zones list.
-		# NOTE: This still has problems. In the first room of pursuit the enemy considers the likeliest exit to be the one closest to themselves, not the last known enemy position. It should be based on LKP for the first round, then unit's position
 		var next_exit : NavZoneExit = current_zone.get_semirandom_exit(current_position, banned_zones)
 		if !next_exit:
 			return result
