@@ -151,7 +151,6 @@ func _resolve_occupied_spaces() -> void:
 		if point_map_by_grid_coords.has(occupier.board_position):
 			var new_point = point_map_by_grid_coords[occupier.board_position]
 			occupation_map[occupier_id] = new_point
-			# TODO: Clean this up, too much repetition of ifs.
 			if !occupier.is_incapacitated():
 				new_point.occupier = occupier
 			if _should_block_unit_space(occupier):
@@ -176,18 +175,16 @@ func _should_block_unit_space(unit : Unit) -> bool:
 	return true
 
 
-## Disable a point arbitrarily in the nav map by its coordinates.
+## Disable a point arbitrarily in the nav map by its coordinates. Note that this technically does not remove the point from navigation, but heavily discourages it by setting a high weight scale. This means the unit will prefer other paths to the one that takes it through this point, unless those other paths are 10+ points longer.
 func disable_point(point_position : Vector3i) -> void:
 	var point = point_map_by_grid_coords[point_position].a_star_point
 	astar.set_point_weight_scale(point, 10.0)
-	# astar.set_point_disabled(point)
 
 
-## Enable a point arbitrarily in the nav map by its coordinates.
+## Enable a point arbitrarily in the nav map by its coordinates. This works by resetting the weight scale for this point to 1, so that it will be treated as being as viable a path as any other unoccupied tile.
 func enable_point(point_position : Vector3i) -> void:
 	var point = point_map_by_grid_coords[point_position].a_star_point
 	astar.set_point_weight_scale(point, 1.0)
-	# astar.set_point_disabled(point, false)
 
 
 # TODO: Update this to block ladders (and some other connections) when holding a hostage. May take an update to the GridPoint data type.
@@ -298,7 +295,7 @@ func find_path(start: Vector3i, end: Vector3i, exact_point := true, point_radius
 
 ## Takes in a starting position and an array of positions to check, and returns the position from the array which can be reached from the starting position with the shortest navigable path. If no position is found to be reachable, returns null.
 func get_closest_point(pos : Vector3i, points_to_check : Array[Vector3i]) -> Variant:
-	# TODO: In a future version this should also return the path to avoid recalculating it.
+	# NOTE: In a future version this might also return the path to avoid recalculating it. This will require a bit of reworking for the enemy [move] func which expects only a final point and then calculates its own path.
 	var result = null
 	var result_path = null
 	for point : Vector3i in points_to_check:
@@ -360,8 +357,6 @@ func probe_for_viable_move(grid_position : Vector3i, max_moves : int, callback :
 	DebugConsole.log("Execution time to probe for a valid move WITHOUT result: " + str(end_time - start_time) + " milliseconds")
 	return null
 
-
-# TODO: If these two funcs are never used for anything besides getting proximal target skills they should eventually be rolled into one to avoid calling the point map dicts multiple times.
 
 ## Returns an array of all the cells adjacent to the starting position which are actually connected to it. Useful for getting targets for proximal skills.
 func get_valid_adjacent_cells(point_position : Vector3i) -> Array[Vector3i]:

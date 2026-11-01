@@ -169,7 +169,6 @@ func deactivate():
 	_cell_highlight.visible = false
 	flag.collapse()
 	skill_machine.visible = false
-	# TODO: Make this a signal
 	Level.current.movement_system.deactivate()
 	Events.unit_deactivated.emit(self)
 	if Level.current.armed_skill:

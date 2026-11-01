@@ -21,7 +21,6 @@ func _on_planned_path_cleared() -> void:
 
 
 func _on_confirm_button_pressed() -> void:
-	# TODO: There's a case to be made that a lot more of the movement system should operate on global signals.
 	if Level.current.allow_inputs:
 		Unit.active_unit.move('Sneak', Level.current.movement_system.path)
 		Level.current.movement_system.wipe_planned_path()

@@ -104,7 +104,7 @@ func _init(u : EnemyUnit) -> void:
 	Events.player_turn_ended.connect(resolve_suppression)
 
 
-# TODO: Gotta roll this in with the see_friendlies func somehow
+## Confirms an individual sighting so that the unit can keep an up to date list of which spotted player units are still in sight and which are out of sight.
 func _confirm_sighting(sighting : FriendlySighting) -> void:
 	var can_see : bool
 	var target_incapacitated = sighting.friendly.is_incapacitated()
@@ -161,6 +161,7 @@ func alert():
 	Events.request_update_unit_monitor.emit(unit)
 
 
+## Runs when the unit visually acquires a player unit. Triggers an alarm phase and adds them to the targeted friendlies dict as necessary. Separate from the [_confirm_sighting] func which is responsible for confirming whether a previously spotted player unit is still in sight.
 func see_friendlies(friendlies : Variant, should_skip_grace_period := false) -> void:
 	var first_sighting = friendlies_in_sight.is_empty()
 	if friendlies is FriendlyUnit:

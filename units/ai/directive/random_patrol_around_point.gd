@@ -1,7 +1,7 @@
 class_name RandomPatrolAroundPoint
 extends Directive
 
-# TODO: More to do before this is implemented. It should pick a random point every  turn and go on indefinitely, only interrupted when the unit reacquires the enemy or has their directive queue reset by an outside influence, like the alarm coming off.
+# TODO: More to do before this is implemented. It should pick a random point every turn and go on indefinitely, only interrupted when the unit reacquires the enemy or has their directive queue reset by an outside influence, like the alarm coming off.
 
 var point : Vector3i
 var all_valid_moves : Array[Vector3i]

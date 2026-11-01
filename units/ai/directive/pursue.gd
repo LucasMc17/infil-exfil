@@ -1,7 +1,7 @@
 class_name Pursue
 extends Directive
 
-# TODO : Noticed a bug here. Two units pursued the same friendly, ended up at the same dead end. One of them was at the end, unable to leave, because the other was behind blocking the only path out, and was still in pursuit. Enemies should safely exit pursuit when no nav path is possible. OR there should be a system for noticing when two units are blocking each other and nudge one of them, even if the directive they are in does not have a nudge func.
+# BUG : Noticed a bug here. Two units pursued the same friendly, ended up at the same dead end. One of them was at the end, unable to leave, because the other was behind blocking the only path out, and was still in pursuit. Enemies should safely exit pursuit when no nav path is possible. OR there should be a system for noticing when two units are blocking each other and nudge one of them, even if the directive they are in does not have a nudge func.
 
 ## The target of this attack.
 var target : FriendlyUnit

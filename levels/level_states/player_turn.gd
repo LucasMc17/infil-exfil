@@ -54,5 +54,3 @@ func _on_player_turn_ended():
 func exit():
 	super()
 	Events.player_turn_ended.disconnect(_on_player_turn_ended)
-
-# TODO: This should better mirror the enenmy turn state
