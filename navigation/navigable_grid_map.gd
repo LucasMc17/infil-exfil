@@ -175,22 +175,35 @@ func _resolve_unstable_connections() -> void:
 
 ## Utility function which iterates through the list of point-blocking scenes and marks their positions as un-navigable, so that units may block each other's paths.
 func _resolve_occupied_spaces() -> void:
-	# BUG: We have instances of units ceasing to block their own tiles when they take a hostage. I have a feeling this has to do with the [_should_block_unit_space] function unblocking the space for the hostage AFTER it has alreadu blocked it for the hostage taker.
-	# I think what we ought to do here is iterate twice. On the first pass, just update all the occupiers and keep track of where they used to be. On the second pass, re enable any of the previously occupied cells which don't have occupiers now, and then disable all the newly occupied cells. By combining this with a new system that doesn't accept captive units as occupiers, we should fix this issue.
 	# TODO: When scenes other than Units are able to block spaces, this will change.
-	for occupier : Unit in Level.current.all_units:
-		var occupier_id := occupier.get_instance_id()
-		if occupation_map.has(occupier_id):
-			var old_point = occupation_map[occupier_id]
+	var previously_occupied : Array[GridPoint]
+	var newly_occupied : Array[GridPoint]
+
+	# First pass: clear old positions of occupiers and get list of those old positions.
+	for unit : Unit in Level.current.all_units:
+		var unit_id := unit.get_instance_id()
+		if occupation_map.has(unit_id):
+			var old_point = occupation_map[unit_id]
+			previously_occupied.append(old_point)
 			old_point.occupier = null
-			enable_point(old_point.position)
-		if point_map_by_grid_coords.has(occupier.board_position):
-			var new_point = point_map_by_grid_coords[occupier.board_position]
-			occupation_map[occupier_id] = new_point
-			if !occupier.is_incapacitated():
-				new_point.occupier = occupier
-			if _should_block_unit_space(occupier):
-				disable_point(occupier.board_position)
+
+	# Second pass: assign occupiers to new positions, get list of those new positions
+	for unit : Unit in Level.current.all_units:
+		var unit_id := unit.get_instance_id()
+		if point_map_by_grid_coords.has(unit.board_position):
+			var new_point = point_map_by_grid_coords[unit.board_position]
+			if _should_block_unit_space(unit):
+				newly_occupied.append(new_point)
+			occupation_map[unit_id] = new_point
+			if !unit.is_incapacitated():
+				new_point.occupier = unit
+
+	# Finally, re enable the old points and disable the new ones.		
+	for point : GridPoint in previously_occupied:
+		enable_point(point.position)
+	
+	for point : GridPoint in newly_occupied:
+		disable_point(point.position)
 
 
 ## Helper function to determine if the currently active unit should consider another unit as actively blocking the space they are occupying. Logic is spelled out for easy refactoring in future iterations.

@@ -33,7 +33,6 @@ func get_unstable_connections(position : Vector3i, basis : Basis) -> Array[Vecto
 	if navigable:
 		for neighbor : TileConnection in viable_neighbors:
 			if !neighbor.is_stable:
-				print('found one')
 				result.append(position + Vector3i(Vector3(neighbor.relative_position) * basis))
 	
 	return result
