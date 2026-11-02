@@ -16,7 +16,7 @@ func begin(unit : EnemyUnit) -> void:
 	Level.current.enemy_awareness.alarm_runner = unit
 	_alarm_point = null
 	DebugConsole.log('Enemy Runs for Alarm', 2)
-	_alarm_point = Level.current.nav_map.get_closest_point(acting_unit.board_position, Level.current.nav_map.alarms.keys())
+	_alarm_point = Level.current.nav_map.get_closest_point(acting_unit.board_position, Level.current.nav_map.alarm_map.keys())
 	if !_alarm_point:
 		acting_unit.forfeit_turn.call_deferred()
 		end()

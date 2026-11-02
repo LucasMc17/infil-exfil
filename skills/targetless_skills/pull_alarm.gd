@@ -4,13 +4,13 @@ extends Skill
 func get_visibility() -> bool:
 	if !super():
 		return false
-	return Level.current.nav_map.alarms.has(user.board_position)
+	return Level.current.nav_map.alarm_map.has(user.board_position)
 
 
 func get_affordability() -> bool:
 	if !super():
 		return false
-	return Level.current.nav_map.alarms.has(user.board_position)
+	return Level.current.nav_map.alarm_map.has(user.board_position)
 
 
 func begin_use() -> void:

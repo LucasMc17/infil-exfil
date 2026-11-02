@@ -23,6 +23,8 @@ const DEAD_END := preload("./tiles/dead_end.tres")
 const PASSAGE := preload("./tiles/passage.tres")
 ## Array of all preloaded [Tile] resources, in the order of their corresponding meshes within the [MeshLibrary] of the [GridMap].
 const TILE_PALETTE : Array[Tile] = [FLOOR, WALL, LADDER, ALARM, CORNER, DEAD_END, PASSAGE]
+## Array of all preloaded [Tile] resources which feature at least one connection which cannot be navigated while encumbered.
+const COMPLICATED_TILES : Array[Tile] = [LADDER]
 
 ## Custom class representing a single point, both in the grid map and the A* grid. Contains information about that point's position, tile type, connections, mesh ID, rotation and A* ID. Designed to allow for easy referencing of specific spoints in the context of either the GridMap or the A* grid.
 class GridPoint:
@@ -84,8 +86,10 @@ var point_map_by_grid_coords : Dictionary[Vector3i, GridPoint] = {}
 var point_map_by_astar_ids: Dictionary[int, GridPoint] = {}
 ## A reuseable variable for loops. Can ignore.
 var points : PackedVector3Array
-## A dictionary of alarms in the level.
-var alarms : Dictionary[Vector3i, bool] = {}
+## A dictionary of alarm_map in the level.
+var alarm_map : Dictionary[Vector3i, bool] = {}
+## A dictionary of all tiles which cannot be navigated while holding a hostage or otherwise while encumbered.
+var complicated_tile_map : Dictionary[Vector3i, GridPoint] = {}
 ## A dictionary tracking the positions of all tile blocking scenes in the level.
 var occupation_map : Dictionary[int, GridPoint] = {}
 
@@ -109,11 +113,12 @@ func _ready() -> void:
 
 
 ## Utility function for adding a new point to both the A* grid, and the coords grid.
-func _map_new_point(cell_pos : Vector3i, mesh_id : int, a_star_point : int, tile_basis : Basis, tile : Tile) -> void:
+func _map_new_point(cell_pos : Vector3i, mesh_id : int, a_star_point : int, tile_basis : Basis, tile : Tile) -> GridPoint:
 	var point := GridPoint.new(cell_pos, mesh_id, a_star_point, tile_basis, tile)
 
 	point_map_by_grid_coords[cell_pos] = point
 	point_map_by_astar_ids[a_star_point] = point
+	return point
 
 
 ## Utility function to connect a point to it's tile's viable neighbors.
@@ -139,7 +144,21 @@ func _disconnect_point_from_neighbors(point : GridPoint, two_way := true, ingoin
 			astar.disconnect_points(point.a_star_point, connection, two_way)
 
 
-## Utility function which takes in a list of point-blocking scenes and marks their positions as un-navigable, so that units may block each other's paths.
+## Main function for determining which points and connections between points are navigable to the active unit. Works in two phases, first by severing connections between tiles which the active unit is not able to perform (such as ladders when carrying a body), and then by completely blocking off spaces which are occupied by other units.
+func _resolve_blocks() -> void:
+	_resolve_complicated_tiles()
+	_resolve_occupied_spaces()
+
+
+## Utility function which severs all complicated tile connections if the active unit is encumbered and unable to traverse them.
+func _resolve_complicated_tiles() -> void:
+	pass
+	# if Unit.active_unit.is_encumbered:
+	# 	for point : GridPoint in complicated_tile_map.values():
+	# 		for connection in point.real_connections
+
+
+## Utility function which iterates through the list of point-blocking scenes and marks their positions as un-navigable, so that units may block each other's paths.
 func _resolve_occupied_spaces() -> void:
 	# TODO: When scenes other than Units are able to block spaces, this will change.
 	for occupier : Unit in Level.current.all_units:
@@ -187,7 +206,7 @@ func enable_point(point_position : Vector3i) -> void:
 	astar.set_point_weight_scale(point, 1.0)
 
 
-# TODO: Update this to block ladders (and some other connections) when holding a hostage. May take an update to the GridPoint data type.
+# TODO: Update this to block ladders (and some other connections) when holding a hostage. May take an update to the GridPoint data type. MARK
 ## Utility function handling the recursion necessary to find all valid moves.
 func _recursively_get_valid_pos(last_point_ring: Array[Vector3i], moves_left: int, potential_moves : Dictionary[Vector3i, bool], starting_point : Vector3i) -> void:
 	var next_point_ring : Dictionary[Vector3i, bool] = {}
@@ -248,9 +267,11 @@ func setup_astar_grid() -> void:
 			var tile_basis = get_basis_with_orthogonal_index(orientation).inverse()
 			var point_id: int = astar.get_available_point_id()
 			astar.add_point(point_id, cell_pos)
-			_map_new_point(cell_pos, item_id, point_id, tile_basis, tile)
+			var grid_point = _map_new_point(cell_pos, item_id, point_id, tile_basis, tile)
+			if COMPLICATED_TILES.has(tile):
+				complicated_tile_map[cell_pos] = grid_point
 			if tile == ALARM:
-				alarms[cell_pos] = true
+				alarm_map[cell_pos] = true
 	
 	# Connect neighboring points
 	for coord : Vector3i in point_map_by_grid_coords:
@@ -316,7 +337,7 @@ func paint_grid_square(grid_position: Vector3, color : Color):
 ## Utilizes recursion to find all valid moves from a valid position, assuming a certain max movement distance. The recursion makes it considerably faster than using the old, naive function for the same purpose.
 func get_all_valid_moves(grid_position: Vector3i, max_moves: int) -> Array[Vector3i]:
 	var start_time = Time.get_ticks_msec()
-	_resolve_occupied_spaces()
+	_resolve_blocks()
 	var valid_moves : Dictionary[Vector3i, bool] = {}
 	_recursively_get_valid_pos([grid_position], max_moves, valid_moves, grid_position)
 	var end_time = Time.get_ticks_msec()
@@ -334,7 +355,7 @@ func probe_for_viable_move(grid_position : Vector3i, max_moves : int, callback :
 	var last_point_ring : Array[Vector3i] = [grid_position]
 	var start_time = Time.get_ticks_msec()
 	var end_time : int
-	_resolve_occupied_spaces()
+	_resolve_blocks()
 	while moves_left > 0:
 		var next_point_ring : Dictionary[Vector3i, bool] = {}
 		for point : Vector3i in last_point_ring:

@@ -9,3 +9,5 @@ extends Resource
 @export var name : String
 ## The relative position of the 'to' [Tile] to the 'from' [Tile] in this potential connection.
 @export var relative_position : Vector3i
+## Whether or not these tiles should be considered connected when the traversing unit is encumbered, such as when holding a hostage or a downed unit.
+@export var traversable_while_encumbered := true
