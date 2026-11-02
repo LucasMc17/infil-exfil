@@ -1,25 +1,30 @@
-class_name RandomPatrolAroundPoint
+class_name RandomPatrol
 extends Directive
 
-# TODO: More to do before this is implemented. It should pick a random point every turn and go on indefinitely, only interrupted when the unit reacquires the enemy or has their directive queue reset by an outside influence, like the alarm coming off.
-
-var point : Vector3i
-var all_valid_moves : Array[Vector3i]
-
-func _init(p : Vector3i) -> void:
-	point = p
-
+## The attack skill the unit intends to use.
+var attack_skill : EnemyAttack
 
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
-	all_valid_moves = Level.current.nav_map.get_all_valid_moves(point, unit.max_movement_points)
+	attack_skill = acting_unit.skill_machine.skills["EnemyAttack"]
+	attack_skill.arm_as_enemy()
 	var unit_valid_moves = Level.current.nav_map.get_all_valid_moves(unit.board_position, unit.max_movement_points)
-	var move = unit_valid_moves.filter(func (pos): return all_valid_moves.has(pos)).pick_random()
+	var move = unit_valid_moves.pick_random()
 
 	unit.move("Run", move)
 
 
 func _on_finished_moving(unit : EnemyUnit, arrived : bool):
 	super(unit, arrived)
+	if !attack_skill.potential_targets.is_empty():
+		attack_skill.use({ "target": attack_skill.potential_targets[0] })
+	else:
+		acting_unit.forfeit_turn()
+
+
+func _on_finished_acting(unit : EnemyUnit):
+	# Unit found their target.
+	super(unit)
 	end()
+	unit.decision_director.clear_queue()
 	acting_unit.forfeit_turn()
