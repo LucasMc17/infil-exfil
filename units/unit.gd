@@ -117,6 +117,10 @@ var aimed_skills : Array[AimedSkill]:
 var captive : Unit
 ## The unit that is currently holding this unit as a captive, if one exists.
 var captor : Unit
+## Whether this unit is too encumbered to perform certain actions like climbing a ladder.
+var is_encumbered : bool:
+	get():
+		return !!captive
 	
 @onready var _cell_highlight := %CellHighlight
 @onready var flag : UnitFlag = %UnitFlag

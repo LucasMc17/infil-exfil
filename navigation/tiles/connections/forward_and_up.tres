@@ -7,5 +7,5 @@ script = ExtResource("1_0ee1j")
 must_be_two_way = false
 name = "Forward and Up"
 relative_position = Vector3i(0, 1, -1)
-traversable_while_encumbered = false
+is_stable = false
 metadata/_custom_type_script = "uid://boqs7jy6uova"

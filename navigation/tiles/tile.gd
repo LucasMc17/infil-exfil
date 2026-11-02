@@ -25,3 +25,15 @@ func get_viable_connections(position : Vector3i, basis : Basis) -> Dictionary[Ve
 			result[position + to_add] = neighbor.must_be_two_way
 	
 	return result
+
+
+## Returns an array of vector3is representing the positions of tiles this tile is tenuously connected to. These connections can be broken under certain circumstances.
+func get_unstable_connections(position : Vector3i, basis : Basis) -> Array[Vector3i]:
+	var result : Array[Vector3i]
+	if navigable:
+		for neighbor : TileConnection in viable_neighbors:
+			if !neighbor.is_stable:
+				print('found one')
+				result.append(position + Vector3i(Vector3(neighbor.relative_position) * basis))
+	
+	return result

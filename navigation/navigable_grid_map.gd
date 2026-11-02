@@ -4,6 +4,8 @@
 class_name NavigableGridMap
 extends GridMap
 
+# TODO: This file is getting really chunky. Should break it out to its own submodules to let it breathe a bit. I think the code around path blocking (units and unstable connections) could benefit a lot and get a lot cleaner.
+
 ## The size of the basic cell in the gridmap, as a Vector3.
 static var CELL_SIZE := Vector3i(1, 4, 1)
 
@@ -23,8 +25,6 @@ const DEAD_END := preload("./tiles/dead_end.tres")
 const PASSAGE := preload("./tiles/passage.tres")
 ## Array of all preloaded [Tile] resources, in the order of their corresponding meshes within the [MeshLibrary] of the [GridMap].
 const TILE_PALETTE : Array[Tile] = [FLOOR, WALL, LADDER, ALARM, CORNER, DEAD_END, PASSAGE]
-## Array of all preloaded [Tile] resources which feature at least one connection which cannot be navigated while encumbered.
-const COMPLICATED_TILES : Array[Tile] = [LADDER]
 
 ## Custom class representing a single point, both in the grid map and the A* grid. Contains information about that point's position, tile type, connections, mesh ID, rotation and A* ID. Designed to allow for easy referencing of specific spoints in the context of either the GridMap or the A* grid.
 class GridPoint:
@@ -40,8 +40,15 @@ class GridPoint:
 	var tile : Tile
 	## A dictionary representing the absolute positions of possible connections to this tile based on its type, without consideration of whether they are actually able to connect.
 	var potential_connections : Dictionary[Vector3i, bool]
+	## A dictionary of astar points which this tile has an unstable connection to, capable of being severed under certain circumstances.
+	var unstable_connected_points : Array[int]
 	## A dictionary representing the absolute positions of real connections for this point in the A* grid.
-	var real_connections : Dictionary[Vector3i, bool]
+	var connections : Dictionary[Vector3i, bool]:
+		get():
+			var result : Dictionary[Vector3i, bool]
+			for id in NavigableGridMap.astar.get_point_connections(a_star_point):
+				result[NavigableGridMap.point_map_by_astar_ids[id].position] = true
+			return result
 	## The name of the mesh shown at this position in the GridMap.
 	var mesh_name : String:
 		get():
@@ -56,6 +63,10 @@ class GridPoint:
 		position = p_position
 		tile = p_tile
 		potential_connections = tile.get_viable_connections(position, basis)
+		var unstable_neighbors = tile.get_unstable_connections(position, basis)
+		for neighbor in unstable_neighbors:
+			if NavigableGridMap.point_map_by_grid_coords.has(neighbor):
+				unstable_connected_points.append(NavigableGridMap.point_map_by_grid_coords[neighbor].a_star_point)
 
 @export_group("Context")
 ## The level this NavGrid lives inside of.
@@ -79,17 +90,18 @@ class GridPoint:
 @export var show_debug: bool = true
 
 ## The [AStar3D] instance that can be used in your games.
-var astar := CustomAStar.new()
+static var astar := CustomAStar.new()
 ## Dictionary of all points identified by their Vector3i coords in the [GridMap].
-var point_map_by_grid_coords : Dictionary[Vector3i, GridPoint] = {}
+static var point_map_by_grid_coords : Dictionary[Vector3i, GridPoint] = {}
 ## Dictionary of all points identified by their A* IDs.
-var point_map_by_astar_ids: Dictionary[int, GridPoint] = {}
+static var point_map_by_astar_ids: Dictionary[int, GridPoint] = {}
+
 ## A reuseable variable for loops. Can ignore.
 var points : PackedVector3Array
 ## A dictionary of alarm_map in the level.
 var alarm_map : Dictionary[Vector3i, bool] = {}
 ## A dictionary of all tiles which cannot be navigated while holding a hostage or otherwise while encumbered.
-var complicated_tile_map : Dictionary[Vector3i, GridPoint] = {}
+var ladder_map : Dictionary[Vector3i, GridPoint] = {}
 ## A dictionary tracking the positions of all tile blocking scenes in the level.
 var occupation_map : Dictionary[int, GridPoint] = {}
 
@@ -129,37 +141,42 @@ func _connect_point_to_neighbors(point : GridPoint) -> void:
 				if point.potential_connections[neighbor] == false or (!astar.are_points_connected(neighbor_point.a_star_point, point.a_star_point, false) \
 				and neighbor_point.potential_connections.has(point.position)):
 					astar.connect_points(point.a_star_point, neighbor_point.a_star_point)
-					point.real_connections[neighbor_point.position] = true
-					neighbor_point.real_connections[point.position] = true
 
 
-# NOTE: Not currently in use, but may still prove useful for changing nav grid without regenning whole grid. IE if a door locks.
-## Utility function to break the connection between a point and it's neighbors.
-func _disconnect_point_from_neighbors(point : GridPoint, two_way := true, ingoing := true) -> void:
-	var connections = astar.get_point_connections(point.a_star_point)
-	for connection in connections:
-		if ingoing:
-			astar.disconnect_points(connection, point.a_star_point, two_way)
-		else:
-			astar.disconnect_points(point.a_star_point, connection, two_way)
+## Utility function to break the connection between a point and it's unstable neighbors.
+func _sever_unstable_connections(point : GridPoint) -> void:
+	for connection in point.unstable_connected_points:
+		astar.disconnect_points(point.a_star_point, connection)
+
+
+## Utility function to rebuild unstable connections between points.
+func _rebuild_unstable_connections(point : GridPoint) -> void:
+	for connection in point.unstable_connected_points:
+		if !astar.are_points_connected(point.a_star_point, connection):
+			astar.connect_points(point.a_star_point, connection)
+	
 
 
 ## Main function for determining which points and connections between points are navigable to the active unit. Works in two phases, first by severing connections between tiles which the active unit is not able to perform (such as ladders when carrying a body), and then by completely blocking off spaces which are occupied by other units.
 func _resolve_blocks() -> void:
-	_resolve_complicated_tiles()
+	_resolve_unstable_connections()
 	_resolve_occupied_spaces()
 
 
 ## Utility function which severs all complicated tile connections if the active unit is encumbered and unable to traverse them.
-func _resolve_complicated_tiles() -> void:
-	pass
-	# if Unit.active_unit.is_encumbered:
-	# 	for point : GridPoint in complicated_tile_map.values():
-	# 		for connection in point.real_connections
+func _resolve_unstable_connections() -> void:
+	if Unit.active_unit.is_encumbered:
+		for point : GridPoint in ladder_map.values():
+			_sever_unstable_connections(point)
+	else:
+		for point : GridPoint in ladder_map.values():
+			_rebuild_unstable_connections(point)
 
 
 ## Utility function which iterates through the list of point-blocking scenes and marks their positions as un-navigable, so that units may block each other's paths.
 func _resolve_occupied_spaces() -> void:
+	# BUG: We have instances of units ceasing to block their own tiles when they take a hostage. I have a feeling this has to do with the [_should_block_unit_space] function unblocking the space for the hostage AFTER it has alreadu blocked it for the hostage taker.
+	# I think what we ought to do here is iterate twice. On the first pass, just update all the occupiers and keep track of where they used to be. On the second pass, re enable any of the previously occupied cells which don't have occupiers now, and then disable all the newly occupied cells. By combining this with a new system that doesn't accept captive units as occupiers, we should fix this issue.
 	# TODO: When scenes other than Units are able to block spaces, this will change.
 	for occupier : Unit in Level.current.all_units:
 		var occupier_id := occupier.get_instance_id()
@@ -206,7 +223,6 @@ func enable_point(point_position : Vector3i) -> void:
 	astar.set_point_weight_scale(point, 1.0)
 
 
-# TODO: Update this to block ladders (and some other connections) when holding a hostage. May take an update to the GridPoint data type. MARK
 ## Utility function handling the recursion necessary to find all valid moves.
 func _recursively_get_valid_pos(last_point_ring: Array[Vector3i], moves_left: int, potential_moves : Dictionary[Vector3i, bool], starting_point : Vector3i) -> void:
 	var next_point_ring : Dictionary[Vector3i, bool] = {}
@@ -214,7 +230,7 @@ func _recursively_get_valid_pos(last_point_ring: Array[Vector3i], moves_left: in
 		if point != starting_point:
 			potential_moves[point] = true
 		var grid_point = point_map_by_grid_coords[point]
-		for connection : Vector3i in grid_point.real_connections:
+		for connection : Vector3i in grid_point.connections:
 			if connection != starting_point and !potential_moves.has(connection) and !point_map_by_grid_coords[connection].occupier:
 			# if connection != starting_point and !potential_moves.has(connection):
 				next_point_ring[connection] = true
@@ -268,9 +284,9 @@ func setup_astar_grid() -> void:
 			var point_id: int = astar.get_available_point_id()
 			astar.add_point(point_id, cell_pos)
 			var grid_point = _map_new_point(cell_pos, item_id, point_id, tile_basis, tile)
-			if COMPLICATED_TILES.has(tile):
-				complicated_tile_map[cell_pos] = grid_point
-			if tile == ALARM:
+			if tile == LADDER:
+				ladder_map[cell_pos] = grid_point
+			elif tile == ALARM:
 				alarm_map[cell_pos] = true
 	
 	# Connect neighboring points
@@ -360,7 +376,7 @@ func probe_for_viable_move(grid_position : Vector3i, max_moves : int, callback :
 		var next_point_ring : Dictionary[Vector3i, bool] = {}
 		for point : Vector3i in last_point_ring:
 			var grid_point = point_map_by_grid_coords[point]
-			for connection : Vector3i in grid_point.real_connections:
+			for connection : Vector3i in grid_point.connections:
 				if connection != grid_position and !visited_points.has(connection) and !point_map_by_grid_coords[connection].occupier:
 					if !banned_moves.has(connection) and callback.call(connection):
 						end_time = Time.get_ticks_msec()
@@ -385,7 +401,7 @@ func get_valid_adjacent_cells(point_position : Vector3i) -> Array[Vector3i]:
 	var result : Array[Vector3i]
 	for potential_connection in [Vector3i(1, 0, 0), Vector3i(-1, 0, 0), Vector3i(0, 0, 1), Vector3i(0, 0, -1)]:
 		var real_position = point_position + potential_connection
-		if grid_point.real_connections.has(real_position):
+		if grid_point.connections.has(real_position):
 			result.append(real_position)
 	return result
 
