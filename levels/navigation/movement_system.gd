@@ -12,13 +12,13 @@ extends Node3D
 @onready var _all_move_holder := %AllMoveHolder
 
 ## The cell highlight scene.
-const HIGHLIGHT = preload("./cell_highlight.tscn")
+static var HIGHLIGHT = FileReference.new("uid://dmkx4m8je1llw")
 ## The cell unavailable highlight scene.
-const UNAVAILABLE_HIGHLIGHT = preload("./cell_highlight_unavailable.tscn")
+static var UNAVAILABLE_HIGHLIGHT = FileReference.new("uid://debm6j8wwh5iu")
 ## Preloaded path marker sprite scene.
-const PATH_MARKER := preload('./path_marker.tscn')
+static var PATH_MARKER := FileReference.new('uid://ck6owgdcv1cpj')
 ## Preloaded small path marker sprite scene.
-const PATH_MARKER_SMALL := preload('./path_marker_small.tscn')
+static var PATH_MARKER_SMALL := FileReference.new('uid://codhw5nrgp658')
 
 ## The path the player has marked with planned points.
 var planned_path : Array[PackedVector3Array] = []
@@ -53,7 +53,7 @@ func mark_hovered_path(end_point : Vector3) -> void:
 		starting_point = Unit.active_unit.board_position
 	hovered_path = level.nav_map.find_path(starting_point, end_point)
 	for cell in hovered_path:
-		var path_marker_scene = PATH_MARKER_SMALL.instantiate()
+		var path_marker_scene = PATH_MARKER_SMALL.value.instantiate()
 		path_marker_scene.position = NavigableGridMap.convert_grid_to_global_position(cell)
 		_hovered_path_holder.add_child(path_marker_scene)
 
@@ -71,7 +71,7 @@ func _mark_planned_path() -> void:
 	Utilities.clear_children(_planned_paths_holder)
 	for subpath in planned_path:
 		for step in subpath:
-			var path_marker_scene = PATH_MARKER.instantiate()
+			var path_marker_scene = PATH_MARKER.value.instantiate()
 			path_marker_scene.position = NavigableGridMap.convert_grid_to_global_position(step)
 			_planned_paths_holder.add_child(path_marker_scene)
 
@@ -124,13 +124,13 @@ func _draw_available_moves():
 	var seen : Dictionary[Vector3, bool]
 	for move in viable_moves:
 		seen[move] = true
-		var highlight_scene = HIGHLIGHT.instantiate()
+		var highlight_scene = HIGHLIGHT.value.instantiate()
 		highlight_scene.position = NavigableGridMap.convert_grid_to_global_position(move)
 		_viable_move_holder.add_child(highlight_scene)
 	if !planned_path.is_empty():
 		for move in all_unit_moves:
 			if !seen.has(move):
-				var highlight_scene = UNAVAILABLE_HIGHLIGHT.instantiate()
+				var highlight_scene = UNAVAILABLE_HIGHLIGHT.value.instantiate()
 				highlight_scene.position = NavigableGridMap.convert_grid_to_global_position(move)
 				_all_move_holder.add_child(highlight_scene)
 

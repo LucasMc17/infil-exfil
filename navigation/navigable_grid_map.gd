@@ -9,6 +9,7 @@ extends GridMap
 ## The size of the basic cell in the gridmap, as a Vector3.
 static var CELL_SIZE := Vector3i(1, 4, 1)
 
+# NOTE: I am allowing these preloads for now.
 ## Floor [Tile] resource.
 const FLOOR := preload("./tiles/floor.tres")
 ## Wall [Tile] resource.

@@ -20,7 +20,6 @@ func check_detection() -> void:
 		var collision_instances = shape_cast.collision_result
 		var seen_zones = collision_instances.map(func(instance): return instance.collider).filter(func(collider): return collider is SeenZone and collider.unit is FriendlyUnit)
 		for zone : SeenZone in seen_zones:
-			# TODO: We need a whole separate system for tracking known/unknown incapacitated units. For now we just ignore them
 			if !zone.unit.is_incapacitated():
 				var vis_score = 0
 				for point : VisibilityPoint in zone.vision_targets:

@@ -3,7 +3,7 @@ class_name ActiveUnitOptions
 extends HBoxContainer
 
 ## The [UnitSkill] scene for instantiation.
-const SKILL_SCENE = preload('./unit_skill.tscn')
+static var SKILL_SCENE = FileReference.new('uid://cxqjmbgho07yf')
 
 func _ready() -> void:
 	Events.refresh_unit_skills.connect(_on_skill_refresh)
@@ -21,7 +21,7 @@ func _on_skill_refresh() -> void:
 		var index := 1
 		for skill in Unit.active_unit.all_skills:
 			if skill.get_visibility():
-				var skill_button = SKILL_SCENE.instantiate()
+				var skill_button = SKILL_SCENE.value.instantiate()
 				skill_button.build(skill, index)
 				add_child(skill_button)
 				index += 1

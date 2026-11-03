@@ -41,8 +41,7 @@ func physics_update(delta: float):
 
 		if unit.rotation.y != angle:
 			unit.rotation.y = angle
-		# TODO: Long term, I think this should just force a detection of the blocking unit at this point. Right? I don't like having to await a physics frame.
-		# TODO: Other todo. One thing that might also fix this is actually lerp the rotation for a few frames, checking for detection on each. Would also fix unit turning blindspots.
+		# TODO: Eventually we will want to actually lerp the rotation for a few frames, checking for detection on each. Would also fix unit turning blindspots.
 		unit.check_for_detection()
 	
 

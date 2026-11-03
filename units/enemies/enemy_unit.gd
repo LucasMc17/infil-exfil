@@ -4,14 +4,13 @@
 class_name EnemyUnit
 extends Unit
 
-# TODO: I know, I know, preloads are bad. Gotta figure out what to do instead.
-const STUN_IMAGE := preload('res://assets/images/stun.png')
-const SLEEP_IMAGE := preload('res://assets/images/sleep.png')
-const INVESTIGATING_IMAGE := preload('res://assets/images/investigating.png')
-const HALF_ALERT_IMAGE := preload('res://assets/images/half_alert.png')
-const FULL_ALERT_IMAGE := preload('res://assets/images/full_alert.png')
+static var STUN_IMAGE := FileReference.new("uid://7g1qemtda6wf")
+static var SLEEP_IMAGE := FileReference.new('uid://bvkgv4bux21nd')
+static var INVESTIGATING_IMAGE := FileReference.new('uid://c0c8hi370vmj4')
+static var HALF_ALERT_IMAGE := FileReference.new('uid://b1mgenlur5ke3')
+static var FULL_ALERT_IMAGE := FileReference.new('uid://qrdq7awobm4q')
 
-const ENEMY_YELL = preload('uid://beenh2i58pt2e')
+static var ENEMY_YELL = FileReference.new('uid://beenh2i58pt2e')
 
 ## Starting queue of directives to perform when unaware. Passed directly to the [DecisionDirectorModule].
 @export var unaware_base_directives : Array[Directive] = []
@@ -126,7 +125,7 @@ func forfeit_turn() -> void:
 func react_to_sighting(nav_zone : NavZone, is_first_sighting := true) -> void:
 	speak(Barks.get_first_contact_line(nav_zone) if is_first_sighting else Barks.get_resumed_contact_line(nav_zone))
 	await get_tree().create_timer(0.1).timeout
-	make_sound(ENEMY_YELL)
+	make_sound(ENEMY_YELL.value)
 
 
 func make_sound(sound : Sound) -> void:
@@ -137,13 +136,13 @@ func update_indicator() -> void:
 	if unit_status == Status.DEAD:
 		_status_indicator.texture = null
 	elif unit_status == Status.UNCONSCIOUS:
-		_status_indicator.texture = SLEEP_IMAGE
+		_status_indicator.texture = SLEEP_IMAGE.value
 	elif unit_status == Status.STUNNED:
-		_status_indicator.texture = STUN_IMAGE
+		_status_indicator.texture = STUN_IMAGE.value
 	elif awareness.is_alarmed():
 		if awareness.is_in_grace_period:
-			_status_indicator.texture = HALF_ALERT_IMAGE
+			_status_indicator.texture = HALF_ALERT_IMAGE.value
 		else:
-			_status_indicator.texture = FULL_ALERT_IMAGE
+			_status_indicator.texture = FULL_ALERT_IMAGE.value
 	else:
 		_status_indicator.texture = null
