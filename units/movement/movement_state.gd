@@ -27,18 +27,6 @@ func enter(previous_state : State, ext : Dictionary):
 
 
 func physics_update(delta: float):
-	# unit.follow_path(path_walk, delta, mps)
-	# move towards the next point
-	# if we reach it:
-		# check for detection
-		# If there is a next point:
-			# turn toward the next point if one exists.
-		# else:
-			# if we have a ghost point:
-				# turn towards it 
-				# check for detection
-			# then end the walk either way
-	
 	var update_captive_position = func() -> void:
 		if unit.captive:
 			unit.captive.position = unit._hostage_marker.global_position

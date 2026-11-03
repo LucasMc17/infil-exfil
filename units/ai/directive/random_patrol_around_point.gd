@@ -8,10 +8,13 @@ func begin(unit : EnemyUnit) -> void:
 	super(unit)
 	attack_skill = acting_unit.skill_machine.skills["EnemyAttack"]
 	attack_skill.arm_as_enemy()
-	var unit_valid_moves = Level.current.nav_map.get_all_valid_moves(unit.board_position, unit.max_movement_points)
-	var move = unit_valid_moves.pick_random()
+	if !attack_skill.potential_targets.is_empty():
+		attack_skill.use({ "target": attack_skill.potential_targets[0] })
+	else:
+		var unit_valid_moves = Level.current.nav_map.get_all_valid_moves(unit.board_position, unit.max_movement_points)
+		var move = unit_valid_moves.pick_random()
 
-	unit.move("Run", move)
+		unit.move("Run", move)
 
 
 func _on_finished_moving(unit : EnemyUnit, arrived : bool):
