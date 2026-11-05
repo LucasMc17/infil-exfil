@@ -21,12 +21,7 @@ func check_detection() -> void:
 		var seen_zones = collision_instances.map(func(instance): return instance.collider).filter(func(collider): return collider is SeenZone and collider.unit is FriendlyUnit)
 		for zone : SeenZone in seen_zones:
 			if !zone.unit.is_incapacitated():
-				var vis_score = 0
-				for point : VisibilityPoint in zone.vision_targets:
-					if get_line_of_sight(point.global_position, zone.unit):
-						vis_score += 1
-				DebugConsole.log("Enemy sees " + str(vis_score) + "/8 of friendly's vision points", 3)
-				if vis_score > 2:
+				if get_visibility_of_seen_zone(zone):
 					spotted.append(zone.unit)
 					enemy.awareness.known_bodies.remove(zone.unit)
 					if Level.current.alarm.active:

@@ -3,9 +3,13 @@
 @abstract class_name VisionZone
 extends Area3D
 
-## Casts a ray from the [global_position] of this [VisionZone] to a specific position in 3D space, and returns true if the ray's first intersect is with the expected target, indicating clear line of sight. Returns false otherwise.
-func get_line_of_sight(target_position : Vector3, expected_target : Node3D) -> bool:
-	return Level.current.test_line_of_sight(global_position, target_position, expected_target)
+## Use the [test_line_of_sight] func above to determine if another seen zone (usually belonging to another unit) is visible to this unit.
+func get_visibility_of_seen_zone(zone : SeenZone, use_override := false, position_override := Vector3.ZERO) -> bool:
+	var vis_score = 0
+	for point : VisibilityPoint in zone.vision_targets:
+		if Level.current.test_line_of_sight(position_override if use_override else global_position, point.global_position, zone.unit):
+			vis_score += 1
+	return vis_score > 2
 
 
 ## Determines whether this [VisionZone] is currently detecting or being detected by any other [VisionZone]s.

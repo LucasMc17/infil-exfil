@@ -109,7 +109,7 @@ func _confirm_sighting(sighting : FriendlySighting) -> void:
 	var can_see : bool
 	var target_incapacitated = sighting.friendly.is_incapacitated()
 	if sighting.friendly.position.distance_to(unit.position) <= 15.0 and \
-	unit.seeing_zone.get_line_of_sight(sighting.friendly.seen_zone.global_position, sighting.friendly):
+	unit.seeing_zone.get_visibility_of_seen_zone(sighting.friendly.seen_zone):
 		can_see = true
 		
 		has_pursued = false

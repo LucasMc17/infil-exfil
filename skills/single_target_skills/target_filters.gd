@@ -132,7 +132,7 @@ static func _filter_alarmed_enemies_only(targeted : Unit, targeter : Unit) -> bo
 
 
 static func _filter_in_sight_only(targeted : Unit, targeter : Unit) -> bool:
-	return targeter.seen_zone.get_line_of_sight(targeted.seen_zone.global_position, targeted)
+	return targeter.seen_zone.get_visibility_of_seen_zone(targeted.seen_zone)
 
 
 static func _filter_spotted_friendlies_only(targeted : Unit, targeter : Unit) -> bool:
