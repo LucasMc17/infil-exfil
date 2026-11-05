@@ -5,69 +5,31 @@ class_name NavigableGridMap
 extends GridMap
 
 # TODO: This file is getting really chunky. Should break it out to its own submodules to let it breathe a bit. I think the code around path blocking (units and unstable connections) could benefit a lot and get a lot cleaner.
+# UNIT BLOCKING 1
+# ALL POSSIBLE MOVES 2
 
 ## The size of the basic cell in the gridmap, as a Vector3.
 static var CELL_SIZE := Vector3i(1, 4, 1)
+## The current instance of the navigable grid map in use.
+static var current : NavigableGridMap
 
 # NOTE: I am allowing these preloads for now.
 ## Floor [Tile] resource.
-const FLOOR := preload("./tiles/floor.tres")
+const FLOOR := preload("uid://ct7pd1lj65vgj")
 ## Wall [Tile] resource.
-const WALL := preload("./tiles/wall.tres")
+const WALL := preload("uid://dp7k0jhnf8m4j")
 ## Ladder [Tile] resource.
-const LADDER := preload("./tiles/ladder.tres")
+const LADDER := preload("uid://btv5bvtvjfvyg")
 ## Alarm [Tile] resource.
-const ALARM := preload("./tiles/alarm.tres")
+const ALARM := preload("uid://b73x4ovcpyxvf")
 ## Corner [Tile] resource.
-const CORNER := preload("./tiles/corner.tres")
+const CORNER := preload("uid://doewqvdgdbi2c")
 ## Dead End [Tile] resource.
-const DEAD_END := preload("./tiles/dead_end.tres")
+const DEAD_END := preload("uid://bmon5owcn2cyp")
 ## Passage [Tile] resource.
-const PASSAGE := preload("./tiles/passage.tres")
+const PASSAGE := preload("uid://dnxq50dy3lyem")
 ## Array of all preloaded [Tile] resources, in the order of their corresponding meshes within the [MeshLibrary] of the [GridMap].
 const TILE_PALETTE : Array[Tile] = [FLOOR, WALL, LADDER, ALARM, CORNER, DEAD_END, PASSAGE]
-
-## Custom class representing a single point, both in the grid map and the A* grid. Contains information about that point's position, tile type, connections, mesh ID, rotation and A* ID. Designed to allow for easy referencing of specific spoints in the context of either the GridMap or the A* grid.
-class GridPoint:
-	## The ID of the mesh occupying this point in the GridMap.
-	var mesh_id : int
-	## The ID of this point in the A* nav grid.
-	var a_star_point : int
-	## The rotational basis of the point.
-	var basis : Basis
-	## The position of this point in the NavGrid.
-	var position : Vector3i
-	## The [Tile] type of this point.
-	var tile : Tile
-	## A dictionary representing the absolute positions of possible connections to this tile based on its type, without consideration of whether they are actually able to connect.
-	var potential_connections : Dictionary[Vector3i, bool]
-	## A dictionary of astar points which this tile has an unstable connection to, capable of being severed under certain circumstances.
-	var unstable_connected_points : Array[int]
-	## A dictionary representing the absolute positions of real connections for this point in the A* grid.
-	var connections : Dictionary[Vector3i, bool]:
-		get():
-			var result : Dictionary[Vector3i, bool]
-			for id in NavigableGridMap.astar.get_point_connections(a_star_point):
-				result[NavigableGridMap.point_map_by_astar_ids[id].position] = true
-			return result
-	## The name of the mesh shown at this position in the GridMap.
-	var mesh_name : String:
-		get():
-			return TILE_PALETTE[mesh_id].name
-	## The movable object occupying this point (and blocking it for use in pathing).
-	var occupier : Node3D = null
-
-	func _init(p_position: Vector3i, p_mesh_id : int, p_a_star_point : int, p_basis : Basis, p_tile : Tile):
-		mesh_id = p_mesh_id
-		a_star_point = p_a_star_point
-		basis = p_basis
-		position = p_position
-		tile = p_tile
-		potential_connections = tile.get_viable_connections(position, basis)
-		var unstable_neighbors = tile.get_unstable_connections(position, basis)
-		for neighbor in unstable_neighbors:
-			if NavigableGridMap.point_map_by_grid_coords.has(neighbor):
-				unstable_connected_points.append(NavigableGridMap.point_map_by_grid_coords[neighbor].a_star_point)
 
 @export_group("Context")
 ## The level this NavGrid lives inside of.
@@ -91,11 +53,13 @@ class GridPoint:
 @export var show_debug: bool = true
 
 ## The [AStar3D] instance that can be used in your games.
-static var astar := CustomAStar.new()
+var astar := CustomAStar.new()
 ## Dictionary of all points identified by their Vector3i coords in the [GridMap].
-static var point_map_by_grid_coords : Dictionary[Vector3i, GridPoint] = {}
+var point_map_by_grid_coords : Dictionary[Vector3i, GridPoint] = {}
 ## Dictionary of all points identified by their A* IDs.
-static var point_map_by_astar_ids: Dictionary[int, GridPoint] = {}
+var point_map_by_astar_ids: Dictionary[int, GridPoint] = {}
+## Module for handling blocked spaces in the navigable grid map.
+var space_blocking := SpaceBlockingModule.new()
 
 ## A reuseable variable for loops. Can ignore.
 var points : PackedVector3Array
@@ -103,8 +67,6 @@ var points : PackedVector3Array
 var alarm_map : Dictionary[Vector3i, bool] = {}
 ## A dictionary of all tiles which cannot be navigated while holding a hostage or otherwise while encumbered.
 var ladder_map : Dictionary[Vector3i, GridPoint] = {}
-## A dictionary tracking the positions of all tile blocking scenes in the level.
-var occupation_map : Dictionary[int, GridPoint] = {}
 
 ## Takes in a global position and converts it to it's nearest position on the grid.
 static func convert_global_to_grid_position(pos : Vector3i) -> Vector3:
@@ -121,6 +83,7 @@ static func convert_grid_to_global_position(pos : Vector3i) -> Vector3:
 
 func _ready() -> void:
 	cell_size = CELL_SIZE
+	current = self
 	if Engine.is_editor_hint():
 		setup_astar_grid()
 
@@ -144,87 +107,6 @@ func _connect_point_to_neighbors(point : GridPoint) -> void:
 					astar.connect_points(point.a_star_point, neighbor_point.a_star_point)
 
 
-## Utility function to break the connection between a point and it's unstable neighbors.
-func _sever_unstable_connections(point : GridPoint) -> void:
-	for connection in point.unstable_connected_points:
-		astar.disconnect_points(point.a_star_point, connection)
-
-
-## Utility function to rebuild unstable connections between points.
-func _rebuild_unstable_connections(point : GridPoint) -> void:
-	for connection in point.unstable_connected_points:
-		if !astar.are_points_connected(point.a_star_point, connection):
-			astar.connect_points(point.a_star_point, connection)
-	
-
-
-## Main function for determining which points and connections between points are navigable to the active unit. Works in two phases, first by severing connections between tiles which the active unit is not able to perform (such as ladders when carrying a body), and then by completely blocking off spaces which are occupied by other units.
-func _resolve_blocks() -> void:
-	_resolve_unstable_connections()
-	_resolve_occupied_spaces()
-
-
-## Utility function which severs all complicated tile connections if the active unit is encumbered and unable to traverse them.
-func _resolve_unstable_connections() -> void:
-	if Unit.active_unit.is_encumbered:
-		for point : GridPoint in ladder_map.values():
-			_sever_unstable_connections(point)
-	else:
-		for point : GridPoint in ladder_map.values():
-			_rebuild_unstable_connections(point)
-
-
-## Utility function which iterates through the list of point-blocking scenes and marks their positions as un-navigable, so that units may block each other's paths.
-func _resolve_occupied_spaces() -> void:
-	# TODO: When scenes other than Units are able to block spaces, this will change.
-	var previously_occupied : Array[GridPoint]
-	var newly_occupied : Array[GridPoint]
-
-	# First pass: clear old positions of occupiers and get list of those old positions.
-	for unit : Unit in Level.current.all_units:
-		var unit_id := unit.get_instance_id()
-		if occupation_map.has(unit_id):
-			var old_point = occupation_map[unit_id]
-			previously_occupied.append(old_point)
-			old_point.occupier = null
-
-	# Second pass: assign occupiers to new positions, get list of those new positions
-	for unit : Unit in Level.current.all_units:
-		var unit_id := unit.get_instance_id()
-		if point_map_by_grid_coords.has(unit.board_position):
-			var new_point = point_map_by_grid_coords[unit.board_position]
-			if _should_block_unit_space(unit):
-				newly_occupied.append(new_point)
-			occupation_map[unit_id] = new_point
-			if !unit.is_incapacitated():
-				new_point.occupier = unit
-
-	# Finally, re enable the old points and disable the new ones.		
-	for point : GridPoint in previously_occupied:
-		enable_point(point.position)
-	
-	for point : GridPoint in newly_occupied:
-		disable_point(point.position)
-
-
-## Helper function to determine if the currently active unit should consider another unit as actively blocking the space they are occupying. Logic is spelled out for easy refactoring in future iterations.
-func _should_block_unit_space(unit : Unit) -> bool:
-	var active_unit = Unit.active_unit
-	if active_unit == unit:
-		return false
-	if !point_map_by_grid_coords.has(unit.board_position):
-		return false
-	if unit.is_incapacitated():
-		return false
-	if active_unit is not EnemyUnit:
-		return true
-	if unit is EnemyUnit:
-		return true
-	if !active_unit.awareness.targeted_friendlies.has(unit.get_instance_id()):
-		return false
-	return true
-
-
 ## Disable a point arbitrarily in the nav map by its coordinates. Note that this technically does not remove the point from navigation, but heavily discourages it by setting a high weight scale. This means the unit will prefer other paths to the one that takes it through this point, unless those other paths are 10+ points longer.
 func disable_point(point_position : Vector3i) -> void:
 	var point = point_map_by_grid_coords[point_position].a_star_point
@@ -237,7 +119,7 @@ func enable_point(point_position : Vector3i) -> void:
 	astar.set_point_weight_scale(point, 1.0)
 
 
-## Utility function handling the recursion necessary to find all valid moves.
+## Utility function handling the recursion necessary to find all valid moves. #2
 func _recursively_get_valid_pos(last_point_ring: Array[Vector3i], moves_left: int, potential_moves : Dictionary[Vector3i, bool], starting_point : Vector3i) -> void:
 	var next_point_ring : Dictionary[Vector3i, bool] = {}
 	for point : Vector3i in last_point_ring:
@@ -245,7 +127,7 @@ func _recursively_get_valid_pos(last_point_ring: Array[Vector3i], moves_left: in
 			potential_moves[point] = true
 		var grid_point = point_map_by_grid_coords[point]
 		for connection : Vector3i in grid_point.connections:
-			if connection != starting_point and !potential_moves.has(connection) and !point_map_by_grid_coords[connection].occupier:
+			if connection != starting_point and !potential_moves.has(connection) and !get_point_occupier(connection):
 			# if connection != starting_point and !potential_moves.has(connection):
 				next_point_ring[connection] = true
 	
@@ -313,7 +195,7 @@ func setup_astar_grid() -> void:
 	DebugConsole.log("Execution time to build A* map: " + str(end_time - start_time) + " milliseconds", 4)
 
 
-## Returns an array of Vector3s, beginning with the [start] position and ending with the [end] position, which describes a navigable path between those two points. If no valid path exists, returns an empty array. The optional exact_point parameter determines whether or not the unit can path to point close to the intended point, if it is inaccessible due to being occupied. The point_radius parameter determines how wide of a radius around the point that unit must have to be withing to satisfy the move conditions without reaching the exact point.
+## Returns an array of Vector3s, beginning with the [start] position and ending with the [end] position, which describes a navigable path between those two points. If no valid path exists, returns an empty array. The optional exact_point parameter determines whether or not the unit can path to point close to the intended point, if it is inaccessible due to being occupied. The point_radius parameter determines how wide of a radius around the point that unit must have to be withing to satisfy the move conditions without reaching the exact point. # 3
 func find_path(start: Vector3i, end: Vector3i, exact_point := true, point_radius := 3) -> PackedVector3Array:
 	# Ensure start and end are within the grid
 	if not point_map_by_grid_coords.has(start) or not point_map_by_grid_coords.has(end):
@@ -344,7 +226,7 @@ func find_path(start: Vector3i, end: Vector3i, exact_point := true, point_radius
 	return path
 	
 
-## Takes in a starting position and an array of positions to check, and returns the position from the array which can be reached from the starting position with the shortest navigable path. If no position is found to be reachable, returns null.
+## Takes in a starting position and an array of positions to check, and returns the position from the array which can be reached from the starting position with the shortest navigable path. If no position is found to be reachable, returns null. # 3
 func get_closest_point(pos : Vector3i, points_to_check : Array[Vector3i]) -> Variant:
 	# NOTE: In a future version this might also return the path to avoid recalculating it. This will require a bit of reworking for the enemy [move] func which expects only a final point and then calculates its own path.
 	var result = null
@@ -364,10 +246,10 @@ func paint_grid_square(grid_position: Vector3, color : Color):
 	DebugDraw3D.draw_box.call_deferred(temp, Quaternion.IDENTITY, Vector3(0.9, 0.9, 0.9), color, true, INF)
 
 
-## Utilizes recursion to find all valid moves from a valid position, assuming a certain max movement distance. The recursion makes it considerably faster than using the old, naive function for the same purpose.
+## Utilizes recursion to find all valid moves from a valid position, assuming a certain max movement distance. The recursion makes it considerably faster than using the old, naive function for the same purpose. # 2
 func get_all_valid_moves(grid_position: Vector3i, max_moves: int) -> Array[Vector3i]:
 	var start_time = Time.get_ticks_msec()
-	_resolve_blocks()
+	space_blocking.resolve_blocks()
 	var valid_moves : Dictionary[Vector3i, bool] = {}
 	_recursively_get_valid_pos([grid_position], max_moves, valid_moves, grid_position)
 	var end_time = Time.get_ticks_msec()
@@ -377,7 +259,7 @@ func get_all_valid_moves(grid_position: Vector3i, max_moves: int) -> Array[Vecto
 
 # NOTE: Long term, might want to pass in de-prioritized moves in addition to hard banned ones.
 ## Iterates throughout the unit's available moves, similarly to [get_all_valid_moves], but runs a passed callable on each position, returning the first one to return true. Starts from the unit's position and moves outward, so that the nearest viable position will always be chosen. Can optionally take a list of banned positions which will not be accepted as valid. Returns null if no valid move exists.[br]
-## For use by AI-controlled units.
+## For use by AI-controlled units.  # 2
 func probe_for_viable_move(grid_position : Vector3i, max_moves : int, callback : Callable, banned_moves : PackedVector3Array = []) -> Variant:
 	# NOTE: This code could be cleaned up a bit. a lot of it is also reused from the get all valid moves func, but I am not sure if that can be avoided.
 	var visited_points : Dictionary[Vector3i, bool]
@@ -385,7 +267,7 @@ func probe_for_viable_move(grid_position : Vector3i, max_moves : int, callback :
 	var last_point_ring : Array[Vector3i] = [grid_position]
 	var start_time = Time.get_ticks_msec()
 	var end_time : int
-	_resolve_blocks()
+	space_blocking.resolve_blocks()
 	while moves_left > 0:
 		var next_point_ring : Dictionary[Vector3i, bool] = {}
 		for point : Vector3i in last_point_ring:
@@ -409,7 +291,7 @@ func probe_for_viable_move(grid_position : Vector3i, max_moves : int, callback :
 	return null
 
 
-## Returns an array of all the cells adjacent to the starting position which are actually connected to it. Useful for getting targets for proximal skills.
+## Returns an array of all the cells adjacent to the starting position which are actually connected to it. Useful for getting targets for proximal skills. # 2
 func get_valid_adjacent_cells(point_position : Vector3i) -> Array[Vector3i]:
 	var grid_point = point_map_by_grid_coords[point_position]
 	var result : Array[Vector3i]
