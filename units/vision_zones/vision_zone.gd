@@ -6,7 +6,7 @@ extends Area3D
 ## Use the [test_line_of_sight] func above to determine if another seen zone (usually belonging to another unit) is visible to this unit.
 func get_visibility_of_seen_zone(zone : SeenZone, use_override := false, position_override := Vector3.ZERO) -> bool:
 	var vis_score = 0
-	for point : VisibilityPoint in zone.vision_targets:
+	for point : Marker3D in zone.vision_targets:
 		if Level.current.test_line_of_sight(position_override if use_override else global_position, point.global_position, zone.unit):
 			vis_score += 1
 	return vis_score > 2
