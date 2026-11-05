@@ -4,6 +4,7 @@
 class_name Level
 extends Node3D
 
+## The currently active level.
 static var current : Level
 
 ## Logic module for handling the enemy's awareness of the player's units.
@@ -113,6 +114,10 @@ func _ready() -> void:
 		)
 		current = self
 		Events.level_loaded.emit()
+
+
+func _exit_tree() -> void:
+	current = null
 
 
 func _unhandled_input(event: InputEvent) -> void:

@@ -11,7 +11,7 @@ func begin(unit : EnemyUnit) -> void:
 	if !attack_skill.potential_targets.is_empty():
 		attack_skill.use({ "target": attack_skill.potential_targets[0] })
 	else:
-		var unit_valid_moves = Level.current.nav_map.get_all_valid_moves(unit.board_position, unit.max_movement_points)
+		var unit_valid_moves = Level.current.nav_map.move_searching.get_all_valid_moves(unit.board_position, unit.max_movement_points)
 		var move = unit_valid_moves.pick_random()
 
 		unit.move("Run", move)

@@ -2,6 +2,8 @@
 class_name GridPoint
 extends Object
 
+## The NavigableGridMap this object represents a point within.
+var grid_map : NavigableGridMap
 ## The ID of the mesh occupying this point in the GridMap.
 var mesh_id : int
 ## The ID of this point in the A* nav grid.
@@ -20,17 +22,18 @@ var unstable_connected_points : Array[int]
 var connections : Dictionary[Vector3i, bool]:
 	get():
 		var result : Dictionary[Vector3i, bool]
-		for id in NavigableGridMap.current.astar.get_point_connections(a_star_point):
-			result[NavigableGridMap.current.point_map_by_astar_ids[id].position] = true
+		for id in grid_map.astar.get_point_connections(a_star_point):
+			result[grid_map.point_map_by_astar_ids[id].position] = true
 		return result
 ## The name of the mesh shown at this position in the GridMap.
 var mesh_name : String:
 	get():
-		return NavigableGridMap.current.TILE_PALETTE[mesh_id].name
+		return grid_map.TILE_PALETTE[mesh_id].name
 ## The movable object occupying this point (and blocking it for use in pathing).
 var occupier : Node3D = null
 
-func _init(p_position: Vector3i, p_mesh_id : int, p_a_star_point : int, p_basis : Basis, p_tile : Tile):
+func _init(p_grid_map : NavigableGridMap, p_position: Vector3i, p_mesh_id : int, p_a_star_point : int, p_basis : Basis, p_tile : Tile):
+	grid_map = p_grid_map
 	mesh_id = p_mesh_id
 	a_star_point = p_a_star_point
 	basis = p_basis
@@ -39,5 +42,5 @@ func _init(p_position: Vector3i, p_mesh_id : int, p_a_star_point : int, p_basis 
 	potential_connections = tile.get_viable_connections(position, basis)
 	var unstable_neighbors = tile.get_unstable_connections(position, basis)
 	for neighbor in unstable_neighbors:
-		if NavigableGridMap.current.point_map_by_grid_coords.has(neighbor):
-			unstable_connected_points.append(NavigableGridMap.current.point_map_by_grid_coords[neighbor].a_star_point)
+		if grid_map.point_map_by_grid_coords.has(neighbor):
+			unstable_connected_points.append(grid_map.point_map_by_grid_coords[neighbor].a_star_point)

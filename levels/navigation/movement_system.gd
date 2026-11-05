@@ -99,7 +99,7 @@ func place_waymarker(point : Vector3) -> void:
 	var subpath = level.nav_map.find_path(starting_point, point)
 	mp_cost += subpath.size()
 	# set_viable_moves(point, Unit.active_unit.movement_points - mp_cost)
-	viable_moves = level.nav_map.get_all_valid_moves(point, active_unit.movement_points - mp_cost)
+	viable_moves = level.nav_map.move_searching.get_all_valid_moves(point, active_unit.movement_points - mp_cost)
 	planned_path.append(subpath)
 	_draw_available_moves()
 	_mark_planned_path()
@@ -139,7 +139,7 @@ func _draw_available_moves():
 ## Called when the movement options are initialized, usually when a unit activates or becomes able to move again.
 func activate(unit : Unit) -> void:
 	active_unit = unit
-	all_unit_moves = level.nav_map.get_all_valid_moves(unit.board_position, unit.movement_points)
+	all_unit_moves = level.nav_map.move_searching.get_all_valid_moves(unit.board_position, unit.movement_points)
 	viable_moves = all_unit_moves
 	planned_path = []
 	hovered_path = []
