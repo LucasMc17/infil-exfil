@@ -57,7 +57,7 @@ func _ready():
 func check_for_detection() -> void:
 	DebugConsole.log("Checking for detection", 2)
 	seeing_zone.check_detection()
-	awareness.confirm_all_sightings()
+	awareness.friendly_knowledge.confirm_all_sightings()
 
 
 func move(movement_name : String, end_point : Vector3i, exact_point := true, point_radius := 3) -> void:
@@ -66,8 +66,8 @@ func move(movement_name : String, end_point : Vector3i, exact_point := true, poi
 
 
 func _on_unit_disabled(unit : Unit) -> void:
-	if unit == self or unit == awareness.suppression_target:
-		awareness.lose_suppression()
+	if unit == self or unit == awareness.friendly_knowledge.suppression_target:
+		awareness.friendly_knowledge.lose_suppression()
 
 
 func _on_seeing_zone_friendly_seen(friendlies: Array[FriendlyUnit]) -> void:
@@ -80,9 +80,9 @@ func _on_awareness_changed(_old_awareness, _new_awareness):
 	update_indicator()
 
 
-func _on_alarm_raised(raiser) -> void:
+func _on_alarm_raised(_raiser) -> void:
 	awareness.has_seen_enemies = true
-	awareness.last_poc = Level.current.alarm.alarm_point
+	awareness.friendly_knowledge.last_poc = Level.current.alarm.alarm_point
 	awareness.alarm(false)
 
 
@@ -92,7 +92,7 @@ func _on_alarm_ended() -> void:
 
 func activate():
 	super()
-	awareness.confirm_all_sightings()
+	awareness.friendly_knowledge.confirm_all_sightings()
 	awareness.resolve_grace_period()
 	update_indicator()
 
@@ -103,7 +103,7 @@ func lose_consciousness() -> void:
 
 
 func _on_damage() -> void:
-	awareness.lose_suppression()
+	awareness.friendly_knowledge.lose_suppression()
 
 
 func _on_die() -> void:

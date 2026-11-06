@@ -122,13 +122,13 @@ static func _filter_no_suppressors(targeted : Unit, targeter : Unit) -> bool:
 static func _filter_unalarmed_enemies_only(targeted : Unit, targeter : Unit) -> bool:
 	if targeter is not FriendlyUnit or targeted is not EnemyUnit:
 		return true
-	return !targeted.awareness.is_aware_of(targeter) or targeted.awareness.is_in_grace_period
+	return !targeted.awareness.friendly_knowledge.is_aware_of(targeter) or targeted.awareness.is_in_grace_period
 
 
 static func _filter_alarmed_enemies_only(targeted : Unit, targeter : Unit) -> bool:
 	if targeter is not FriendlyUnit or targeted is not EnemyUnit:
 		return true
-	return targeted.awareness.is_aware_of(targeter)
+	return targeted.awareness.friendly_knowledge.is_aware_of(targeter)
 
 
 static func _filter_in_sight_only(targeted : Unit, targeter : Unit) -> bool:
@@ -138,7 +138,7 @@ static func _filter_in_sight_only(targeted : Unit, targeter : Unit) -> bool:
 static func _filter_spotted_friendlies_only(targeted : Unit, targeter : Unit) -> bool:
 	if targeter is not EnemyUnit or targeted is not FriendlyUnit:
 		return true
-	return targeter.awareness.is_aware_of(targeted)
+	return targeter.awareness.friendly_knowledge.is_aware_of(targeted)
 
 
 static func _filter_no_captives(targeted : Unit, _targeter : Unit) -> bool:

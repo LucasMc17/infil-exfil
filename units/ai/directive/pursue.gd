@@ -25,7 +25,7 @@ func _init(t : FriendlyUnit, lkp : Vector3i) -> void:
 
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
-	unit.awareness.has_pursued = true
+	unit.awareness.friendly_knowledge.has_pursued = true
 	if !_is_pursuit_path_set:
 		pursuit_path = Level.current.get_likely_path(acting_unit.position, last_known_pos)
 		_is_pursuit_path_set = true

@@ -4,10 +4,6 @@
 class_name NavigableGridMap
 extends GridMap
 
-# TODO: This file is getting really chunky. Should break it out to its own submodules to let it breathe a bit. I think the code around path blocking (units and unstable connections) could benefit a lot and get a lot cleaner.
-# UNIT BLOCKING 1
-# ALL POSSIBLE MOVES 2
-
 ## The size of the basic cell in the gridmap, as a Vector3.
 static var CELL_SIZE := Vector3i(1, 4, 1)
 
@@ -28,10 +24,6 @@ const DEAD_END := preload("uid://bmon5owcn2cyp")
 const PASSAGE := preload("uid://dnxq50dy3lyem")
 ## Array of all preloaded [Tile] resources, in the order of their corresponding meshes within the [MeshLibrary] of the [GridMap].
 const TILE_PALETTE : Array[Tile] = [FLOOR, WALL, LADDER, ALARM, CORNER, DEAD_END, PASSAGE]
-
-@export_group("Context")
-## The level this NavGrid lives inside of.
-@export var level : Level
 
 @export_group("In Editor Debug")
 ## The start path [GridMap] position for in editor debugging.[br][br]

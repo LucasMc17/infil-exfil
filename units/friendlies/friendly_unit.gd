@@ -15,7 +15,7 @@ func check_for_detection() -> void:
 
 ## Checks if the unit is currently being suppressed by an enemy unit.
 func is_suppressed_by(enemy : EnemyUnit) -> bool:
-	return enemy.awareness.suppression_target == self
+	return enemy.awareness.friendly_knowledge.suppression_target == self
 
 
 func move(movement_name : String, path : Array[Vector3i]) -> void:

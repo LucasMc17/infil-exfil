@@ -8,7 +8,7 @@ var active := false
 ## The number of turns until this alarm shuts off.
 var countdown := MAX_COOLDOWN
 ## The position this unit cites as having been where they encountered enemies.
-var alarm_point : EnemyUnitAwarenessModule.ContactPoint
+var alarm_point : FriendlyKnowledgeModule.ContactPoint
 ## Whether an enemy unit has investigated the alarm point this alarm was raised with.
 var point_investigated := false
 ## Whether the friendly force has been acquired during this alarm phase.
@@ -33,7 +33,7 @@ func reset() -> void:
 
 func _enemies_in_active_pursuit() -> bool:
 	for enemy in Level.current.live_enemies:
-		if enemy.awareness.friendlies_in_sight.size() > 0 or enemy.decision_director.current_directive is Pursue:
+		if enemy.awareness.friendly_knowledge.friendlies_in_sight.size() > 0 or enemy.decision_director.current_directive is Pursue:
 			return true
 	return false
 
@@ -57,10 +57,10 @@ func _no_more_investigators() -> bool:
 func raise(raiser : Unit) -> void:
 	active = true
 	reset()
-	if raiser is not EnemyUnit or !raiser.awareness.last_poc:
-		alarm_point = EnemyUnitAwarenessModule.ContactPoint.new(raiser.board_position)
+	if raiser is not EnemyUnit or !raiser.awareness.friendly_knowledge.last_poc:
+		alarm_point = FriendlyKnowledgeModule.ContactPoint.new(raiser.board_position)
 	else:
-		alarm_point = raiser.awareness.last_poc
+		alarm_point = raiser.awareness.friendly_knowledge.last_poc
 	# if raiser is EnemyUnit:
 	# 	alarm_point = raiser.awareness.last_poc or EnemyUnitAwarenessModule.ContactPoint.new(raiser.board_position)
 	# else:
