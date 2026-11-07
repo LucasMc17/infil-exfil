@@ -20,16 +20,16 @@ func refresh(new_module : EnemyUnitAwarenessModule = null) -> void:
 		else:
 			_contact_point.value = "NONE"
 		
-		_in_sight.value = str(awareness.friendly_knowledge.friendlies_in_sight.size())
-		_out_of_sight.value = str(awareness.friendly_knowledge.friendlies_out_of_sight.size())
+		_in_sight.value = str(awareness.friendly_knowledge.all_in_sight.size())
+		_out_of_sight.value = str(awareness.friendly_knowledge.all_out_of_sight.size())
 		Utilities.clear_children(_in_sight_buttons)
 		Utilities.clear_children(_out_of_sight_buttons)
-		for sighting in awareness.friendly_knowledge.friendlies_in_sight:
+		for sighting in awareness.friendly_knowledge.all_in_sight:
 			var button = Button.new()
 			button.text = sighting.friendly.name
 			button.pressed.connect(func (): Level.current.level_camera.jump_to_point(sighting.friendly.global_position))
 			_in_sight_buttons.add_child(button)
-		for sighting in awareness.friendly_knowledge.friendlies_out_of_sight:
+		for sighting in awareness.friendly_knowledge.all_out_of_sight:
 			var button = Button.new()
 			button.text = sighting.friendly.name
 			button.pressed.connect(func (): Level.current.level_camera.jump_to_point(sighting.friendly.global_position))

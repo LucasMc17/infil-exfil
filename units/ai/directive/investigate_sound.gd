@@ -15,6 +15,6 @@ func begin(unit : EnemyUnit) -> void:
 
 func _on_finished_moving(unit : EnemyUnit, arrived : bool):
 	super(unit, arrived)
-	if arrived or !unit.awareness.friendly_knowledge.friendlies_in_sight.is_empty():
+	if arrived or !unit.awareness.friendly_knowledge.all_in_sight.is_empty():
 		end()
 	unit.forfeit_turn()

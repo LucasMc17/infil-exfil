@@ -33,7 +33,7 @@ func reset() -> void:
 
 func _enemies_in_active_pursuit() -> bool:
 	for enemy in Level.current.live_enemies:
-		if enemy.awareness.friendly_knowledge.friendlies_in_sight.size() > 0 or enemy.decision_director.current_directive is Pursue:
+		if enemy.awareness.friendly_knowledge.all_in_sight.size() > 0 or enemy.decision_director.current_directive is Pursue:
 			return true
 	return false
 

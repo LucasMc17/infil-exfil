@@ -21,8 +21,10 @@ enum AwarenessLevel {
 	ALARMED
 }
 
-## The unit position knowledge module for this awareness module.
+## The unit's knowledge base for the player controlled friendly units.
 var friendly_knowledge : FriendlyKnowledgeModule
+## The unit's knowledge base for the AI controlled enemy units.
+var enemy_knowledge : EnemyKnowledgeModule
 ## The enemy's current awareness level.
 var awareness_level := AwarenessLevel.UNAWARE:
 	set(val):
@@ -47,6 +49,7 @@ var known_bodies := Utilities.BodiesDict.new(unit)
 func _init(u : EnemyUnit) -> void:
 	unit = u
 	friendly_knowledge = FriendlyKnowledgeModule.new(self)
+	enemy_knowledge = EnemyKnowledgeModule.new(self)
 
 
 ## Update the unit's awareness level to [ALERTED].
@@ -60,7 +63,7 @@ func alert():
 
 ## Runs when the unit visually acquires a player unit. Triggers an alarm phase and adds them to the targeted friendlies dict as necessary. Separate from the [_confirm_sighting] func which is responsible for confirming whether a previously spotted player unit is still in sight.
 func see_friendlies(friendlies : Variant, should_skip_grace_period := false) -> void:
-	var first_sighting = friendly_knowledge.no_friendlies_in_sight
+	var first_sighting = friendly_knowledge.has_none_in_sight
 	var friendlies_array : Array[FriendlyUnit]
 	if friendlies is FriendlyUnit:
 		friendlies_array = [friendlies]

@@ -86,6 +86,6 @@ func _should_block_unit_space(unit : Unit) -> bool:
 		return true
 	if unit is EnemyUnit:
 		return true
-	if !active_unit.awareness.friendly_knowledge.targeted_friendlies.has(unit.get_instance_id()):
+	if !active_unit.awareness.friendly_knowledge.sightings.has(unit.get_instance_id()):
 		return false
 	return true
