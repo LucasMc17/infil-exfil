@@ -23,14 +23,13 @@ class EnemySighting extends Sighting:
 
 func _init(a : EnemyUnitAwarenessModule) -> void:
 	super(a)
+	SightingObject = EnemySighting
 	Events.level_loaded.connect(_setup_knowledge)
 
 
 func _setup_knowledge() -> void:
 	for enemy : EnemyUnit in Level.current.all_enemies:
-		var enemy_id = enemy.get_instance_id()
-		var sighting := EnemySighting.new(enemy)
-		sightings[enemy_id] = sighting
+		add_sighting(enemy)
 
 	confirm_all_sightings()
 

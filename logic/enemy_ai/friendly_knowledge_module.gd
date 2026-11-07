@@ -42,6 +42,7 @@ var has_pursued := false
 
 func _init(a : EnemyUnitAwarenessModule) -> void:
 	super(a)
+	SightingObject = FriendlySighting
 	Events.player_turn_ended.connect(_resolve_suppression)
 
 
@@ -54,7 +55,7 @@ func _on_sighting_confirmed(_sighting : Sighting, friendly_sighting : FriendlySi
 		last_poc = ContactPoint.new(unit.board_position)
 
 
-func _on_sighting_not_confirmed(_sighting : Sighting, friendly_sighting : FriendlySighting = null) -> void:
+func _on_sighting_not_confirmed(_sighting : Sighting, _friendly_sighting : FriendlySighting = null) -> void:
 	unit.suppression_indicator.check_los(false)
 
 

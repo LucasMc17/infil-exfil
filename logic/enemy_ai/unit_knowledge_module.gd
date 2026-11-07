@@ -2,7 +2,7 @@
 @abstract class_name UnitKnowledgeModule
 extends Object
 
-@abstract class Sighting:
+class Sighting:
 	var unit : Unit
 	## Whether the enemy unit still has eyes on this unit.
 	var still_in_sight := true
@@ -14,12 +14,19 @@ extends Object
 	func _init(seen_unit : Unit) -> void:
 		unit = seen_unit
 
+class BodySighting extends Sighting:
+	## The status of the downed unit (since the unit is incapacitated, this should be DEAD or UNCONSCIOUS).
+	var last_known_status : Unit.Status
+
+var SightingObject = Sighting
 ## The awareness module which initiated this submodule
 var awareness : EnemyUnitAwarenessModule
 ## The unit which this module corresponds to.
 var unit : EnemyUnit
 ## All the sightings this module is currently maintaining.
 var sightings : Dictionary[int, Sighting] = {}
+## All the body sightings this module is currently maintaining.
+var bodies : Dictionary[int, BodySighting] = {}
 ## How many friendlies the unit is actively aware of/in combat with at this moment.
 var sightings_count : int:
 	get():
@@ -54,17 +61,35 @@ func confirm_all_sightings() -> void:
 	Events.request_update_unit_monitor.emit(unit)
 
 
+func add_sighting(seen_unit : Unit) -> Sighting:
+	var unit_id = seen_unit.get_instance_id()
+	if bodies.has(unit_id):
+		bodies.erase(unit_id)
+	if !sightings.has(unit_id):
+		var sighting = SightingObject.new(seen_unit)
+		sightings[unit_id] = sighting
+		return sighting
+	return null
+
+
+func add_body_sighting(seen_body : Unit) -> BodySighting:
+	var body_id = seen_body.get_instance_id()
+	if sightings.has(body_id):
+		sightings.erase(body_id)
+	if !bodies.has(body_id):
+		var body_sighting = BodySighting.new(seen_body)
+		bodies[body_id] = body_sighting
+		return body_sighting
+	return null
+
+
 ## Confirms an individual sighting so that the unit can keep an up to date list of units have been spotted, as well as which ones are in sight and which are out of sight.
 func _confirm_sighting(sighting : Sighting) -> void:
-	var target_incapacitated = sighting.unit.is_incapacitated()
 	if sighting.unit.position.distance_to(unit.position) <= 15.0 and \
 	unit.seeing_zone.get_visibility_of_seen_zone(sighting.unit.seen_zone):
 		sighting.still_in_sight = true
 		sighting.last_known_position = sighting.unit.board_position
 		sighting.last_known_zone = Level.current.get_zone_from_position(sighting.last_known_position)
-		if target_incapacitated:
-			# MARK
-			sighting.confirmed_incapacitated = true
 		_on_sighting_confirmed(sighting, sighting)
 	else:
 		sighting.still_in_sight = false
