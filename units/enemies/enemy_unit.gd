@@ -52,6 +52,8 @@ func _ready():
 		Events.alarm_raised.connect(_on_alarm_raised)
 		Events.alarm_ended.connect(_on_alarm_ended)
 		Events.unit_disabled.connect(_on_unit_disabled)
+		seeing_zone.friendly_seen.connect(_on_seeing_zone_friendly_seen)
+		seeing_zone.body_seen.connect(_on_seeing_zone_body_seen)
 
 
 func check_for_detection() -> void:
@@ -73,6 +75,10 @@ func _on_unit_disabled(unit : Unit) -> void:
 func _on_seeing_zone_friendly_seen(friendlies: Array[FriendlyUnit]) -> void:
 	DebugConsole.log("Enemy Sees Friendly/Friendlies", 2)
 	awareness.see_friendlies(friendlies, true)
+
+func _on_seeing_zone_body_seen(bodies : Array[Unit]) -> void:
+	DebugConsole.log("Enemy Sees Body/Bodies", 2)
+	awareness.see_bodies(bodies)
 
 
 func _on_awareness_changed(_old_awareness, _new_awareness):

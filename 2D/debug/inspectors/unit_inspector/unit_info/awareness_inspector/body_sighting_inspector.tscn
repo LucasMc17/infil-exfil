@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cabr4srxa5sbu"]
+
+[ext_resource type="PackedScene" uid="uid://c8iio3w5c60dk" path="res://2D/debug/inspectors/unit_inspector/unit_info/awareness_inspector/unit_sighting_inspector.tscn" id="1_8o7pj"]
+[ext_resource type="Script" uid="uid://madea2xtorr2" path="res://2D/debug/inspectors/unit_inspector/unit_info/awareness_inspector/body_sighting_inspector.gd" id="2_jc2yc"]
+
+[node name="BodySightingInspector" unique_id=1261146965 instance=ExtResource("1_8o7pj")]
+script = ExtResource("2_jc2yc")
+
+[node name="Status" type="Label" parent="." index="3" unique_id=1899353392]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "DEAD"
+horizontal_alignment = 1

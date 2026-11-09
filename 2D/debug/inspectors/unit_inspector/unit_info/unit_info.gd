@@ -5,7 +5,6 @@ extends PanelContainer
 
 @onready var _status_inspector : UnitStatusInspector = %UnitStatusInspector
 @onready var _awareness_inspector : UnitAwarenessInspector = %UnitAwarenessInspector
-@onready var _bodies_dict_inspector : BodiesDictInspector = %BodiesDictInspector
 @onready var _directive_inspector : UnitDirectiveInspector = %UnitDirectiveInspector
 
 var unit : EnemyUnit
@@ -22,7 +21,6 @@ func display_unit_info(u : EnemyUnit) -> void:
 		_awareness_inspector.refresh(unit.awareness)
 		_directive_inspector.refresh(unit.decision_director)
 		_status_inspector.refresh(unit)
-		_bodies_dict_inspector.refresh(unit.awareness.known_bodies)
 
 
 func refresh() -> void:

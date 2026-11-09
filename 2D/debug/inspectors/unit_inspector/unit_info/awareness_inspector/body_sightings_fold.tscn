@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cduagujrb8l60"]
+
+[ext_resource type="Script" uid="uid://cbbmsf81g575m" path="res://2D/debug/inspectors/unit_inspector/unit_info/awareness_inspector/body_sightings_fold.gd" id="1_5umhh"]
+[ext_resource type="PackedScene" uid="uid://dv23xg01min15" path="res://2D/debug/inspectors/debug_kv_pair.tscn" id="1_nn21d"]
+
+[node name="BodySightings" type="FoldableContainer" unique_id=1160969387]
+title = "Body Sightings"
+script = ExtResource("1_5umhh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1097675891]
+layout_mode = 2
+
+[node name="BodiesSeen" parent="VBoxContainer" unique_id=848224705 instance=ExtResource("1_nn21d")]
+unique_name_in_owner = true
+layout_mode = 2
+key = "Bodies Seen"
+value = "0"
+
+[node name="AllBodies" type="VBoxContainer" parent="VBoxContainer" unique_id=1184312955]
+unique_name_in_owner = true
+layout_mode = 2

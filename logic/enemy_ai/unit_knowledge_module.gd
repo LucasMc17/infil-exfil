@@ -34,11 +34,11 @@ var sightings_count : int:
 ## The targeted friendlies which are still in this unit's sights and not known to be incapacitated.
 var all_in_sight : Array[Sighting]:
 	get():
-		return sightings.values().filter(func(sighting : Sighting): return sighting.still_in_sight and !sighting.confirmed_incapacitated)
+		return sightings.values().filter(func(sighting : Sighting): return sighting.still_in_sight)
 ## The targeted friendlies which are not currently in this unit's sights and are not known to be incapacitated.
 var all_out_of_sight : Array[Sighting]:
 	get():
-		return sightings.values().filter(func(sighting : Sighting): return !sighting.still_in_sight and !sighting.confirmed_incapacitated)
+		return sightings.values().filter(func(sighting : Sighting): return !sighting.still_in_sight)
 ## True if there are currently no active friendlies in sight of this unit.
 var has_none_in_sight : bool:
 	get():
@@ -58,6 +58,8 @@ func confirm_all_sightings() -> void:
 		return
 	for sighting : Sighting in sightings.values():
 		_confirm_sighting(sighting)
+	for body_sighting : BodySighting in bodies.values():
+		_confirm_body_sighting(body_sighting)
 	Events.request_update_unit_monitor.emit(unit)
 
 
@@ -94,6 +96,18 @@ func _confirm_sighting(sighting : Sighting) -> void:
 	else:
 		sighting.still_in_sight = false
 		_on_sighting_not_confirmed(sighting, sighting)
+
+
+## Confirms an individual body sighting.
+func _confirm_body_sighting(body_sighting : BodySighting) -> void:
+	if body_sighting.unit.position.distance_to(unit.position) <= 15.0 and \
+	unit.seeing_zone.get_visibility_of_seen_zone(body_sighting.unit.seen_zone):
+		body_sighting.still_in_sight = true
+		body_sighting.last_known_position = body_sighting.unit.board_position
+		body_sighting.last_known_zone = Level.current.get_zone_from_position(body_sighting.last_known_position)
+		body_sighting.last_known_status = body_sighting.unit.unit_status
+	else:
+		body_sighting.still_in_sight = false
 
 
 ## Executed when a sighting is confirmed.

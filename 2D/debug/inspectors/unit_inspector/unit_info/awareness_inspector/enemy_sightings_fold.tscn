@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://db15hw4a3wc21"]
+
+[ext_resource type="PackedScene" uid="uid://dv23xg01min15" path="res://2D/debug/inspectors/debug_kv_pair.tscn" id="1_3awcp"]
+[ext_resource type="Script" uid="uid://drevhoq5nsct4" path="res://2D/debug/inspectors/unit_inspector/unit_info/awareness_inspector/enemy_sightings_fold.gd" id="1_lijls"]
+
+[node name="EnemySightings" type="FoldableContainer" unique_id=1665587041]
+title = "Enemy Sightings"
+script = ExtResource("1_lijls")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=417337058]
+layout_mode = 2
+
+[node name="EnemiesInSight" parent="VBoxContainer" unique_id=848224705 instance=ExtResource("1_3awcp")]
+unique_name_in_owner = true
+layout_mode = 2
+key = "Known Enemies in Sight"
+value = "0"
+
+[node name="EnemiesOutOfSight" parent="VBoxContainer" unique_id=31475802 instance=ExtResource("1_3awcp")]
+unique_name_in_owner = true
+layout_mode = 2
+key = "Known Enemies out of Sight"
+value = "0"
+
+[node name="AllEnemies" type="VBoxContainer" parent="VBoxContainer" unique_id=1926598914]
+unique_name_in_owner = true
+layout_mode = 2

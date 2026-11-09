@@ -235,7 +235,7 @@ func take_captive(captured : Unit) -> void:
 	captive.board_position = board_position
 	captive.rotation.y = rotation.y
 	if captive is EnemyUnit:
-		captive.awareness.friendly_knowledge.see_friendlies(self, true)
+		captive.awareness.see_friendlies(self, true)
 		captive.awareness.friendly_knowledge.lose_suppression()
 	Events.unit_moved.emit()
 

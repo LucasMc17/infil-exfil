@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://0hj8cbjqfhe5"]
+
+[ext_resource type="PackedScene" uid="uid://c8iio3w5c60dk" path="res://2D/debug/inspectors/unit_inspector/unit_info/awareness_inspector/unit_sighting_inspector.tscn" id="1_j2o8h"]
+[ext_resource type="Script" uid="uid://djep8pd037g4t" path="res://2D/debug/inspectors/unit_inspector/unit_info/awareness_inspector/enemy_sighting_inspector.gd" id="2_lfssw"]
+
+[node name="EnemySightingInspector" unique_id=1261146965 instance=ExtResource("1_j2o8h")]
+script = ExtResource("2_lfssw")
+
+[node name="Directive" type="Label" parent="." index="3" unique_id=1591233689]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Directive"
+horizontal_alignment = 1

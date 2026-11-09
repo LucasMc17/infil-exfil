@@ -8,9 +8,6 @@ signal awareness_changed(old_awareness : AwarenessLevel, new_awareness : Awarene
 ## Signal emitted when the unit confirms a sighting of a [FriendltUnit]. Mirrors the global signal but allows for local context.
 signal friendly_spotted(friendly : FriendlyUnit)
 
-# TODO: This friendly sighting system is getting complicated enough to possibly warrant its own file
-
-
 ## The possible awareness states which an enemy unit can operate under.
 enum AwarenessLevel {
 	## No knowledge whatsoever of friendlies-- no alert.
@@ -75,6 +72,26 @@ func see_friendlies(friendlies : Variant, should_skip_grace_period := false) -> 
 		alarm(should_skip_grace_period)
 	has_seen_enemies = true
 	Events.request_update_unit_monitor.emit(unit)
+
+
+## Runs when the unit visually acquires a body, friendly or enemy. Triggers complicated logic around how much suspicion this should cause in the unit.
+func see_bodies(bodies : Array[Unit]) -> void:
+	for body : Unit in bodies:
+		if body is FriendlyUnit:
+			if !has_seen_enemies:
+				if !is_alarmed():
+					unit.speak("Unknown body!")
+					unit.stop_moving()
+					alarm(true)
+				has_seen_enemies = true
+			friendly_knowledge.add_body_sighting(body)
+		elif body is EnemyUnit:
+			if !enemy_knowledge.bodies.has(body.get_instance_id()):
+				if !is_alarmed():
+					unit.speak("Man down!")
+					unit.stop_moving()
+					alarm(true)
+			enemy_knowledge.add_body_sighting(body)
 
 
 ## Update the unit's awareness level to [ALARMED], instantly stopping the unit if they are moving, and adding all sighted friendlies to their list of targets.

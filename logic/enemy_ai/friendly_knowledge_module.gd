@@ -8,8 +8,6 @@ class FriendlySighting extends Sighting:
 	var friendly : FriendlyUnit:
 		get():
 			return unit
-	## Whether the enemy has confirmed the sighted unit to be incapacitated.
-	var confirmed_incapacitated := false
 	
 	func _init(seen_friendly : FriendlyUnit) -> void:
 		super(seen_friendly)

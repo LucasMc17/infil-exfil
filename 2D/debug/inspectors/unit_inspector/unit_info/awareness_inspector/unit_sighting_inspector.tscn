@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://c8iio3w5c60dk"]
+
+[ext_resource type="Script" uid="uid://bkp4popipoma1" path="res://2D/debug/inspectors/unit_inspector/unit_info/awareness_inspector/unit_sighting_inspector.gd" id="1_1ng7g"]
+
+[node name="UnitSightingInspector" type="HBoxContainer" unique_id=1261146965]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+script = ExtResource("1_1ng7g")
+
+[node name="UnitName" type="Button" parent="." unique_id=1629743138]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Unit Name"
+
+[node name="SightStatus" type="Label" parent="." unique_id=1219649856]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "IN SIGHT"
+horizontal_alignment = 1
+
+[node name="LastPosition" type="Button" parent="." unique_id=143110148]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "(0, 0, 0)"
