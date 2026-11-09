@@ -24,7 +24,7 @@ func choose_combat_directive() -> Array[Directive]:
 		elif !awareness.friendly_knowledge.all_out_of_sight.is_empty() and !awareness.friendly_knowledge.has_pursued:
 			var pursued = awareness.friendly_knowledge.all_out_of_sight[0]
 			var result : Array[Directive] = [Pursue.new(pursued.friendly, pursued.last_known_position)]
-			if !Level.current.alarm.active and !Level.current.enemy_awareness.alarm_runner:
+			if !Level.current.alarm.active and !unit.awareness.enemy_knowledge.is_aware_of_alarm_runner():
 				result.append(RunForAlarm.new())
 			return result
 		elif Level.current.alarm.active and !Level.current.alarm.point_investigated:
@@ -34,13 +34,11 @@ func choose_combat_directive() -> Array[Directive]:
 
 
 func _decide_on_alarm_run() -> bool:
-	if Level.current.alarm.active or Level.current.enemy_awareness.alarm_runner:
+	if Level.current.alarm.active or unit.awareness.enemy_knowledge.is_aware_of_alarm_runner():
 		return false
 	if awareness.friendly_knowledge.all_in_sight.is_empty() and awareness.friendly_knowledge.all_out_of_sight.is_empty():
 		return true
-	if !awareness.friendly_knowledge.all_in_sight.is_empty():
-		return Utilities.dice_roll(unit.alarm_run_chance)
-	return false
+	return Utilities.dice_roll(unit.alarm_run_chance)
 
 
 # Lets get to basics here.

@@ -11,9 +11,8 @@ func _init() -> void:
 
 func begin(unit : EnemyUnit) -> void:
 	super(unit)
-	if Level.current.alarm.active or (Level.current.enemy_awareness.alarm_runner and Level.current.enemy_awareness.alarm_runner != unit):
+	if Level.current.alarm.active: # NOTE: We used to force a reconsider if there was an alarm runner. Do we also want to force one now if the unit is aware of another unit running for the alarm? Unsure. might not be necessary, might cause issues. Will return to this
 		unit.decision_director.reconsider_directive()
-	Level.current.enemy_awareness.alarm_runner = unit
 	_alarm_point = null
 	DebugConsole.log('Enemy Runs for Alarm', 2)
 	_alarm_point = Level.current.nav_map.get_closest_point(acting_unit.board_position, Level.current.nav_map.alarm_map.keys())

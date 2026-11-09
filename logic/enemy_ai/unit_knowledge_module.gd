@@ -54,7 +54,7 @@ func _init(a : EnemyUnitAwarenessModule) -> void:
 ## Note that, in order to be in sight, the unit does not have to be directly looking at the friendly. There only needs to be a clear theoretical line of sight between them, and the unit must be within 15 meters of the target.[br]
 ## If the unit is still in sight, the sighting will update its last known position. If not, it will mark the unit as out of sight and cease updating its last known position.
 func confirm_all_sightings() -> void:
-	if unit.is_incapacitated() or !awareness.is_alarmed():
+	if unit.is_incapacitated():
 		return
 	for sighting : Sighting in sightings.values():
 		_confirm_sighting(sighting)

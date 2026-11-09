@@ -18,8 +18,6 @@ extends Resource
 		# In short, while alarmed (and therefore in combat or running for the alarm), enemies are smart enough to distinguish friendlies and count them. Between alarms (even if still on guard), the enemy will remember how many enemies they saw but lose the ability to distinguish them next time they see them, and start countng from 0 again, even if seeing friendlies theyve never seen before.
 		# One more small note: Will enemies within earshot of enemies who spot friendlies have their known friendly count increase to match? Possibly. Could have a voice line like "Two hostiles spotted" or some such.
 
-## The unit actively running for the alarm.
-var alarm_runner : EnemyUnit
 ## The number of friendly units which the enemies are aware of.
 var known_friendly_count := 0:
 	set(val):
@@ -30,7 +28,6 @@ var known_bodies := Utilities.BodiesDict.new()
 
 func _init() -> void:
 	if !Engine.is_editor_hint():
-		Events.unit_disabled.connect(_on_unit_disabled)
 		Events.alarm_raised.connect(_on_alarm_raised)
 
 
@@ -40,11 +37,6 @@ func are_friendlies_in_sight() -> bool:
 		if enemy.awareness.friendly_knowledge.all_in_sight.size() > 0:
 			return true
 	return false
-
-
-func _on_unit_disabled(unit : Unit) -> void:
-	if unit == alarm_runner:
-		alarm_runner = null
 
 
 func _on_alarm_raised(raiser : Unit) -> void:
