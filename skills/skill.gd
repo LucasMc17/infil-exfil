@@ -87,7 +87,7 @@ func get_visibility() -> bool:
 func get_affordability() -> bool:
 	if user.action_points >= action_cost && user.movement_points >= movement_cost:
 		if ammo_cost:
-			if DebugOptions.ammo_mode as int == 2:
+			if DebugSettings.CURRENT.ammo_mode as int == 2:
 				return true
 			else:
 				return user.primary_weapon is RangedWeapon && user.primary_weapon.current_ammunition >= ammo_cost

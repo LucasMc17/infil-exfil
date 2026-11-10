@@ -20,7 +20,6 @@ config/icon="res://icon.svg"
 
 Events="*uid://cndbfd7bt3wyg"
 ConsoleEvents="*uid://cvf4hwhfclj32"
-DebugOptions="*uid://ccq0t586nfsk"
 
 [debug]
 

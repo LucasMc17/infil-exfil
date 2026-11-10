@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://rdxpmqyrxf14"]
+
+[ext_resource type="Theme" uid="uid://bisleysoror3b" path="res://assets/themes/debug_theme.tres" id="1_pv75l"]
+[ext_resource type="Script" uid="uid://dt35ynt2oidrj" path="res://2D/debug/debug_options_interface.gd" id="2_s2hnf"]
+
+[node name="DebugOptionsInterface" type="FoldableContainer" unique_id=840935503]
+theme = ExtResource("1_pv75l")
+title = "Debug Overrides"
+script = ExtResource("2_s2hnf")
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=1804855998]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="Panel" unique_id=931003575]
+layout_mode = 2
+columns = 2
+
+[node name="AmmoMode" type="Label" parent="Panel/GridContainer" unique_id=1154243621]
+layout_mode = 2
+text = "Ammo Mode"
+
+[node name="AmmoModeSelect" type="OptionButton" parent="Panel/GridContainer" unique_id=1265469274]
+unique_name_in_owner = true
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "NORMAL"
+popup/item_0/id = 0
+popup/item_1/text = "UNLIMITED_AMMO"
+popup/item_1/id = 1
+popup/item_2/text = "BOTTOMLESS_MAG"
+popup/item_2/id = 2
+
+[node name="UnlimitedMP" type="Label" parent="Panel/GridContainer" unique_id=1536745269]
+layout_mode = 2
+text = "Unlimited MP"
+
+[node name="UnlimitedMPCheck" type="CheckBox" parent="Panel/GridContainer" unique_id=1704809389]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="UnlimitedAP" type="Label" parent="Panel/GridContainer" unique_id=947168527]
+layout_mode = 2
+text = "Unlimited AP"
+
+[node name="UnlimitedAPCheck" type="CheckBox" parent="Panel/GridContainer" unique_id=989352691]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="TimeScale" type="Label" parent="Panel/GridContainer" unique_id=1131135642]
+layout_mode = 2
+text = "Time Scale"
+
+[node name="TimeScaleRange" type="SpinBox" parent="Panel/GridContainer" unique_id=572791204]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.1
+step = 0.1
+value = 1.0
+suffix = "x"
+custom_arrow_step = 0.5

@@ -1,5 +1,7 @@
-## Suite of debug options for easier testing.
-extends Node
+class_name DebugSettings
+extends Resource
+
+static var CURRENT = preload("uid://f3fenm4qrtmv")
 
 enum AmmoMode {
 	## Normal, limited ammo.

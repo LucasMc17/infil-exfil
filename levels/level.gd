@@ -101,6 +101,7 @@ var allow_inputs : bool:
 @onready var _dialog_layer : Control = %DialogLayer
 @onready var _soundscape : Soundscape = %Soundscape
 
+
 func _ready() -> void:
 	if !Engine.is_editor_hint():
 		nav_zone_map.visible = false

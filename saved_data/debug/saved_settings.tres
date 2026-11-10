@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="DebugSettings" format=3 uid="uid://maybhcp6xeqn"]
+
+[ext_resource type="Script" uid="uid://bj4mfp8jfts2d" path="res://saved_data/debug/debug_settings.gd" id="1_uxhhn"]
+
+[resource]
+script = ExtResource("1_uxhhn")
+metadata/_custom_type_script = "uid://bj4mfp8jfts2d"

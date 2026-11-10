@@ -29,11 +29,11 @@ var current_reserve_ammo : int:
 
 func initialize(unit : Unit) -> void:
 	super(unit)
-	if DebugOptions.ammo_mode as int == 2:
+	if DebugSettings.CURRENT.ammo_mode as int == 2:
 		current_ammunition = int(INF)
 	else:
 		current_ammunition = capacity
-	if DebugOptions.ammo_mode as int > 0:
+	if DebugSettings.CURRENT.ammo_mode as int > 0:
 		current_reserve_ammo = int(INF)
 	else:
 		current_reserve_ammo = maximum_reserve_ammo
@@ -41,7 +41,7 @@ func initialize(unit : Unit) -> void:
 
 ## Reload the weapon, taking ammunition from the reserve. If [should_discard_unused] is true, the reamining ammunition in the weapon magazine will be discarded.
 func reload(should_discard_unused : bool) -> void:
-	if DebugOptions.ammo_mode as int == 1:
+	if DebugSettings.CURRENT.ammo_mode as int == 1:
 		current_ammunition = capacity
 	elif should_discard_unused:
 		current_ammunition = min(capacity, current_reserve_ammo)

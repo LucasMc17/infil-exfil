@@ -181,8 +181,8 @@ func deactivate():
 
 ## Return the unit to a default state, with action and movement points reset.
 func reset():
-	movement_points = 100 if DebugOptions.unlimited_mp else max_movement_points
-	action_points = 100 if DebugOptions.unlimited_ap else max_action_points
+	movement_points = 100 if DebugSettings.CURRENT.unlimited_mp else max_movement_points
+	action_points = 100 if DebugSettings.CURRENT.unlimited_ap else max_action_points
 
 
 func stop_moving() -> void:
