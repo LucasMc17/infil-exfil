@@ -18,12 +18,10 @@ func _ready() -> void:
 
 
 func _update_debug_setting(setting_value : Variant, setting_name : StringName) -> bool:
-	print(setting_value)
 	var path = DebugSettings.CURRENT.resource_path
 	if setting_name in DebugSettings.CURRENT:
 		DebugSettings.CURRENT.set(setting_name, setting_value)
 		var error := ResourceSaver.save(DebugSettings.CURRENT, path)
-		print(error == OK)
 		return error == OK
 	DebugConsole.error("Property " + setting_name + "not found in Debug Settings File.")
 	return false
