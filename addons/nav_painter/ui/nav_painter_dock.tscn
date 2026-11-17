@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://cpaulkerjmwyc"]
+
+[ext_resource type="PackedScene" uid="uid://csg4lcphhregi" path="res://addons/nav_painter/ui/level_loaded/level_loaded_ui.tscn" id="1_lh11v"]
+[ext_resource type="Script" uid="uid://b574ow51kbb1" path="res://addons/nav_painter/ui/nav_painter_dock.gd" id="1_x8d3j"]
+[ext_resource type="PackedScene" uid="uid://c7cbrk2j6uikj" path="res://addons/nav_painter/ui/no_level/no_level_ui.tscn" id="2_vn118"]
+
+[node name="NavPainterDock" type="Control" unique_id=677682227]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x8d3j")
+
+[node name="LevelLoadedUI" parent="." unique_id=2085022504 instance=ExtResource("1_lh11v")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[node name="NoLevelUI" parent="." unique_id=1747353350 instance=ExtResource("2_vn118")]
+unique_name_in_owner = true
+layout_mode = 1
+offset_left = -64.0
+offset_top = -29.0
+offset_right = 64.0
+offset_bottom = 29.0

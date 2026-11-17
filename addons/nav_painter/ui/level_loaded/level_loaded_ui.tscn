@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://csg4lcphhregi"]
+
+[ext_resource type="Script" uid="uid://bs1xb3og7ccsc" path="res://addons/nav_painter/ui/level_loaded/level_loaded_ui.gd" id="1_xfgoq"]
+
+[node name="LevelLoadedUI" type="VBoxContainer" unique_id=2085022504]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xfgoq")
+
+[node name="Label" type="Label" parent="." unique_id=208220735]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Select a rectangle in the GridMap to begin painting a new NavRegion,
+or select from the list below to continue editing one."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NavZonePreviews" type="VBoxContainer" parent="." unique_id=373628762]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0

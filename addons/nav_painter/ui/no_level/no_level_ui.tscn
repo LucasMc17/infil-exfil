@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://c7cbrk2j6uikj"]
+
+[ext_resource type="Script" uid="uid://dvieqhcay7oks" path="res://addons/nav_painter/ui/no_level/no_level_ui.gd" id="1_tk13h"]
+
+[node name="NoLevelUI" type="VBoxContainer" unique_id=1747353350]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tk13h")
+
+[node name="Label" type="Label" parent="." unique_id=310470676]
+layout_mode = 2
+text = "No Level Loaded"
+horizontal_alignment = 1
+
+[node name="RefreshButton" type="Button" parent="." unique_id=1048093067]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Refresh"
