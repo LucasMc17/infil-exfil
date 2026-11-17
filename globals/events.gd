@@ -45,10 +45,10 @@ signal recheck_skill_usability()
 signal target_cleared()
 
 ## Signal emitted when the player begins to use a skill. Fired in conjunction with more specific skill events below
-signal skill_use_began(skill : Skill)
+signal skill_usage_began(skill : Skill)
 
 ## Signal emitted when the player finishes using a skill (usually when its animations have finished). Fired in conjunction with more specific skill events below
-signal skill_use_ended(skill : Skill)
+signal skill_usage_ended(skill : Skill)
 
 ## Signal emitted when the player disarms the active units armed skill.
 signal skill_disarmed()

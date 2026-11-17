@@ -20,25 +20,13 @@ var first_step := true
 
 func enter(previous_state : State, ext : Dictionary):
 	super(previous_state, ext)
-	Level.current_level.level_camera.fix_to_actor(unit)
+	Level.current.level_camera.fix_to_actor(unit)
 	ghost_point = null
 	first_step = true
 	unit.started_moving.emit(unit)
 
 
 func physics_update(delta: float):
-	# unit.follow_path(path_walk, delta, mps)
-	# move towards the next point
-	# if we reach it:
-		# check for detection
-		# If there is a next point:
-			# turn toward the next point if one exists.
-		# else:
-			# if we have a ghost point:
-				# turn towards it 
-				# check for detection
-			# then end the walk either way
-	
 	var update_captive_position = func() -> void:
 		if unit.captive:
 			unit.captive.position = unit._hostage_marker.global_position
@@ -53,8 +41,7 @@ func physics_update(delta: float):
 
 		if unit.rotation.y != angle:
 			unit.rotation.y = angle
-		# TODO: Long term, I think this should just force a detection of the blocking unit at this point. Right? I don't like having to await a physics frame.
-		# TODO: Other todo. One thing that might also fix this is actually lerp the rotation for a few frames, checking for detection on each. Would also fix unit turning blindspots.
+		# TODO: Eventually we will want to actually lerp the rotation for a few frames, checking for detection on each. Would also fix unit turning blindspots.
 		unit.check_for_detection()
 	
 

@@ -1,5 +1,7 @@
-## Suite of debug options for easier testing.
-extends Node
+class_name DebugSettings
+extends Resource
+
+static var CURRENT = preload("./saved_settings.tres")
 
 enum AmmoMode {
 	## Normal, limited ammo.

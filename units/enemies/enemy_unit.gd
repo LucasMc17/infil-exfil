@@ -4,14 +4,13 @@
 class_name EnemyUnit
 extends Unit
 
-# TODO: I know, I know, preloads are bad. Gotta figure out what to do instead.
-const STUN_IMAGE := preload('res://assets/images/stun.png')
-const SLEEP_IMAGE := preload('res://assets/images/sleep.png')
-const INVESTIGATING_IMAGE := preload('res://assets/images/investigating.png')
-const HALF_ALERT_IMAGE := preload('res://assets/images/half_alert.png')
-const FULL_ALERT_IMAGE := preload('res://assets/images/full_alert.png')
+static var STUN_IMAGE := FileReference.new("uid://7g1qemtda6wf")
+static var SLEEP_IMAGE := FileReference.new('uid://bvkgv4bux21nd')
+static var INVESTIGATING_IMAGE := FileReference.new('uid://c0c8hi370vmj4')
+static var HALF_ALERT_IMAGE := FileReference.new('uid://b1mgenlur5ke3')
+static var FULL_ALERT_IMAGE := FileReference.new('uid://qrdq7awobm4q')
 
-const ENEMY_YELL = preload('uid://beenh2i58pt2e')
+static var ENEMY_YELL = FileReference.new('uid://beenh2i58pt2e')
 
 ## Starting queue of directives to perform when unaware. Passed directly to the [DecisionDirectorModule].
 @export var unaware_base_directives : Array[Directive] = []
@@ -53,12 +52,14 @@ func _ready():
 		Events.alarm_raised.connect(_on_alarm_raised)
 		Events.alarm_ended.connect(_on_alarm_ended)
 		Events.unit_disabled.connect(_on_unit_disabled)
+		seeing_zone.friendly_seen.connect(_on_seeing_zone_friendly_seen)
+		seeing_zone.body_seen.connect(_on_seeing_zone_body_seen)
 
 
 func check_for_detection() -> void:
 	DebugConsole.log("Checking for detection", 2)
 	seeing_zone.check_detection()
-	awareness.confirm_all_sightings()
+	awareness.friendly_knowledge.confirm_all_sightings()
 
 
 func move(movement_name : String, end_point : Vector3i, exact_point := true, point_radius := 3) -> void:
@@ -67,13 +68,17 @@ func move(movement_name : String, end_point : Vector3i, exact_point := true, poi
 
 
 func _on_unit_disabled(unit : Unit) -> void:
-	if unit == self or unit == awareness.suppression_target:
-		awareness.lose_suppression()
+	if unit == self or unit == awareness.friendly_knowledge.suppression_target:
+		awareness.friendly_knowledge.lose_suppression()
 
 
 func _on_seeing_zone_friendly_seen(friendlies: Array[FriendlyUnit]) -> void:
 	DebugConsole.log("Enemy Sees Friendly/Friendlies", 2)
 	awareness.see_friendlies(friendlies, true)
+
+func _on_seeing_zone_body_seen(bodies : Array[Unit]) -> void:
+	DebugConsole.log("Enemy Sees Body/Bodies", 2)
+	awareness.see_bodies(bodies)
 
 
 func _on_awareness_changed(_old_awareness, _new_awareness):
@@ -81,9 +86,9 @@ func _on_awareness_changed(_old_awareness, _new_awareness):
 	update_indicator()
 
 
-func _on_alarm_raised(raiser) -> void:
+func _on_alarm_raised(_raiser) -> void:
 	awareness.has_seen_enemies = true
-	awareness.last_poc = raiser.awareness.last_poc
+	awareness.friendly_knowledge.last_poc = Level.current.alarm.alarm_point
 	awareness.alarm(false)
 
 
@@ -93,7 +98,7 @@ func _on_alarm_ended() -> void:
 
 func activate():
 	super()
-	awareness.confirm_all_sightings()
+	awareness.friendly_knowledge.confirm_all_sightings()
 	awareness.resolve_grace_period()
 	update_indicator()
 
@@ -104,7 +109,7 @@ func lose_consciousness() -> void:
 
 
 func _on_damage() -> void:
-	awareness.lose_suppression()
+	awareness.friendly_knowledge.lose_suppression()
 
 
 func _on_die() -> void:
@@ -126,24 +131,24 @@ func forfeit_turn() -> void:
 func react_to_sighting(nav_zone : NavZone, is_first_sighting := true) -> void:
 	speak(Barks.get_first_contact_line(nav_zone) if is_first_sighting else Barks.get_resumed_contact_line(nav_zone))
 	await get_tree().create_timer(0.1).timeout
-	make_sound(ENEMY_YELL)
+	make_sound(ENEMY_YELL.value)
 
 
 func make_sound(sound : Sound) -> void:
-	Level.current_level.make_sound(global_position, sound, [self])
+	Level.current.make_sound(global_position, sound, [self])
 
 ## Update the enemy's icon status indicator.
 func update_indicator() -> void:
 	if unit_status == Status.DEAD:
 		_status_indicator.texture = null
 	elif unit_status == Status.UNCONSCIOUS:
-		_status_indicator.texture = SLEEP_IMAGE
+		_status_indicator.texture = SLEEP_IMAGE.value
 	elif unit_status == Status.STUNNED:
-		_status_indicator.texture = STUN_IMAGE
+		_status_indicator.texture = STUN_IMAGE.value
 	elif awareness.is_alarmed():
 		if awareness.is_in_grace_period:
-			_status_indicator.texture = HALF_ALERT_IMAGE
+			_status_indicator.texture = HALF_ALERT_IMAGE.value
 		else:
-			_status_indicator.texture = FULL_ALERT_IMAGE
+			_status_indicator.texture = FULL_ALERT_IMAGE.value
 	else:
 		_status_indicator.texture = null

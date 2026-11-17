@@ -78,7 +78,7 @@ static var active_unit : Unit
 ## Whether or not this unit is currently the active unit within the level.
 var is_active : bool:
 	get():
-		if Level.current_level:
+		if Level.current:
 			return Unit.active_unit == self
 		else:
 			return false
@@ -117,6 +117,10 @@ var aimed_skills : Array[AimedSkill]:
 var captive : Unit
 ## The unit that is currently holding this unit as a captive, if one exists.
 var captor : Unit
+## Whether this unit is too encumbered to perform certain actions like climbing a ladder.
+var is_encumbered : bool:
+	get():
+		return !!captive
 	
 @onready var _cell_highlight := %CellHighlight
 @onready var flag : UnitFlag = %UnitFlag
@@ -147,8 +151,8 @@ func _ready():
 
 ## Update the list of valid moves for this unit based on their maximum move distance and what positions within that range are navigable to.
 func refresh_valid_moves() -> void:
-	if Level.current_level and can_move() and is_active:
-		Level.current_level.movement_system.activate(self)
+	if Level.current and can_move() and is_active:
+		Level.current.movement_system.activate(self)
 
 
 ## Executed when the unit becomes the active unit within the level.
@@ -169,17 +173,16 @@ func deactivate():
 	_cell_highlight.visible = false
 	flag.collapse()
 	skill_machine.visible = false
-	# TODO: Make this a signal
-	Level.current_level.movement_system.deactivate()
+	Level.current.movement_system.deactivate()
 	Events.unit_deactivated.emit(self)
-	if Level.current_level.armed_skill:
+	if Level.current.armed_skill:
 		Events.skill_disarmed.emit()
 
 
 ## Return the unit to a default state, with action and movement points reset.
 func reset():
-	movement_points = 100 if DebugOptions.unlimited_mp else max_movement_points
-	action_points = 100 if DebugOptions.unlimited_ap else max_action_points
+	movement_points = 100 if DebugSettings.CURRENT.unlimited_mp else max_movement_points
+	action_points = 100 if DebugSettings.CURRENT.unlimited_ap else max_action_points
 
 
 func stop_moving() -> void:
@@ -233,7 +236,7 @@ func take_captive(captured : Unit) -> void:
 	captive.rotation.y = rotation.y
 	if captive is EnemyUnit:
 		captive.awareness.see_friendlies(self, true)
-		captive.awareness.lose_suppression()
+		captive.awareness.friendly_knowledge.lose_suppression()
 	Events.unit_moved.emit()
 
 

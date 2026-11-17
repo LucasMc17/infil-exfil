@@ -4,7 +4,8 @@
 class_name Level
 extends Node3D
 
-static var current_level : Level
+## The currently active level.
+static var current : Level
 
 ## Logic module for handling the enemy's awareness of the player's units.
 var enemy_awareness := EnemyTeamAwarenessModule.new()
@@ -100,6 +101,7 @@ var allow_inputs : bool:
 @onready var _dialog_layer : Control = %DialogLayer
 @onready var _soundscape : Soundscape = %Soundscape
 
+
 func _ready() -> void:
 	if !Engine.is_editor_hint():
 		nav_zone_map.visible = false
@@ -111,8 +113,12 @@ func _ready() -> void:
 			if command_name == "exit":
 				get_tree().quit()
 		)
-		current_level = self
+		current = self
 		Events.level_loaded.emit()
+
+
+func _exit_tree() -> void:
+	current = null
 
 
 func _unhandled_input(event: InputEvent) -> void:

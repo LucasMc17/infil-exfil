@@ -11,7 +11,7 @@ func enter(previous_state, ext) -> void:
 		unit.movement_points -= path.size()
 	else:
 		DebugConsole.error('Must pass PlayerMovementState a path array of points.')
-	Level.current_level.movement_system.deactivate()
+	Level.current.movement_system.deactivate()
 
 
 func exit():

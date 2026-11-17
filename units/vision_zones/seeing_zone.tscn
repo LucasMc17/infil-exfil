@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cgpw6tpslc20p" path="res://units/vision_zones/seeing_zone.gd" id="1_2jn7x"]
 [ext_resource type="Shape3D" uid="uid://dktqnidq34xyr" path="res://assets/meshes/vision_cones/vision_cone_01.tres" id="2_vwds1"]
 
-[node name="VisionZone" type="Area3D" unique_id=1663672907]
+[node name="SeeingZone" type="Area3D" unique_id=1663672907]
 script = ExtResource("1_2jn7x")
 
 [node name="VisionShape" type="CollisionShape3D" parent="." unique_id=2117925060]

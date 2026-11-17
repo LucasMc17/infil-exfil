@@ -5,8 +5,10 @@ extends VisionZone
 # NOTE: I'm not in love with having both a shapecast and an area3d covering the same exact polygon of space. But this allows me to have frame-instant detections when this unit initiates a detection check (the shapecast) AND to detect overlaps with other unit's seenzones while they are moving (the area3D). The idea is we add a bit of complexity but keep performance strong and make detection more consistent from both sides.
 @onready var shape_cast : ShapeCast3D = %ShapeCast3D
 
-## Signal emitted when the [SeeingZone] successfully detects one or more [FriendlyUnit]s.
+## Signal emitted when the [SeeingZone] successfully detects one or more live [FriendlyUnit]s.
 signal friendly_seen(friendlies : Array[FriendlyUnit])
+## Signal emitted when the [SeeingZone] acquires one or more dead or unconscious bodies of either team.
+signal body_seen(bodies : Array[Unit])
 
 ## The enemy unit which owns this [SeeingZone], since only enemies need a typical vision cone at this point in development.
 @export var enemy : EnemyUnit
@@ -16,30 +18,28 @@ signal friendly_seen(friendlies : Array[FriendlyUnit])
 func check_detection() -> void:
 	if !enemy.is_incapacitated():
 		var spotted : Array[FriendlyUnit] = []
+		var spotted_bodies : Array[Unit] = []
 		shape_cast.force_shapecast_update()
 		var collision_instances = shape_cast.collision_result
-		var seen_zones = collision_instances.map(func(instance): return instance.collider).filter(func(collider): return collider is SeenZone and collider.unit is FriendlyUnit)
+		var seen_zones = collision_instances.map(func(instance): return instance.collider).filter(func(collider): return collider is SeenZone)
 		for zone : SeenZone in seen_zones:
-			# TODO: We need a whole separate system for tracking known/unknown incapacitated units. For now we just ignore them
-			if !zone.unit.is_incapacitated():
-				var vis_score = 0
-				for point : VisibilityPoint in zone.vision_targets:
-					if get_line_of_sight(point.global_position, zone.unit):
-						vis_score += 1
-				DebugConsole.log("Enemy sees " + str(vis_score) + "/8 of friendly's vision points", 3)
-				if vis_score > 2:
-					spotted.append(zone.unit)
-					enemy.awareness.known_bodies.remove(zone.unit)
-					if Level.current_level.alarm.active:
-						Level.current_level.enemy_awareness.known_bodies.remove(zone.unit)
-			else:
-				enemy.awareness.known_bodies.add(zone.unit)
-				if Level.current_level.alarm.active:
-					Level.current_level.enemy_awareness.known_bodies.add(zone.unit)
+			if get_visibility_of_seen_zone(zone):
+				if zone.unit.is_incapacitated():
+					# enemy.awareness.known_bodies.add(zone.unit)
+					# if Level.current.alarm.active:
+					# 	Level.current.enemy_awareness.known_bodies.add(zone.unit)
+					spotted_bodies.append(zone.unit)
+				elif zone.unit is FriendlyUnit:
+						spotted.append(zone.unit)
+						enemy.awareness.known_bodies.remove(zone.unit)
+						if Level.current.alarm.active:
+							Level.current.enemy_awareness.known_bodies.remove(zone.unit)
 		if !spotted.is_empty():
-			# var nav_zone = Level.current_level.get_zone_from_position(spotted[0].board_position)
+			# var nav_zone = Level.current.get_zone_from_position(spotted[0].board_position)
 			# if enemy.awareness.is_unaware():
 			# 	enemy.speak(Barks.get_first_contact_line(nav_zone))
 			# else:
 			# 	enemy.speak(Barks.get_resumed_contact_line(nav_zone))
 			friendly_seen.emit(spotted)
+		if !spotted_bodies.is_empty():
+			body_seen.emit(spotted_bodies)

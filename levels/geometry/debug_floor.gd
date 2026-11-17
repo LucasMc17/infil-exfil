@@ -1,8 +1,6 @@
 @tool
 extends StaticBody3D
 
-const MATERIAL = preload("uid://b0rlusiqnnw7i")
-
 @onready var collision : CollisionShape3D = %CollisionShape3D
 @onready var mesh : MeshInstance3D = %MeshInstance3D
 
@@ -22,7 +20,6 @@ func _ready() -> void:
 	collision.shape.size.y = 0.1
 
 	mesh.mesh = BoxMesh.new()
-	mesh.mesh.material = MATERIAL
 	mesh.mesh.size.y = 0.1
 	
 	_set_size()

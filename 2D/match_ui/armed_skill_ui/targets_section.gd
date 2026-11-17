@@ -3,7 +3,7 @@ class_name TargetsSection
 extends VBoxContainer
 
 ## [TargetIcon] scene for instantiation.
-const TARGET_ICON = preload('./target_icon.tscn')
+static var TARGET_ICON = FileReference.new('uid://vcl2eciemag7')
 
 ## The particular [TargetIcon] instance which is currently selected, if one exists.
 var selected_target_icon : TargetIcon = null
@@ -16,7 +16,7 @@ func build(skill : TargetedSkill) -> void:
 	selected_target_icon = null
 	var index := 1
 	for target in skill.potential_targets:
-			var target_icon = TARGET_ICON.instantiate()
+			var target_icon = TARGET_ICON.value.instantiate()
 			target_icon.build(target, index)
 			target_icon.target_selected.connect(_on_target_icon_clicked)
 			_targets.add_child(target_icon)

@@ -18,29 +18,27 @@ func choose_combat_directive() -> Array[Directive]:
 	if _decide_on_alarm_run():
 		return [RunForAlarm.new()]
 	else:
-		if !awareness.friendlies_in_sight.is_empty():
-			var target : FriendlyUnit = unit.awareness.suppression_target if unit.awareness.suppression_target else awareness.friendlies_in_sight[0].friendly
+		if !awareness.friendly_knowledge.all_in_sight.is_empty():
+			var target : FriendlyUnit = unit.awareness.friendly_knowledge.suppression_target if unit.awareness.friendly_knowledge.suppression_target else awareness.friendly_knowledge.all_in_sight[0].friendly
 			return [MoveAndAttack.new(target)]
-		elif !awareness.friendlies_out_of_sight.is_empty() and !awareness.has_pursued:
-			var pursued = awareness.friendlies_out_of_sight[0]
+		elif !awareness.friendly_knowledge.all_out_of_sight.is_empty() and !awareness.friendly_knowledge.has_pursued:
+			var pursued = awareness.friendly_knowledge.all_out_of_sight[0]
 			var result : Array[Directive] = [Pursue.new(pursued.friendly, pursued.last_known_position)]
-			if !Level.current_level.alarm.active and !Level.current_level.enemy_awareness.alarm_runner:
+			if !Level.current.alarm.active and !unit.awareness.enemy_knowledge.is_aware_of_alarm_runner():
 				result.append(RunForAlarm.new())
 			return result
-		elif Level.current_level.alarm.active and !Level.current_level.alarm.point_investigated:
-			return [InvestigateAlarmPoint.new()] #RandomPatrolAroundPoint.new(Level.current_level.alarm.alarm_point.position)
+		elif Level.current.alarm.active and !Level.current.alarm.point_investigated:
+			return [InvestigateAlarmPoint.new()] #RandomPatrolAroundPoint.new(Level.current.alarm.alarm_point.position)
 		else:
-			return [NoDirective.new()]
+			return [RandomPatrol.new()]
 
 
 func _decide_on_alarm_run() -> bool:
-	if Level.current_level.alarm.active or Level.current_level.enemy_awareness.alarm_runner:
+	if Level.current.alarm.active or unit.awareness.enemy_knowledge.is_aware_of_alarm_runner():
 		return false
-	if awareness.friendlies_in_sight.is_empty() and awareness.friendlies_out_of_sight.is_empty():
+	if awareness.friendly_knowledge.all_in_sight.is_empty() and awareness.friendly_knowledge.all_out_of_sight.is_empty():
 		return true
-	if !awareness.friendlies_in_sight.is_empty():
-		return Utilities.dice_roll(unit.alarm_run_chance)
-	return false
+	return Utilities.dice_roll(unit.alarm_run_chance)
 
 
 # Lets get to basics here.

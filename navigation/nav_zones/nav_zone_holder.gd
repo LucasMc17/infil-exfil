@@ -6,7 +6,7 @@ class_name NavZoneHolder
 extends Node3D
 
 ## The material to apply to meshes representing navigation points within this NavZoneHolder.
-const POINT_MATERIAL = preload("uid://cvcg462nivceg")
+static var POINT_MATERIAL = FileReference.new("uid://cvcg462nivceg")
 
 @export_tool_button("Assign Random Color") var random_color_button = func():
 	debug_color = Utilities.random_color()
@@ -61,7 +61,7 @@ func _redraw_meshes() -> void:
 			if point != null:
 				var mesh_instance = MeshInstance3D.new()
 				var box_mesh = BoxMesh.new()
-				box_mesh.material = POINT_MATERIAL
+				box_mesh.material = POINT_MATERIAL.value
 				mesh_instance.position.x = point.x + 0.5
 				mesh_instance.position.z = point.y + 0.5
 

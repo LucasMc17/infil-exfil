@@ -1,4 +1,4 @@
-## [br]Expects to contain an array of [VisibilityPoint]s as direct children, which are used to make sure a configurable portion of the unit is visible before officially considering them as "seen".
+## [br]Expects to contain an array of [Marker3D]s as direct children, which are used to make sure a configurable portion of the unit is visible before officially considering them as "seen".
 class_name SeenZone
 extends VisionZone
 
@@ -8,12 +8,12 @@ signal seen_by_enemies(enemies : Array[EnemyUnit])
 ## The unit which owns this [SeenZone]. Can be friendly or enemy, as determining line of sight to another unit is relevant for both teams.
 @export var unit : Unit
 
-## The [VisibilityPoint]s contained under this [SeenZone] as children.
-var vision_targets : Array[VisibilityPoint]:
+## The [Marker3D]s contained under this [SeenZone] as children.
+var vision_targets : Array[Marker3D]:
 	get():
-		var result : Array[VisibilityPoint]
+		var result : Array[Marker3D]
 		for point in get_children():
-			if point is VisibilityPoint:
+			if point is Marker3D:
 				result.append(point)
 		return result
 
@@ -24,12 +24,7 @@ func check_detection() -> void:
 	var seeing_zones = colliders.filter(func(collider): return collider is SeeingZone)
 	for zone : SeeingZone in seeing_zones:
 		if !zone.enemy.is_incapacitated():
-			var vis_score = 0
-			for point : VisibilityPoint in vision_targets:
-				if zone.get_line_of_sight(point.global_position, unit):
-					vis_score += 1
-			DebugConsole.log(str(vis_score) + "/8 of unit's vision points seen by enemy", 3)
-			if vis_score > 1:
+			if zone.get_visibility_of_seen_zone(self):
 				spotters.append(zone.enemy)
 	if !spotters.is_empty():
 		seen_by_enemies.emit(spotters)

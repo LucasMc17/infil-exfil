@@ -95,6 +95,7 @@ func get_semirandom_exit(pos : Vector3i, banned_zones : Array[NavZone]) -> NavZo
 		var zone = load(exit.to_zone_uid)
 		if !banned_zones.has(zone):
 			potential_exits.append(exit)
-			# TODO: passing a zero to the weighted pick random func gives back a NaN when inverting the weights. So when a unit is standing at the exit of a room, ironically pursuers have a 0% chance of picking that door to follow through. The fix below is to add .01 to all weights. In the future we may account for this more elegantly.
-			weights.append(exit.board_position.distance_to(pos) + 0.01)
+			var dist = exit.board_position.distance_to(pos)
+			# The algo doesn't like zeros, so we force a 0.01 if the unit is standing at the exit of the room.
+			weights.append(dist if dist > 0.0 else 0.01)
 	return Utilities.weighted_pick_random(potential_exits, weights, true)

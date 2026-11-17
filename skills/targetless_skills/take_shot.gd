@@ -17,11 +17,11 @@ func begin_use() -> void:
 
 
 func end_use() -> void:
-	Level.current_level.level_camera.fix_to_actor(Unit.active_unit)
+	Level.current.level_camera.fix_to_actor(Unit.active_unit)
 	super()
 
 
 func arm() -> void:
 	super()
 	if user is Sniper and user.scoped_target:
-		Level.current_level.level_camera.jump_to_point(user.scoped_target.global_position)
+		Level.current.level_camera.jump_to_point(user.scoped_target.global_position)

@@ -14,10 +14,10 @@ var point_radius := 3
 func enter(previous_state, ext) -> void:
 	super(previous_state, ext)
 	if ext.has('end_point'):
-		full_intended_path = Level.current_level.nav_map.find_path(unit.board_position, end_point, exact_point, point_radius)
+		full_intended_path = Level.current.nav_map.find_path(unit.board_position, end_point, exact_point, point_radius)
 		var temp_path = full_intended_path.slice(0, unit.movement_points)
 		for point in temp_path:
-			var blocker = Level.current_level.nav_map.get_point_occupier(point)
+			var blocker = Level.current.nav_map.get_point_occupier(point)
 			if blocker:
 				ghost_point = point
 				unit.temp_blocker = blocker

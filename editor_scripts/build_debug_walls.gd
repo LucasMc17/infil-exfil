@@ -2,8 +2,8 @@
 class_name BuildDebugWalls
 extends EditorScript
 
-const DEBUG_FLOOR := preload("uid://d1i1gcecs1k5t")
-const DEBUG_WALL := preload("uid://dygqxfucs53hc")
+var DEBUG_FLOOR := load("uid://d1i1gcecs1k5t")
+var DEBUG_WALL := load("uid://dygqxfucs53hc")
 
 # Called when the script is executed (using File -> Run in Script Editor).
 func _run() -> void:

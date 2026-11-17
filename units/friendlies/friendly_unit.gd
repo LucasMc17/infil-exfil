@@ -7,7 +7,7 @@ extends Unit
 func check_for_detection() -> void:
 	DebugConsole.log("Checking for detection", 2)
 	# var unit_id = get_instance_id()
-	# for enemy : EnemyUnit in Level.current_level.all_enemies:
+	# for enemy : EnemyUnit in Level.current.all_enemies:
 		# enemy.awareness.confirm_specific_sighting(unit_id)
 	seen_zone.check_detection()
 	get_instance_id()
@@ -15,7 +15,7 @@ func check_for_detection() -> void:
 
 ## Checks if the unit is currently being suppressed by an enemy unit.
 func is_suppressed_by(enemy : EnemyUnit) -> bool:
-	return enemy.awareness.suppression_target == self
+	return enemy.awareness.friendly_knowledge.suppression_target == self
 
 
 func move(movement_name : String, path : Array[Vector3i]) -> void:

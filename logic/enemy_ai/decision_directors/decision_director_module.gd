@@ -3,12 +3,18 @@
 class_name DecisionDirectorModule
 extends Resource
 
+## Signal emitted when this unit chooses a new directive at the start of its turn.
+signal directive_changed(new_directive : Directive)
+
 ## The Unit for whom this director is making decisions.
 var unit : EnemyUnit
 ## The awareness module for this director (and the unit)
 var awareness : EnemyUnitAwarenessModule
 ## The currently actioned directive
-var current_directive : Directive
+var current_directive : Directive:
+	set(val):
+		current_directive = val
+		directive_changed.emit(val)
 ## The combat decision director
 var combat_director : CombatDirectorSubmodule
 
