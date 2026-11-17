@@ -1,7 +1,7 @@
 class_name DebugSettings
 extends Resource
 
-static var CURRENT = preload("uid://f3fenm4qrtmv")
+static var CURRENT = preload("./saved_settings.tres")
 
 enum AmmoMode {
 	## Normal, limited ammo.

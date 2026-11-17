@@ -19,6 +19,7 @@ func begin(unit : EnemyUnit) -> void:
 
 func _on_finished_moving(unit : EnemyUnit, arrived : bool):
 	super(unit, arrived)
+	attack_skill.arm_as_enemy()
 	if !attack_skill.potential_targets.is_empty():
 		attack_skill.use({ "target": attack_skill.potential_targets[0] })
 	else:
