@@ -13,19 +13,18 @@ func _ready() -> void:
 
 
 func _check_for_level() -> void:
-	print("hey")
 	var level = EditorInterface.get_edited_scene_root()
 	if level is Level:
-		_switch_to_level_loaded_ui()
+		_switch_to_level_loaded_ui(level)
 	else:
 		_switch_to_no_level_ui()
 
 
-func _switch_to_level_loaded_ui() -> void:
+func _switch_to_level_loaded_ui(level : Level) -> void:
 	_no_level_ui.visible = false
-	_level_loaded_ui.visible = true
+	_level_loaded_ui.activate(level)
 
 
 func _switch_to_no_level_ui() -> void:
 	_no_level_ui.visible = true
-	_level_loaded_ui.visible = false
+	_level_loaded_ui.deactivate()
