@@ -18,10 +18,14 @@ func _ready() -> void:
 func activate(loaded_level : Level, loaded_nav_zone : NavZone) -> void:
 	nav_zone = loaded_nav_zone
 	level = loaded_level
+	level.nav_zone_map.visible = true
 	visible = true
 
 	_name_input.text = nav_zone.name
 	_prep_input.text = nav_zone.preposition
+
+	EditorInterface.get_selection().clear()
+	EditorInterface.get_selection().add_node(level.nav_map)
 
 
 func deactivate() -> void:
