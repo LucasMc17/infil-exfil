@@ -13,7 +13,7 @@ script = ExtResource("1_xfgoq")
 [node name="Label" type="Label" parent="." unique_id=208220735]
 layout_mode = 2
 size_flags_vertical = 3
-text = "Select a rectangle in the GridMap to begin painting a new NavRegion,
+text = "Select a rectangle in the GridMap to begin painting a new NavZone,
 or select from the list below to continue editing one."
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -3,6 +3,8 @@
 class_name LevelLoadedUI
 extends VBoxContainer
 
+signal zone_edit_requested(zone : NavZone)
+
 @onready var _nav_zone_previews : VBoxContainer = %NavZonePreviews
 
 ## The level that was loaded.
@@ -50,6 +52,7 @@ func _populate_previews() -> void:
 	for zone in nav_zones:
 		var preview : NavZonePreview = NavZonePreview.new_preview(zone)
 		preview.find_requested.connect(_find_nav_zone_in_level)
+		preview.edit_requested.connect(func (zone : NavZone): zone_edit_requested.emit(zone))
 		_nav_zone_previews.add_child(preview)
 
 

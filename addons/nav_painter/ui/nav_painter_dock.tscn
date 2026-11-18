@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://csg4lcphhregi" path="res://addons/nav_painter/ui/level_loaded/level_loaded_ui.tscn" id="1_lh11v"]
 [ext_resource type="Script" uid="uid://b574ow51kbb1" path="res://addons/nav_painter/ui/nav_painter_dock.gd" id="1_x8d3j"]
 [ext_resource type="PackedScene" uid="uid://c7cbrk2j6uikj" path="res://addons/nav_painter/ui/no_level/no_level_ui.tscn" id="2_vn118"]
+[ext_resource type="PackedScene" uid="uid://crre1w3s6j16q" path="res://addons/nav_painter/ui/zone_edit/zone_edit_ui.tscn" id="4_eacix"]
 
 [node name="NavPainterDock" type="Control" unique_id=677682227]
 layout_mode = 3
@@ -25,3 +26,7 @@ offset_left = -64.0
 offset_top = -29.0
 offset_right = 64.0
 offset_bottom = 29.0
+
+[node name="ZoneEditUI" parent="." unique_id=1340478694 instance=ExtResource("4_eacix")]
+unique_name_in_owner = true
+layout_mode = 1
