@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://crre1w3s6j16q"]
 
 [ext_resource type="Script" uid="uid://c8fbjgln0s86u" path="res://addons/nav_painter/ui/zone_edit/zone_edit_ui.gd" id="1_6gvwc"]
+[ext_resource type="Theme" uid="uid://bsq7v3mhee4gx" path="res://addons/nav_painter/nav_painter_theme.tres" id="1_v0nvf"]
 
 [node name="ZoneEditUI" type="VBoxContainer" unique_id=1340478694]
 anchors_preset = 15
@@ -8,6 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_v0nvf")
 script = ExtResource("1_6gvwc")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=436417570]
@@ -22,82 +24,53 @@ text = "Back to zone select"
 layout_mode = 2
 text = "Zone name (file_name.tres)"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2124402608]
+[node name="PanelContainer2" type="PanelContainer" parent="." unique_id=1240218448]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer2" unique_id=1229759928]
 layout_mode = 2
 
-[node name="NameLabel" type="Label" parent="VBoxContainer" unique_id=1143209297]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer2/CenterContainer" unique_id=1942207697]
 layout_mode = 2
-text = "Zone Name"
 
-[node name="NameInput" type="LineEdit" parent="VBoxContainer" unique_id=17836388]
+[node name="Label" type="Label" parent="PanelContainer2/CenterContainer/VBoxContainer" unique_id=153935416]
+layout_mode = 2
+text = "Make a selection in the GridMap3D to create a new area, point, or exit for this NavZone
+Or, use the resource editor below to make adjustments to what's already there."
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer2/CenterContainer/VBoxContainer" unique_id=623418755]
+layout_mode = 2
+
+[node name="AreaButton" type="Button" parent="PanelContainer2/CenterContainer/VBoxContainer/HBoxContainer" unique_id=1624535712]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "New Area"
+
+[node name="PointButton" type="Button" parent="PanelContainer2/CenterContainer/VBoxContainer/HBoxContainer" unique_id=646118846]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "New Point"
+
+[node name="ExitButton" type="Button" parent="PanelContainer2/CenterContainer/VBoxContainer/HBoxContainer" unique_id=1087702170]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "New Exit"
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1362644758]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=448093434]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/HBoxContainer" unique_id=461906591]
+layout_mode = 2
+text = "Resource Editor"
+horizontal_alignment = 1
+
+[node name="EditorInspector" type="EditorInspector" parent="PanelContainer/HBoxContainer" unique_id=724087472]
 unique_name_in_owner = true
 layout_mode = 2
-
-[node name="PrepLabel" type="Label" parent="VBoxContainer" unique_id=1400686037]
-layout_mode = 2
-text = "Zone Preposition"
-
-[node name="PrepInput" type="LineEdit" parent="VBoxContainer" unique_id=1050029700]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="SplitContainer" type="SplitContainer" parent="." unique_id=846857125]
-layout_mode = 2
 size_flags_vertical = 3
-split_offsets = PackedInt32Array(0, 0)
-vertical = true
-
-[node name="ScrollContainer" type="ScrollContainer" parent="SplitContainer" unique_id=998158856]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SplitContainer/ScrollContainer" unique_id=1347664195]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="SplitContainer/ScrollContainer/VBoxContainer" unique_id=1232231719]
-layout_mode = 2
-text = "Zone Areas"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SplitContainer/ScrollContainer/VBoxContainer" unique_id=735136134]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ScrollContainer2" type="ScrollContainer" parent="SplitContainer" unique_id=402322783]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SplitContainer/ScrollContainer2" unique_id=149225960]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="SplitContainer/ScrollContainer2/VBoxContainer" unique_id=1047256231]
-layout_mode = 2
-text = "Zone Points"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SplitContainer/ScrollContainer2/VBoxContainer" unique_id=1048652648]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ScrollContainer3" type="ScrollContainer" parent="SplitContainer" unique_id=1401306792]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SplitContainer/ScrollContainer3" unique_id=877895634]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="SplitContainer/ScrollContainer3/VBoxContainer" unique_id=1679159140]
-layout_mode = 2
-text = "Zone Exits"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SplitContainer/ScrollContainer3/VBoxContainer" unique_id=1888188312]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Button" type="Button" parent="." unique_id=730259736]
-layout_mode = 2
-text = "Save Changes"

@@ -1,0 +1,11 @@
+[gd_resource type="Theme" format=3 uid="uid://bsq7v3mhee4gx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fgoux"]
+bg_color = Color(0.61474454, 0.6147446, 0.6147445, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[resource]
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_fgoux")

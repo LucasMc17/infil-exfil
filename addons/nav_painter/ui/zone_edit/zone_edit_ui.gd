@@ -5,8 +5,7 @@ extends VBoxContainer
 signal back_clicked()
 
 @onready var _back_button : Button = %BackButton
-@onready var _name_input : LineEdit = %NameInput
-@onready var _prep_input : LineEdit = %PrepInput
+@onready var _inspector : EditorInspector = %EditorInspector
 
 var nav_zone : NavZone
 var level : Level
@@ -21,11 +20,10 @@ func activate(loaded_level : Level, loaded_nav_zone : NavZone) -> void:
 	level.nav_zone_map.visible = true
 	visible = true
 
-	_name_input.text = nav_zone.name
-	_prep_input.text = nav_zone.preposition
-
 	EditorInterface.get_selection().clear()
 	EditorInterface.get_selection().add_node(level.nav_map)
+
+	_inspector.edit(nav_zone)
 
 
 func deactivate() -> void:
