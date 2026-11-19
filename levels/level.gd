@@ -193,7 +193,7 @@ func get_likely_path(pursuer_position : Vector3i, last_known_position : Vector3i
 		if !next_exit:
 			return result
 		current_zone = load(next_exit.to_zone_uid)
-		current_position = next_exit.board_position
+		current_position = next_exit.position
 		result.append(current_zone.get_nearest_point(current_position))
 		banned_zones.append(current_zone)
 

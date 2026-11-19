@@ -44,15 +44,15 @@ func _run() -> void:
 				errors += 1
 			else:
 				configs.ro_floor_number = zone_holder.floor_number
-				configs.ro_base_position = zone_holder.position
+				# configs.ro_base_position = zone_holder.position
 				
 				var board_points : Array[Vector3i] = []
-				for point : Vector2i in configs.points:
-					board_points.append(configs.to_board_space(point))
+				# for point : Vector3i in configs.points:
+				# 	board_points.append(configs.to_board_space(point))
 				configs.ro_board_points = board_points
 			
 				for exit : NavZoneExit in configs.exits:
-					exit.ro_board_position = configs.to_board_space(exit.local_position)
+					# exit.ro_board_position = configs.to_board_space(exit.local_position)
 					var to_zone = find_nav_zone_by_name(exit.to_zone_name, nav_zone_system)
 					if !to_zone:
 						printerr("FOR EXIT OF ZONE " + zone_holder.name + ", NO CONNECTING ZONE WITH NAME " + exit.to_zone_name + 'FOUND')

@@ -57,13 +57,12 @@ func _redraw_meshes() -> void:
 
 				add_child(mesh_instance)
 		
-		for point : Vector2i in configs.points:
+		for point : Vector3i in configs.points:
 			if point != null:
 				var mesh_instance = MeshInstance3D.new()
 				var box_mesh = BoxMesh.new()
 				box_mesh.material = POINT_MATERIAL.value
-				mesh_instance.position.x = point.x + 0.5
-				mesh_instance.position.z = point.y + 0.5
+				mesh_instance.position = Vector3(point) + Vector3(0.5, 0.0, 0.5)
 
 				mesh_instance.mesh = box_mesh
 
@@ -73,8 +72,7 @@ func _redraw_meshes() -> void:
 			if exit:
 				var mesh_instance = MeshInstance3D.new()
 				var cylinder_mesh = CylinderMesh.new()
-				mesh_instance.position.x = exit.local_position.x + 0.5
-				mesh_instance.position.z = exit.local_position.y + 0.5
+				mesh_instance.position = Vector3(exit.position) + Vector3(0.5, 0.0, 0.5)
 
 				mesh_instance.mesh = cylinder_mesh
 

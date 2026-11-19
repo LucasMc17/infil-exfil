@@ -17,6 +17,8 @@ var level : Level
 func _ready() -> void:
 	_back_button.pressed.connect(back_clicked.emit)
 	_area_button.pressed.connect(_new_area)
+	_point_button.pressed.connect(_new_point)
+	_exit_button.pressed.connect(_new_exit)
 
 
 func activate(loaded_level : Level, loaded_nav_zone : NavZone) -> void:
@@ -45,7 +47,7 @@ func _new_area() -> void:
 
 	var selection : AABB = plugin.get_selection()
 	var size = Vector2i(selection.size.x + 1, selection.size.z + 1)
-	var position = Vector2i(selection.position.x, selection.position.z) - Vector2i(nav_zone.base_position.x , nav_zone.base_position.z)
+	var position = Vector2i(selection.position.x, selection.position.z)
 	var rect = Rect2i(position, size)
 
 	var old_areas = nav_zone.areas.duplicate()
@@ -57,6 +59,50 @@ func _new_area() -> void:
 	undo_redo.create_action("Add NavZone Area")
 	undo_redo.add_do_property(nav_zone, "areas", new_areas)
 	undo_redo.add_undo_property(nav_zone, "areas", old_areas)
+	undo_redo.commit_action()
+
+
+func _new_point() -> void:
+	var plugin = _get_grid_map_plugin()
+
+	if !plugin:
+		return
+
+	var selection : AABB = plugin.get_selection()
+
+	var old_points = nav_zone.points.duplicate()
+
+	var new_points = old_points.duplicate()
+	new_points.append(selection.position)
+
+	var undo_redo = EditorInterface.get_editor_undo_redo()
+	undo_redo.create_action("Add NavZone Point")
+	undo_redo.add_do_property(nav_zone, "points", new_points)
+	undo_redo.add_undo_property(nav_zone, "points", old_points)
+	undo_redo.commit_action()
+
+
+func _new_exit() -> void:
+	var plugin = _get_grid_map_plugin()
+
+	if !plugin:
+		return
+
+	var selection : AABB = plugin.get_selection()
+
+	var old_exits = nav_zone.exits.duplicate()
+
+	var new_exits = old_exits.duplicate()
+
+	var exit = NavZoneExit.new()
+	exit.position = selection.position
+
+	new_exits.append(exit)
+
+	var undo_redo = EditorInterface.get_editor_undo_redo()
+	undo_redo.create_action("Add NavZone Exit")
+	undo_redo.add_do_property(nav_zone, "exits", new_exits)
+	undo_redo.add_undo_property(nav_zone, "exits", old_exits)
 	undo_redo.commit_action()
 
 
