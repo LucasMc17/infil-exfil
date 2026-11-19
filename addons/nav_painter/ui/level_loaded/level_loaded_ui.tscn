@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bs1xb3og7ccsc" path="res://addons/nav_painter/ui/level_loaded/level_loaded_ui.gd" id="1_xfgoq"]
 
-[node name="LevelLoadedUI" type="VBoxContainer" unique_id=2085022504]
+[node name="LevelLoadedUI" type="CenterContainer" unique_id=983114722]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -14,29 +14,6 @@ script = ExtResource("1_xfgoq")
 layout_mode = 2
 size_flags_vertical = 3
 text = "Select a rectangle in the GridMap to begin painting a new NavZone,
-or select from the list below to continue editing one."
+or select a single cell in an exiting NavZone to edit it."
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1360447218]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1737724149]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer" unique_id=961444584]
-layout_mode = 2
-text = "NavZones found in this level:"
-horizontal_alignment = 1
-
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer" unique_id=2004898488]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="NavZonePreviews" type="VBoxContainer" parent="PanelContainer/VBoxContainer/ScrollContainer" unique_id=373628762]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3

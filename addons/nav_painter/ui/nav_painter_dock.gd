@@ -18,6 +18,8 @@ func _ready() -> void:
 
 
 func _check_for_level() -> void:
+	NavPaintUtilities.update_grid_map_plugin()
+	NavPaintUtilities.grid_map_editor_plugin.clear_selection()
 	var level = EditorInterface.get_edited_scene_root()
 	if level is Level:
 		_switch_to_level_loaded_ui(level)
