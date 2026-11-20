@@ -46,10 +46,10 @@ func _run() -> void:
 				configs.ro_floor_number = zone_holder.floor_number
 				# configs.ro_base_position = zone_holder.position
 				
-				var board_points : Array[Vector3i] = []
+				# var board_points : Array[Vector3i] = []
 				# for point : Vector3i in configs.points:
 				# 	board_points.append(configs.to_board_space(point))
-				configs.ro_board_points = board_points
+				# configs.ro_board_points = board_points
 			
 				for exit : NavZoneExit in configs.exits:
 					# exit.ro_board_position = configs.to_board_space(exit.local_position)

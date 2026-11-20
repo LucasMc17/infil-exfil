@@ -18,8 +18,6 @@ extends Resource
 @export var exits : Array[NavZoneExit]
 
 @export_group("READ ONLY", "ro_")
-## READ ONLY version of the points within this zone, adjusted to 3d space based on the base position.
-@export var ro_board_points : Array[Vector3i]
 ## READ ONLY version of the index of the Y-level this NavZone is located on.
 @export var ro_floor_number := 0
 
@@ -27,10 +25,6 @@ func _validate_property(property : Dictionary) -> void:
 	if property.name.begins_with("ro_"):
 		property.usage |= PROPERTY_USAGE_READ_ONLY
 
-## The points within this zone, adjusted to 3d space based on the base position.
-var board_points : Array[Vector3i]:
-	get():
-		return ro_board_points
 ## The index of the Y-level this NavZone is located on.
 var floor_number : int:
 	get():
@@ -59,7 +53,7 @@ func has_point(point : Vector3i) -> bool:
 func get_nearest_point(pos : Vector3i) -> Vector3i:
 	var result = null
 	var distance_to_result = null
-	for point : Vector3i in board_points:
+	for point : Vector3i in points:
 		var distance = pos.distance_to(point)
 		if !distance_to_result or distance < distance_to_result:
 			distance_to_result = distance
