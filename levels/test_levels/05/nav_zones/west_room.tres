@@ -1,11 +1,18 @@
 [gd_resource type="Resource" script_class="NavZone" format=3 uid="uid://c5o7a0s0ij50u"]
 
+[ext_resource type="Script" uid="uid://btel0ockjxs7m" path="res://navigation/nav_zones/nav_zone_area.gd" id="1_e20ng"]
 [ext_resource type="Script" uid="uid://c7xqovr73fsq5" path="res://navigation/nav_zones/nav_zone_exit.gd" id="1_wve7x"]
 [ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_zones/nav_zone.gd" id="1_xidbl"]
+
+[sub_resource type="Resource" id="Resource_gq3kt"]
+script = ExtResource("1_e20ng")
+position = Vector3i(-9, 0, -4)
+dimensions = Vector2i(4, 3)
+metadata/_custom_type_script = "uid://btel0ockjxs7m"
 
 [resource]
 script = ExtResource("1_xidbl")
 name = "the west room"
-areas = Array[Rect2i]([Rect2i(-9, -4, 4, 3)])
-ro_board_points = Array[Vector3i]([Vector3i(-8, 0, -3)])
+debug_color = Color(0.058201686, 0.5820167, 0.46731377, 1)
+areas = Array[ExtResource("1_e20ng")]([SubResource("Resource_gq3kt")])
 metadata/_custom_type_script = "uid://wjvqhhryw4h4"

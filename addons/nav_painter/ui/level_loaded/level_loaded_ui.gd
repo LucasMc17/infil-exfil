@@ -28,7 +28,7 @@ func _process(_delta: float) -> void:
 	if active:
 		NavPaintUtilities.update_grid_map_plugin()
 		if NavPaintUtilities.grid_map_editor_plugin.has_selection():
-			var zone = level.get_zone_from_position(NavPaintUtilities.grid_map_editor_plugin.get_selection().position)
+			var zone = level.nav_system.get_zone_from_position(NavPaintUtilities.grid_map_editor_plugin.get_selection().position)
 			if zone:
 				zone_edit_requested.emit(zone)
 

@@ -8,10 +8,14 @@ extends Resource
 @export var name : String = ""
 ## The preoposition which units will use to refer to this zone, usually either "in" or "on".
 @export var preposition : String = "in"
+## The color to use to represent this [NavZone] in the editor.
+@export var debug_color : Color = Color.WHITE
+@export_tool_button("Assign Random Color") var random_color_button = func():
+	debug_color = Utilities.random_color()
 
 @export_group("Configs")
 ## A series of rectangles defining the borders of the zone, relative to the zone's base position.
-@export var areas : Array[Rect2i]
+@export var areas : Array[NavZoneArea]
 ## A series of points within the zone which can be used for precise pathing inside of it.
 @export var points : Array[Vector3i]
 ## A series of exits which this NavZone uses to connect to other NavZones, and mark the point at which the connection applies.
@@ -35,16 +39,10 @@ func to_board_space(point : Vector2i) -> Vector3i:
 	return Vector3i(point.x, floor_number, point.y)
 
 
-## Translates 3D nav grid coordinates into local, 2d coordinates.
-func to_local_space(point : Vector3i) -> Vector2i:
-	return Vector2i(point.x, point.z)
-
-
 ## Takes in a point in 3D space and returns true if that space, once translated to local 2D coordinates, is within the NavZone.
 func has_point(point : Vector3i) -> bool:
-	var true_point = to_local_space(point)
-	for rect : Rect2i in areas:
-		if rect.has_point(true_point):
+	for area : NavZoneArea in areas:
+		if area.has_point(point):
 			return true
 	return false
 

@@ -34,27 +34,12 @@ func _wire_up_to_zone() -> void:
 		printerr("Not currently editing a level.")
 		return
 	
-	for child in level.nav_zone_map.get_children():
-		for zone_holder : NavZoneHolder in child.get_children():
-			if zone_holder.name == to_zone_name:
-				ro_to_zone_uid = _get_uid_from_resource(_find_nav_zone_by_name(to_zone_name, level.nav_zone_map))
-				return
+	var to_zone = level.nav_system.find_nav_zone_by_name(to_zone_name)
+	if !to_zone:
+		printerr("No zone by that name found in level.")
+		return
 	
-	printerr("No zone by that name found in level.")
-
-
-func _get_uid_from_resource(resource: Resource) -> String:
-	var path = resource.resource_path
-	var int_id = ResourceLoader.get_resource_uid(path)
-	return ResourceUID.id_to_text(int_id)
-
-
-func _find_nav_zone_by_name(name : String, nav_zone_system : Node3D) -> NavZone:
-	for child in nav_zone_system.get_children():
-		for zone_holder : NavZoneHolder in child.get_children():
-			if zone_holder.name == name:
-				return zone_holder.configs
-	return null
+	ro_to_zone_uid = ResourceUID.id_to_text(ResourceLoader.get_resource_uid(to_zone.resource_path))
 
 
 func _highlight_exit() -> void:

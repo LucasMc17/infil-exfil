@@ -96,7 +96,7 @@ var allow_inputs : bool:
 @onready var state_machine : StateMachine = %StateMachine
 @onready var match_ui : MatchUI = %MatchUi
 @onready var target_retical : Sprite3D = %TargetRetical
-@onready var nav_zone_map : NavZoneMap = %NavZoneMap
+@onready var nav_system : NavSystem = %NavSystem
 @onready var geometry : Node3D = %Geometry
 @onready var _dialog_layer : Control = %DialogLayer
 @onready var _soundscape : Soundscape = %Soundscape
@@ -104,7 +104,7 @@ var allow_inputs : bool:
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
-		nav_zone_map.visible = false
+		nav_system.visible = false
 		Events.skill_armed.connect(_on_skill_armed)
 		Events.skill_disarmed.connect(_on_skill_disarmed)
 		Events.unit_spoke.connect(_on_unit_spoke)
@@ -164,19 +164,11 @@ func set_active_unit(unit : Unit):
 			level_camera.fix_to_actor(unit)
 
 
-## Returns the NavZoneHolder a given position is in.
-func get_zone_from_position(pos : Vector3i) -> NavZone:
-	for zone_holder : NavZoneHolder in nav_zone_map.get_child(pos.y).get_children():
-		if zone_holder.configs.has_point(pos):
-			return zone_holder.configs
-	return null
-
-
 ## Generates an array of positions to visit in pursuit of a fleeing FriendlyUnit, in order, based on that unit's last known position.
 func get_likely_path(pursuer_position : Vector3i, last_known_position : Vector3i, pursuit_depth := 6) -> Array[Vector3i]:
 	var result : Array[Vector3i] = []
-	var starting_zone = get_zone_from_position(pursuer_position)
-	var last_known_zone = get_zone_from_position(last_known_position)
+	var starting_zone = nav_system.get_zone_from_position(pursuer_position)
+	var last_known_zone = nav_system.get_zone_from_position(last_known_position)
 	var banned_zones : Array[NavZone] = [last_known_zone, starting_zone]
 	var current_zone = last_known_zone
 	var current_position = last_known_position

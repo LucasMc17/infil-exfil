@@ -32,7 +32,7 @@ func _run() -> void:
 			ResourceSaver.save(res, full_path)
 			zone.configs = load(full_path)
 	
-	var nav_zone_system = level.nav_zone_map
+	var nav_zone_system = level.nav_system
 	for node : Node3D in nav_zone_system.get_children():
 		for zone_holder : NavZoneHolder in node.get_children():
 			encountered += 1

@@ -24,7 +24,7 @@ func _ready() -> void:
 func activate(loaded_level : Level, loaded_nav_zone : NavZone) -> void:
 	nav_zone = loaded_nav_zone
 	level = loaded_level
-	level.nav_zone_map.visible = true
+	level.nav_system.visible = true
 	visible = true
 
 	EditorInterface.get_selection().clear()
@@ -47,13 +47,14 @@ func _new_area() -> void:
 
 	var selection : AABB = plugin.get_selection()
 	var size = Vector2i(selection.size.x + 1, selection.size.z + 1)
-	var position = Vector2i(selection.position.x, selection.position.z)
-	var rect = Rect2i(position, size)
+	var area = NavZoneArea.new()
+	area.position = selection.position
+	area.dimensions = size
 
 	var old_areas = nav_zone.areas.duplicate()
 
 	var new_areas = old_areas.duplicate()
-	new_areas.append(rect)
+	new_areas.append(area)
 
 	var undo_redo = EditorInterface.get_editor_undo_redo()
 	undo_redo.create_action("Add NavZone Area")
