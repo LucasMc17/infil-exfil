@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="NavZone" format=3 uid="uid://bb38rhto3litl"]
+
+[ext_resource type="Script" uid="uid://btel0ockjxs7m" path="res://navigation/nav_zones/nav_zone_area.gd" id="1_l8sau"]
+[ext_resource type="Script" uid="uid://c7xqovr73fsq5" path="res://navigation/nav_zones/nav_zone_exit.gd" id="2_iw2nm"]
+[ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_zones/nav_zone.gd" id="3_jy64w"]
+
+[sub_resource type="Resource" id="Resource_yfscy"]
+script = ExtResource("1_l8sau")
+position = Vector3i(-17, 1, 5)
+dimensions = Vector2i(10, 3)
+
+[sub_resource type="Resource" id="Resource_l8sau"]
+script = ExtResource("2_iw2nm")
+position = Vector3i(-10, 1, 6)
+to_zone_index = 0
+
+[sub_resource type="Resource" id="Resource_iw2nm"]
+script = ExtResource("2_iw2nm")
+position = Vector3i(-14, 1, 5)
+to_zone_index = 4
+
+[resource]
+script = ExtResource("3_jy64w")
+name = "the upstairs"
+debug_color = Color(0.08608907, 0.6596335, 0.065963365, 1)
+areas = Array[ExtResource("1_l8sau")]([SubResource("Resource_yfscy")])
+points = Array[Vector3i]([Vector3i(-14, 1, 6), Vector3i(-11, 1, 6)])
+exits = Array[ExtResource("2_iw2nm")]([SubResource("Resource_l8sau"), SubResource("Resource_iw2nm")])

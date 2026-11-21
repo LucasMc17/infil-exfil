@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c8fbjgln0s86u" path="res://addons/nav_painter/ui/zone_edit/zone_edit_ui.gd" id="1_6gvwc"]
 [ext_resource type="Theme" uid="uid://bsq7v3mhee4gx" path="res://addons/nav_painter/nav_painter_theme.tres" id="1_v0nvf"]
+[ext_resource type="PackedScene" uid="uid://dufjacb5rxbfe" path="res://addons/nav_painter/ui/zone_edit/confirm_deletion.tscn" id="3_0prng"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_v0nvf"]
 device = -1
@@ -47,9 +48,11 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Back to zone select"
 
-[node name="Label" type="Label" parent="HBoxContainer" unique_id=216367476]
+[node name="DeleteButton" type="Button" parent="HBoxContainer" unique_id=1273798291]
+unique_name_in_owner = true
 layout_mode = 2
-text = "Zone name (file_name.tres)"
+size_flags_horizontal = 10
+text = "Delete Nav Zone"
 
 [node name="PanelContainer2" type="PanelContainer" parent="." unique_id=1240218448]
 layout_mode = 2
@@ -107,3 +110,6 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="ConfirmDeletion" parent="." unique_id=1825542960 instance=ExtResource("3_0prng")]
+unique_name_in_owner = true

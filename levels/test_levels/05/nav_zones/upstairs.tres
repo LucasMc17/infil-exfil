@@ -23,5 +23,4 @@ debug_color = Color(0.8606091, 0.086060934, 0.086436935, 1)
 areas = Array[ExtResource("1_gps7c")]([SubResource("Resource_ycq63")])
 points = Array[Vector3i]([Vector3i(-7, 1, 1)])
 exits = Array[ExtResource("1_iqq7t")]([SubResource("Resource_gps7c")])
-ro_floor_number = 1
 metadata/_custom_type_script = "uid://wjvqhhryw4h4"

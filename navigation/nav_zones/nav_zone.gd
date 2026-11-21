@@ -21,22 +21,15 @@ extends Resource
 ## A series of exits which this NavZone uses to connect to other NavZones, and mark the point at which the connection applies.
 @export var exits : Array[NavZoneExit]
 
-@export_group("READ ONLY", "ro_")
-## READ ONLY version of the index of the Y-level this NavZone is located on.
-@export var ro_floor_number := 0
-
-func _validate_property(property : Dictionary) -> void:
-	if property.name.begins_with("ro_"):
-		property.usage |= PROPERTY_USAGE_READ_ONLY
-
-## The index of the Y-level this NavZone is located on.
-var floor_number : int:
-	get():
-		return ro_floor_number
-
-## Translates a 2D point within this NavZone to real, 3D space in terms of the navigable grid map.
-func to_board_space(point : Vector2i) -> Vector3i:
-	return Vector3i(point.x, floor_number, point.y)
+static func new_zone_from_selection(n : String, p : Vector3i, d : Vector2i) -> NavZone:
+	var zone = NavZone.new()
+	zone.name = n
+	zone.debug_color = Utilities.random_color()
+	var area = NavZoneArea.new()
+	area.position = p
+	area.dimensions = d
+	zone.areas.append(area)
+	return zone
 
 
 ## Takes in a point in 3D space and returns true if that space, once translated to local 2D coordinates, is within the NavZone.

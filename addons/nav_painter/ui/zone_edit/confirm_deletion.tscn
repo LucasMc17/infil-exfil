@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dufjacb5rxbfe"]
+
+[node name="ConfirmDeletion" type="ConfirmationDialog" unique_id=1825542960]
+oversampling_override = 1.0
+title = "Delete NavZone?"
+position = Vector2i(0, 36)
+size = Vector2i(1718, 366)
+ok_button_text = "Delete"
+dialog_text = "Are you sure you wish to delete the NavZone from the repository? This will also likely affect the index positions of the remaining NavZones in this level's NavSystem (and therefore may break some NavZoneExit mappings)."
+dialog_autowrap = true

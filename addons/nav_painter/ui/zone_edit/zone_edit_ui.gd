@@ -5,11 +5,14 @@ extends VBoxContainer
 signal back_clicked()
 
 @onready var _back_button : Button = %BackButton
+@onready var _delete_button : Button = %DeleteButton
 @onready var _inspector : EditorInspector = %EditorInspector
 
 @onready var _area_button : Button = %AreaButton
 @onready var _point_button : Button = %PointButton
 @onready var _exit_button : Button = %ExitButton
+
+@onready var _delete_dialog : ConfirmationDialog = %ConfirmDeletion
 
 var nav_zone : NavZone
 var level : Level
@@ -19,6 +22,8 @@ func _ready() -> void:
 	_area_button.pressed.connect(_new_area)
 	_point_button.pressed.connect(_new_point)
 	_exit_button.pressed.connect(_new_exit)
+	_delete_button.pressed.connect(_on_delete_button_pressed)
+	_delete_dialog.confirmed.connect(_on_delete_confirmed)
 
 
 func activate(loaded_level : Level, loaded_nav_zone : NavZone) -> void:
@@ -130,3 +135,19 @@ func _get_grid_map_plugin() -> GridMapEditorPlugin:
 		return null
 	
 	return plugin
+
+
+func _on_delete_button_pressed() -> void:
+	_delete_dialog.popup_centered()
+
+
+func _on_delete_confirmed() -> void:
+	if !level or !nav_zone:
+		printerr("Something went wrong, please try again...")
+		return
+	level.nav_system.nav_zones = level.nav_system.nav_zones.filter(func (zone : NavZone): return zone != nav_zone)
+	var path = nav_zone.resource_path
+	if FileAccess.file_exists(path):
+		var error = DirAccess.remove_absolute(path)
+		if error != OK:
+			printerr(error)
