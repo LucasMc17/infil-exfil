@@ -184,7 +184,7 @@ func get_likely_path(pursuer_position : Vector3i, last_known_position : Vector3i
 		var next_exit : NavZoneExit = current_zone.get_semirandom_exit(current_position, banned_zones)
 		if !next_exit:
 			return result
-		current_zone = load(next_exit.to_zone_uid)
+		current_zone = next_exit.to_zone
 		current_position = next_exit.position
 		result.append(current_zone.get_nearest_point(current_position))
 		banned_zones.append(current_zone)

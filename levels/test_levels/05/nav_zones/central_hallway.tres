@@ -25,10 +25,41 @@ script = ExtResource("1_y4utj")
 position = Vector3i(-3, 0, 3)
 dimensions = Vector2i(5, 2)
 
+[sub_resource type="Resource" id="Resource_qrsxq"]
+script = ExtResource("1_ism71")
+position = Vector3i(-1, 0, 3)
+to_zone_index = 0
+
+[sub_resource type="Resource" id="Resource_oll5c"]
+script = ExtResource("1_ism71")
+position = Vector3i(3, 0, 0)
+to_zone_index = 2
+
+[sub_resource type="Resource" id="Resource_vlbki"]
+script = ExtResource("1_ism71")
+position = Vector3i(-2, 0, -4)
+to_zone_index = 5
+
+[sub_resource type="Resource" id="Resource_qqa6l"]
+script = ExtResource("1_ism71")
+position = Vector3i(2, 0, -4)
+to_zone_index = 6
+
+[sub_resource type="Resource" id="Resource_bgqht"]
+script = ExtResource("1_ism71")
+position = Vector3i(-5, 0, -3)
+to_zone_index = 9
+
+[sub_resource type="Resource" id="Resource_tlkt2"]
+script = ExtResource("1_ism71")
+position = Vector3i(-5, 0, 1)
+to_zone_index = 3
+
 [resource]
 script = ExtResource("1_37wvy")
 name = "the hallway"
 debug_color = Color(0.4159652, 0.45201927, 0.04520194, 1)
 areas = Array[ExtResource("1_y4utj")]([SubResource("Resource_swe06"), SubResource("Resource_y4utj"), SubResource("Resource_ism71"), SubResource("Resource_0r2nh")])
 points = Array[Vector3i]([Vector3i(-1, 0, 4), Vector3i(2, 0, 0), Vector3i(2, 0, -3), Vector3i(-2, 0, -3), Vector3i(-4, 0, -3), Vector3i(-4, 0, 1)])
+exits = Array[ExtResource("1_ism71")]([SubResource("Resource_qrsxq"), SubResource("Resource_oll5c"), SubResource("Resource_vlbki"), SubResource("Resource_qqa6l"), SubResource("Resource_bgqht"), SubResource("Resource_tlkt2")])
 metadata/_custom_type_script = "uid://wjvqhhryw4h4"

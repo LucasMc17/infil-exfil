@@ -10,3 +10,11 @@ signal refresh_requested()
 
 func _ready() -> void:
 	_refresh_button.pressed.connect(func(): refresh_requested.emit())
+
+
+func activate() -> void:
+	visible = true
+
+
+func deactivate() -> void:
+	visible = false

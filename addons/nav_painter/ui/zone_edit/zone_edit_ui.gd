@@ -27,6 +27,10 @@ func activate(loaded_level : Level, loaded_nav_zone : NavZone) -> void:
 	level.nav_system.visible = true
 	visible = true
 
+	_area_button.disabled = false
+	_point_button.disabled = false
+	_exit_button.disabled = false
+
 	EditorInterface.get_selection().clear()
 	EditorInterface.get_selection().add_node(level.nav_map)
 
@@ -37,6 +41,10 @@ func deactivate() -> void:
 	nav_zone = null
 	level = null
 	visible = false
+
+	_area_button.disabled = true
+	_point_button.disabled = true
+	_exit_button.disabled = true
 
 
 func _new_area() -> void:

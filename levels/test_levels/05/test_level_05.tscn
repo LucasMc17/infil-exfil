@@ -37,6 +37,7 @@ data = {
 }
 
 [node name="NavSystem" parent="NavigableGridMap" index="0" unique_id=1688252954]
+visible = false
 nav_zones = Array[ExtResource("2_giyhb")]([ExtResource("12_h35ky"), ExtResource("4_bgn5r"), ExtResource("7_1j87o"), ExtResource("5_ik5qm"), ExtResource("10_m0sp5"), ExtResource("8_peql8"), ExtResource("9_p8x4w"), ExtResource("6_b83sn"), ExtResource("13_giyhb"), ExtResource("11_h35ky")])
 
 [node name="DebugFloor" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="0" unique_id=1729299196 instance=ExtResource("14_xfu07")]

@@ -10,9 +10,16 @@ position = Vector3i(-3, 0, -2)
 dimensions = Vector2i(5, 5)
 metadata/_custom_type_script = "uid://btel0ockjxs7m"
 
+[sub_resource type="Resource" id="Resource_1slw0"]
+script = ExtResource("1_1slw0")
+position = Vector3i(-1, 0, 2)
+to_zone_index = 1
+
 [resource]
 script = ExtResource("1_l5smo")
 name = "the center room"
 debug_color = Color(0.04472856, 0.24317023, 0.44728547, 1)
 areas = Array[ExtResource("1_lkg4v")]([SubResource("Resource_nbgnw")])
+points = Array[Vector3i]([Vector3i(-1, 0, 0)])
+exits = Array[ExtResource("1_1slw0")]([SubResource("Resource_1slw0")])
 metadata/_custom_type_script = "uid://wjvqhhryw4h4"

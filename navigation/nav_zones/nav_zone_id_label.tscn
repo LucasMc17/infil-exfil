@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bugiio8du2wfr"]
+
+[node name="NavZoneIdLabel" type="Label3D" unique_id=1388091942]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+pixel_size = 0.03
+no_depth_test = true
+text = "1"
