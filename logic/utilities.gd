@@ -80,12 +80,24 @@ static func _pick_from_normalized_weights(weights : Array) -> int:
 
 	return -1
 
+
+## Returns the editor plugin for making changes to a grid map. This is frequently useful for my home brewed editor tools.
+static func get_grid_map_plugin() -> GridMapEditorPlugin:
+	var editor_root = EditorInterface.get_base_control().get_tree().root
+	var plugins = editor_root.find_children("",  "GridMapEditorPlugin", true, false)
+
+	if plugins.is_empty():
+			return null
+
+	return plugins[0]
+
 #endregion
 
 # Classes
 #region
 
 ## Class representing the unit bodies which an enemy unit (aor the entire enemy team) is aware of currently.
+# TODO: Get rid of these tf
 class BodiesDict:
 	## Nullable owning unit of this bodies dict.
 	var owning_unit : Unit

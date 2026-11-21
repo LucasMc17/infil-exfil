@@ -43,13 +43,6 @@ func _wire_up_to_zone() -> void:
 
 
 func _highlight_exit() -> void:
-	var editor_root = EditorInterface.get_base_control().get_tree().root
-	var plugins = editor_root.find_children("",  "GridMapEditorPlugin", true, false)
-
-	if plugins.is_empty():
-			printerr("No active grid map plugin")
-			return
-
-	var plugin = plugins[0]
+	var plugin = Utilities.get_grid_map_plugin()
 
 	plugin.set_selection(position, position)
