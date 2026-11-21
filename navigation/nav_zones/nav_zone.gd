@@ -21,6 +21,7 @@ extends Resource
 ## A series of exits which this NavZone uses to connect to other NavZones, and mark the point at which the connection applies.
 @export var exits : Array[NavZoneExit]
 
+## Takes in a GridMap selection range and creates and saves an entirely new NavZone based on it. Creates the new NavZone with one NavZoneArea already created to encompass the selection area.
 static func new_zone_from_selection(n : String, p : Vector3i, d : Vector2i) -> NavZone:
 	var zone = NavZone.new()
 	zone.name = n

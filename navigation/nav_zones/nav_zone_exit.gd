@@ -12,13 +12,11 @@ extends Resource
 ## The name of the zone which this exit connects to, used by the wire up process to fetch its UID.
 @export var to_zone_index : int = -1
 
+## The zone which this exit leads to. Defined based on the [to_zone_index] above by the [NavSystem]'s ready function.
 var to_zone : NavZone
 
-func _validate_property(property : Dictionary) -> void:
-	if property.name.begins_with("ro_"):
-		property.usage |= PROPERTY_USAGE_READ_ONLY
 
-
+## Selects the position of this exit in the Grid Map editor to identify it before making changes.
 func _highlight_exit() -> void:
 	var plugin = Utilities.get_grid_map_plugin()
 

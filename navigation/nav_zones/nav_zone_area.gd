@@ -8,6 +8,7 @@ extends Resource
 @export var position : Vector3i
 @export var dimensions : Vector2i
 
+## Returns true if a given point on the board is within this nav zone area.
 func has_point(point : Vector3i) -> bool:
 	if point.y != position.y:
 		return false
@@ -15,6 +16,7 @@ func has_point(point : Vector3i) -> bool:
 	return true_rect.has_point(Vector2i(point.x, point.z))
 
 
+## Selects the scope of this area within the grid map editor to help easily identify it before making changes.
 func _highlight_area() -> void:
 	var plugin = Utilities.get_grid_map_plugin()
 

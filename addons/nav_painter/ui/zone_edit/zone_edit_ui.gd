@@ -2,6 +2,7 @@
 class_name ZoneEditUI
 extends VBoxContainer
 
+## Emitted when the user clicks back to select another NavZone to edit.
 signal back_clicked()
 
 @onready var _back_button : Button = %BackButton
@@ -22,10 +23,11 @@ func _ready() -> void:
 	_area_button.pressed.connect(_new_area)
 	_point_button.pressed.connect(_new_point)
 	_exit_button.pressed.connect(_new_exit)
-	_delete_button.pressed.connect(_on_delete_button_pressed)
+	_delete_button.pressed.connect(_delete_dialog.popup_centered)
 	_delete_dialog.confirmed.connect(_on_delete_confirmed)
 
 
+## Activate and set up the UI slice.
 func activate(loaded_level : Level, loaded_nav_zone : NavZone) -> void:
 	nav_zone = loaded_nav_zone
 	level = loaded_level
@@ -42,6 +44,7 @@ func activate(loaded_level : Level, loaded_nav_zone : NavZone) -> void:
 	_inspector.edit(nav_zone)
 
 
+## Deactivat the UI slice when the user navigates away.
 func deactivate() -> void:
 	nav_zone = null
 	level = null
@@ -52,8 +55,9 @@ func deactivate() -> void:
 	_exit_button.disabled = true
 
 
+## Create a new NavZoneArea for the chosen NavZone, when the user requests it.
 func _new_area() -> void:
-	var plugin = _get_grid_map_plugin()
+	var plugin = Utilities.get_grid_map_plugin()
 
 	if !plugin:
 		return
@@ -76,8 +80,9 @@ func _new_area() -> void:
 	undo_redo.commit_action()
 
 
+## Create a new point for the chosen NavZone, when the user requests it.
 func _new_point() -> void:
-	var plugin = _get_grid_map_plugin()
+	var plugin = Utilities.get_grid_map_plugin()
 
 	if !plugin:
 		return
@@ -96,8 +101,9 @@ func _new_point() -> void:
 	undo_redo.commit_action()
 
 
+## Create a new exit for the chosen NavZone, when the user requests it.
 func _new_exit() -> void:
-	var plugin = _get_grid_map_plugin()
+	var plugin = Utilities.get_grid_map_plugin()
 
 	if !plugin:
 		return
@@ -120,27 +126,7 @@ func _new_exit() -> void:
 	undo_redo.commit_action()
 
 
-func _get_grid_map_plugin() -> GridMapEditorPlugin:
-	var editor_root = EditorInterface.get_base_control().get_tree().root
-	var grid_map_plugins = editor_root.find_children("", "GridMapEditorPlugin", true, false)
-
-	if grid_map_plugins.is_empty():
-		print("NO ACTIVE GRID MAP PLUGIN")
-		return null
-
-	var plugin : GridMapEditorPlugin = grid_map_plugins[0]
-
-	if !plugin.has_selection():
-		print("NO ACTIVE SELECTION")
-		return null
-	
-	return plugin
-
-
-func _on_delete_button_pressed() -> void:
-	_delete_dialog.popup_centered()
-
-
+## Fully deletes a NavZone from memory.
 func _on_delete_confirmed() -> void:
 	if !level or !nav_zone:
 		printerr("Something went wrong, please try again...")

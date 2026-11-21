@@ -7,6 +7,7 @@ extends Control
 @onready var _level_loaded_ui : LevelLoadedUI = %LevelLoadedUI
 @onready var _zone_edit_ui : ZoneEditUI = %ZoneEditUI
 
+## The level loaded into the editor.
 var loaded_level : Level
 
 func _ready() -> void:
@@ -18,15 +19,17 @@ func _ready() -> void:
 
 
 func _check_for_level() -> void:
-	NavPaintUtilities.update_grid_map_plugin()
-	NavPaintUtilities.grid_map_editor_plugin.clear_selection()
+	var plugin = Utilities.get_grid_map_plugin()
+	if plugin:
+		plugin.clear_selection()
 	var level = EditorInterface.get_edited_scene_root()
 	if level is Level:
 		_switch_to_level_loaded_ui(level)
 	else:
 		_switch_to_no_level_ui()
+	
 
-
+## A level has been loaded for editing, switch to the appropriate UI.
 func _switch_to_level_loaded_ui(level : Level) -> void:
 	loaded_level = level
 	_no_level_ui.deactivate()
@@ -34,12 +37,14 @@ func _switch_to_level_loaded_ui(level : Level) -> void:
 	_level_loaded_ui.activate(level)
 
 
+## No level has been found for editing, switch to the appropriate UI.
 func _switch_to_no_level_ui() -> void:
 	_no_level_ui.activate()
 	_zone_edit_ui.deactivate()
 	_level_loaded_ui.deactivate()
 
 
+## A NavZone has been selected for editing, switch to the appropriate UI.
 func _switch_to_zone_edit_ui(zone : NavZone) -> void:
 	_level_loaded_ui.deactivate()
 	_zone_edit_ui.activate(loaded_level, zone)

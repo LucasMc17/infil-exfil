@@ -12,9 +12,11 @@ func _ready() -> void:
 	_refresh_button.pressed.connect(func(): refresh_requested.emit())
 
 
+## Activate the UI slice, making it visible.
 func activate() -> void:
 	visible = true
 
 
+## Shutdown the UI slice, making it invisible.
 func deactivate() -> void:
 	visible = false

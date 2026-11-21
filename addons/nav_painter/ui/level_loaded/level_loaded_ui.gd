@@ -3,12 +3,12 @@
 class_name LevelLoadedUI
 extends CenterContainer
 
+## Emitted when the user clicks into a NavZone with the intent to make edits to it.
 signal zone_edit_requested(zone : NavZone)
 
 @onready var _nav_zone_button : Button = %NewZoneButton
 @onready var _name_input : LineEdit = %ZoneName
 @onready var _file_input : LineEdit = %FileName
-
 
 ## Whether or not this UI screen is active.
 var active := false
@@ -18,6 +18,15 @@ var level : Level
 func _ready() -> void:
 	_nav_zone_button.pressed.connect(_new_zone)
 	_name_input.text_changed.connect(_on_name_input_changed)
+
+
+func _process(_delta: float) -> void:
+	if active:
+		var plugin = Utilities.get_grid_map_plugin()
+		if plugin:
+			var zone = level.nav_system.get_zone_from_position(plugin.get_selection().position)
+			if zone:
+				zone_edit_requested.emit(zone)
 
 
 ## Runs when the UI is loaded after detecting a level.
@@ -38,15 +47,7 @@ func deactivate() -> void:
 	_file_input.text = ''
 
 
-func _process(_delta: float) -> void:
-	if active:
-		NavPaintUtilities.update_grid_map_plugin()
-		if NavPaintUtilities.grid_map_editor_plugin.has_selection():
-			var zone = level.nav_system.get_zone_from_position(NavPaintUtilities.grid_map_editor_plugin.get_selection().position)
-			if zone:
-				zone_edit_requested.emit(zone)
-
-
+## Handler for the new zone button, creates and saves a new NavZone based on the selected cells.
 func _new_zone() -> void:
 	if active:
 		if !level:

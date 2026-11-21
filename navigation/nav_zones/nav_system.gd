@@ -84,6 +84,7 @@ func _redraw_meshes() -> void:
 		zone_index += 1
 
 
+## Search the nav system for a specific nav zone by its name
 func find_nav_zone_by_name(zone_name : String) -> NavZone:
 	for nav_zone : NavZone in nav_zones:
 		if nav_zone.name == zone_name:
