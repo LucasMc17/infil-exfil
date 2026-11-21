@@ -91,7 +91,7 @@ func _confirm_sighting(sighting : Sighting) -> void:
 	unit.seeing_zone.get_visibility_of_seen_zone(sighting.unit.seen_zone):
 		sighting.still_in_sight = true
 		sighting.last_known_position = sighting.unit.board_position
-		sighting.last_known_zone = Level.current.get_zone_from_position(sighting.last_known_position)
+		sighting.last_known_zone = Level.current.nav_system.get_zone_from_position(sighting.last_known_position)
 		_on_sighting_confirmed(sighting, sighting)
 	else:
 		sighting.still_in_sight = false
@@ -104,7 +104,7 @@ func _confirm_body_sighting(body_sighting : BodySighting) -> void:
 	unit.seeing_zone.get_visibility_of_seen_zone(body_sighting.unit.seen_zone):
 		body_sighting.still_in_sight = true
 		body_sighting.last_known_position = body_sighting.unit.board_position
-		body_sighting.last_known_zone = Level.current.get_zone_from_position(body_sighting.last_known_position)
+		body_sighting.last_known_zone = Level.current.nav_system.get_zone_from_position(body_sighting.last_known_position)
 		body_sighting.last_known_status = body_sighting.unit.unit_status
 	else:
 		body_sighting.still_in_sight = false

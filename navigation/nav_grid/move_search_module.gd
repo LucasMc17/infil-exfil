@@ -40,7 +40,6 @@ func probe_for_viable_move(grid_position : Vector3i, max_moves : int, callback :
 					if !banned_moves.has(connection) and callback.call(connection):
 						end_time = Time.get_ticks_msec()
 						DebugConsole.log("Execution time to probe for a valid move WITH result: " + str(end_time - start_time) + " milliseconds")
-						DebugConsole.log(visited_points.size())
 						return connection
 					else:
 						next_point_ring[connection] = true

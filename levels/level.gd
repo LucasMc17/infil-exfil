@@ -164,34 +164,6 @@ func set_active_unit(unit : Unit):
 			level_camera.fix_to_actor(unit)
 
 
-## Generates an array of positions to visit in pursuit of a fleeing FriendlyUnit, in order, based on that unit's last known position.
-func get_likely_path(pursuer_position : Vector3i, last_known_position : Vector3i, pursuit_depth := 6) -> Array[Vector3i]:
-	var result : Array[Vector3i] = []
-	var starting_zone = nav_system.get_zone_from_position(pursuer_position)
-	var last_known_zone = nav_system.get_zone_from_position(last_known_position)
-	var banned_zones : Array[NavZone] = [last_known_zone, starting_zone]
-	var current_zone = last_known_zone
-	var current_position = last_known_position
-
-	# Update this with zones passed but not taken
-	# var bypassed_zones : Array[Array] = []
-
-	for i in range(pursuit_depth):
-		# Create a separate function which returns a full list of exit
-		# Find the closest exit and get its zone, removing that exit from the full list
-		# Additionally, filter the remainder of the list for exits which do not lead to the same zone as the closest exit.
-		# Add the rest of the list to the bypassed zones list.
-		var next_exit : NavZoneExit = current_zone.get_semirandom_exit(current_position, banned_zones)
-		if !next_exit:
-			return result
-		current_zone = next_exit.to_zone
-		current_position = next_exit.position
-		result.append(current_zone.get_nearest_point(current_position))
-		banned_zones.append(current_zone)
-
-	return result
-
-
 ## Cycle the active unit to the next in the list.
 func cycle_active_unit():
 	var faction : Array

@@ -13,7 +13,7 @@ class FriendlySighting extends Sighting:
 		super(seen_friendly)
 		still_in_sight = true
 		last_known_position = friendly.board_position
-		last_known_zone = Level.current.get_zone_from_position(last_known_position)
+		last_known_zone = Level.current.nav_system.get_zone_from_position(last_known_position)
 
 ## Class representing where the unit was last standing when actively encountering friendlies. Updated by the confirm_all_sightings function if it detects that a unit is still in sight.
 class ContactPoint:
@@ -24,7 +24,7 @@ class ContactPoint:
 
 	func _init(p : Vector3i) -> void:
 		position = p
-		nav_zone = Level.current.get_zone_from_position(p)
+		nav_zone = Level.current.nav_system.get_zone_from_position(p)
 
 ## The last known point of contact with the friendly team, if any.
 var last_poc : ContactPoint:
