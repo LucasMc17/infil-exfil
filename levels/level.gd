@@ -101,6 +101,27 @@ var allow_inputs : bool:
 @onready var _dialog_layer : Control = %DialogLayer
 @onready var _soundscape : Soundscape = %Soundscape
 
+static func test_player_awareness(enemy : EnemyUnit) -> void:
+	var zone = current.nav_system.get_zone_from_position(enemy.board_position)
+	for player in current.live_friendlies:
+		if zone:
+			var player_zone = current.nav_system.get_zone_from_position(player.board_position)
+			if player_zone == zone:
+				enemy.awareness.player_aware = true
+				print('in zone')
+				return
+		if player.board_position.distance_to(enemy.board_position) <= 5.0:
+			enemy.awareness.player_aware = true
+			print('within 5 m')
+			return
+		if player.seen_zone.get_visibility_of_seen_zone(enemy.seen_zone):
+			enemy.awareness.player_aware = true
+			print('can see')
+			return
+	
+	print('not aware')
+	enemy.awareness.player_aware = false
+
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
@@ -115,6 +136,8 @@ func _ready() -> void:
 		)
 		current = self
 		Events.level_loaded.emit()
+		for enemy in live_enemies:
+			test_player_awareness(enemy)
 
 
 func _exit_tree() -> void:

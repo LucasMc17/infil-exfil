@@ -40,6 +40,11 @@ var unit : EnemyUnit
 var will_attempt_to_detain := true
 ## Whether the unit is in the detection grace period. This occurs when the unit sees a friendly unit during the player turn. While in the grace period, stealth skills are still usable on this unit. The grace period ends as soon as the enemy unit begins its next turn.
 var is_in_grace_period := false
+## Whether or not the player's units are aware of this unit. This is defined as the unit being either in the same nav zone as a friendly unit, within 5 meters of a friendly unit, or if a unit has direct line of sight on the unit. This is a bit of an outlier for this file which typically focuses on the enemy's awareness of the player and not the other way around. Enemy units which the player is not aware of are typically rendered invisible and have their animations skipped to speed up gameplay.
+var player_aware := false:
+	set(val):
+		player_aware = val
+		unit.visible = val
 
 func _init(u : EnemyUnit) -> void:
 	unit = u
