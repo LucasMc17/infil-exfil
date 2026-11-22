@@ -96,7 +96,7 @@ var allow_inputs : bool:
 @onready var state_machine : StateMachine = %StateMachine
 @onready var match_ui : MatchUI = %MatchUi
 @onready var target_retical : Sprite3D = %TargetRetical
-@onready var nav_zone_map : NavZoneMap = %NavZoneMap
+@onready var nav_system : NavSystem = %NavSystem
 @onready var geometry : Node3D = %Geometry
 @onready var _dialog_layer : Control = %DialogLayer
 @onready var _soundscape : Soundscape = %Soundscape
@@ -104,7 +104,7 @@ var allow_inputs : bool:
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
-		nav_zone_map.visible = false
+		nav_system.visible = false
 		Events.skill_armed.connect(_on_skill_armed)
 		Events.skill_disarmed.connect(_on_skill_disarmed)
 		Events.unit_spoke.connect(_on_unit_spoke)
@@ -162,42 +162,6 @@ func set_active_unit(unit : Unit):
 		if Unit.active_unit: 
 			Unit.active_unit.activate()
 			level_camera.fix_to_actor(unit)
-
-
-## Returns the NavZoneHolder a given position is in.
-func get_zone_from_position(pos : Vector3i) -> NavZone:
-	for zone_holder : NavZoneHolder in nav_zone_map.get_child(pos.y).get_children():
-		if zone_holder.configs.has_point(pos):
-			return zone_holder.configs
-	return null
-
-
-## Generates an array of positions to visit in pursuit of a fleeing FriendlyUnit, in order, based on that unit's last known position.
-func get_likely_path(pursuer_position : Vector3i, last_known_position : Vector3i, pursuit_depth := 6) -> Array[Vector3i]:
-	var result : Array[Vector3i] = []
-	var starting_zone = get_zone_from_position(pursuer_position)
-	var last_known_zone = get_zone_from_position(last_known_position)
-	var banned_zones : Array[NavZone] = [last_known_zone, starting_zone]
-	var current_zone = last_known_zone
-	var current_position = last_known_position
-
-	# Update this with zones passed but not taken
-	# var bypassed_zones : Array[Array] = []
-
-	for i in range(pursuit_depth):
-		# Create a separate function which returns a full list of exit
-		# Find the closest exit and get its zone, removing that exit from the full list
-		# Additionally, filter the remainder of the list for exits which do not lead to the same zone as the closest exit.
-		# Add the rest of the list to the bypassed zones list.
-		var next_exit : NavZoneExit = current_zone.get_semirandom_exit(current_position, banned_zones)
-		if !next_exit:
-			return result
-		current_zone = load(next_exit.to_zone_uid)
-		current_position = next_exit.board_position
-		result.append(current_zone.get_nearest_point(current_position))
-		banned_zones.append(current_zone)
-
-	return result
 
 
 ## Cycle the active unit to the next in the list.

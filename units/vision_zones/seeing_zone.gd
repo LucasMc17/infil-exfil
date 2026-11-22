@@ -25,21 +25,10 @@ func check_detection() -> void:
 		for zone : SeenZone in seen_zones:
 			if get_visibility_of_seen_zone(zone):
 				if zone.unit.is_incapacitated():
-					# enemy.awareness.known_bodies.add(zone.unit)
-					# if Level.current.alarm.active:
-					# 	Level.current.enemy_awareness.known_bodies.add(zone.unit)
 					spotted_bodies.append(zone.unit)
 				elif zone.unit is FriendlyUnit:
 						spotted.append(zone.unit)
-						enemy.awareness.known_bodies.remove(zone.unit)
-						if Level.current.alarm.active:
-							Level.current.enemy_awareness.known_bodies.remove(zone.unit)
 		if !spotted.is_empty():
-			# var nav_zone = Level.current.get_zone_from_position(spotted[0].board_position)
-			# if enemy.awareness.is_unaware():
-			# 	enemy.speak(Barks.get_first_contact_line(nav_zone))
-			# else:
-			# 	enemy.speak(Barks.get_resumed_contact_line(nav_zone))
 			friendly_seen.emit(spotted)
 		if !spotted_bodies.is_empty():
 			body_seen.emit(spotted_bodies)

@@ -23,12 +23,6 @@ var known_friendly_count := 0:
 	set(val):
 		if val > known_friendly_count:
 			known_friendly_count = val
-## A dictionary of bodies which this unit is aware of.
-var known_bodies := Utilities.BodiesDict.new()
-
-func _init() -> void:
-	if !Engine.is_editor_hint():
-		Events.alarm_raised.connect(_on_alarm_raised)
 
 
 ## Returns true if any enemy in the game is currently seeing a friendly unit.
@@ -37,10 +31,3 @@ func are_friendlies_in_sight() -> bool:
 		if enemy.awareness.friendly_knowledge.all_in_sight.size() > 0:
 			return true
 	return false
-
-
-func _on_alarm_raised(raiser : Unit) -> void:
-	if raiser is EnemyUnit:
-		for sighting in raiser.awareness.friendly_knowledge.sightings.values():
-			known_bodies.remove(sighting.friendly)
-		known_bodies.sync(raiser.awareness.known_bodies)

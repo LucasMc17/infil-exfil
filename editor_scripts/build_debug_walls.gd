@@ -24,7 +24,7 @@ func _run() -> void:
 
 	for coord : Vector3i in nav_map.point_map_by_grid_coords.keys():
 		encountered += 1
-		var point : NavigableGridMap.GridPoint = nav_map.point_map_by_grid_coords[coord]
+		var point : GridPoint = nav_map.point_map_by_grid_coords[coord]
 		var global_coord = NavigableGridMap.convert_grid_to_global_position(coord)
 		if point.tile.walled_sides & 16:
 			var floor_scene = DEBUG_FLOOR.instantiate()

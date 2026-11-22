@@ -80,61 +80,21 @@ static func _pick_from_normalized_weights(weights : Array) -> int:
 
 	return -1
 
+
+## Returns the editor plugin for making changes to a grid map. This is frequently useful for my home brewed editor tools.
+static func get_grid_map_plugin() -> GridMapEditorPlugin:
+	var editor_root = EditorInterface.get_base_control().get_tree().root
+	var plugins = editor_root.find_children("",  "GridMapEditorPlugin", true, false)
+
+	if plugins.is_empty():
+			return null
+
+	return plugins[0]
+
 #endregion
 
 # Classes
 #region
-
-## Class representing the unit bodies which an enemy unit (aor the entire enemy team) is aware of currently.
-class BodiesDict:
-	## Nullable owning unit of this bodies dict.
-	var owning_unit : Unit
-	## The known friendly bodies.
-	var friendlies : Dictionary[int, FriendlyUnit] = {}
-	## The known enemy bodies.
-	var enemies : Dictionary[int,EnemyUnit] = {}
-
-	func _init(o : Unit = null) -> void:
-		owning_unit = o
-
-
-	## Add a unit to the list of known bodies.
-	func add(unit : Unit) -> void:
-		var id = unit.get_instance_id()
-		if unit is FriendlyUnit:
-			friendlies[id] = unit
-		else:
-			enemies[id] = unit
-		if owning_unit:
-			Events.request_update_unit_monitor.emit(owning_unit)
-	
-
-	## Remove a unit from the list of known bodies.
-	func remove(unit : Unit) -> void:
-		var id = unit.get_instance_id()
-		if unit is FriendlyUnit:
-			friendlies.erase(id)
-		else:
-			enemies.erase(id)
-		if owning_unit:
-			Events.request_update_unit_monitor.emit(owning_unit)
-	
-
-	## Returns true if the unit is in the list of known bodies
-	func has(unit : Unit) -> bool:
-		var id = unit.get_instance_id()
-		if unit is FriendlyUnit:
-			return friendlies.has(id)
-		else:
-			return enemies.has(id)
-	
-
-	## Sync this list of bodies to another list of bodies by adding all known bodies from the other list to this one.
-	func sync(dict : BodiesDict) -> void:
-		for friendly in dict.friendlies.values():
-			add(friendly)
-		for enemy in dict.enemies.values():
-			add(enemy)
 
 #endregion
 

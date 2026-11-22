@@ -1,30 +1,30 @@
 [gd_resource type="Resource" script_class="NavZone" format=3 uid="uid://ccsh82dwxe3dg"]
 
 [ext_resource type="Script" uid="uid://c7xqovr73fsq5" path="res://navigation/nav_zones/nav_zone_exit.gd" id="1_52cn6"]
+[ext_resource type="Script" uid="uid://btel0ockjxs7m" path="res://navigation/nav_zones/nav_zone_area.gd" id="1_cbc6v"]
 [ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_zones/nav_zone.gd" id="1_cdi1x"]
 
-[sub_resource type="Resource" id="Resource_o6vb7"]
-script = ExtResource("1_52cn6")
-local_position = Vector2i(0, 8)
-to_zone_name = "CentralHallway"
-ro_board_position = Vector3i(4, 0, 0)
-ro_to_zone_uid = "uid://0dxsj43fe112"
-metadata/_custom_type_script = "uid://c7xqovr73fsq5"
+[sub_resource type="Resource" id="Resource_1slw0"]
+script = ExtResource("1_cbc6v")
+position = Vector3i(4, 0, -8)
+dimensions = Vector2i(4, 17)
+metadata/_custom_type_script = "uid://btel0ockjxs7m"
 
-[sub_resource type="Resource" id="Resource_ya7ln"]
+[sub_resource type="Resource" id="Resource_cbc6v"]
 script = ExtResource("1_52cn6")
-local_position = Vector2i(0, 14)
-to_zone_name = "SouthHall"
-ro_board_position = Vector3i(4, 0, 6)
-ro_to_zone_uid = "uid://b887chbu27m44"
-metadata/_custom_type_script = "uid://c7xqovr73fsq5"
+position = Vector3i(4, 0, 6)
+to_zone_index = 7
+
+[sub_resource type="Resource" id="Resource_6n65o"]
+script = ExtResource("1_52cn6")
+position = Vector3i(4, 0, 0)
+to_zone_index = 1
 
 [resource]
 script = ExtResource("1_cdi1x")
 name = "the east hall"
-areas = Array[Rect2i]([Rect2i(0, 0, 4, 17)])
-points = Array[Vector2i]([Vector2i(1, 2), Vector2i(1, 8), Vector2i(1, 14)])
-exits = Array[ExtResource("1_52cn6")]([SubResource("Resource_o6vb7"), SubResource("Resource_ya7ln")])
-ro_base_position = Vector3i(4, 0, -8)
-ro_board_points = Array[Vector3i]([Vector3i(5, 0, -6), Vector3i(5, 0, 0), Vector3i(5, 0, 6)])
+debug_color = Color(0.39564395, 0.07901009, 0.79010075, 1)
+areas = Array[ExtResource("1_cbc6v")]([SubResource("Resource_1slw0")])
+points = Array[Vector3i]([Vector3i(6, 0, -6), Vector3i(6, 0, 0), Vector3i(6, 0, 6)])
+exits = Array[ExtResource("1_52cn6")]([SubResource("Resource_cbc6v"), SubResource("Resource_6n65o")])
 metadata/_custom_type_script = "uid://wjvqhhryw4h4"

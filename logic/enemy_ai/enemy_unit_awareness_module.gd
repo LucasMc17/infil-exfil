@@ -40,8 +40,6 @@ var unit : EnemyUnit
 var will_attempt_to_detain := true
 ## Whether the unit is in the detection grace period. This occurs when the unit sees a friendly unit during the player turn. While in the grace period, stealth skills are still usable on this unit. The grace period ends as soon as the enemy unit begins its next turn.
 var is_in_grace_period := false
-## A dictionary of bodies which this unit is aware of.
-var known_bodies := Utilities.BodiesDict.new(unit)
 
 func _init(u : EnemyUnit) -> void:
 	unit = u

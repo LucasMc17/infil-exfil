@@ -1,22 +1,25 @@
 [gd_resource type="Resource" script_class="NavZone" format=3 uid="uid://b85e1hsm15332"]
 
+[ext_resource type="Script" uid="uid://btel0ockjxs7m" path="res://navigation/nav_zones/nav_zone_area.gd" id="1_c11od"]
 [ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_zones/nav_zone.gd" id="1_m62ac"]
 [ext_resource type="Script" uid="uid://c7xqovr73fsq5" path="res://navigation/nav_zones/nav_zone_exit.gd" id="1_v8kyd"]
 
-[sub_resource type="Resource" id="Resource_fgoux"]
+[sub_resource type="Resource" id="Resource_ae7w5"]
+script = ExtResource("1_c11od")
+position = Vector3i(1, 0, -8)
+dimensions = Vector2i(3, 4)
+metadata/_custom_type_script = "uid://btel0ockjxs7m"
+
+[sub_resource type="Resource" id="Resource_c11od"]
 script = ExtResource("1_v8kyd")
-local_position = Vector2i(1, 3)
-to_zone_name = "CentralHallway"
-ro_board_position = Vector3i(2, 0, -5)
-ro_to_zone_uid = "uid://0dxsj43fe112"
-metadata/_custom_type_script = "uid://c7xqovr73fsq5"
+position = Vector3i(2, 0, -5)
+to_zone_index = 1
 
 [resource]
 script = ExtResource("1_m62ac")
 name = "the north room"
-areas = Array[Rect2i]([Rect2i(0, 0, 3, 4)])
-points = Array[Vector2i]([Vector2i(1, 1)])
-exits = Array[ExtResource("1_v8kyd")]([SubResource("Resource_fgoux")])
-ro_base_position = Vector3i(1, 0, -8)
-ro_board_points = Array[Vector3i]([Vector3i(2, 0, -7)])
+debug_color = Color(0.43768358, 0.04376837, 0.13306683, 1)
+areas = Array[ExtResource("1_c11od")]([SubResource("Resource_ae7w5")])
+points = Array[Vector3i]([Vector3i(2, 0, -7)])
+exits = Array[ExtResource("1_v8kyd")]([SubResource("Resource_c11od")])
 metadata/_custom_type_script = "uid://wjvqhhryw4h4"

@@ -1,24 +1,26 @@
 [gd_resource type="Resource" script_class="NavZone" format=3 uid="uid://c2v3i8fwwgfhn"]
 
+[ext_resource type="Script" uid="uid://btel0ockjxs7m" path="res://navigation/nav_zones/nav_zone_area.gd" id="1_gps7c"]
 [ext_resource type="Script" uid="uid://c7xqovr73fsq5" path="res://navigation/nav_zones/nav_zone_exit.gd" id="1_iqq7t"]
 [ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_zones/nav_zone.gd" id="2_gps7c"]
 
-[sub_resource type="Resource" id="Resource_iqq7t"]
+[sub_resource type="Resource" id="Resource_ycq63"]
+script = ExtResource("1_gps7c")
+position = Vector3i(-9, 1, 0)
+dimensions = Vector2i(4, 3)
+metadata/_custom_type_script = "uid://btel0ockjxs7m"
+
+[sub_resource type="Resource" id="Resource_gps7c"]
 script = ExtResource("1_iqq7t")
-local_position = Vector2i(0, 1)
-to_zone_name = "LadderRoom"
-ro_board_position = Vector3i(-9, 1, 1)
-ro_to_zone_uid = "uid://3atogghfi1ss"
-metadata/_custom_type_script = "uid://c7xqovr73fsq5"
+position = Vector3i(-9, 1, 1)
+to_zone_index = 3
 
 [resource]
 script = ExtResource("2_gps7c")
 name = "the roof"
 preposition = "on"
-areas = Array[Rect2i]([Rect2i(0, 0, 4, 3)])
-points = Array[Vector2i]([Vector2i(0, 1)])
-exits = Array[ExtResource("1_iqq7t")]([SubResource("Resource_iqq7t")])
-ro_base_position = Vector3i(-9, 0, 0)
-ro_board_points = Array[Vector3i]([Vector3i(-9, 1, 1)])
-ro_floor_number = 1
+debug_color = Color(0.8606091, 0.086060934, 0.086436935, 1)
+areas = Array[ExtResource("1_gps7c")]([SubResource("Resource_ycq63")])
+points = Array[Vector3i]([Vector3i(-7, 1, 1)])
+exits = Array[ExtResource("1_iqq7t")]([SubResource("Resource_gps7c")])
 metadata/_custom_type_script = "uid://wjvqhhryw4h4"

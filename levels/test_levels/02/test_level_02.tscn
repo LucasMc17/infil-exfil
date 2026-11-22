@@ -1,24 +1,123 @@
 [gd_scene format=3 uid="uid://pogqdn4ot8ht"]
 
 [ext_resource type="PackedScene" uid="uid://dt305x7b2byrv" path="res://levels/level.tscn" id="1_gfecl"]
-[ext_resource type="Script" uid="uid://7xjtskn0u7u" path="res://navigation/nav_zones/nav_zone_holder.gd" id="2_5qx6c"]
 [ext_resource type="PackedScene" uid="uid://b6h1160eunshj" path="res://units/friendlies/friendly_unit.tscn" id="2_81yhl"]
+[ext_resource type="Script" uid="uid://btel0ockjxs7m" path="res://navigation/nav_zones/nav_zone_area.gd" id="2_qr3q2"]
 [ext_resource type="PackedScene" uid="uid://bup8e1flyaj0p" path="res://units/enemies/enemy_unit.tscn" id="3_53l1m"]
 [ext_resource type="Script" uid="uid://c7xqovr73fsq5" path="res://navigation/nav_zones/nav_zone_exit.gd" id="3_qr3q2"]
 [ext_resource type="PackedScene" uid="uid://dygqxfucs53hc" path="res://levels/geometry/debug_wall.tscn" id="3_uslpm"]
 [ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_zones/nav_zone.gd" id="4_1icgt"]
 [ext_resource type="Script" uid="uid://bp1pubml3l0d7" path="res://units/ai/directive/directive.gd" id="4_uslpm"]
 [ext_resource type="Script" uid="uid://cvy611uxolcnt" path="res://units/ai/directive/move_to_point.gd" id="5_3og0o"]
-[ext_resource type="Script" uid="uid://cpgomrtb6arr4" path="res://navigation/nav_zones/nav_zone_floor.gd" id="5_qr3q2"]
 [ext_resource type="PackedScene" uid="uid://d1i1gcecs1k5t" path="res://levels/geometry/debug_floor.tscn" id="6_1icgt"]
+
+[sub_resource type="GDScript" id="GDScript_1icgt"]
+script/source = "@tool
+## The holder for a [NavZoneHolder] resource in 3D game space. This class has two main purposes: [br]
+## 1. To provide a spot in the scene tree for holding the NavZoneHolder resources which make up the Ai-enabled navigation layer of a level.
+## 2. To draw debug visuals representing the NavZones in 3D space for ease of editing in the editor. In the compiled game, these scenes should have no visual component at all.
+class_name NavZoneHolder
+extends Node3D
+
+## The NavZoneHolder resource file which populates this holder.
+@export var configs : NavZone 
+## The color to assign to the debug meshes for this NavZoneHolder in editor
+@export var debug_color : Color:
+	set(val):
+		debug_color = val
+		if Engine.is_editor_hint() and plane_material:
+			plane_material.albedo_color = debug_color
+
+## The material to apply to the debug mesh of this NavZoneHolder (when drawn).
+var plane_material : StandardMaterial3D
+## The floor number of this zone.
+var floor_number := 0
+
+func _ready() -> void:
+	if Engine.is_editor_hint():
+		plane_material = StandardMaterial3D.new()
+		plane_material.albedo_color = debug_color
+	add_to_group(\"nav_zones\")
+
+
+func _process(_delta: float) -> void:
+	if Engine.is_editor_hint() and is_visible_in_tree():
+		_redraw_meshes()
+
+
+## The function which continually redraws the mesh in editor to visualize this NavZoneHolder.
+func _redraw_meshes() -> void:
+	Utilities.clear_children(self)
+
+	if configs:
+		for area : NavZoneArea in configs.areas:
+			if area != null:
+				var mesh_instance = MeshInstance3D.new()
+				var plane_mesh = PlaneMesh.new()
+				plane_mesh.material = plane_material
+				mesh_instance.mesh = plane_mesh
+
+				mesh_instance.mesh.size.x = abs(area.dimensions.x)
+				mesh_instance.mesh.size.y = abs(area.dimensions.y)
+				mesh_instance.position.y = area.position.y * 4 + 0.1
+				mesh_instance.position.x = (float(area.dimensions.x) / 2) + area.position.x
+				mesh_instance.position.z = (float(area.dimensions.y) / 2) + area.position.z
+
+				add_child(mesh_instance)
+		
+		for point : Vector3i in configs.points:
+			if point != null:
+				var mesh_instance = MeshInstance3D.new()
+				var box_mesh = BoxMesh.new()
+				box_mesh.material = POINT_MATERIAL.value
+				mesh_instance.position = Vector3(point) + Vector3(0.5, 0.0, 0.5)
+
+				mesh_instance.mesh = box_mesh
+
+				add_child(mesh_instance)
+		
+		for exit in configs.exits:
+			if exit:
+				var mesh_instance = MeshInstance3D.new()
+				var cylinder_mesh = CylinderMesh.new()
+				mesh_instance.position = Vector3(exit.position) + Vector3(0.5, 0.0, 0.5)
+
+				mesh_instance.mesh = cylinder_mesh
+
+				add_child(mesh_instance)
+"
 
 [sub_resource type="Resource" id="Resource_oh6eq"]
 script = ExtResource("4_1icgt")
-areas = Array[Rect2i]([Rect2i(0, 0, 4, 16), Rect2i(-15, 13, 15, 3), Rect2i(-15, 0, 15, 3), Rect2i(-15, 3, 4, 10)])
-points = Array[Vector2i]([Vector2i(1, 3), Vector2i(1, 14), Vector2i(-13, 14)])
-base_position = Vector3i(4, 0, -8)
-board_points = Array[Vector3i]([Vector3i(5, 0, -5), Vector3i(5, 0, 6), Vector3i(-9, 0, 6)])
 metadata/_custom_type_script = "uid://wjvqhhryw4h4"
+
+[sub_resource type="GDScript" id="GDScript_but68"]
+script/source = "@tool
+## A floor of [NavZone]s. Affixes all children to a consistent y-level in 3D space, based on the floor's index within the [NavZoneMap].
+class_name NavZoneFloor
+extends Node3D
+
+func _ready() -> void:
+	add_to_group(\"nav_floors\")
+
+
+## Virtual property of all the zone holders directly held by this floor of the nav zone map.
+var zone_holders : Array[NavZoneHolder]:
+	get():
+		var result : Array[NavZoneHolder]
+		for child in get_children():
+			if child is NavZoneHolder:
+				result.append(child)
+		return result
+
+## The index of the floor which this scene represents in the nav zone map.
+var floor_number := 0:
+	set(val):
+		floor_number = val
+		position.y = floor_number * 4
+		for child in get_children():
+			if child is NavZoneHolder:
+				child.floor_number = floor_number"
 
 [sub_resource type="Resource" id="Resource_gfecl"]
 script = ExtResource("5_3og0o")
@@ -32,24 +131,19 @@ metadata/_custom_type_script = "uid://cvy611uxolcnt"
 
 [node name="Level" unique_id=1510169201 instance=ExtResource("1_gfecl")]
 
-[node name="NavigableGridMap" parent="." index="3" unique_id=805823171]
+[node name="NavigableGridMap_NavZoneMap_NavZoneFloor#NavZoneHolder" type="Node3D" parent="." index="0" unique_id=1568278590]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -8)
+script = SubResource("GDScript_1icgt")
+configs = SubResource("Resource_oh6eq")
+debug_color = Color(0.7656241, 0.6304058, 0.07656243, 1)
+
+[node name="NavigableGridMap_NavZoneMap#NavZoneFloor" type="Node3D" parent="." index="1" unique_id=378991579]
+script = SubResource("GDScript_but68")
+
+[node name="NavigableGridMap" parent="." index="6" unique_id=805823171]
 data = {
 "cells": PackedInt32Array(65525, 5, 1048577, 65525, 6, 1048577, 65525, 7, 1048580, 65526, 5, 655360, 65526, 6, 655360, 65526, 7, 655361, 65527, 5, 655360, 65527, 6, 655360, 65527, 7, 655361, 65528, 5, 1441792, 65528, 6, 0, 65528, 7, 655361, 65529, 5, 1, 65529, 6, 0, 65529, 7, 655361, 65530, 5, 1, 65530, 6, 0, 65530, 7, 655361, 65531, 5, 1, 65531, 6, 0, 65531, 7, 655361, 65532, 5, 1, 65532, 6, 0, 65532, 7, 655361, 65533, 5, 1, 65533, 6, 0, 65533, 7, 655361, 65534, 5, 1, 65534, 6, 0, 65534, 7, 655361, 65535, 5, 1, 65535, 6, 0, 65535, 7, 655361, 0, 5, 1, 0, 6, 0, 0, 7, 655361, 1, 5, 1, 1, 6, 0, 1, 7, 655361, 2, 5, 1441796, 2, 6, 0, 2, 7, 655361, 3, 5, 4, 3, 6, 0, 3, 7, 655361, 4, 5, 0, 4, 6, 0, 4, 7, 655361, 5, 5, 0, 5, 6, 0, 5, 7, 655361, 6, 5, 0, 6, 6, 0, 6, 7, 655361, 7, 5, 1441793, 7, 6, 1441793, 7, 7, 655364, 4, 65528, 1, 4, 65529, 655360, 4, 65530, 0, 4, 65531, 1048577, 4, 65532, 1048577, 4, 65533, 1048577, 4, 65534, 1048577, 4, 65535, 1048577, 4, 0, 1048577, 4, 1, 1048577, 4, 2, 1048577, 4, 3, 1048577, 4, 4, 1048577, 5, 65528, 1, 5, 65529, 0, 5, 65530, 0, 5, 65531, 0, 5, 65532, 0, 5, 65533, 0, 5, 65534, 0, 5, 65535, 0, 5, 0, 0, 5, 1, 0, 5, 2, 0, 5, 3, 0, 5, 4, 0, 6, 65528, 1, 6, 65529, 0, 6, 65530, 0, 6, 65531, 0, 6, 65532, 0, 6, 65533, 0, 6, 65534, 0, 6, 65535, 0, 6, 0, 0, 6, 1, 0, 6, 2, 0, 6, 3, 0, 6, 4, 0, 7, 65528, 1441796, 7, 65529, 1441793, 7, 65530, 1441793, 7, 65531, 1441793, 7, 65532, 1441793, 7, 65533, 1441793, 7, 65534, 1441793, 7, 65535, 1441793, 7, 0, 1441793, 7, 1, 1441793, 7, 2, 1441793, 7, 3, 1441793, 7, 4, 1441793, 65526, 65530, 655360, 65526, 65531, 655360, 65526, 65532, 655360, 65526, 65533, 655360, 65526, 65534, 655360, 65526, 65535, 655360, 65526, 0, 655360, 65526, 1, 655360, 65526, 2, 655360, 65526, 3, 655360, 65526, 4, 655360, 65527, 65530, 655360, 65527, 65531, 655360, 65527, 65532, 655360, 65527, 65533, 655360, 65527, 65534, 655360, 65527, 65535, 655360, 65527, 0, 655360, 65527, 1, 655360, 65527, 2, 655360, 65527, 3, 655360, 65527, 4, 655360, 65526, 65529, 655360, 65527, 65529, 655360, 65528, 65529, 655360, 65529, 65529, 655360, 65530, 65529, 655360, 65531, 65529, 655360, 65532, 65529, 655360, 65533, 65529, 655360, 65534, 65529, 655360, 65535, 65529, 655360, 0, 65529, 655360, 1, 65529, 655360, 2, 65529, 655360, 3, 65529, 655360, 3, 65530, 655361, 2, 65530, 655361, 1, 65530, 655361, 0, 65530, 655361, 65535, 65530, 655361, 65534, 65530, 655361, 65533, 65530, 655361, 65532, 65530, 655361, 65531, 65530, 655361, 65530, 65530, 655361, 65529, 65530, 655361, 65528, 65530, 1441792, 65528, 65531, 1441793, 65528, 65532, 1441793, 65528, 65533, 1441793, 65528, 65534, 1441793, 65528, 65535, 1441793, 65528, 0, 1441793, 65528, 1, 1441793, 65528, 2, 1441793, 65528, 3, 1441793, 65528, 4, 1441793, 65525, 65528, 4, 65526, 65528, 1, 65527, 65528, 1, 65528, 65528, 1, 65529, 65528, 1, 65530, 65528, 1, 65531, 65528, 1, 65532, 65528, 1, 65533, 65528, 1, 65534, 65528, 1, 65535, 65528, 1, 0, 65528, 1, 1, 65528, 1, 2, 65528, 1, 3, 65528, 1, 65525, 65529, 1048577, 65525, 65530, 1048577, 65525, 65531, 1048577, 65525, 65532, 1048577, 65525, 65533, 1048577, 65525, 65534, 1048577, 65525, 65535, 1048577, 65525, 0, 1048577, 65525, 1, 1048577, 65525, 2, 1048577, 65525, 3, 1048577, 65525, 4, 1048577)
 }
-
-[node name="NavZoneMap" parent="NavigableGridMap" index="0" unique_id=1688252954]
-visible = false
-
-[node name="NavZoneFloor" type="Node3D" parent="NavigableGridMap/NavZoneMap" index="0" unique_id=378991579]
-script = ExtResource("5_qr3q2")
-metadata/_custom_type_script = "uid://cpgomrtb6arr4"
-
-[node name="NavZoneHolder" type="Node3D" parent="NavigableGridMap/NavZoneMap/NavZoneFloor" index="0" unique_id=1568278590]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -8)
-script = ExtResource("2_5qx6c")
-configs = SubResource("Resource_oh6eq")
-debug_color = Color(0.7656241, 0.6304058, 0.07656243, 1)
-metadata/_custom_type_script = "uid://7xjtskn0u7u"
 
 [node name="DebugFloor" parent="NavigableGridMap/Geometry" parent_id_path=PackedInt32Array(2043084881) index="0" unique_id=1729299196 instance=ExtResource("6_1icgt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 5)

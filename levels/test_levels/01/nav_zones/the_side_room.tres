@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="NavZone" format=3 uid="uid://cwlyw7felpc01"]
+
+[ext_resource type="Script" uid="uid://btel0ockjxs7m" path="res://navigation/nav_zones/nav_zone_area.gd" id="1_pw6qe"]
+[ext_resource type="Script" uid="uid://c7xqovr73fsq5" path="res://navigation/nav_zones/nav_zone_exit.gd" id="2_vo2sw"]
+[ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_zones/nav_zone.gd" id="3_jpueg"]
+
+[sub_resource type="Resource" id="Resource_o6k48"]
+script = ExtResource("1_pw6qe")
+position = Vector3i(-5, 0, 8)
+dimensions = Vector2i(5, 3)
+
+[sub_resource type="Resource" id="Resource_pw6qe"]
+script = ExtResource("2_vo2sw")
+position = Vector3i(-3, 0, 8)
+to_zone_index = 0
+
+[resource]
+script = ExtResource("3_jpueg")
+name = "the side room"
+debug_color = Color(0.15989299, 0.8461368, 0.0846137, 1)
+areas = Array[ExtResource("1_pw6qe")]([SubResource("Resource_o6k48")])
+points = Array[Vector3i]([Vector3i(-3, 0, 9)])
+exits = Array[ExtResource("2_vo2sw")]([SubResource("Resource_pw6qe")])

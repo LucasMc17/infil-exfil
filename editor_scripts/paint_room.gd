@@ -2,15 +2,6 @@
 class_name PaintRoom
 extends EditorScript
 
-func _get_grid_map_plugin() -> GridMapEditorPlugin:
-	var editor_root = EditorInterface.get_base_control().get_tree().root
-	var grid_map_plugins = editor_root.find_children("", "GridMapEditorPlugin", true, false)
-
-	if grid_map_plugins.is_empty():
-		return null
-
-	return grid_map_plugins[0]
-
 
 func _set_grid_map_contents(grid_map : GridMap, cell_map : Dictionary[Vector3i, Vector2i]) -> void:
 	grid_map.clear()
@@ -23,7 +14,7 @@ func _set_grid_map_contents(grid_map : GridMap, cell_map : Dictionary[Vector3i, 
 
 
 func _run() -> void:
-	var grid_map_plugin = _get_grid_map_plugin()
+	var grid_map_plugin = Utilities.get_grid_map_plugin()
 
 	if !grid_map_plugin:
 		printerr("COULD NOT FIND GRID MAP PLUGIN")
