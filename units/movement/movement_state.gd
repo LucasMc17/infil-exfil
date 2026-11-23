@@ -53,6 +53,8 @@ func physics_update(delta: float):
 	var handle_arrival_at_point = func() -> void:
 		unit.board_position = path.pop_front()
 		unit.check_for_detection()
+		if unit is EnemyUnit:
+			Level.test_player_awareness(unit)
 		if !path.is_empty():
 			var next_point = NavigableGridMap.convert_grid_to_global_position(path[0])
 			var direction = (next_point - unit.position).normalized()

@@ -35,6 +35,12 @@ layout_mode = 2
 key = "Position"
 value = "(0,0,0)"
 
+[node name="PlayerAware" parent="MarginContainer/Status/VBoxContainer" unique_id=827927769 instance=ExtResource("2_7wqtn")]
+unique_name_in_owner = true
+layout_mode = 2
+key = "Player Aware"
+value = "FALSE"
+
 [node name="KillButton" type="Button" parent="MarginContainer/Status/VBoxContainer" unique_id=1417669905]
 layout_mode = 2
 text = "Kill"

@@ -45,6 +45,7 @@ var player_aware := false:
 	set(val):
 		player_aware = val
 		unit.visible = val
+		Events.request_update_unit_monitor.emit(unit)
 
 func _init(u : EnemyUnit) -> void:
 	unit = u

@@ -3,6 +3,7 @@ extends PanelContainer
 
 @onready var _acting_state : DebugKVPair = %ActingState
 @onready var _position : DebugKVPair = %Position
+@onready var _player_aware : DebugKVPair = %PlayerAware
 
 var unit : EnemyUnit
 
@@ -12,6 +13,7 @@ func refresh(new_unit : EnemyUnit = null) -> void:
 	if unit:
 		_acting_state.value = Unit.Status.find_key(unit.unit_status)
 		_position.value = str(unit.board_position)
+		_player_aware.value = str(unit.awareness.player_aware).to_upper()
 
 
 func _on_kill_button_pressed() -> void:
