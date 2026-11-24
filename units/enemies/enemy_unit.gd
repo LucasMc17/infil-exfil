@@ -101,6 +101,8 @@ func activate():
 	awareness.friendly_knowledge.confirm_all_sightings()
 	awareness.resolve_grace_period()
 	update_indicator()
+	if awareness.player_aware:
+		Level.current.level_camera.fix_to_actor(self)
 
 
 func lose_consciousness() -> void:

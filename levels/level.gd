@@ -110,9 +110,9 @@ static func test_player_awareness(enemy : EnemyUnit) -> void:
 				enemy.awareness.player_aware = true
 				print('in zone')
 				return
-		if player.board_position.distance_to(enemy.board_position) <= 5.0:
+		if player.board_position.distance_to(enemy.board_position) <= 3.0:
 			enemy.awareness.player_aware = true
-			print('within 5 m')
+			print('within 3 m')
 			return
 		if player.seen_zone.get_visibility_of_seen_zone(enemy.seen_zone):
 			enemy.awareness.player_aware = true
@@ -136,7 +136,7 @@ func _ready() -> void:
 		)
 		current = self
 		Events.level_loaded.emit()
-		for enemy in live_enemies:
+		for enemy in all_enemies:
 			test_player_awareness(enemy)
 
 
@@ -184,7 +184,6 @@ func set_active_unit(unit : Unit):
 		Unit.active_unit = unit
 		if Unit.active_unit: 
 			Unit.active_unit.activate()
-			level_camera.fix_to_actor(unit)
 
 
 ## Cycle the active unit to the next in the list.

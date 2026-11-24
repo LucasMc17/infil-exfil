@@ -22,13 +22,15 @@ func cycle_enemy() -> void:
 		var enemy = enemy_units.pop_front()
 		level.set_active_unit(enemy)
 		# TODO: There's a decision to be made about how much I like/trust awaits here, but this works to give us some breathng room between the camera movement and the enemy action.
-		await get_tree().create_timer(0.5).timeout
+		if enemy.awareness.player_aware:
+			await get_tree().create_timer(0.5).timeout
 		if enemy.decision_director.current_directive:
 			enemy.decision_director.current_directive.begin(enemy)
 		else:
 			enemy.decision_director.take_directive_from_queue()
 		await enemy.forfeited_turn
-		await get_tree().create_timer(0.5).timeout
+		if enemy.awareness.player_aware:
+			await get_tree().create_timer(0.5).timeout
 		cycle_enemy()
 	else:
 		Events.enemy_turn_ended.emit()

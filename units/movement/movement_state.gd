@@ -46,15 +46,22 @@ func physics_update(delta: float):
 	
 
 	var walk_to_next_point = func(next_pos : Vector3) -> void:
-		unit.position = unit.position.move_toward(next_pos, mps * delta)
+		if unit.awareness.player_aware:
+			unit.position = unit.position.move_toward(next_pos, mps * delta)
+		else:
+			unit.position = next_pos
 		update_captive_position.call()
 	
 
 	var handle_arrival_at_point = func() -> void:
 		unit.board_position = path.pop_front()
 		unit.check_for_detection()
+		# FIXME: god I hate these next 5 lines. this whole file is gonna need an overhaul, turn these nested functions into dedicated lifecycle hooks which can be overwridden by player and enemy movement states. 
 		if unit is EnemyUnit:
 			Level.test_player_awareness(unit)
+		elif unit is FriendlyUnit:
+			for enemy in Level.current.all_enemies:
+				Level.test_player_awareness(enemy)
 		if !path.is_empty():
 			var next_point = NavigableGridMap.convert_grid_to_global_position(path[0])
 			var direction = (next_point - unit.position).normalized()
