@@ -46,7 +46,7 @@ func physics_update(delta: float):
 	
 
 	var walk_to_next_point = func(next_pos : Vector3) -> void:
-		if unit.awareness.player_aware:
+		if unit is FriendlyUnit or unit.awareness.player_aware:
 			unit.position = unit.position.move_toward(next_pos, mps * delta)
 		else:
 			unit.position = next_pos
