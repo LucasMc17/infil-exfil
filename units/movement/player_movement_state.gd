@@ -4,6 +4,7 @@ extends MovementState
 
 func enter(previous_state, ext) -> void:
 	super(previous_state, ext)
+	Level.current.level_camera.fix_to_actor(unit)
 	unit.is_moving = true
 	Events.skill_disarmed.emit()
 	if ext.has('path'):
@@ -12,6 +13,11 @@ func enter(previous_state, ext) -> void:
 	else:
 		DebugConsole.error('Must pass PlayerMovementState a path array of points.')
 	Level.current.movement_system.deactivate()
+
+
+func _on_arrival_at_point() -> void:
+	for enemy in Level.current.all_enemies:
+		Level.test_player_awareness(enemy)
 
 
 func exit():

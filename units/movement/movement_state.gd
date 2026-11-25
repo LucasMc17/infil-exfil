@@ -20,21 +20,40 @@ var first_step := true
 
 func enter(previous_state : State, ext : Dictionary):
 	super(previous_state, ext)
-	Level.current.level_camera.fix_to_actor(unit)
 	ghost_point = null
 	first_step = true
 	unit.started_moving.emit(unit)
 
 
-func physics_update(delta: float):
-	var update_captive_position = func() -> void:
+## Internal function for handling the unit arriving at a point, not necessarily the final destination of the current movement. Custom behavior is typically accomplished by extending [_on_arrival_at_point], and NOT this function. However, this function can still be overridden if needed.
+func _arrive_at_point() -> void:
+	unit.board_position = path.pop_front()
+	unit.check_for_detection()
+	if !path.is_empty():
+		var next_point = NavigableGridMap.convert_grid_to_global_position(path[0])
+		var direction = (next_point - unit.position).normalized()
+		var angle = atan2(-direction.x, -direction.z)
+		if unit.rotation.y != angle:
+			unit.rotation.y = angle
+		_update_captive_position()
+	else:
+		if ghost_point:
+			_handle_ghost_point()
+		unit.stop_moving()
+	_on_arrival_at_point()
+	Events.unit_moved.emit()
+
+
+## Internal function for updating the position of the unit's captive, if they have one.
+func _update_captive_position() -> void:
 		if unit.captive:
 			unit.captive.position = unit._hostage_marker.global_position
 			unit.captive.board_position = unit.board_position
 			unit.captive.rotation.y = unit.rotation.y
 
-	
-	var handle_ghost_point = func() -> void:
+
+## Internal function for handling the event of a 'ghost point' (the next space the unit intended to enter which was unexpectedly occupied by a previously unseen unit. Only relevant for AI-controlled units).
+func _handle_ghost_point() -> void:
 		var direction = (ghost_point - unit.position).normalized()
 		var angle = atan2(-direction.x, -direction.z)
 		ghost_point = null
@@ -43,41 +62,23 @@ func physics_update(delta: float):
 			unit.rotation.y = angle
 		# TODO: Eventually we will want to actually lerp the rotation for a few frames, checking for detection on each. Would also fix unit turning blindspots.
 		unit.check_for_detection()
-	
 
-	var walk_to_next_point = func(next_pos : Vector3) -> void:
-		if unit is FriendlyUnit or unit.awareness.player_aware:
-			unit.position = unit.position.move_toward(next_pos, mps * delta)
-		else:
-			unit.position = next_pos
-		update_captive_position.call()
-	
 
-	var handle_arrival_at_point = func() -> void:
-		unit.board_position = path.pop_front()
-		unit.check_for_detection()
-		# FIXME: god I hate these next 5 lines. this whole file is gonna need an overhaul, turn these nested functions into dedicated lifecycle hooks which can be overwridden by player and enemy movement states. 
-		if unit is EnemyUnit:
-			Level.test_player_awareness(unit)
-		elif unit is FriendlyUnit:
-			for enemy in Level.current.all_enemies:
-				Level.test_player_awareness(enemy)
-		if !path.is_empty():
-			var next_point = NavigableGridMap.convert_grid_to_global_position(path[0])
-			var direction = (next_point - unit.position).normalized()
-			var angle = atan2(-direction.x, -direction.z)
-			if unit.rotation.y != angle:
-				unit.rotation.y = angle
-			update_captive_position.call()
-		else:
-			if ghost_point:
-				handle_ghost_point.call()
-			unit.stop_moving()
-		Events.unit_moved.emit()
-	
+## Extensible function for moving towards the next point. By default, smoothly lerps them towards the next point, but can be extended with custom behavior.
+func _move_toward_next_point(next_pos : Vector3, delta : float) -> void:
+	unit.position = unit.position.move_toward(next_pos, mps * delta)
+	_update_captive_position()
+
+
+## Lifecycle hook which runs when the unit arrives at a point, to be extended by inheriting scripts.
+func _on_arrival_at_point() -> void:
+	pass
+
+
+func physics_update(delta: float):
 	if path.is_empty():
 		if ghost_point:
-			handle_ghost_point.call()
+			_handle_ghost_point()
 		unit.stop_moving()
 		return
 	
@@ -90,10 +91,10 @@ func physics_update(delta: float):
 		if unit.rotation.y != angle:
 			unit.rotation.y = angle
 
-	walk_to_next_point.call(next_global_pos)
+	_move_toward_next_point(next_global_pos, delta)
 
 	if unit.position == next_global_pos:
-		handle_arrival_at_point.call()
+		_arrive_at_point()
 
 
 func exit():

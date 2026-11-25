@@ -24,9 +24,11 @@ func _process(_delta: float) -> void:
 	if active:
 		var plugin = Utilities.get_grid_map_plugin()
 		if plugin:
-			var zone = level.nav_system.get_zone_from_position(plugin.get_selection().position)
-			if zone:
-				zone_edit_requested.emit(zone)
+			if plugin.get_selection().position != Vector3.ZERO:
+				var zone = level.nav_system.get_zone_from_position(plugin.get_selection().position)
+				if zone:
+					print('found a zone!')
+					zone_edit_requested.emit(zone)
 
 
 ## Runs when the UI is loaded after detecting a level.

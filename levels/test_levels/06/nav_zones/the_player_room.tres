@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="NavZone" format=3 uid="uid://cowwjseqyfrmi"]
+
+[ext_resource type="Script" uid="uid://btel0ockjxs7m" path="res://navigation/nav_zones/nav_zone_area.gd" id="1_jo82v"]
+[ext_resource type="Script" uid="uid://c7xqovr73fsq5" path="res://navigation/nav_zones/nav_zone_exit.gd" id="2_bii0y"]
+[ext_resource type="Script" uid="uid://wjvqhhryw4h4" path="res://navigation/nav_zones/nav_zone.gd" id="3_rquxk"]
+
+[sub_resource type="Resource" id="Resource_ei0cb"]
+script = ExtResource("1_jo82v")
+position = Vector3i(-9, 0, -3)
+dimensions = Vector2i(12, 7)
+
+[sub_resource type="Resource" id="Resource_jo82v"]
+script = ExtResource("2_bii0y")
+position = Vector3i(2, 0, 0)
+to_zone_index = 1
+
+[sub_resource type="Resource" id="Resource_bii0y"]
+script = ExtResource("2_bii0y")
+position = Vector3i(2, 0, -2)
+to_zone_index = 1
+
+[sub_resource type="Resource" id="Resource_rquxk"]
+script = ExtResource("2_bii0y")
+position = Vector3i(2, 0, 2)
+to_zone_index = 1
+
+[resource]
+script = ExtResource("3_rquxk")
+name = "the player room"
+debug_color = Color(0.49517694, 0.05450399, 0.5450398, 1)
+areas = Array[ExtResource("1_jo82v")]([SubResource("Resource_ei0cb")])
+points = Array[Vector3i]([Vector3i(-2, 0, 0), Vector3i(-6, 0, 0)])
+exits = Array[ExtResource("2_bii0y")]([SubResource("Resource_jo82v"), SubResource("Resource_bii0y"), SubResource("Resource_rquxk")])

@@ -10,9 +10,14 @@ var end_point : Vector3
 var exact_point := true
 ## The radius to get within if the movement is not to an exact point.
 var point_radius := 3
+## Whether or not the enemy unit has been in the player's site during this movement, regardless of whether they are currently in the player's site.
+var been_sighted := false
 
 func enter(previous_state, ext) -> void:
 	super(previous_state, ext)
+	if unit.awareness.player_aware:
+		been_sighted = true
+		Level.current.level_camera.fix_to_actor(unit)
 	if ext.has('end_point'):
 		full_intended_path = Level.current.nav_map.find_path(unit.board_position, end_point, exact_point, point_radius)
 		var temp_path = full_intended_path.slice(0, unit.movement_points)
@@ -30,6 +35,21 @@ func enter(previous_state, ext) -> void:
 		unit.movement_points = 0
 	else:
 		DebugConsole.error('Must pass EnemyMovementState an end_point.')
+
+
+func _on_arrival_at_point() -> void: 
+	Level.test_player_awareness(unit)
+	if unit.awareness.player_aware:
+		Level.current.level_camera.fix_to_actor(unit)
+	else:
+		Level.current.level_camera.unfix()
+
+
+func _move_toward_next_point(next_pos : Vector3, delta : float) -> void:
+	if !unit.awareness.player_aware and !been_sighted:
+		unit.position = next_pos
+	else:
+		super(next_pos, delta)
 
 
 func exit():
