@@ -12,6 +12,7 @@ sky_material = SubResource("ProceduralSkyMaterial_jldy4")
 [sub_resource type="Environment" id="Environment_p5284"]
 background_mode = 2
 sky = SubResource("Sky_qeex7")
+volumetric_fog_density = 0.5
 
 [node name="WorldEnvironment" type="WorldEnvironment" unique_id=1107774988]
 environment = SubResource("Environment_p5284")

@@ -37,10 +37,12 @@ func enter(previous_state, ext) -> void:
 		DebugConsole.error('Must pass EnemyMovementState an end_point.')
 
 
-func _on_arrival_at_point() -> void: 
+func _on_arrival_at_point() -> void:
+	await get_tree().physics_frame
 	Level.test_player_awareness(unit)
 	if unit.awareness.player_aware:
 		Level.current.level_camera.fix_to_actor(unit)
+		been_sighted = true
 	else:
 		Level.current.level_camera.unfix()
 
@@ -54,4 +56,5 @@ func _move_toward_next_point(next_pos : Vector3, delta : float) -> void:
 
 func exit():
 	super()
+	been_sighted = false
 	unit.finished_moving.emit(unit, full_intended_path.is_empty() or Vector3(unit.board_position) == full_intended_path[-1])

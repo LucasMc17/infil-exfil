@@ -16,6 +16,7 @@ func enter(previous_state, ext) -> void:
 
 
 func _on_arrival_at_point() -> void:
+	await get_tree().physics_frame
 	for enemy in Level.current.all_enemies:
 		Level.test_player_awareness(enemy)
 
